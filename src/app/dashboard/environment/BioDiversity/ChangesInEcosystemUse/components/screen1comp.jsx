@@ -21,13 +21,18 @@ const widgets = {
 
 
 const view_path =
-  "environment_biodiversity_operational_sites_innear_areas_of_high_biodiversity_value";
+  "environment_biodiversity_changes_in_ecosystem_use_and_biodiversity_condition";
 const client_id = 1;
 const user_id = 1;
 
+
 const schema = {
-  type: "array",
-  items: {
+  type: "object",
+  properties: {
+    ecosystemConversion: {
+      type: "array",
+      title: "Sites where activities lead to ecosystem conversion",
+      items: {
     type: "object",
     properties: {
       col1: {
@@ -97,12 +102,69 @@ const schema = {
       },
       
     },
+  }, // Reuse original ecosystemConversion schema
+    },
+    biodiversityStateChange: {
+      type: "array",
+      title: "Changes to the state of biodiversity",
+      items: {
+    type: "object",
+    properties: {
+      col1: {
+        type: "string",
+        title: "Base Year",
+        enum:[
+
+        ]
+      },
+
+      col2: {
+        type: "string",
+        title: "Ecosystem type & source",
+        
+      },
+      col3: {
+        type: "string",
+        title: "Unit",
+       enum:[
+            "Square meter (m²)",
+            "Hectare (ha)",
+            "Square kilometer (km²)",
+            "Square foot (ft²)",
+            "Square yard (yd²)",
+            "Acre",
+            "Square mile (mi²)"
+        ]
+      },
+      col4: {
+        type: "string",
+        title: "Ecosystem size (in hectares)",
+      },
+      col5: {
+        type: "string",
+        title: "Ecosystem condition (in base year)",
+       
+      },
+      col6: {
+        type: "string",
+        title: "Ecosystem condition (in reporting period)",
+       
+      },
+      
+    },
   },
+    },
+  },
+  dependencies: {
+    ecosystemConversion: {},
+    biodiversityStateChange: {}
+  }
 };
 
 const uiSchema = {
-  "ui:widget": "BioDiversityTwoTableWidget",
-  "ui:options": {
+  ecosystemConversion: {
+    "ui:widget": "BioDiversityTwoTableWidget",
+   "ui:options": {
     titles: [
       {
         key: "col1",
@@ -228,71 +290,10 @@ const uiSchema = {
      
     ],
   },
-};
-
-function getYearListFrom1995() {
-  const currentYear = new Date().getFullYear();
-  const years = [];
-  for (let year = 1995; year <= currentYear; year++) {
-    years.push(year.toString()); // If enum is string type
-  }
-  return years;
-}
-
-
-const schema2 = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      col1: {
-        type: "string",
-        title: "Base Year",
-        enum:[
-
-        ]
-      },
-
-      col2: {
-        type: "string",
-        title: "Ecosystem type & source",
-        
-      },
-      col3: {
-        type: "string",
-        title: "Unit",
-       enum:[
-            "Square meter (m²)",
-            "Hectare (ha)",
-            "Square kilometer (km²)",
-            "Square foot (ft²)",
-            "Square yard (yd²)",
-            "Acre",
-            "Square mile (mi²)"
-        ]
-      },
-      col4: {
-        type: "string",
-        title: "Ecosystem size (in hectares)",
-      },
-      col5: {
-        type: "string",
-        title: "Ecosystem condition (in base year)",
-       
-      },
-      col6: {
-        type: "string",
-        title: "Ecosystem condition (in reporting period)",
-       
-      },
-      
-    },
   },
-};
-
-const uiSchema2 = {
-  "ui:widget": "BioDiversityTwoTableWidget",
-  "ui:options": {
+  biodiversityStateChange: {
+    "ui:widget": "BioDiversityTwoTableWidget",
+    "ui:options": {
     titles: [
       {
         key: "col1",
@@ -345,11 +346,34 @@ const uiSchema2 = {
      
     ],
   },
+  },
+  "ui:options": {
+    orderable: false,
+    addable: false,
+    removable: false,
+    layout: "horizontal"
+  }
 };
 
 
-const Screen1Comp = ({ location, year, month }) => {
-  const [formData, setFormData] = useState([{}]);
+
+function getYearListFrom1995() {
+  const currentYear = new Date().getFullYear();
+  const years = [];
+  for (let year = currentYear; year >= 1995; year--) {
+    years.push(year.toString()); // If enum is string type
+  }
+  return years;
+}
+
+
+
+const Screen1Comp = ({ location, year }) => {
+  // const [formData, setFormData] = useState([{}]);
+  const [formData, setFormData] = useState({
+  ecosystemConversion: [{}],
+  biodiversityStateChange: [{}]
+});
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const apiDataAvailable=false;
@@ -360,15 +384,29 @@ const Screen1Comp = ({ location, year, month }) => {
   const [locationdata, setLocationdata] = useState();
   const toastShown = useRef(false);
 
+ const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
+  const token = getAuthToken();
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
   const handleChange = (e) => {
     setFormData(e.formData);
+  };
+
+  // The below code
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
   };
   
 
@@ -383,24 +421,43 @@ const Screen1Comp = ({ location, year, month }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    setFormData({
+  ecosystemConversion: [{}],
+  biodiversityStateChange: [{}]
+});
+    setSelectedOption("")
+    setSelectedOrgActivity("")
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
+      const loadedSchema = response.data.form[0].schema;
+      const yearEnum = getYearListFrom1995();
+    if (
+      loadedSchema?.properties?.biodiversityStateChange?.items?.properties?.col1
+    ) {
+      loadedSchema.properties.biodiversityStateChange.items.properties.col1.enum = yearEnum;
+    }
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
 const form_parent = response.data.form_data;
       const f_data = form_parent[0].data[0].formData;
       const option_data = form_parent[0].data[0].selectedOption;
+      const org_activity=form_parent[0].data[0].TypeOfchangeToBioDiversity
     //   setFormData({
     //     wildSpecies: fetchedData.wildSpecies || [{}],
     //     waterConsumption: fetchedData.waterConsumption || [{}]
     //   });
       setFormData(f_data);
       setSelectedOption(option_data);
+      setSelectedOrgActivity(org_activity)
     } catch (error) {
-      setFormData([{}]);
+      setFormData({
+  ecosystemConversion: [{}],
+  biodiversityStateChange: [{}]
+});
+ setSelectedOption("")
+    setSelectedOrgActivity("")
       LoaderClose();
     } finally {
       LoaderClose();
@@ -419,11 +476,11 @@ const form_parent = response.data.form_data;
         {
           formData: formData,
           selectedOption: selectedOption,
+          TypeOfchangeToBioDiversity:selectedOrgActivity
         },
       ],
       location,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -482,19 +539,19 @@ const form_parent = response.data.form_data;
   }, [formData]);
 
   // fetch backend and replace initialized forms
-  // useEffect(() => {
-  //   if (location && year && month) {
-  //     loadFormData();
-  //     toastShown.current = false; // Reset the flag when valid data is present
-  //   } else {
-  //     // Only show the toast if it has not been shown already
-  //     if (!toastShown.current) {
-  //       toastShown.current = true; // Set the flag to true after showing the toast
-  //     }
-  //   }
-  //   // console.log('From loaded , ready for trigger')
-  //   // loadFormData()
-  // }, [location, year, month]);
+  useEffect(() => {
+    if (location && year) {
+      loadFormData();
+      toastShown.current = false; // Reset the flag when valid data is present
+    } else {
+      // Only show the toast if it has not been shown already
+      if (!toastShown.current) {
+        toastShown.current = true; // Set the flag to true after showing the toast
+      }
+    }
+    // console.log('From loaded , ready for trigger')
+    // loadFormData()
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -616,8 +673,12 @@ Changes in the state of biodiversity: Refer to any alterations in the health, co
         </label>
             <div>
               <Form
-                schema={schema}
-                uiSchema={uiSchema}
+                schema={r_schema}
+                // uiSchema={uiSchema}
+                 uiSchema={{
+      ...r_ui_schema,
+      biodiversityStateChange: { "ui:widget": () => null } // Hide
+    }}
                 formData={formData}
                 onChange={handleChange}
                 validator={validator}
@@ -655,8 +716,12 @@ affected or potentially affected by the organization.</p>"
         </label>
             <div>
               <Form
-                schema={schema2}
-                uiSchema={uiSchema2}
+                schema={r_schema}
+                // uiSchema={uiSchema}
+                 uiSchema={{
+      ...r_ui_schema,
+      ecosystemConversion: { "ui:widget": () => null } // Hide
+    }}
                 formData={formData}
                 onChange={handleChange}
                 validator={validator}

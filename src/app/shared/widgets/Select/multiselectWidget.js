@@ -114,34 +114,67 @@ const MultiselectWidget = ({
       
   
 
+  // const handleSelectChange = (selectedOptions) => {
+  //   const values = selectedOptions.map((opt) => opt.value);
+  //   setSelected(selectedOptions);
+
+  //   if (values.includes("Others (please specify)")) {
+  //     setShowOther(true);
+  //   } else {
+  //     setShowOther(false);
+  //     setOtherValue("");
+  //   }
+
+  //   const finalValue = values.filter((v) => v !== "Others (please specify)");
+  //   if (showOther && otherValue) {
+  //     finalValue.push(`Other: ${otherValue}`);
+  //   }
+
+  //   onChange(finalValue);
+  // };
   const handleSelectChange = (selectedOptions) => {
-    const values = selectedOptions.map((opt) => opt.value);
-    setSelected(selectedOptions);
+  const values = selectedOptions.map((opt) => opt.value);
 
-    if (values.includes("Others (please specify)")) {
-      setShowOther(true);
-    } else {
-      setShowOther(false);
-      setOtherValue("");
-    }
+  const isOtherSelected = values.includes("Others (please specify)") || !!otherValue;
 
-    const finalValue = values.filter((v) => v !== "Others (please specify)");
-    if (showOther && otherValue) {
-      finalValue.push(`Other: ${otherValue}`);
-    }
+  setSelected(selectedOptions);
+  setShowOther(isOtherSelected);
 
-    onChange(finalValue);
-  };
+  const finalValue = values.filter((v) => v !== "Others (please specify)");
+  if (isOtherSelected && otherValue) {
+    finalValue.push(`Other: ${otherValue}`);
+  } else if (isOtherSelected) {
+    finalValue.push("Others (please specify)");
+  }
 
+  onChange(finalValue);
+};
+
+
+  // const handleOtherChange = (e) => {
+  //   const val = e.target.value;
+  //   setOtherValue(val);
+
+  //   const baseValues = selected.map((s) => s.value).filter((v) => v !== "Others (please specify)");
+  //   if (val) baseValues.push(`Other: ${val}`);
+
+  //   onChange(baseValues);
+  // };
   const handleOtherChange = (e) => {
-    const val = e.target.value;
-    setOtherValue(val);
+  const val = e.target.value;
+  setOtherValue(val);
 
-    const baseValues = selected.map((s) => s.value).filter((v) => v !== "Others (please specify)");
-    if (val) baseValues.push(`Other: ${val}`);
+  const baseValues = selected.map((s) => s.value);
+  const valuesWithoutOther = baseValues.filter((v) => v !== "Others (please specify)");
 
-    onChange(baseValues);
-  };
+  if (val) {
+    valuesWithoutOther.push("Others (please specify)");
+    valuesWithoutOther.push(`Other: ${val}`);
+  }
+
+  onChange(valuesWithoutOther);
+};
+
 
   const multiselectStyle = {
     control: (base) => ({

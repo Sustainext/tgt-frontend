@@ -18,7 +18,7 @@ const widgets = {
 };
 
 const view_path =
-  "environment_biodiversity_operational_sites_innear_areas_of_high_biodiversity_value";
+  "environment_biodiversity_location_with_significant_impacts_on_biodiversity_gri101-6d";
 const client_id = 1;
 const user_id = 1;
 
@@ -70,7 +70,7 @@ const uiSchema = {
   },
 };
 
-const Screen4Comp = ({ location, year, month }) => {
+const Screen4Comp = ({ location, year }) => {
   const [formData, setFormData] = useState([{}]);
 //   const [formData, setFormData] = useState({
 //     wildSpecies: [{}],
@@ -83,15 +83,29 @@ const Screen4Comp = ({ location, year, month }) => {
   const [locationdata, setLocationdata] = useState();
   const toastShown = useRef(false);
 
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
+  const token = getAuthToken();
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
   const LoaderClose = () => {
     setLoOpen(false);
   };
-
   const handleChange = (e) => {
     setFormData(e.formData);
+  };
+
+  // The below code
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
   };
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
@@ -101,7 +115,8 @@ const Screen4Comp = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    setSelectedOption("")
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -109,7 +124,7 @@ const Screen4Comp = ({ location, year, month }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
 const form_parent = response.data.form_data;
       const f_data = form_parent[0].data[0].formData;
-      const option_data = form_parent[0].data[0].selectedOption;
+      const option_data = form_parent[0].data[0].selectedOption || '';
     //   setFormData({
     //     wildSpecies: fetchedData.wildSpecies || [{}],
     //     waterConsumption: fetchedData.waterConsumption || [{}]
@@ -118,6 +133,7 @@ const form_parent = response.data.form_data;
       setSelectedOption(option_data);
     } catch (error) {
       setFormData([{}]);
+      setSelectedOption("")
       LoaderClose();
     } finally {
       LoaderClose();
@@ -138,8 +154,7 @@ const form_parent = response.data.form_data;
         },
       ],
       location,
-      year,
-      month,
+      year
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -182,6 +197,7 @@ const form_parent = response.data.form_data;
         progress: undefined,
         theme: "colored",
       });
+      console.error(error)
       LoaderClose();
     }
   };
@@ -199,7 +215,7 @@ const form_parent = response.data.form_data;
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -210,7 +226,7 @@ const form_parent = response.data.form_data;
     }
     // console.log('From loaded , ready for trigger')
     // loadFormData()
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -250,7 +266,7 @@ Invasive alien species: Invasive alien species are animals, plants, and other or
           value={selectedOption}
           onChange={handleSelectChange}
         >
-          <option>Select Yes/No</option>
+          <option value=''>Select Yes/No</option>
           <option value="yes">Yes</option>
           <option value="no">No</option>
         </select>
@@ -260,8 +276,8 @@ Invasive alien species: Invasive alien species are animals, plants, and other or
           <div className="mb-4 mt-2">
             <div>
               <Form
-                schema={schema}
-                uiSchema={uiSchema}
+                schema={r_schema}
+                uiSchema={r_ui_schema}
                 // formData.waterConsumption
                 formData={formData}
                 // onChange={(e) =>

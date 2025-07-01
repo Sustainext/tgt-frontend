@@ -13,7 +13,7 @@ const widgets = {
   MultitypefiledWidget: MultitypefiledWidget,
 };
 
-const view_path = "gri-environment-energy-302-1g-2c-conversion_factor";
+const view_path = "environment_biodiversity_location_with_significant_impacts_on_biodiversity_gri101-6c";
 const client_id = 1;
 const user_id = 1;
 
@@ -34,7 +34,7 @@ const schema = {
             "Particulate matter (PM 10)",
             "Particulate matter (PM 2.5)",
             "Carbon Monoxide(CO)",
-            "Other air emissions (Specify)"
+            "Others (please specify)"
           ],
         },
   
@@ -53,7 +53,7 @@ const schema = {
             "Kilograms (KG)",
             "tonnes (T)",
             "Pound (LB)",
-            "Other (Please Specify)"
+            "Others (please specify)"
           ],
         },
        
@@ -93,7 +93,7 @@ const schema = {
       ],
     },
   };
-const Screen3Comp = ({ handleQ6Change, location, year, month }) => {
+const Screen3Comp = ({ handleQ6Change, location, year }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -132,8 +132,7 @@ const Screen3Comp = ({ handleQ6Change, location, year, month }) => {
       path: view_path,
       form_data: formData,
       location,
-      year,
-      month,
+      year
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -183,7 +182,7 @@ const Screen3Comp = ({ handleQ6Change, location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
@@ -209,7 +208,7 @@ const Screen3Comp = ({ handleQ6Change, location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -220,7 +219,7 @@ const Screen3Comp = ({ handleQ6Change, location, year, month }) => {
     }
     // console.log('From loaded , ready for trigger')
     // loadFormData()
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -233,8 +232,8 @@ const Screen3Comp = ({ handleQ6Change, location, year, month }) => {
       <div>
         <div>
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
