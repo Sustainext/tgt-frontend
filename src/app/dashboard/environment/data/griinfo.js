@@ -4170,4 +4170,1739 @@ export const Energydata = [
     ],
     link: "",
   },
+  {
+    category: ["62"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 304: Biodiversity 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 304-1 Operational sites owned, leased, managed in, or
+            adjacent to, protected areas and areas of high biodiversity value
+            outside protected areas
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Monitoring which activities are taking place in both protected
+              areas and areas of high biodiversity value outside protected areas
+              makes it possible for the organization to reduce the risks of
+              impacts. It also makes it possible for the organization to manage
+              impacts on biodiversity or to avoid mismanagement.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://globalreporting.org/pdf.ashx?id=12499",
+  },
+  {
+    category: ["63"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-06.png"
+            className="w-[32px] h-[32px]"
+          />{" "}
+          <h5 className="text-cyan-500 text-[17px] font-bold ml-2">SDG 6</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 6: Ensure availability and sustainable
+            management of water and sanitation for all
+          </p>
+          <div>
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, substantially increase water-use efficiency across all
+              sectors and ensure sustainable withdrawals and supply of
+              freshwater to address water scarcity and substantially reduce the
+              number of people suffering from water scarcity
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Change in water-use efficiency over time
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">6.4.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Level of water stress: freshwater withdrawal as a proportion of
+              available freshwater resources
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.a</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, expand international cooperation and capacity-building
+              support to developing countries in water- and sanitation-related
+              activities and programmes, including water harvesting,
+              desalination, water efficiency, wastewater treatment, recycling
+              and reuse technologies.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.a.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Amount of water- and sanitation-related official development
+              assistance that is part of a government-coordinated spending plan
+            </p>
+
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.b</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Support and strengthen the participation of local communities in
+              improving water and sanitation management.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.b.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of local administrative units with established and
+              operational policies and procedures for participation of local
+              communities in water and sanitation management.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal6",
+  },
+  {
+    category: ["64"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-14.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#007dbc] text-[17px] font-bold ml-2">SDG 14</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Conserve and sustainably use the oceans, seas and marine resources
+            for sustainable development
+          </p>
+          <div>
+            <p className="text-[13px] text-[#222222] mb-2">Target 14.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2020, sustainably manage and protect marine and coastal
+              ecosystems to avoid significant adverse impacts, including by
+              strengthening their resilience, and take action for their
+              restoration in order to achieve healthy and productive oceans
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">14.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Number of countries using ecosystem-based approaches to managing
+              marine areas
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal14",
+  },
+  {
+    category: ["65"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-15.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-green-600 text-[17px] font-bold ml-2">SDG 15</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Conserve and sustainably use the oceans, seas and marine resources
+            for sustainable development
+          </p>
+          <div>
+            <p className="text-[13px] text-[#222222] mb-2">Target 15.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2020, ensure the conservation, restoration and sustainable use
+              of terrestrial and inland freshwater ecosystems and their
+              services, in particular forests, wetlands, mountains and drylands,
+              in line with obligations under international agreements
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">15.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Forest area as a proportion of total land area
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">15.1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of important sites for terrestrial and freshwater
+              biodiversity that are covered by protected areas, by ecosystem
+              type
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 15.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Take urgent and significant action to reduce the degradation of
+              natural habitats, halt the loss of biodiversity and, by 2020,
+              protect and prevent the extinction of threatened species
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">Target 15.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">Red List Index</p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal15",
+  },
+  {
+    category: ["66"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 304: Biodiversity 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 304-2 Significant impacts of activities, products and
+            services on biodiversity
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">Guidance</p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Indirect impacts on biodiversity can include impacts in the supply
+              chain. Areas of impact are not limited to areas that are formally
+              protected and include consideration of impacts on buffer zones, as
+              well as formally designated areas of special importance or
+              sensitivity
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure provides the background for understanding (and
+              developing) an organization’s strategy to mitigate significant
+              direct and indirect impacts on biodiversity. By presenting
+              structured and qualitative information, the disclosure enables
+              comparison of the relative size, scale, and nature of impacts over
+              time and across organizations.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://globalreporting.org/pdf.ashx?id=12499",
+  },
+  {
+    category: ["67"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 304: Biodiversity 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 304-3 Habitats protected or restored
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure addresses the extent of an organization’s
+              prevention and remediation activities with respect to its impacts
+              on biodiversity. This disclosure refers to areas where remediation
+              has been completed or where the area is actively protected. Areas
+              where operations are still active can be counted if they conform
+              to the definitions of ‘area restored’ or ‘area protected’.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://globalreporting.org/pdf.ashx?id=12499",
+  },
+  {
+    category: ["68"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 304: Biodiversity 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 304-4 IUCN Red List species and national conservation
+            list species with habitats in areas affected by operations
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure helps an organization to identify where its
+              activities pose a threat to endangered plant and animal species.
+              By identifying these threats, the organization can initiate
+              appropriate steps to avoid harm and to prevent the extinction of
+              species. The International Union for Conservation of Nature (IUCN)
+              ‘Red List of Threatened Species’ (an inventory of the global
+              conservation status of plant and animal species) and national
+              conservation lists serve as authorities on the sensitivity of
+              habitat in areas affected by operations, and on the relative
+              importance of these habitats from a management perspective.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://globalreporting.org/pdf.ashx?id=12499",
+  },
+  {
+    category: ["69"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 101: Biodiversity 2024
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 101-4 Identification of biodiversity impacts
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-4-a
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should describe the methods used and the
+              assumptions made to determine which of its sites and which
+              products and services in its supply chain have the most
+              significant actual and potential impacts on biodiversity.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              It is up to the organization to set the threshold to determine
+              which sites and which products and services in its supply chain
+              have the most significant impacts on biodiversity. For example,
+              the organization can determine that all of its sites have the most
+              significant impacts on biodiversity, except for its headquarters.
+              An organization that sources many products or services can
+              determine to prioritize the products or services in its supply
+              chain that are likely to have the most significant impacts on
+              biodiversity and of which it sources a high volume or on which it
+              spends a large amount.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should describe any limitations or exclusions,
+              for example, whether it has excluded certain parts of its supply
+              chain when identifying the impacts.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should describe the sources and the evidence it
+              has used to identify the impacts. It should also explain whether
+              and how it engages with stakeholders to identify impacts on
+              biodiversity.The organization should explain which information
+              draws on primary, secondary, or modeled data. When reporting
+              secondary or modeled data, the organization should report which
+              datasets it has used and if it plans to improve the accuracy of
+              data.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure enables the organization to explain how it has
+              determined which of its sites and which products and services in
+              its supply chain have the most significant actual and potential
+              impacts on biodiversity. It covers products and services from
+              suppliers throughout the organization’s supply chain, including
+              from suppliers beyond the first tier. This provides an
+              understanding of where in the supply chain, potentially many tiers
+              removed from the organization, the most significant impacts on
+              biodiversity are. The organization can additionally report the
+              information for entities downstream in its value chain
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The activities undertaken by the organization in its sites can
+              have impacts on biodiversity. Sites include sites owned, leased,
+              or managed by the organization and locations where it conducts its
+              activities. Examples are a mine site owned by an organization or a
+              fishing ground where an organization operates. Sites also include
+              those for which future operations have been announced but not yet
+              started, as well as those no longer active. Sites include
+              subsurface infrastructures under the land or seabed surface, such
+              as underground mining tunnels, cables, and pipelines.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization may also be involved with negative impacts on
+              biodiversity as a result of its business relationships with
+              suppliers. Suppliers are entities upstream from the organization,
+              which provide products or services used to develop the
+              organization’s own products or services. The activities undertaken
+              by the suppliers to develop their products or services can have
+              impacts on biodiversity. Suppliers that provide products to the
+              organization can provide raw materials, semi-manufactured goods,
+              or final products
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=24534",
+  },
+  {
+    category: ["70"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 101: Biodiversity 2024
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 101-5 Locations with biodiversity impacts
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-5-a
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should use polygon outlines or maps to report on
+              the location of its sites with the most significant impacts on
+              biodiversity. A polygon is a geographic feature defined by a
+              series of grid references, points, or vertices connected to form
+              an enclosed shape. If available, the organization should also
+              report the names and coordinates of its sites.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Providing the coordinates for the sites of transport and fishing
+              activities may not be possible. In these cases, the organization
+              can report departure and arrival locations and transport routes
+              for transport activities. For fishing activities, it can report
+              FAO major fishing areas and subareas
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-5-b
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The Taskforce on Nature-related Financial Disclosures (TNFD)
+              defines ecologically sensitive areas as areas of biodiversity
+              importance, areas of high ecosystem integrity, areas of rapid
+              decline in ecosystem integrity, areas of high physical water
+              risks, and areas important for the delivery of ecosystem service
+              benefits to Indigenous Peoples, local communities, and other
+              stakeholders.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization can consult the criteria listed in Table 1 in the
+              Appendix to identify ecologically sensitive areas. An area is
+              ecologically sensitive when it meets one or more criteria. For
+              more guidance and examples of tools to identify ecologically
+              sensitive areas, see the TNFD Guidance on the identification and
+              assessment of nature-related issues: The LEAP approach
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              A site is in an ecologically sensitive area when it is completely
+              or partially located in the ecologically sensitive area. A site is
+              near an ecologically sensitive area when the ecologically
+              sensitive area falls within the area affected or potentially
+              affected (sometimes referred to as the area of influence) or
+              within the radius set by the organization. The organization can
+              use a radius if it cannot identify the area affected or
+              potentially affected by its activities. If the organization uses a
+              radius, it should explain this and report the distance of the
+              radius used. The organization is required to report the distance
+              only in cases where the site is near an ecologically sensitive
+              area.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should report the size in hectares of the
+              ecologically sensitive areas within its sites. The organization
+              can also report polygon outlines, or maps of the ecologically
+              sensitive areas and overlay them with the polygon outlines or maps
+              of its sites.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization can also report the percentage of sites in or
+              near ecologically sensitive areas. This information provides a
+              high-level understanding of the significance of biodiversity
+              across the organization’s operations. The percentage of sites in
+              or near ecologically sensitive areas is calculated using the
+              following formula:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Percentage of sites in or near ecologically sensitive areas =
+              <br />
+              Number of sites in or near ecologically sensitive areas x 100{" "}
+              <br />
+              _______________________________
+              <br />
+              Total number of sites
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-5-b-i
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should specify whether the areas of biodiversity
+              importance are:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                protected through legal or other effective means;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                scientifically recognized for their importance to biodiversity;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                important for species;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                important for ecosystems; or
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                important for ecological connectivity.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=24534",
+  },
+  {
+    category: ["71"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 101: Biodiversity 2024
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 101-6 Direct drivers of biodiversity loss
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-6-a
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should report which ecosystem classification it
+              uses to identify the types of ecosystems converted. The
+              organization can report ecosystem types using the biomes or
+              ecosystem functional groups in the IUCN Global Ecosystem Typology.
+              Alternatively, the organization can report according to another
+              global classification, national classification, or register. If
+              the organization cannot use ecosystem classifications, it can
+              utilize land use classifications (e.g., Globio land use
+              categories)
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-6-a-i
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The Accountability Framework initiative defines a natural
+              ecosystem as an ecosystem that substantially resembles – in terms
+              of species composition, structure, and ecological function – one
+              that is or would be found in a given area without major human
+              impacts. It includes human managed ecosystems where much of the
+              natural species composition, structure, and ecological function
+              are present. Natural ecosystem conversion is the human-induced
+              change of a natural ecosystem to another use or profound change in
+              an ecosystem's species composition, structure, or function. It can
+              include severe degradation or introducing management practices
+              that lead to substantial and sustained change in the ecosystem's
+              former species composition, structure, or function.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Natural ecosystem conversion is measured from a cut-off date
+              associated with an organization’s policy related to natural
+              ecosystem conversion (e.g., deforestation-free policy). If the
+              organization does not have such a policy in place, it should
+              select a reference date to measure natural ecosystem conversion.
+              For instance, if 2015 has been set as a cut-off date or reference
+              date, the organization reports the size of the ecosystem converted
+              from 2015 until the reporting period. Common cut-off dates apply
+              to organizations operating in the same or similar context. They
+              support the monitoring, verification, and management of natural
+              ecosystem conversion, including in supply chains. Cut-off dates
+              can, therefore, be selected based on sector-wide or regional
+              cut-off dates (e.g., the 2008 cut-off date from the Brazil Soy
+              Moratorium) or those specified in certification programs (e.g.,
+              Forest Stewardship Council), legislation (e.g., EU regulation on
+              deforestation-free products), or voluntary initiatives (e.g.,
+              Science Based Targets for Nature). Cut-off dates may differ
+              between commodities and regions. More guidance can be found in the
+              Accountability Framework initiative Operational Guidance on Cutoff
+              Dates [6]. The organization should explain why it has determined
+              the cut-off or reference dates as appropriate.
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-6-a-ii
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Intensively used and other modified ecosystems are ecosystems
+              where human activity hassubstantially modified an area’s primary
+              ecological functions and species composition to ecosystems
+              dominated by agriculture, urban, and other industrial activities.
+              Intensively used ecosystems are those covered by the intensive
+              land-use systems biome (T7) in the IUCN
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Global Ecosystem Typology. Other modified ecosystems include
+              anthropogenic subterranean freshwaters (SF2), artificial
+              freshwaters (F3), anthropogenic marine systems (M4), and
+              anthropogenic shorelines (MT3).
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-6-b-i
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Harvesting wild species involves gathering, catching, or hunting
+              wild organisms (animal, fungi, and plant species) by the
+              organization, including those incidentally taken. The organization
+              can report if the species are listed in one of the CITES
+              Appendices. It can also report if the species are harvested from
+              ecologically sensitive areas (e.g., from a Key Biodiversity Area,
+              which aims to protect or conserve the harvested species)
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              To report on the extinction risk of a species, the organization
+              can use information from the IUCN Red List of Threatened Species.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-6-b-ii
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should use information reported under Disclosures
+              303-3 Water withdrawal and 303-5 Water consumption in GRI 303:
+              Water and Effluents 2018 to report water withdrawal and water
+              consumption for each site
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-6-c
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization is only required to report the type and quantity
+              of pollutants that lead or could lead to the most significant
+              impacts on biodiversity. To report on air pollution, the
+              organization should use, where relevant, information reported
+              under Disclosure 305-7 Nitrogen oxides (NOx), sulfur oxides (SOx),
+              and other significant air emissions in GRI 305: Emissions 2016
+              for:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">NOx</li>
+
+              <li className="text-[11px] text-[#727272]">SOx</li>
+              <li className="text-[11px] text-[#727272]">
+                Persistent organic pollutants (POP);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Volatile organic compounds (VOCs);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Hazardous air pollutants (HAP);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Particulate matter (PM);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Other standard categories of air emissions from relevant
+                regulations. To report on water and soil pollution, the
+                organization should use, where relevant, information reported
+                under:
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Disclosure 303-4 Water discharge in GRI 303: Water and Effluents
+                2018 to have information on priority substances of concern that
+                may cause water pollution (e.g., those leading to
+                eutrophication).
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Disclosure 306-3 Significant spills in GRI 306: Effluents and
+                Waste 2016
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-4">
+              For heat, light, noise, or vibration pollution, the organization
+              should report instances that do not comply with legal requirements
+              for permitted pollution levels
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-6-d
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Non-invasive alien species are not required to be reported under
+              101-6-d. Invasive alien species can be introduced accidentally
+              (e.g., transport, discharge of ballast waters) or on purpose
+              (e.g., for pest control, horticulture, pets, zoological gardens,
+              and aquaria). The organization should report the species that are
+              or may be introduced. For example, an organization imports
+              ornamental plants to new areas, which may threaten local
+              biodiversity. A maritime shipping organization may introduce
+              shellfish, crustaceans, and other species to new areas through
+              contaminated ballast water or encrusted organisms on ships. It can
+              also inadvertently introduce other species, such as insects and
+              rodents, through the transport of goods.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              National regulations define which species are considered invasive
+              alien species in a particular country. The Global Invasive Species
+              Database and Global Register of Introduced and Invasive Species
+              also provide information on invasive alien species. The
+              organization can also describe how those species affect or may
+              affect surrounding species and ecosystems.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-6-e
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              It may not be feasible for the organization to obtain primary data
+              on direct drivers from suppliers. In such a case, the organization
+              can estimate the direct drivers using multi-regional input-output
+              models and lifecycle impact assessments in combination with data
+              on the volume or amount spent on products and services.
+              Multi-regional input-output models can provide estimates of the
+              environmental inputs (e.g., water use) and outputs (e.g., air
+              emissions) associated with the products and services in its supply
+              chain. See Aligning accounting approaches for nature (Align)
+              Measuring and valuing biodiversity across supply chains [47] for
+              more information on the methodologies and data to measure direct
+              drivers in supply chains.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization cannot report the size of the natural
+              ecosystem converted for the products in its supply chain, it can
+              report, for each product, the percentage of sourced volume
+              determined to be deforestation- or conversion-free and describe
+              the assessment methods used. For example, out of 100 tons of soy
+              sourced, an organization has determined that 90% is
+              deforestation-free. Assessment methods can include monitoring,
+              certification, sourcing from low-risk jurisdictions with no or
+              negligible recent conversion, or sourcing from verified suppliers.
+              To be deemed conversion- or deforestation-free, products must be
+              assessed as not causing or contributing to natural ecosystem
+              conversion, including deforestation, after an appropriate cut-off
+              date.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-6-f
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should use primary data to report information on
+              the direct drivers where possible. When primary data is
+              unavailable, the organization can use secondary or modeled data
+              (e.g., lifecycle impact assessments). However, such data are less
+              accurate and may not reflect the effectiveness of actions to
+              manage the organization’s impacts
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should explain which information draws on
+              primary, secondary, or modeled data, as well as any limitations of
+              methodologies and data used. When reporting secondary or modeled
+              data, the organization should report which datasets it used and if
+              it plans to improve the accuracy of data.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure provides an understanding of the direct drivers of
+              biodiversity loss (hereafter the direct drivers) leading to the
+              most significant impacts. The organization should additionally
+              report the information on the direct drivers for its downstream
+              value chain.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              According to the Intergovernmental Science-Policy Platform on
+              Biodiversity and Ecosystem Services (IPBES), direct drivers are
+              the drivers that ‘unequivocally influence biodiversity and
+              ecosystem processes’. Direct drivers are sometimes referred to as
+              ‘pressures’ or ‘impact drivers’. The IPBES global assessment has
+              identified land and sea use change and the exploitation of natural
+              resources as the main direct drivers, followed by climate change,
+              pollution, and the introduction of invasive alien species. These
+              direct drivers can also lead to the fragmentation and degradation
+              of ecosystems. See Box 1 for more information on direct drivers of
+              biodiversity loss.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Information on the direct drivers informs decisions on
+              prioritizing actions to manage biodiversityrelated impacts by
+              applying the mitigation hierarchy. See Disclosure 101-2 for more
+              information on the mitigation hierarchy. The organization’s
+              actions to mitigate direct drivers are reported under Disclosure
+              101-2.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Through its activities, an organization can use natural resources
+              for its production processes (e.g., sand used in a construction
+              project) or produce non-product outputs (e.g., pollutants or
+              greenhouse gas emissions). These activities, responsible for the
+              direct drivers of biodiversity loss, can have negative impacts on
+              biodiversity.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization needs to report only the information for the
+              direct drivers relevant to its activitiesand its supply chain.
+              Direct drivers can vary by location. For example, an organization
+              has activities in site A that lead to pollution. It also has
+              activities in site B that lead to the exploitation of natural
+              resources. In this case, the organization only needs to report the
+              information on pollution for site A and on the exploitation of
+              natural resources for site B.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=24534",
+  },
+  {
+    category: ["72"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 101: Biodiversity 2024
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 101-6 Direct drivers of biodiversity loss
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-6-a
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should report which ecosystem classification it
+              uses to identify the types of ecosystems converted. The
+              organization can report ecosystem types using the biomes or
+              ecosystem functional groups in the IUCN Global Ecosystem Typology.
+              Alternatively, the organization can report according to another
+              global classification, national classification, or register. If
+              the organization cannot use ecosystem classifications, it can
+              utilize land use classifications (e.g., Globio land use
+              categories)
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-6-a-i
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The Accountability Framework initiative defines a natural
+              ecosystem as an ecosystem that substantially resembles – in terms
+              of species composition, structure, and ecological function – one
+              that is or would be found in a given area without major human
+              impacts. It includes human managed ecosystems where much of the
+              natural species composition, structure, and ecological function
+              are present. Natural ecosystem conversion is the human-induced
+              change of a natural ecosystem to another use or profound change in
+              an ecosystem's species composition, structure, or function. It can
+              include severe degradation or introducing management practices
+              that lead to substantial and sustained change in the ecosystem's
+              former species composition, structure, or function.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Natural ecosystem conversion is measured from a cut-off date
+              associated with an organization’s policy related to natural
+              ecosystem conversion (e.g., deforestation-free policy). If the
+              organization does not have such a policy in place, it should
+              select a reference date to measure natural ecosystem conversion.
+              For instance, if 2015 has been set as a cut-off date or reference
+              date, the organization reports the size of the ecosystem converted
+              from 2015 until the reporting period. Common cut-off dates apply
+              to organizations operating in the same or similar context. They
+              support the monitoring, verification, and management of natural
+              ecosystem conversion, including in supply chains. Cut-off dates
+              can, therefore, be selected based on sector-wide or regional
+              cut-off dates (e.g., the 2008 cut-off date from the Brazil Soy
+              Moratorium) or those specified in certification programs (e.g.,
+              Forest Stewardship Council), legislation (e.g., EU regulation on
+              deforestation-free products), or voluntary initiatives (e.g.,
+              Science Based Targets for Nature). Cut-off dates may differ
+              between commodities and regions. More guidance can be found in the
+              Accountability Framework initiative Operational Guidance on Cutoff
+              Dates [6]. The organization should explain why it has determined
+              the cut-off or reference dates as appropriate.
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-6-a-ii
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Intensively used and other modified ecosystems are ecosystems
+              where human activity hassubstantially modified an area’s primary
+              ecological functions and species composition to ecosystems
+              dominated by agriculture, urban, and other industrial activities.
+              Intensively used ecosystems are those covered by the intensive
+              land-use systems biome (T7) in the IUCN
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Global Ecosystem Typology. Other modified ecosystems include
+              anthropogenic subterranean freshwaters (SF2), artificial
+              freshwaters (F3), anthropogenic marine systems (M4), and
+              anthropogenic shorelines (MT3).
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure provides an understanding of the direct drivers of
+              biodiversity loss (hereafter the direct drivers) leading to the
+              most significant impacts. The organization should additionally
+              report the information on the direct drivers for its downstream
+              value chain.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              According to the Intergovernmental Science-Policy Platform on
+              Biodiversity and Ecosystem Services (IPBES), direct drivers are
+              the drivers that ‘unequivocally influence biodiversity and
+              ecosystem processes’. Direct drivers are sometimes referred to as
+              ‘pressures’ or ‘impact drivers’. The IPBES global assessment has
+              identified land and sea use change and the exploitation of natural
+              resources as the main direct drivers, followed by climate change,
+              pollution, and the introduction of invasive alien species. These
+              direct drivers can also lead to the fragmentation and degradation
+              of ecosystems. See Box 1 for more information on direct drivers of
+              biodiversity loss.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Information on the direct drivers informs decisions on
+              prioritizing actions to manage biodiversityrelated impacts by
+              applying the mitigation hierarchy. See Disclosure 101-2 for more
+              information on the mitigation hierarchy. The organization’s
+              actions to mitigate direct drivers are reported under Disclosure
+              101-2.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Through its activities, an organization can use natural resources
+              for its production processes (e.g., sand used in a construction
+              project) or produce non-product outputs (e.g., pollutants or
+              greenhouse gas emissions). These activities, responsible for the
+              direct drivers of biodiversity loss, can have negative impacts on
+              biodiversity.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization needs to report only the information for the
+              direct drivers relevant to its activitiesand its supply chain.
+              Direct drivers can vary by location. For example, an organization
+              has activities in site A that lead to pollution. It also has
+              activities in site B that lead to the exploitation of natural
+              resources. In this case, the organization only needs to report the
+              information on pollution for site A and on the exploitation of
+              natural resources for site B.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=24534",
+  },
+  {
+    category: ["73"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 101: Biodiversity 2024
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 101-7 Changes to the state of biodiversity
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-7-a
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting information on the affected or potentially affected
+              ecosystems, the organization should consider all ecosystem types
+              in the area that is or could be affected by its activities,
+              including beyond its sites, if relevant. The state of the overall
+              ecosystem, which extends beyond the areas affected by the
+              organization, is not required for reporting. For example, an
+              organization that owns a soy plantation in the Amazon is required
+              to report information on the type, size, and condition of the
+              affected part of the ecosystem rather than reporting on the entire
+              Amazon region.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The base year is when the organization collects baseline
+              information on the ecosystem type, size, and condition. The base
+              year may be the start of an organization’s activities, the date
+              from which it owned, leased, or managed a particular site, or when
+              it committed to halt and reverse biodiversity loss
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Baseline information can be collected through environmental impact
+              assessments, which provide information on the condition of and
+              trends in biodiversity in a particular area before an
+              organization’s activities start. For more information on best
+              practices to conduct baseline studies. The organization should
+              report the base year. It should report how it has determined the
+              base year and baseline information under 101-7-b.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The size and condition of an affected ecosystem can be combined
+              into one unit: conditionadjusted area. This is the size of the
+              ecosystem adjusted for its condition, and the unit (e.g.,
+              equivalent hectares) represents the residual condition within that
+              area. The organization can also report impacts on affected
+              ecosystems using condition-adjusted hectares. See Align Measuring
+              Ecosystem Condition – A primer for business [50] and the
+              Endangered Wildlife Trust Biological Diversity Protocol [16] for
+              more information on condition-adjusted areas.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-7-a-i
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should report which ecosystem classification it
+              uses to identify the types of ecosystems. The organization can
+              report ecosystem types using the biomes or ecosystem functional
+              groups in the IUCN Global Ecosystem Typology. Alternatively, the
+              organization can report according to another global
+              classification, national classification, or register. If the
+              organization cannot use ecosystem classifications, it can use land
+              use classifications (e.g.,Globio land use categories) instead
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-7-a-ii
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Ecosystem size, also referred to as ecosystem extent, is the area
+              coverage of the ecosystem that is affected or potentially affected
+              by the organization’s activities. This is a fixed area over which
+              the condition of the ecosystem is measured over time.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-7-a-iii
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Ecosystem condition is the quality of an ecosystem measured by its
+              living and non-living characteristics against a reference
+              condition. Living and non-living characteristics include:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                the ecosystem’s composition, function, and structure;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                {" "}
+                the landscape characteristics (e.g., connectivity); and
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                the physical and chemical state characteristics (e.g., soil
+                structure and soil nutrient levels)
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Ecosystem condition can also provide information on the
+              ecosystem’s capacity to supply ecosystem services now and in the
+              future.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The activities of an organization may degrade the condition of
+              affected ecosystems through the direct drivers of biodiversity
+              loss (hereafter direct drivers). For example, the emission of
+              pollutants, partial deforestation, or water withdrawal in an area
+              with water stress, may affect the ecosystem's structure,
+              composition, or function. If land and sea use change is the
+              primary direct driver of biodiversity loss, the activities of an
+              organization lead to the conversion of an ecosystem into a
+              different type of ecosystem. In this case, the conversion of the
+              ecosystem results in a complete reduction in ecosystem condition
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Methods to measure ecosystem condition should reflect the relevant
+              characteristics of the ecosystem. The organization can use methods
+              that directly measure characteristics or estimate ecosystem
+              conditions based on direct drivers. These methods can be specific
+              to certain types of ecosystems (e.g., types of wetlands or
+              forests) or applicable to different ecosystem types (i.e.,
+              applicable across terrestrial, freshwater, or marine realms).
+              examples of methods to measure or estimate ecosystem condition.
+              See Align Measuring Ecosystem Condition – A primer for business
+              [50] and Taskforce on Nature-related Financial Disclosures (TNFD)
+              Guidance on the identification and assessment of nature-related
+              issues: The LEAP approach [41] for more information on how to
+              measure ecosystem condition.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization monitors the condition of affected or
+              potentially affected ecosystems at a frequency different from its
+              sustainability reporting frequency, it should report the most
+              recent information and does not need additional measurement to
+              meet the requirement
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-7-b
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should use primary data to report on direct
+              drivers where possible (e.g., data collected through field
+              surveys, eDNA, or derived from satellite imagery). When primary
+              data is unavailable, the organization can use secondary or modeled
+              data (e.g., data layers on ecosystem extent and condition, life
+              cycle impact assessments). Modeled data are issued from models
+              that quantify how the different direct drivers affect the state of
+              biodiversity. These models use globally collected data, and the
+              results are applied locally to estimate how the organization’s
+              activities can lead to ecosystem changes. They include geospatial
+              data layers that can be used to identify changes in the size and
+              condition of ecosystems, such as the level of habitat
+              fragmentation and connectivity, or identify species that may be
+              present at specific sites.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should explain which information draws on
+              primary, secondary, or modeled data, as well as any limitations of
+              methodologies and data used. When reporting secondary or modeled
+              data, the organization should report which datasets it has used
+              and if it plans to improve the accuracy of data.
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">Guidance to 101-7</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should additionally report information on
+              affected or potentially affected species for the sites reported
+              under 101-5-a. The organization can report the species, its
+              extinction risk, and population size for the baseline and current
+              reporting period.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The extinction risk measures the threat status of a species and
+              how an organization’s activities may affect the threat status. The
+              global, regional, and national IUCN Red Lists can be used to
+              determine the species extinction risk (i.e., Critically
+              Endangered, Endangered, Vulnerable, Near Threatened, and Least
+              Concern). Change in the available species habitat can potentially
+              be used as a proxy to measure impact on local or global extinction
+              risk, noting that other factors can drive extinction risk (e.g.,
+              hunting, climate change).
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Population size measures the number of individuals of a species
+              within an area. It can be measured by the number of mature
+              individuals or the number of breeding pairs. When the population
+              size is unavailable, trends in relative population abundance or in
+              species area of habitat can be used as a proxy.The organization
+              can report information for the following species:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                {" "}
+                Species whose local or overall populations have or could be
+                changed significantly.
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Species that are legally protected by local, national, or
+                international laws and conventions (e.g., species listed in one
+                of the CITES Appendices).
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Species that are recognized as a priority species at the local,
+                national, or international level (e.g., species listed as
+                threatened on the international IUCN Red List or species that
+                trigger a Key Biodiversity Area designation).
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Species that have a critical role in the ecosystem (e.g.,
+                keystone species).
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Species that have a significant cultural or economic role for
+                stakeholders (e.g., hunting, harvesting, pollination).
+              </li>
+            </ul>
+
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure provides information about the changes in the
+              condition of the ecosystem affected or potentially affected by the
+              organization. The state of biodiversity is the holistic quality of
+              the components of biodiversity (genes, species, and ecosystems),
+              and is a function of the condition and size of its components.
+              This disclosure focuses on the condition and size of affected
+              ecosystems. By reporting this information for the base year and
+              the current reporting period, the organization provides
+              information about the ecosystem's overall health over time.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Changes in the state of biodiversity may reflect the cumulative
+              impacts of the organization's activities and the activities of
+              others, such as governments, local communities, or other
+              organizations. It is not always possible to determine how much of
+              the change in the state of biodiversity is due to the activities
+              of the organization or others. However, the information reported
+              under this disclosure, together with Disclosure 101-6, helps to
+              understand the organization’s actual and potential impacts on
+              biodiversity and can inform the management of these impacts.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should report information on changes to the state
+              of biodiversity for each product and service reported under
+              101-5-d by country or jurisdiction. It should also report this
+              information for its downstream value chain.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can organize the information on the state of
+              biodiversity into structured biodiversity accounts. Biodiversity
+              accounts enable more accurate monitoring of gains and losses of
+              biodiversity over time. A core component of biodiversity accounts
+              is the compilation of an asset inventory for each ecosystem type
+              so that gains in one type do not compensate for losses in another.
+              They are also useful in tracking progress against targets to halt
+              and reverse biodiversity loss. See the Endangered Wildlife Trust
+              Biological Diversity Protocol for more information on biodiversity
+              accounts.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=24534",
+  },
+  {
+    category: ["74"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 101: Biodiversity 2024
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 101-8 Ecosystem services
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-8-a
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Beneficiaries can include Indigenous Peoples, local communities,
+              and other organizations. The reporting organization can also be
+              one of the beneficiaries. The organization can report the number
+              of beneficiaries when disclosing information for this requirement
+              (e.g., 50 farmers located in the area). The organization should
+              describe the approach used to identify the ecosystem services
+              reported under 101-8-a. The organization can explain if it engages
+              with stakeholders to identify the ecosystem services and
+              beneficiaries affected. It can also use the following
+              methodologies and tools to identify ecosystem services:
+            </p>
+
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">the ENCORE tool;</li>
+
+              <li className="text-[11px] text-[#727272]">
+                the Natural Capital Protocol from the Natural Capital Coalition
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                the Taskforce on Nature-related Financial Disclosures (TNFD)
+                LEAP approach, which draws on the UN SEEA Ecosystem Accounting;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                the World Resources Institute (WRI) Corporate Ecosystem Services
+                Review.
+              </li>
+            </ul>
+
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-8-b
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization’s activities may lead to an increase or decrease
+              in the quality and quantity of ecosystem services. For example,
+              the organization can explain that cutting trees in the forest has
+              decreased food provisioning services, which has a negative impact
+              on the local community that needs to find an alternative food
+              source. In another example, the organization can explain that
+              switching to agroforestry has resulted in an increase in soil
+              erosion control services, which has a positive impact on the local
+              community that will face fewer risks from flooding.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Ecosystem services occur through an ecosystem's normal functioning
+              and can fall into one or more of the following categories:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                provisioning services;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                regulating and maintenance services; and
+              </li>
+              <li className="text-[11px] text-[#727272]">cultural services.</li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Provisioning services contribute to benefits extracted or
+              harvested from ecosystems. Examples are timber in a forest,
+              freshwater from a river, and subsistence hunting. Regulating and
+              maintenance services result from the ability of ecosystems to
+              regulate biological processes and influence climate, hydrological,
+              and biochemical cycles, thereby maintaining environmental
+              conditions beneficial to people. An example is the role of forests
+              in preventing soil erosion. Cultural services are the non-material
+              benefits people (beneficiaries) obtain from ecosystems through
+              spiritual enrichment, cognitive development, reflection,
+              recreation, and aesthetic experiences. Examples are the
+              recreational value of a forest and the cultural importance of a
+              heritage landscape for a local community.{" "}
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Biodiversity plays an important role in maintaining the quality,
+              quantity, and resilience of ecosystem service flows, and it
+              provides ecosystem services that beneficiaries rely upon now and
+              into the future. The diversity of genes, species, and ecosystems
+              provides a greater range of ecosystem service and higher overall
+              quantity, quality, and resilience of ecosystem services and
+              improves the capacity of ecosystems to function effectively. A
+              change in the state of biodiversity can lead to changes in
+              ecosystem services. This, in turn, can have an impact on the
+              beneficiaries of these ecosystem services. For example, a decline
+              in the number of bees caused by the organization’s activities can
+              lead to decreased pollination services. If the crops are not
+              properly pollinated by the bees, the quality and quantity of the
+              crops produced may be affected, reducing the available food for
+              the local community that grows the crops.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure gives insight into the ecosystem services and
+              beneficiaries affected or potentially affected by the
+              organization’s activities. The organization should also list the
+              ecosystem services and beneficiaries affected or potentially
+              affected by its suppliers’ activities for each country or
+              jurisdiction reported under 101-5-d and those affected or
+              potentially affected by the activities of its downstream entities.{" "}
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=24534",
+  },
+  {
+    category: ["75"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 101: Biodiversity 2024
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 101-6 Direct drivers of biodiversity loss
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-6-f
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should use primary data to report information on
+              the direct drivers where possible. When primary data is
+              unavailable, the organization can use secondary or modeled data
+              (e.g., lifecycle impact assessments). However, such data are less
+              accurate and may not reflect the effectiveness of actions to
+              manage the organization’s impacts
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should explain which information draws on
+              primary, secondary, or modeled data, as well as any limitations of
+              methodologies and data used. When reporting secondary or modeled
+              data, the organization should report which datasets it used and if
+              it plans to improve the accuracy of data.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure provides an understanding of the direct drivers of
+              biodiversity loss (hereafter the direct drivers) leading to the
+              most significant impacts. The organization should additionally
+              report the information on the direct drivers for its downstream
+              value chain.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              According to the Intergovernmental Science-Policy Platform on
+              Biodiversity and Ecosystem Services (IPBES), direct drivers are
+              the drivers that ‘unequivocally influence biodiversity and
+              ecosystem processes’. Direct drivers are sometimes referred to as
+              ‘pressures’ or ‘impact drivers’. The IPBES global assessment has
+              identified land and sea use change and the exploitation of natural
+              resources as the main direct drivers, followed by climate change,
+              pollution, and the introduction of invasive alien species. These
+              direct drivers can also lead to the fragmentation and degradation
+              of ecosystems. See Box 1 for more information on direct drivers of
+              biodiversity loss.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Information on the direct drivers informs decisions on
+              prioritizing actions to manage biodiversityrelated impacts by
+              applying the mitigation hierarchy. See Disclosure 101-2 for more
+              information on the mitigation hierarchy. The organization’s
+              actions to mitigate direct drivers are reported under Disclosure
+              101-2.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Through its activities, an organization can use natural resources
+              for its production processes (e.g., sand used in a construction
+              project) or produce non-product outputs (e.g., pollutants or
+              greenhouse gas emissions). These activities, responsible for the
+              direct drivers of biodiversity loss, can have negative impacts on
+              biodiversity.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization needs to report only the information for the
+              direct drivers relevant to its activitiesand its supply chain.
+              Direct drivers can vary by location. For example, an organization
+              has activities in site A that lead to pollution. It also has
+              activities in site B that lead to the exploitation of natural
+              resources. In this case, the organization only needs to report the
+              information on pollution for site A and on the exploitation of
+              natural resources for site B.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=24534",
+  },
+  {
+    category: ["76"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 101: Biodiversity 2024
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 101-7 Changes to the state of biodiversity
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-7-b
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should use primary data to report on direct
+              drivers where possible (e.g., data collected through field
+              surveys, eDNA, or derived from satellite imagery). When primary
+              data is unavailable, the organization can use secondary or modeled
+              data (e.g., data layers on ecosystem extent and condition, life
+              cycle impact assessments). Modeled data are issued from models
+              that quantify how the different direct drivers affect the state of
+              biodiversity. These models use globally collected data, and the
+              results are applied locally to estimate how the organization’s
+              activities can lead to ecosystem changes. They include geospatial
+              data layers that can be used to identify changes in the size and
+              condition of ecosystems, such as the level of habitat
+              fragmentation and connectivity, or identify species that may be
+              present at specific sites.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should explain which information draws on
+              primary, secondary, or modeled data, as well as any limitations of
+              methodologies and data used. When reporting secondary or modeled
+              data, the organization should report which datasets it has used
+              and if it plans to improve the accuracy of data.
+            </p>
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure provides information about the changes in the
+              condition of the ecosystem affected or potentially affected by the
+              organization. The state of biodiversity is the holistic quality of
+              the components of biodiversity (genes, species, and ecosystems),
+              and is a function of the condition and size of its components.
+              This disclosure focuses on the condition and size of affected
+              ecosystems. By reporting this information for the base year and
+              the current reporting period, the organization provides
+              information about the ecosystem's overall health over time.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Changes in the state of biodiversity may reflect the cumulative
+              impacts of the organization's activities and the activities of
+              others, such as governments, local communities, or other
+              organizations. It is not always possible to determine how much of
+              the change in the state of biodiversity is due to the activities
+              of the organization or others. However, the information reported
+              under this disclosure, together with Disclosure 101-6, helps to
+              understand the organization’s actual and potential impacts on
+              biodiversity and can inform the management of these impacts.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should report information on changes to the state
+              of biodiversity for each product and service reported under
+              101-5-d by country or jurisdiction. It should also report this
+              information for its downstream value chain.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can organize the information on the state of
+              biodiversity into structured biodiversity accounts. Biodiversity
+              accounts enable more accurate monitoring of gains and losses of
+              biodiversity over time. A core component of biodiversity accounts
+              is the compilation of an asset inventory for each ecosystem type
+              so that gains in one type do not compensate for losses in another.
+              They are also useful in tracking progress against targets to halt
+              and reverse biodiversity loss. See the Endangered Wildlife Trust
+              Biological Diversity Protocol for more information on biodiversity
+              accounts.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=24534",
+  },
+  {
+    category: ["77"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 101: Biodiversity 2024
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 101-6 Direct drivers of biodiversity loss
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-6-e
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              It may not be feasible for the organization to obtain primary data
+              on direct drivers from suppliers. In such a case, the organization
+              can estimate the direct drivers using multi-regional input-output
+              models and lifecycle impact assessments in combination with data
+              on the volume or amount spent on products and services.
+              Multi-regional input-output models can provide estimates of the
+              environmental inputs (e.g., water use) and outputs (e.g., air
+              emissions) associated with the products and services in its supply
+              chain. See Aligning accounting approaches for nature (Align)
+              Measuring and valuing biodiversity across supply chains [47] for
+              more information on the methodologies and data to measure direct
+              drivers in supply chains.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization cannot report the size of the natural
+              ecosystem converted for the products in its supply chain, it can
+              report, for each product, the percentage of sourced volume
+              determined to be deforestation- or conversion-free and describe
+              the assessment methods used. For example, out of 100 tons of soy
+              sourced, an organization has determined that 90% is
+              deforestation-free. Assessment methods can include monitoring,
+              certification, sourcing from low-risk jurisdictions with no or
+              negligible recent conversion, or sourcing from verified suppliers.
+              To be deemed conversion- or deforestation-free, products must be
+              assessed as not causing or contributing to natural ecosystem
+              conversion, including deforestation, after an appropriate cut-off
+              date.
+            </p>
+
+            <p className="text-[12px] text-[#222222] mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure provides an understanding of the direct drivers of
+              biodiversity loss (hereafter the direct drivers) leading to the
+              most significant impacts. The organization should additionally
+              report the information on the direct drivers for its downstream
+              value chain.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              According to the Intergovernmental Science-Policy Platform on
+              Biodiversity and Ecosystem Services (IPBES), direct drivers are
+              the drivers that ‘unequivocally influence biodiversity and
+              ecosystem processes’. Direct drivers are sometimes referred to as
+              ‘pressures’ or ‘impact drivers’. The IPBES global assessment has
+              identified land and sea use change and the exploitation of natural
+              resources as the main direct drivers, followed by climate change,
+              pollution, and the introduction of invasive alien species. These
+              direct drivers can also lead to the fragmentation and degradation
+              of ecosystems. See Box 1 for more information on direct drivers of
+              biodiversity loss.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Information on the direct drivers informs decisions on
+              prioritizing actions to manage biodiversityrelated impacts by
+              applying the mitigation hierarchy. See Disclosure 101-2 for more
+              information on the mitigation hierarchy. The organization’s
+              actions to mitigate direct drivers are reported under Disclosure
+              101-2.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Through its activities, an organization can use natural resources
+              for its production processes (e.g., sand used in a construction
+              project) or produce non-product outputs (e.g., pollutants or
+              greenhouse gas emissions). These activities, responsible for the
+              direct drivers of biodiversity loss, can have negative impacts on
+              biodiversity.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization needs to report only the information for the
+              direct drivers relevant to its activitiesand its supply chain.
+              Direct drivers can vary by location. For example, an organization
+              has activities in site A that lead to pollution. It also has
+              activities in site B that lead to the exploitation of natural
+              resources. In this case, the organization only needs to report the
+              information on pollution for site A and on the exploitation of
+              natural resources for site B.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=24534",
+  },
+  {
+    category: ["78"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 101: Biodiversity 2024
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 101-5 Locations with biodiversity impacts
+          </p>
+
+          <div>
+            <p className="text-[12px] text-[#222222] mb-2">
+              Guidance to 101-5-d
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Where possible, the organization should also report the location
+              within the country or jurisdiction (e.g., state, city, Exclusive
+              Economic Zone) or a precise location, such as polygon outlines or
+              maps. The organization can report departure and arrival locations
+              and transport routes for transport activities. For fishing
+              activities, it can report FAO major fishing areas and subareas.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              For each product and service with the most significant impacts on
+              biodiversity, the organization should describe the level of
+              traceability in place, for example, whether the product or service
+              can be traced to the national, regional, or local level, or a
+              specific point of origin (e.g., farms). The organization can also
+              report the volume sourced or the amount spent on each product and
+              service
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              If available, the organization should also report the information
+              on ecologically sensitive areas required by 101-5-b for the
+              products and services in its supply chain with the most
+              significant impacts on biodiversity. If the products in its supply
+              chain are or contain high-impact commodities, the organization can
+              report the quantity of each high-impact commodity sourced (e.g.,
+              tons of avocado) and the proportion of total high-impact
+              commodities sourced. This information provides a high-level
+              understanding of the significance of biodiversity across products
+              in the organization’s supply chain. The organization can use the
+              SBTN High Impact Commodity List to identify whether it sources
+              products that are or contain high-impact commodities. The
+              proportion of total high-impact commodities sourced is calculated
+              using the following formula:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Proportion of total high-impact commodities sourced =
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Quantity of high-impact commodity sourced
+            </p>
+            <hr />
+            <p className="text-[11px] text-[#727272] mb-2 mt-1">
+              Quantity of total high-impact commodities sourced
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure provides information about the locations of the
+              organization’s sites with the most significant impacts on
+              biodiversity. It also provides information on the location of the
+              activities associated with the products and services in its supply
+              chain with the most significant impacts on biodiversity. The sites
+              and products and services with the most significant impacts on
+              biodiversity are identified under Disclosure 101-4. These sites
+              and products and services are the focus of Disclosure 101-2 and
+              Disclosures 101-5 to 101-8 of this Standard.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If available, the organization can additionally report the
+              information for entities downstream in its value chain with the
+              most significant impacts on biodiversity
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=24534",
+  },
 ];

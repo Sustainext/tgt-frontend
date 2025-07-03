@@ -91,6 +91,7 @@ const EmissionsHeader = ({
       const monthNumber = monthMapping[value];
       dispatch(setMonth(monthNumber));
       dispatch(f_setMonthName(value));
+      localStorage.setItem("selectedMonth", monthNumber);
     } else if (name === "location") {
       const selectedLocation = locations.find(
         (loc) => loc.id === Number(value)
@@ -101,8 +102,10 @@ const EmissionsHeader = ({
         dispatch(f_setLocationName(selectedLocation.name));
       }
       dispatch(setLocation(Number(value)));
+      localStorage.setItem("selectedLocation", value);
     } else if (name === "year") {
       dispatch(setYear(value));
+      localStorage.setItem("selectedYear", value);
     }
   };
 

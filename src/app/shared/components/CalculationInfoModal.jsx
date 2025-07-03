@@ -21,9 +21,9 @@ const CalculationInfoModal = ({ isOpen, onClose, data }) => {
     unique_id,
   } = data;
 
-  const result = useSelector((state) =>
+  const [result,setResult] = React.useState(useSelector((state) =>
     searchClimatiqDataById(state, unique_id)
-  );
+  ));
 
   const formatScope = (scopeText) => {
     if (!scopeText) return "";
@@ -55,55 +55,63 @@ const CalculationInfoModal = ({ isOpen, onClose, data }) => {
           </button>
         </div>
 
-        {/* Total Emission */}
-        <div className="mb-6">
-          <p className="text-3xl font-bold text-green-700">
-            {result.co2e} tCO<sub>2</sub>e
-          </p>
-          <p className="text-sm text-gray-500 mt-1">
-            Calculated at{" "}
-            {format(new Date(result.updated_at), "d MMM yyyy HH:mm:ss aa")}
+        {
+          result ? <div>
+          {/* Total Emission */}
+          <div className="mb-6">
+            <p className="text-3xl font-bold text-green-700">
+              {result?.co2e} tCO<sub>2</sub>e
+            </p>
+            <p className="text-sm text-gray-500 mt-1">
+              Calculated at{" "}
+              {format(new Date(result?.updated_at), "d MMM yyyy HH:mm:ss aa")}
+            </p>
+          </div>
+
+          {/* Divider */}
+          <hr className="border-gray-200 mb-6" />
+
+          {/* Details */}
+          <div className="grid grid-cols-[120px,1fr] gap-y-3 text-sm">
+            {/* Category */}
+            <p className="text-gray-500">Category</p>
+            <p className="font-medium text-gray-800">{category}</p>
+
+            {/* Sub Category */}
+            <p className="text-gray-500">Sub Category</p>
+            <p className="font-medium text-gray-800">{subCategory}</p>
+
+            {/* Activity */}
+            <p className="text-gray-500 mt-3">Activity</p>
+            <p className="font-medium text-gray-800  mt-3">{activity}</p>
+
+            {/* Quantity and Unit */}
+            <p className="text-gray-500">Quantity.Unit</p>
+            <p className="font-medium text-gray-800">
+              {quantity}.{unit}
+            </p>
+
+            {/* Emission Factor */}
+            <p className="text-gray-500 col-span-2 mt-3">Emission Factor:</p>
+
+            <p className="text-gray-500 ms-4">Name</p>
+            <p className="font-medium text-gray-800">
+              {result?.emission_factor.name} - {result?.emission_factor.region}{" "}
+              - {result?.emission_factor.year}
+            </p>
+
+            <p className="text-gray-500 ms-4">Value</p>
+            <p className="font-medium text-gray-800">
+              {emissionFactorValue} {result?.co2e_unit}/
+              {result?.activity_data.activity_unit}
+            </p>
+          </div>
+        </div> : <div>
+          <p className="text-center text-gray-500">
+            Something went wrong. Please try again later.
           </p>
         </div>
-
-        {/* Divider */}
-        <hr className="border-gray-200 mb-6" />
-
-        {/* Details */}
-        <div className="grid grid-cols-[120px,1fr] gap-y-3 text-sm">
-          {/* Category */}
-          <p className="text-gray-500">Category</p>
-          <p className="font-medium text-gray-800">{category}</p>
-
-          {/* Sub Category */}
-          <p className="text-gray-500">Sub Category</p>
-          <p className="font-medium text-gray-800">{subCategory}</p>
-
-          {/* Activity */}
-          <p className="text-gray-500 mt-3">Activity</p>
-          <p className="font-medium text-gray-800  mt-3">{activity}</p>
-
-          {/* Quantity and Unit */}
-          <p className="text-gray-500">Quantity.Unit</p>
-          <p className="font-medium text-gray-800">
-            {quantity}.{unit}
-          </p>
-
-          {/* Emission Factor */}
-          <p className="text-gray-500 col-span-2 mt-3">Emission Factor:</p>
-
-          <p className="text-gray-500 ms-4">Name</p>
-          <p className="font-medium text-gray-800">
-            {result.emission_factor.name} - {result.emission_factor.region} -{" "}
-            {result.emission_factor.year}
-          </p>
-
-          <p className="text-gray-500 ms-4">Value</p>
-          <p className="font-medium text-gray-800">
-            {emissionFactorValue} {result.co2e_unit}/
-            {result.activity_data.activity_unit}
-          </p>
-        </div>
+        }
       </div>
     </div>
   );

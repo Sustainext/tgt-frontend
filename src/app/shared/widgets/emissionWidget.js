@@ -53,7 +53,6 @@ const EmissionWidget = React.memo(
     id,
     formRef,
   }) => {
-
     const dispatch = useDispatch();
     const rowId = scope + "_" + index;
     const [rowType, setRowType] = useState(value.rowType || "default");
@@ -107,7 +106,6 @@ const EmissionWidget = React.memo(
 
     const locationname = useSelector((state) => state.emissions.locationName);
     const monthName = useSelector((state) => state.emissions.monthName);
-
 
     //file log code//
     const getIPAddress = async () => {
@@ -485,41 +483,47 @@ const EmissionWidget = React.memo(
           Category: newCategory,
           Subcategory: "",
           Activity: "",
-          Quantity: "",
-          Unit: "",
+          // Remove these lines to preserve quantity and units:
+          // Quantity: "",
+          // Unit: "",
         };
         setCategory(newCategory);
         onChange(updatedValue);
         updateSelectedRowIfNeeded(updatedValue);
 
-        // Reset local state
+        // Reset local state for category/subcategory/activity only
         setSubcategory("");
         setActivity("");
-        setQuantity("");
-        setUnit("");
+        // Remove these lines to preserve quantity and units:
+        // setQuantity("");
+        // setUnit("");
       },
       [onChange, value, updateSelectedRowIfNeeded]
     );
 
+    // Fix for handleSubcategoryChange - Remove quantity and unit resets
     const handleSubcategoryChange = useCallback(
       (newSubcategory) => {
         const updatedValue = {
           ...value,
           Subcategory: newSubcategory,
           Activity: "",
-          Quantity: "",
-          Unit: "",
+          // Remove these lines to preserve quantity and units:
+          // Quantity: "",
+          // Unit: "",
         };
         onChange(updatedValue);
         updateSelectedRowIfNeeded(updatedValue);
 
         setActivity("");
-        setQuantity("");
-        setUnit("");
+        // Remove these lines to preserve quantity and units:
+        // setQuantity("");
+        // setUnit("");
       },
       [onChange, value, updateSelectedRowIfNeeded]
     );
 
+    // Fix for handleActivityChange - Remove quantity and unit resets
     const handleActivityChange = useCallback(
       (newActivity) => {
         console.log("handleActivityChange called with:", newActivity);
@@ -527,16 +531,13 @@ const EmissionWidget = React.memo(
         // Find the selected activity object from our activities array
         const foundActivity = activities.find(
           (act) =>
-            // `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
-          `${act.name} - (${
-                            act.source
-                          }) - ${act.unit_type} - ${act.region} - ${
-                            act.year
-                          }${
-                            act.source_lca_activity !== "unknown"
-                              ? ` - ${act.source_lca_activity}`
-                              : ""
-                          }` === newActivity
+            `${act.name} - (${act.source}) - ${act.unit_type} - ${
+              act.region
+            } - ${act.year}${
+              act.source_lca_activity !== "unknown"
+                ? ` - ${act.source_lca_activity}`
+                : ""
+            }` === newActivity
         );
 
         console.log("Found activity:", foundActivity);
@@ -556,13 +557,12 @@ const EmissionWidget = React.memo(
           data_version: foundActivity
             ? foundActivity.data_version
             : "{{DATA_VERSION}}",
-          Quantity: "",
-          Quantity2: "",
-          Unit: "",
-          Unit2: "",
+          // Remove these lines to preserve quantities and units:
+          // Quantity: "",
+          // Quantity2: "",
+          // Unit: "",
+          // Unit2: "",
         };
-
-        // setUnitType(foundActivity ? foundActivity.unit_type : "")
 
         // Update form state
         onChange(updatedValue);
@@ -570,15 +570,16 @@ const EmissionWidget = React.memo(
         // Update selected row if needed
         updateSelectedRowIfNeeded(updatedValue);
 
-        // Reset quantity and unit states
-        setQuantity("");
-        setQuantity2("");
-        setUnit("");
-        setUnit2("");
+        // Remove these lines to preserve quantity and unit states:
+        // setQuantity("");
+        // setQuantity2("");
+        // setUnit("");
+        // setUnit2("");
       },
       [activities, onChange, value, updateSelectedRowIfNeeded]
     );
-    // mobile version
+
+    // Mobile version fix - Remove quantity and unit resets
     const handleActivityChangemobile = useCallback(
       (newActivity) => {
         console.log("handleActivityChange called with:", newActivity);
@@ -604,10 +605,11 @@ const EmissionWidget = React.memo(
           data_version: foundActivity
             ? foundActivity.data_version
             : "{{DATA_VERSION}}",
-          Quantity: "",
-          Quantity2: "",
-          Unit: "",
-          Unit2: "",
+          // Remove these lines to preserve quantities and units:
+          // Quantity: "",
+          // Quantity2: "",
+          // Unit: "",
+          // Unit2: "",
         };
 
         // Update form state
@@ -616,14 +618,15 @@ const EmissionWidget = React.memo(
         // Update selected row if needed
         updateSelectedRowIfNeeded(updatedValue);
 
-        // Reset quantity and unit states
-        setQuantity("");
-        setQuantity2("");
-        setUnit("");
-        setUnit2("");
+        // Remove these lines to preserve quantity and unit states:
+        // setQuantity("");
+        // setQuantity2("");
+        // setUnit("");
+        // setUnit2("");
       },
       [activities, onChange, value, updateSelectedRowIfNeeded]
     );
+
     // bug causing
     useEffect(() => {
       if (
@@ -1323,7 +1326,7 @@ const EmissionWidget = React.memo(
                   <input
                     ref={inputRef}
                     type="text"
-                    title={value.Activity?value.Activity:''}
+                    title={value.Activity ? value.Activity : ""}
                     placeholder={getActivityPlaceholder()}
                     value={activitySearch}
                     onChange={handleSearchChange}
@@ -1442,7 +1445,7 @@ const EmissionWidget = React.memo(
 
                       <input
                         type="text"
-                        title={value.Activity?value.Activity:''}
+                        title={value.Activity ? value.Activity : ""}
                         value={activitySearch}
                         onChange={handleSearchChange}
                         placeholder="Search activities..."
@@ -1555,7 +1558,7 @@ const EmissionWidget = React.memo(
                           }`}
                           disabled={["assigned", "approved"].includes(rowType)}
                         >
-                          <option value="">Unit</option>
+                          <option value="">{unit || "Unit"}</option>
                           {units.map((unit, index) => (
                             <option key={index} value={unit}>
                               {unit}
@@ -1609,7 +1612,7 @@ const EmissionWidget = React.memo(
                           }`}
                           disabled={["assigned", "approved"].includes(rowType)}
                         >
-                          <option value="">Unit</option>
+                          <option value="">{unit2 || "Unit"}</option>
                           {units2.map((unit, index) => (
                             <option key={index} value={unit}>
                               {unit}
