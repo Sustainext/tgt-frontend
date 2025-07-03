@@ -124,7 +124,6 @@ const CustomFileUploadWidget = ({
   };
 
   useEffect(() => {
-    console.log(value, " is the new value");
 
     if (value?.url && value?.name) {
       setFileName(value.name);
@@ -220,11 +219,11 @@ const CustomFileUploadWidget = ({
 
   return (
     <>
-      <div className={id.startsWith("root_0") ? "mb-[3.2rem]" : "mb-[0.8rem]"}>
+      {/* <div className={id.startsWith("root_0") ? "mb-[3.2rem]" : "mb-[0.8rem]"}>
         <p className="text-[14px] text-neutral-950 font-[400] mb-1 hidden">
           {label}
         </p>
-      </div>
+      </div> */}
       <div className="flex justify-center items-center ml-2  w-[80px]">
         <input
           type="file"
