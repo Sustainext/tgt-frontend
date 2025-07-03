@@ -43,7 +43,7 @@ const NotificationsModal = ({ isOpen, onClose, triggerRef }) => {
       avatar: '/api/placeholder/32/32',
       actionLink: 'Review Report',
       priority: 'high',
-      isNew: true
+      isNew: false,
     },
     {
       id: 2,
@@ -357,7 +357,7 @@ const NotificationsModal = ({ isOpen, onClose, triggerRef }) => {
       {/* Modal */}
       <div
         ref={modalRef}
-        className="fixed z-50 bg-white rounded-lg shadow-xl border border-gray-200 flex flex-col animate-in fade-in zoom-in-95 duration-200"
+        className="fixed z-50 bg-white shadow-xl border border-gray-200 flex flex-col animate-in fade-in zoom-in-95 duration-200 rounded-lg"
         style={{
           top: position.top,
           right: position.right,
@@ -370,16 +370,16 @@ const NotificationsModal = ({ isOpen, onClose, triggerRef }) => {
         {/* Arrow pointing up */}
         <div className="absolute -top-2 right-4 w-4 h-4 bg-white border-l border-t border-gray-200 transform rotate-45" />
         
-        <div className="flex flex-col h-full min-h-0">
+        <div className="flex flex-col h-full min-h-0 rounded-lg">
           {/* Header */}
           <div className="flex justify-between items-center p-4 border-b border-gray-200">
             <div className="flex items-center gap-2">
               <h2 className="text-lg font-semibold text-gray-900">Notifications</h2>
-              {unreadCount > 0 && (
+              {/* {unreadCount > 0 && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                   {unreadCount}
                 </span>
-              )}
+              )} */}
             </div>
             <div className="flex items-center gap-3">
               {unreadCount > 0 && (
@@ -418,8 +418,8 @@ const NotificationsModal = ({ isOpen, onClose, triggerRef }) => {
                 onClick={() => setActiveTab(tab.name)}
                 className={`flex-1 px-3 py-3 text-sm font-medium transition-all relative ${
                   activeTab === tab.name
-                    ? 'text-blue-600 bg-blue-50'
-                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                    ? 'text-blue-600'
+                    : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
                 <span>{tab.name}</span>
@@ -427,9 +427,9 @@ const NotificationsModal = ({ isOpen, onClose, triggerRef }) => {
                   <span className={`ml-1 text-xs px-1.5 py-0.5 rounded-full font-medium ${
                     activeTab === tab.name 
                       ? 'bg-blue-600 text-white' 
-                      : 'bg-gray-200 text-gray-600'
+                      : 'text-gray-600'
                   }`}>
-                    {tab.count}
+                    ({tab.count})
                   </span>
                 )}
                 
@@ -450,7 +450,7 @@ const NotificationsModal = ({ isOpen, onClose, triggerRef }) => {
             ) : (
               <div 
                 ref={scrollRef}
-                className="h-full overflow-y-auto overflow-x-hidden pr-2 custom-scrollbar"
+                className="h-full overflow-y-auto overflow-x-hidden pr-2 custom-scrollbar rounded-lg"
                 style={{ 
                   maxHeight: '384px',
                   scrollbarWidth: 'thin',
@@ -507,10 +507,10 @@ const NotificationsModal = ({ isOpen, onClose, triggerRef }) => {
                                 {/* Action button */}
                                 {notification.actionLink && (
                                   <button 
-                                    className={`inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                                    className={`inline-flex items-center gap-1 text-xs font-medium rounded-md transition-all ${
                                       actionLoading.has(notification.id)
                                         ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
-                                        : 'text-blue-600 bg-blue-100 hover:bg-blue-200 hover:scale-105'
+                                        : 'text-blue-600'
                                     }`}
                                     onClick={(e) => handleActionClick(notification, e)}
                                     disabled={actionLoading.has(notification.id)}
@@ -553,7 +553,7 @@ const NotificationsModal = ({ isOpen, onClose, triggerRef }) => {
 
             {/* View All Button - appears when scrolled to bottom */}
             {showViewAll && (
-              <div className="bg-gradient-to-t from-white via-white to-transparent pt-6 pb-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <div className="bg-gradient-to-t from-white via-white to-transparent pt-6 pb-4 animate-in fade-in slide-in-from-bottom-2 duration-300 rounded-lg">
                 <div className="px-4">
                   <button
                     className="w-full text-center text-sm text-blue-600 hover:text-blue-800 font-medium py-2 px-4 bg-blue-50 hover:bg-blue-100 rounded-md transition-all hover:scale-105"
