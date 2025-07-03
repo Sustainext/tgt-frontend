@@ -327,7 +327,7 @@ const DashboardHeader = () => {
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1 rounded-full"
+                    className="absolute -top-1 -right-1 bg-gradient-to-r from-sky-500/5 to-lime-500/5 text-white text-xs px-1 rounded-full"
                   >
                     2
                   </motion.span>
