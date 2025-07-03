@@ -598,7 +598,7 @@ useEffect(() => {
               )}
               {
                 activeTab==='Location with Significant impacts on Biodiversity' && (
-                  <LocationWithSignificantImpact apiData={data} setMobileopen={setMobileopen}/>
+                  <LocationWithSignificantImpact apiData={data} setMobileopen={setMobileopen}  handleTabClick={handleTabClick}/>
                 )
               }
               {

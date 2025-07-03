@@ -22,7 +22,7 @@ const schema = {
     items: {
       type: "object",
       properties: {
-        col1: {
+        Pollutant: {
           type: "string",
           title: "Pollutant",
           enum: [
@@ -38,11 +38,11 @@ const schema = {
           ],
         },
   
-        col2: {
+        Quanity: {
           type: "string",
           title: "Quanity",
         },
-        col3: {
+        Unit: {
           type: "string",
           title: "Unit",
           enum: [
@@ -66,7 +66,7 @@ const schema = {
     "ui:options": {
       titles: [
         {
-          key: "col1",
+          key: "Pollutant",
           title: "Pollutant",
           tooltip:
             "<p>Indicate the air pollutants released as a result of the organisation's activities at the selected location.",
@@ -74,7 +74,7 @@ const schema = {
           tooltipdispaly: "block",
         },
         {
-          key: "col2",
+          key: "Quanity",
           title: "Quanity",
           tooltip:
             "Specify total quantity of pollutants released at the selected location.",
@@ -82,7 +82,7 @@ const schema = {
           tooltipdispaly: "block",
         },
         {
-          key: "col3",
+          key: "Unit",
           title: "Unit",
           tooltip:
             "Select the correct unit corresponding to the quantity of water withdrawal/discharge.",

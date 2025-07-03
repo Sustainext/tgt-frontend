@@ -137,6 +137,7 @@ const Screen2 = ({
   month,
   setLocationMessage,
   setYearMessage,
+  handleTabClick
 }) => {
   return (
     <>
@@ -153,7 +154,7 @@ const Screen2 = ({
           year={year}
           setYearMessage={setYearMessage}
         >
-          <Screen2Comp location={location} year={year} month={month} />
+          <Screen2Comp location={location} year={year} month={month} handleTabClick={handleTabClick} />
         </AccordionItem>
       </div>
     </>

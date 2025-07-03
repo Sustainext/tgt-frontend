@@ -202,9 +202,7 @@ const Screen1Comp = ({ handleQ6Change, location, year }) => {
   }, [r_schema, r_ui_schema]);
 
   // console log the form data change
-  useEffect(() => {
-    console.log("Form data is changed -", formData);
-  }, [formData]);
+ 
 
   // fetch backend and replace initialized forms
   useEffect(() => {

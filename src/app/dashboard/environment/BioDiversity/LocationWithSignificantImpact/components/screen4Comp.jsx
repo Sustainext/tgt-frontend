@@ -125,10 +125,6 @@ const Screen4Comp = ({ location, year }) => {
 const form_parent = response.data.form_data;
       const f_data = form_parent[0].data[0].formData;
       const option_data = form_parent[0].data[0].selectedOption || '';
-    //   setFormData({
-    //     wildSpecies: fetchedData.wildSpecies || [{}],
-    //     waterConsumption: fetchedData.waterConsumption || [{}]
-    //   });
       setFormData(f_data);
       setSelectedOption(option_data);
     } catch (error) {

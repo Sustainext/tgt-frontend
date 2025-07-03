@@ -13,347 +13,348 @@ const widgets = {
   MultitypefiledWidget: MultitypefiledWidget,
 };
 
-const view_path = "gri-environment-energy-302-1g-2c-conversion_factor";
+const view_path =
+  "environment_biodiversity_products_services_with_impact_on_biodiversity_screen3";
 const client_id = 1;
 const user_id = 1;
 
 const schema = {
-    type: "array",
-    items: {
-      type: "object",
-      properties: {
-        col1: {
-          type: "string",
-          title: "Name of Product/Service",
-        },
-    col2: {
-          type: "string",
-          title: "Country or Jurisdiction",
-          enum:[
-  "Afghanistan",
-  "Albania",
-  "Algeria",
-  "Andorra",
-  "Angola",
-  "Antigua and Barbuda",
-  "Argentina",
-  "Armenia",
-  "Australia",
-  "Austria",
-  "Austrian Empire",
-  "Azerbaijan",
-  "Baden",
-  "Bahamas",
-  "Bahrain",
-  "Bangladesh",
-  "Barbados",
-  "Bavaria",
-  "Belarus",
-  "Belgium",
-  "Belize",
-  "Benin (Dahomey)",
-  "Bolivia",
-  "Bosnia and Herzegovina",
-  "Botswana",
-  "Brazil",
-  "Brunei",
-  "Brunswick and Lüneburg",
-  "Bulgaria",
-  "Burkina Faso (Upper Volta)",
-  "Burma",
-  "Burundi",
-  "Cabo Verde",
-  "Cambodia",
-  "Cameroon",
-  "Canada",
-  "Cayman Islands, The",
-  "Central African Republic",
-  "Central American Federation",
-  "Chad",
-  "Chile",
-  "China",
-  "Colombia",
-  "Comoros",
-  "Congo Free State",
-  "Cook Islands",
-  "Costa Rica",
-  "Cote d’Ivoire (Ivory Coast)",
-  "Croatia",
-  "Cuba",
-  "Cyprus",
-  "Czechia",
-  "Czechoslovakia",
-  "Democratic Republic of the Congo",
-  "Denmark",
-  "Djibouti",
-  "Dominica",
-  "Dominican Republic",
-  "Duchy of Parma",
-  "East Germany (German Democratic Republic)",
-  "Ecuador",
-  "Egypt",
-  "El Salvador",
-  "Equatorial Guinea",
-  "Eritrea",
-  "Estonia",
-  "Eswatini",
-  "Ethiopia",
-  "Fiji",
-  "Finland",
-  "France",
-  "Gabon",
-  "Gambia, The",
-  "Georgia",
-  "Germany",
-  "Ghana",
-  "Grand Duchy of Tuscany",
-  "Greece",
-  "Grenada",
-  "Guatemala",
-  "Guinea",
-  "Guinea-Bissau",
-  "Guyana",
-  "Haiti",
-  "Hanover",
-  "Hanseatic Republics",
-  "Hawaii",
-  "Hesse",
-  "Holy See",
-  "Honduras",
-  "Hungary",
-  "Iceland",
-  "India",
-  "Indonesia",
-  "Iran",
-  "Iraq",
-  "Ireland",
-  "Israel",
-  "Italy",
-  "Jamaica",
-  "Japan",
-  "Jordan",
-  "Kazakhstan",
-  "Kenya",
-  "Kingdom of Serbia/Yugoslavia",
-  "Kiribati",
-  "Korea",
-  "Kosovo",
-  "Kuwait",
-  "Kyrgyzstan",
-  "Laos",
-  "Latvia",
-  "Lebanon",
-  "Lesotho",
-  "Lew Chew (Loochoo)",
-  "Liberia",
-  "Libya",
-  "Liechtenstein",
-  "Lithuania",
-  "Luxembourg",
-  "Madagascar",
-  "Malawi",
-  "Malaysia",
-  "Maldives",
-  "Mali",
-  "Malta",
-  "Marshall Islands",
-  "Mauritania",
-  "Mauritius",
-  "Mecklenburg-Schwerin",
-  "Mecklenburg-Strelitz",
-  "Mexico",
-  "Micronesia",
-  "Moldova",
-  "Monaco",
-  "Mongolia",
-  "Montenegro",
-  "Morocco",
-  "Mozambique",
-  "Namibia",
-  "Nassau",
-  "Nauru",
-  "Nepal",
-  "Netherlands, The",
-  "New Zealand",
-  "Nicaragua",
-  "Niger",
-  "Nigeria",
-  "Niue",
-  "North German Confederation",
-  "North German Union",
-  "North Macedonia",
-  "Norway",
-  "Oldenburg",
-  "Oman",
-  "Orange Free State",
-  "Pakistan",
-  "Palau",
-  "Panama",
-  "Papal States",
-  "Papua New Guinea",
-  "Paraguay",
-  "Peru",
-  "Philippines",
-  "Piedmont-Sardinia",
-  "Poland",
-  "Portugal",
-  "Qatar",
-  "Republic of Genoa",
-  "Republic of Korea (South Korea)",
-  "Republic of the Congo",
-  "Romania",
-  "Russia",
-  "Rwanda",
-  "Saint Kitts and Nevis",
-  "Saint Lucia",
-  "Saint Vincent and the Grenadines",
-  "Samoa",
-  "San Marino",
-  "Sao Tome and Principe",
-  "Saudi Arabia",
-  "Schaumburg-Lippe",
-  "Senegal",
-  "Serbia",
-  "Seychelles",
-  "Sierra Leone",
-  "Singapore",
-  "Slovakia",
-  "Slovenia",
-  "Solomon Island",
-  "Somalia",
-  "South Africa",
-  "South Sudan",
-  "Spain",
-  "Sri Lanka",
-  "Sudan",
-  "Suriname",
-  "Sweden",
-  "Switzerland",
-  "Syria",
-  "Tajikistan",
-  "Tanzania",
-  "Texas",
-  "Thailand",
-  "Timor-Leste",
-  "Togo",
-  "Tonga",
-  "Trinidad and Tobago",
-  "Tunisia",
-  "Turkey",
-  "Turkmenistan",
-  "Tuvalu",
-  "Two Sicilies",
-  "Uganda",
-  "Ukraine",
-  "Union of Soviet Socialist Republics",
-  "United Arab Emirates, The",
-  "United Kingdom",
-  "Uruguay",
-  "Uzbekistan",
-  "Vanuatu",
-  "Venezuela",
-  "Vietnam",
-  "Württemberg",
-  "Yemen",
-  "Zambia",
-  "Zimbabwe",
-  "Others (please specify)"
-            ]
-        },
-        col3: {
-          type: "string",
-          title: "Pollutant",
-           enum: [
-            "NOx",
-            "SOx",
-            "Persistent organic pollutants (POP)",
-            "Volatile organic compounds (VOC)",
-            "Hazardous air pollutants (HAP)",
-            "Particulate matter (PM 10)",
-            "Particulate matter (PM 2.5)",
-            "Carbon Monoxide(CO)",
-            "Others (please specify)"
-          ],
-        },
-        col4: {
-          type: "string",
-          title: "Quanity",
-        },
-      
-        col5: {
-          type: "string",
-          title: "Unit",
-          enum: [
-            "ppm",
-            "μg/m³",
-            "ton (US Short ton)",
-            "Gram (G)",
-            "Kilograms (KG)",
-            "tonnes (T)",
-            "Pound (LB)",
-            "Others (please specify)"
-          ],
-        },
-       
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      NameOfProductService: {
+        type: "string",
+        title: "Name of Product/Service",
+      },
+      Country: {
+        type: "string",
+        title: "Country or Jurisdiction",
+        enum: [
+          "Afghanistan",
+          "Albania",
+          "Algeria",
+          "Andorra",
+          "Angola",
+          "Antigua and Barbuda",
+          "Argentina",
+          "Armenia",
+          "Australia",
+          "Austria",
+          "Austrian Empire",
+          "Azerbaijan",
+          "Baden",
+          "Bahamas",
+          "Bahrain",
+          "Bangladesh",
+          "Barbados",
+          "Bavaria",
+          "Belarus",
+          "Belgium",
+          "Belize",
+          "Benin (Dahomey)",
+          "Bolivia",
+          "Bosnia and Herzegovina",
+          "Botswana",
+          "Brazil",
+          "Brunei",
+          "Brunswick and Lüneburg",
+          "Bulgaria",
+          "Burkina Faso (Upper Volta)",
+          "Burma",
+          "Burundi",
+          "Cabo Verde",
+          "Cambodia",
+          "Cameroon",
+          "Canada",
+          "Cayman Islands, The",
+          "Central African Republic",
+          "Central American Federation",
+          "Chad",
+          "Chile",
+          "China",
+          "Colombia",
+          "Comoros",
+          "Congo Free State",
+          "Cook Islands",
+          "Costa Rica",
+          "Cote d’Ivoire (Ivory Coast)",
+          "Croatia",
+          "Cuba",
+          "Cyprus",
+          "Czechia",
+          "Czechoslovakia",
+          "Democratic Republic of the Congo",
+          "Denmark",
+          "Djibouti",
+          "Dominica",
+          "Dominican Republic",
+          "Duchy of Parma",
+          "East Germany (German Democratic Republic)",
+          "Ecuador",
+          "Egypt",
+          "El Salvador",
+          "Equatorial Guinea",
+          "Eritrea",
+          "Estonia",
+          "Eswatini",
+          "Ethiopia",
+          "Fiji",
+          "Finland",
+          "France",
+          "Gabon",
+          "Gambia, The",
+          "Georgia",
+          "Germany",
+          "Ghana",
+          "Grand Duchy of Tuscany",
+          "Greece",
+          "Grenada",
+          "Guatemala",
+          "Guinea",
+          "Guinea-Bissau",
+          "Guyana",
+          "Haiti",
+          "Hanover",
+          "Hanseatic Republics",
+          "Hawaii",
+          "Hesse",
+          "Holy See",
+          "Honduras",
+          "Hungary",
+          "Iceland",
+          "India",
+          "Indonesia",
+          "Iran",
+          "Iraq",
+          "Ireland",
+          "Israel",
+          "Italy",
+          "Jamaica",
+          "Japan",
+          "Jordan",
+          "Kazakhstan",
+          "Kenya",
+          "Kingdom of Serbia/Yugoslavia",
+          "Kiribati",
+          "Korea",
+          "Kosovo",
+          "Kuwait",
+          "Kyrgyzstan",
+          "Laos",
+          "Latvia",
+          "Lebanon",
+          "Lesotho",
+          "Lew Chew (Loochoo)",
+          "Liberia",
+          "Libya",
+          "Liechtenstein",
+          "Lithuania",
+          "Luxembourg",
+          "Madagascar",
+          "Malawi",
+          "Malaysia",
+          "Maldives",
+          "Mali",
+          "Malta",
+          "Marshall Islands",
+          "Mauritania",
+          "Mauritius",
+          "Mecklenburg-Schwerin",
+          "Mecklenburg-Strelitz",
+          "Mexico",
+          "Micronesia",
+          "Moldova",
+          "Monaco",
+          "Mongolia",
+          "Montenegro",
+          "Morocco",
+          "Mozambique",
+          "Namibia",
+          "Nassau",
+          "Nauru",
+          "Nepal",
+          "Netherlands, The",
+          "New Zealand",
+          "Nicaragua",
+          "Niger",
+          "Nigeria",
+          "Niue",
+          "North German Confederation",
+          "North German Union",
+          "North Macedonia",
+          "Norway",
+          "Oldenburg",
+          "Oman",
+          "Orange Free State",
+          "Pakistan",
+          "Palau",
+          "Panama",
+          "Papal States",
+          "Papua New Guinea",
+          "Paraguay",
+          "Peru",
+          "Philippines",
+          "Piedmont-Sardinia",
+          "Poland",
+          "Portugal",
+          "Qatar",
+          "Republic of Genoa",
+          "Republic of Korea (South Korea)",
+          "Republic of the Congo",
+          "Romania",
+          "Russia",
+          "Rwanda",
+          "Saint Kitts and Nevis",
+          "Saint Lucia",
+          "Saint Vincent and the Grenadines",
+          "Samoa",
+          "San Marino",
+          "Sao Tome and Principe",
+          "Saudi Arabia",
+          "Schaumburg-Lippe",
+          "Senegal",
+          "Serbia",
+          "Seychelles",
+          "Sierra Leone",
+          "Singapore",
+          "Slovakia",
+          "Slovenia",
+          "Solomon Island",
+          "Somalia",
+          "South Africa",
+          "South Sudan",
+          "Spain",
+          "Sri Lanka",
+          "Sudan",
+          "Suriname",
+          "Sweden",
+          "Switzerland",
+          "Syria",
+          "Tajikistan",
+          "Tanzania",
+          "Texas",
+          "Thailand",
+          "Timor-Leste",
+          "Togo",
+          "Tonga",
+          "Trinidad and Tobago",
+          "Tunisia",
+          "Turkey",
+          "Turkmenistan",
+          "Tuvalu",
+          "Two Sicilies",
+          "Uganda",
+          "Ukraine",
+          "Union of Soviet Socialist Republics",
+          "United Arab Emirates, The",
+          "United Kingdom",
+          "Uruguay",
+          "Uzbekistan",
+          "Vanuatu",
+          "Venezuela",
+          "Vietnam",
+          "Württemberg",
+          "Yemen",
+          "Zambia",
+          "Zimbabwe",
+          "Others (please specify)",
+        ],
+      },
+      Pollutant: {
+        type: "string",
+        title: "Pollutant",
+        enum: [
+          "NOx",
+          "SOx",
+          "Persistent organic pollutants (POP)",
+          "Volatile organic compounds (VOC)",
+          "Hazardous air pollutants (HAP)",
+          "Particulate matter (PM 10)",
+          "Particulate matter (PM 2.5)",
+          "Carbon Monoxide(CO)",
+          "Others (please specify)",
+        ],
+      },
+      Quanity: {
+        type: "string",
+        title: "Quanity",
+      },
+
+      Unit: {
+        type: "string",
+        title: "Unit",
+        enum: [
+          "ppm",
+          "μg/m³",
+          "ton (US Short ton)",
+          "Gram (G)",
+          "Kilograms (KG)",
+          "tonnes (T)",
+          "Pound (LB)",
+          "Others (please specify)",
+        ],
       },
     },
-  };
-  
-  const uiSchema = {
-    "ui:widget": "MultitypefiledWidget",
-    "ui:options": {
-      titles: [
-        {
-          key: "col1",
-          title: "Name of Product/Service",
-          tooltip:
-            "<p>Specify the name of the product or service in organisation's supply chain with the most significant impacts on biodiversity.<br/> Supply chain: range of activities carried out by entities upstream from the organization, which provide products or services that are used in the development of the organization’s own products or services.",
-          layouttype: "input",
-          tooltipdispaly: "block",
-        },
-         {
-          key: "col2",
-          title: "Country or Jurisdiction",
-          tooltip:
-            "Enter the name of the country or specific jurisdiction where mentioned activity occurs (e.g., Indonesia, Amazon Basin, Alberta - Canada).",
-          layouttype: "select",
-          tooltipdispaly: "none",
-        },
-        {
-          key: "col3",
-          title: "Pollutant",
-          tooltip:
-            "Indicate the air pollutants released as a result of the organisation's activities associated with the mentioned product/service.",
-          layouttype: "select",
-          tooltipdispaly: "block",
-        },
-        {
-          key: "col4",
-          title: "Quanity",
-          tooltip:
-            "Specify total quantity of pollutants released at the selected location.",
-          layouttype: "inputonlynumber",
-          tooltipdispaly: "block",
-        },
-       
-        {
-          key: "col5",
-          title: "Unit",
-          tooltip:
-            "<p>Select the correct unit corresponding to the quantity of water withdrawal/discharge.</p>",
-          layouttype: "select",
-          tooltipdispaly: "block",
-        },
-       
-      ],
-    },
-  };
-const Screen3Comp = ({ handleQ6Change, location, year, month }) => {
+  },
+};
+
+const uiSchema = {
+  "ui:widget": "MultitypefiledWidget",
+  "ui:options": {
+    titles: [
+      {
+        key: "NameOfProductService",
+        title: "Name of Product/Service",
+        tooltip:
+          "<p>Specify the name of the product or service in organisation's supply chain with the most significant impacts on biodiversity.<br/> Supply chain: range of activities carried out by entities upstream from the organization, which provide products or services that are used in the development of the organization’s own products or services.",
+        layouttype: "input",
+        tooltipdispaly: "none",
+      },
+      {
+        key: "Country",
+        title: "Country or Jurisdiction",
+        tooltip:
+          "Enter the name of the country or specific jurisdiction where mentioned activity occurs (e.g., Indonesia, Amazon Basin, Alberta - Canada).",
+        layouttype: "select",
+        tooltipdispaly: "none",
+      },
+      {
+        key: "Pollutant",
+        title: "Pollutant",
+        tooltip:
+          "Indicate the air pollutants released as a result of the organisation's activities associated with the mentioned product/service.",
+        layouttype: "select",
+        tooltipdispaly: "block",
+      },
+      {
+        key: "Quanity",
+        title: "Quanity",
+        tooltip:
+          "Specify total quantity of pollutants released at the selected location.",
+        layouttype: "inputonlynumber",
+        tooltipdispaly: "block",
+      },
+
+      {
+        key: "Unit",
+        title: "Unit",
+        tooltip:
+          "<p>Select the correct unit corresponding to the quantity of water withdrawal/discharge.</p>",
+        layouttype: "select",
+        tooltipdispaly: "block",
+      },
+    ],
+  },
+};
+const Screen3Comp = ({ handleQ6Change, location, year }) => {
   const { open } = GlobalState();
+  let readOnlyFields = [];
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
+  const [readOnly, setReadOnly] = useState([]);
   const toastShown = useRef(false);
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
@@ -388,7 +389,6 @@ const Screen3Comp = ({ handleQ6Change, location, year, month }) => {
       form_data: formData,
       location,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -438,14 +438,43 @@ const Screen3Comp = ({ handleQ6Change, location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
+      // const form_parent = response.data.form_data;
+      // setFormData(form_parent[0].data);
       const form_parent = response.data.form_data;
-      setFormData(form_parent[0].data);
+      const formValues = response.data.products_services_data || [];
+      const f_data = form_parent[0]?.data || [{}];
+      let finalFormData;
+
+      if (formValues.length > 0 && form_parent.length === 0) {
+        finalFormData = formValues.map((item) => ({
+          NameOfProductService: item.NameOfProductService || "",
+          Country: item.Country || "",
+          Pollutant: "",
+          Quanity: "",
+          Unit: "",
+        }));
+        // setReadOnly(["NameOfProductService", "Country"]);
+      } else {
+        const baseFormData = Array.isArray(f_data) ? [...f_data] : [{}];
+
+        // Extract only extra rows (those beyond baseFormData length)
+        const extraRows = formValues.slice(baseFormData.length).map((item) => ({
+          NameOfProductService: item.NameOfProductService || "",
+          Country: item.Country || "",
+          Pollutant: "",
+          Quanity: "",
+          Unit: "",
+        }));
+
+        finalFormData = [...baseFormData, ...extraRows];
+      }
+      setFormData(finalFormData);
     } catch (error) {
       console.error("API call failed:", error);
     } finally {
@@ -453,18 +482,10 @@ const Screen3Comp = ({ handleQ6Change, location, year, month }) => {
     }
   };
   //Reloading the forms -- White Beard
-  useEffect(() => {
-    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  }, [r_schema, r_ui_schema]);
-
-  // console log the form data change
-  useEffect(() => {
-    console.log("Form data is changed -", formData);
-  }, [formData]);
-
+ 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -475,7 +496,7 @@ const Screen3Comp = ({ handleQ6Change, location, year, month }) => {
     }
     // console.log('From loaded , ready for trigger')
     // loadFormData()
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -488,12 +509,13 @@ const Screen3Comp = ({ handleQ6Change, location, year, month }) => {
       <div>
         <div>
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            //  formContext={{readOnlyFields:readOnly}}
           />
         </div>
         {loopen && (

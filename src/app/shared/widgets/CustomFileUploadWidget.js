@@ -124,7 +124,6 @@ const CustomFileUploadWidget = ({
   };
 
   useEffect(() => {
-    console.log(value, " is the new value");
 
     if (value?.url && value?.name) {
       setFileName(value.name);

@@ -35,12 +35,12 @@ const schema = {
       items: {
     type: "object",
     properties: {
-      col1: {
+      Size: {
         type: "string",
         title: "Size",
       },
 
-      col2: {
+      Unit: {
         type: "string",
         title: "Unit",
         enum:[
@@ -53,7 +53,7 @@ const schema = {
             "Square mile (mi²)"
         ]
       },
-      col3: {
+      TypeOfEcosystemConverted: {
         type: "string",
         title: "Type of ecosystem converted",
         enum:[
@@ -61,11 +61,11 @@ const schema = {
             "Converted from one intensively used or modified ecosystem to another"
         ]
       },
-      col4: {
+      ReferenceDate: {
         type: "string",
         title: "Cut-off/Reference Date",
       },
-      col5: {
+      EcosystemBeforeConversion: {
         type: "string",
         title: "Ecosystem Before Conversion",
         enum:[
@@ -83,7 +83,7 @@ const schema = {
             "Others (please specify)"
         ]
       },
-      col6: {
+      EcosystemAfterConversion: {
         type: "string",
         title: "Ecosystem After Conversion",
         enum:[
@@ -110,7 +110,7 @@ const schema = {
       items: {
     type: "object",
     properties: {
-      col1: {
+      BaseYear: {
         type: "string",
         title: "Base Year",
         enum:[
@@ -118,12 +118,12 @@ const schema = {
         ]
       },
 
-      col2: {
+      EcosystemTypeSource: {
         type: "string",
         title: "Ecosystem type & source",
         
       },
-      col3: {
+      Unit: {
         type: "string",
         title: "Unit",
        enum:[
@@ -136,16 +136,16 @@ const schema = {
             "Square mile (mi²)"
         ]
       },
-      col4: {
+      EcosystemSizeHectares: {
         type: "string",
         title: "Ecosystem size (in hectares)",
       },
-      col5: {
+      EcosystemConditionBaseYear: {
         type: "string",
         title: "Ecosystem condition (in base year)",
        
       },
-      col6: {
+      EcosystemConditionReportingPeriod: {
         type: "string",
         title: "Ecosystem condition (in reporting period)",
        
@@ -167,7 +167,7 @@ const uiSchema = {
    "ui:options": {
     titles: [
       {
-        key: "col1",
+        key: "Size",
         title: "Size",
         tooltip:
           "<p>Specify size of natural ecosystem converted or land or sea converted from one intensively used or modified ecosystem to another during the reporting period.</p>",
@@ -175,7 +175,7 @@ const uiSchema = {
         tooltipdispaly: "block",
       },
       {
-        key: "col2",
+        key: "Unit",
         title: "Unit",
         tooltip:
           "Select the unit of measurement for the area reported.",
@@ -183,7 +183,7 @@ const uiSchema = {
         tooltipdispaly: "block",
       },
       {
-        key: "col3",
+        key: "TypeOfEcosystemConverted",
         title: "Type of ecosystem converted",
         tooltip:
           "<p>Indicate whether the site has resulted in the conversion of a <br/> 1) natural ecosystem: An ecosystem that is mostly untouched by humans and still has the same types of plants, animals, and natural processes that would exist in the area without major human interference. or <br/> 2)One intensively used or modified ecosystem into another: These are ecosystems where human activity has substantially modified an area’s primary ecological functions and species composition to ecosystems dominated by agriculture, urban, and other industrial activities.</p>",
@@ -191,27 +191,27 @@ const uiSchema = {
         tooltipdispaly: "block",
       },
       {
-        key: "col4",
+        key: "ReferenceDate",
         title: "Cut-off/Reference Date",
         tooltip:
           "<p>Specify the the cut-off date or reference date since the natural ecosystem is converted.<br/> Cuf-off date: Natural ecosystem conversion is measured from a cut-off date associated with an organization’s policy related to natural ecosystem conversion (e.g., deforestation-free policy). If the organization does not have such a policy in place, it should select a reference date to measure natural ecosystem conversion.<br/> Reference Date: The starting point in time from which the organization begins tracking ecosystem conversion. </p>",
         layouttype: "inputDate",
         tooltipdispaly: "block",
-        keytack: "col3",
-        disable: "col4",
+        keytack: "TypeOfEcosystemConverted",
+        disable: "ReferenceDate",
         disableIfNotValue: ["Converted from natural ecosystem"],
       },
       {
-        key: "col5",
+        key: "EcosystemBeforeConversion",
         title: "Ecosystem Before Conversion",
         tooltip:
           "<p>Select the original ecosystem type before any changes occurred</p>",
         layouttype: "select",
         tooltipdispaly: "block",
-         keytack: "col3",
-        disable: "col5",
+         keytack: "TypeOfEcosystemConverted",
+        disable: "EcosystemBeforeConversion",
         disableIfNotValue: ["Converted from natural ecosystem","Converted from one intensively used or modified ecosystem to another"],
-         dynamicEnumSourceKey: "col3",
+         dynamicEnumSourceKey: "TypeOfEcosystemConverted",
           dynamicEnumMapping: {
     "Converted from natural ecosystem": [
   "Forest (e.g., tropical, temperate, boreal)",
@@ -246,16 +246,16 @@ const uiSchema = {
   }
       },
        {
-        key: "col6",
+        key: "EcosystemAfterConversion",
         title: "Ecosystem After Conversion",
         tooltip:
           "<p>Select the new land use or ecosystem type after conversion</p>",
         layouttype: "select",
         tooltipdispaly: "block",
-         keytack: "col3",
-        disable: "col5",
+         keytack: "TypeOfEcosystemConverted",
+        disable: "EcosystemAfterConversion",
         disableIfNotValue: ["Converted from natural ecosystem","Converted from one intensively used or modified ecosystem to another"],
-        dynamicEnumSourceKey: "col3",
+        dynamicEnumSourceKey: "TypeOfEcosystemConverted",
         dynamicEnumMapping: {
     "Converted from natural ecosystem": [
   "Agricultural land (e.g., cropland, pasture)",
@@ -296,7 +296,7 @@ const uiSchema = {
     "ui:options": {
     titles: [
       {
-        key: "col1",
+        key: "BaseYear",
         title: "Base Year",
         tooltip:
           "<p>Specify base year for tracking changes in the condition of the ecosystem affected or potentially affected by the organization.<br/>Base year definition: historical datum (such as year) against which a measurement is tracked over time.</p>",
@@ -304,7 +304,7 @@ const uiSchema = {
         tooltipdispaly: "block",
       },
       {
-        key: "col2",
+        key: "EcosystemTypeSource",
         title: "Ecosystem type & source",
         tooltip:
           "Specify the type of the ecosystem and source used to report type of ecosystem (for the base year). The organization can report ecosystem types using the biomes or ecosystem     functional groups in the IUCN Global Ecosystem Typology.",
@@ -312,7 +312,7 @@ const uiSchema = {
         tooltipdispaly: "block",
       },
       {
-        key: "col3",
+        key: "Unit",
         title: "Unit",
         tooltip:
           "<p>Select the unit of measurement for the area reported.</p>",
@@ -320,7 +320,7 @@ const uiSchema = {
         tooltipdispaly: "block",
       },
       {
-        key: "col4",
+        key: "EcosystemSizeHectares",
         title: "Ecosystem size (in hectares)",
         tooltip:
           "<p>Mention ecosystem size in hectares for the base year. Ecosystem size, also referred to as ecosystem extent, is the area coverage of the ecosystem that is affected or potentially affected by the organization’s activities. This is a fixed area over which the condition of the ecosystem is measured over time.</p>",
@@ -328,7 +328,7 @@ const uiSchema = {
         tooltipdispaly: "block",
       },
       {
-        key: "col5",
+        key: "EcosystemConditionBaseYear",
         title: "Ecosystem condition (in base year)",
         tooltip:
           "<p>Describe the condition of the affected ecosystem in the base year. Ecosystem condition is the quality of an ecosystem measured by its living and non-living characteristics against a reference condition.</p>",
@@ -336,7 +336,7 @@ const uiSchema = {
         tooltipdispaly: "block",
       },
        {
-        key: "col6",
+        key: "EcosystemConditionReportingPeriod",
         title: "Ecosystem condition (in reporting period)",
         tooltip:
           "<p>Mention condition for the current reporting period. </p>",
@@ -434,9 +434,9 @@ const Screen1Comp = ({ location, year }) => {
       const loadedSchema = response.data.form[0].schema;
       const yearEnum = getYearListFrom1995();
     if (
-      loadedSchema?.properties?.biodiversityStateChange?.items?.properties?.col1
+      loadedSchema?.properties?.biodiversityStateChange?.items?.properties?.BaseYear
     ) {
-      loadedSchema.properties.biodiversityStateChange.items.properties.col1.enum = yearEnum;
+      loadedSchema.properties.biodiversityStateChange.items.properties.BaseYear.enum = yearEnum;
     }
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -534,9 +534,7 @@ const form_parent = response.data.form_data;
   // }, [r_schema, r_ui_schema]);
 
   // console log the form data change
-  useEffect(() => {
-    console.log("Form data is changed -", formData);
-  }, [formData]);
+  
 
   // fetch backend and replace initialized forms
   useEffect(() => {

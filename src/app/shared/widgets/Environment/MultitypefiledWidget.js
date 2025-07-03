@@ -90,7 +90,7 @@ const MultitypefiledWidget = ({
   schema,
   formContext,
 }) => {
-  console.log(formContext.locationdata, "test locationdata");
+  console.log(formContext,"form content")
   const dropdownRefs = useRef([]);
   const [localValue, setLocalValue] = useState(value || []);
   const [othersInputs, setOthersInputs] = useState([]);
@@ -146,7 +146,6 @@ const MultitypefiledWidget = ({
     }
   };
     useEffect(() => {
-    console.log(value, " is the new value");
 
     if (value?.url && value?.name) {
       setFileName(value.name);
@@ -447,6 +446,20 @@ const MultitypefiledWidget = ({
     }
     return false;
   };
+
+  // {for disabling autopopulate}
+//   const isFieldDisabled = (field, row, key) => {
+//   if (formContext?.readOnlyFields?.includes(key)) return true;
+
+//   if (field.keytack && field.disable) {
+//     let sourceValue = row[field.keytack] || "";
+//     let enableVal = field.disableIfNotValue || "Yes";
+//     return sourceValue !== enableVal;
+//   }
+
+//   return false;
+// };
+
   const handleAddRow = () => {
     const newRow = {};
     Object.keys(schema.items.properties).forEach((key) => {
@@ -597,7 +610,7 @@ const MultitypefiledWidget = ({
                                 selectedOptions.map((opt) => opt.value)
                               )
                             }
-                            isDisabled={isFieldDisabled(uiSchemaField, row)}
+                            isDisabled={isFieldDisabled(uiSchemaField, row,key)}
                             styles={updatedMultiSelectStyle}
                             closeMenuOnSelect={false}
                             hideSelectedOptions={false}
@@ -638,8 +651,8 @@ const MultitypefiledWidget = ({
                             onChange={(e) =>
                               handleSelectChange(rowIndex, key, e.target.value)
                             }
-                            disabled={isFieldDisabled(uiSchemaField, row)}
-                            className="text-[12px]   py-2 pl-1 w-full border-b "
+                            disabled={isFieldDisabled(uiSchemaField, row,key)}
+                            className={`text-[12px]   py-2 pl-1 w-full border-b ${isFieldDisabled(uiSchemaField, row,key)?'bg-[#fafafa] rounded-sm':''} `}
                           >
                             <option value="">Select an option</option>
                             {propertySchema.enum.map((option) => (
@@ -676,7 +689,7 @@ const MultitypefiledWidget = ({
                             (e) =>
                               handleInputChange(rowIndex, key, e.target.value) // Use the new handler here
                           }
-                          disabled={isFieldDisabled(uiSchemaField, row)}
+                          disabled={isFieldDisabled(uiSchemaField, row,key)}
                           className="text-[12px]   py-2 pl-1 w-full border-b rounded-md"
                           placeholder="Enter"
                         />
@@ -692,7 +705,7 @@ const MultitypefiledWidget = ({
                                 e.target.value
                               ) // Use the new handler here
                           }
-                          disabled={isFieldDisabled(uiSchemaField, row)}
+                          disabled={isFieldDisabled(uiSchemaField, row,key)}
                           className="text-[12px] py-1 pl-1 w-full border-b rounded-md"
                           placeholder="Enter data"
                           rows={2}

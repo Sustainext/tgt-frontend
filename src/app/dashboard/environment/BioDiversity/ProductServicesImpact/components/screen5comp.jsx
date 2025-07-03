@@ -17,7 +17,8 @@ const widgets = {
   BioDiversityTwoTableWidget: BioDiversityTwoTableWidget,
 };
 
-const view_path = "gri-environment-energy-302-1g-2c-conversion_factor";
+const view_path =
+  "environment_biodiversity_products_services_with_impact_on_biodiversity_screen5";
 const client_id = 1;
 const user_id = 1;
 
@@ -26,11 +27,11 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      col1: {
+      NameOfProductService: {
         type: "string",
         title: "Name of Product/Service",
       },
-      col2: {
+      Country: {
         type: "string",
         title: "Country or Jurisdiction",
         enum: [
@@ -264,12 +265,12 @@ const schema = {
           "Others (please specify)",
         ],
       },
-      col3: {
+      Size: {
         type: "string",
         title: "Size",
       },
 
-      col4: {
+      Unit: {
         type: "string",
         title: "Unit",
         enum: [
@@ -282,7 +283,7 @@ const schema = {
           "Square mile (mi²)",
         ],
       },
-      col5: {
+      TypeOfEcosystemConverted: {
         type: "string",
         title: "Type of ecosystem converted",
         enum: [
@@ -290,11 +291,11 @@ const schema = {
           "Converted from one intensively used or modified ecosystem to another",
         ],
       },
-      col6: {
+      ReferenceDate: {
         type: "string",
         title: "Cut-off/Reference Date",
       },
-      col7: {
+      EcosystemBeforeConversion: {
         type: "string",
         title: "Ecosystem Before Conversion",
         enum: [
@@ -312,7 +313,7 @@ const schema = {
           "Others (please specify)",
         ],
       },
-      col8: {
+      EcosystemAfterConversion: {
         type: "string",
         title: "Ecosystem After Conversion",
         enum: [
@@ -338,7 +339,7 @@ const uiSchema = {
   "ui:options": {
     titles: [
       {
-        key: "col1",
+        key: "NameOfProductService",
         title: "Name of Product/Service",
         tooltip:
           "<p>Specify size of natural ecosystem converted or land or sea converted from one intensively used or modified ecosystem to another during the reporting period.</p>",
@@ -346,7 +347,7 @@ const uiSchema = {
         tooltipdispaly: "none",
       },
       {
-        key: "col2",
+        key: "Country",
         title: "Country or Jurisdiction",
         tooltip:
           "<p>Specify size of natural ecosystem converted or land or sea converted from one intensively used or modified ecosystem to another during the reporting period.</p>",
@@ -354,7 +355,7 @@ const uiSchema = {
         tooltipdispaly: "none",
       },
       {
-        key: "col3",
+        key: "Size",
         title: "Size",
         tooltip:
           "<p>Specify size of natural ecosystem converted or land or sea converted from one intensively used or modified ecosystem to another during the reporting period.</p>",
@@ -362,14 +363,14 @@ const uiSchema = {
         tooltipdispaly: "block",
       },
       {
-        key: "col4",
+        key: "Unit",
         title: "Unit",
         tooltip: "Select the unit of measurement for the area reported.",
         layouttype: "select",
         tooltipdispaly: "block",
       },
       {
-        key: "col5",
+        key: "TypeOfEcosystemConverted",
         title: "Type of ecosystem converted",
         tooltip:
           "<p>Indicate whether the site has resulted in the conversion of a <br/> 1) natural ecosystem: An ecosystem that is mostly untouched by humans and still has the same types of plants, animals, and natural processes that would exist in the area without major human interference. or <br/> 2)One intensively used or modified ecosystem into another: These are ecosystems where human activity has substantially modified an area’s primary ecological functions and species composition to ecosystems dominated by agriculture, urban, and other industrial activities.</p>",
@@ -377,30 +378,30 @@ const uiSchema = {
         tooltipdispaly: "block",
       },
       {
-        key: "col6",
+        key: "ReferenceDate",
         title: "Cut-off/Reference Date",
         tooltip:
           "<p>Specify the the cut-off date or reference date since the natural ecosystem is converted.<br/> Cuf-off date: Natural ecosystem conversion is measured from a cut-off date associated with an organization’s policy related to natural ecosystem conversion (e.g., deforestation-free policy). If the organization does not have such a policy in place, it should select a reference date to measure natural ecosystem conversion.<br/> Reference Date: The starting point in time from which the organization begins tracking ecosystem conversion. </p>",
         layouttype: "inputDate",
         tooltipdispaly: "block",
-        keytack: "col5",
-        disable: "col6",
+        keytack: "TypeOfEcosystemConverted",
+        disable: "ReferenceDate",
         disableIfNotValue: ["Converted from natural ecosystem"],
       },
       {
-        key: "col7",
+        key: "EcosystemBeforeConversion",
         title: "Ecosystem Before Conversion",
         tooltip:
           "<p>Select the original ecosystem type before any changes occurred</p>",
         layouttype: "select",
         tooltipdispaly: "block",
-        keytack: "col5",
-        disable: "col7",
+        keytack: "TypeOfEcosystemConverted",
+        disable: "EcosystemBeforeConversion",
         disableIfNotValue: [
           "Converted from natural ecosystem",
           "Converted from one intensively used or modified ecosystem to another",
         ],
-        dynamicEnumSourceKey: "col5",
+        dynamicEnumSourceKey: "TypeOfEcosystemConverted",
         dynamicEnumMapping: {
           "Converted from natural ecosystem": [
             "Forest (e.g., tropical, temperate, boreal)",
@@ -436,19 +437,19 @@ const uiSchema = {
         },
       },
       {
-        key: "col8",
+        key: "EcosystemAfterConversion",
         title: "Ecosystem After Conversion",
         tooltip:
           "<p>Select the new land use or ecosystem type after conversion</p>",
         layouttype: "select",
         tooltipdispaly: "block",
-        keytack: "col5",
-        disable: "col7",
+        keytack: "TypeOfEcosystemConverted",
+        disable: "EcosystemAfterConversion",
         disableIfNotValue: [
           "Converted from natural ecosystem",
           "Converted from one intensively used or modified ecosystem to another",
         ],
-        dynamicEnumSourceKey: "col5",
+        dynamicEnumSourceKey: "TypeOfEcosystemConverted",
         dynamicEnumMapping: {
           "Converted from natural ecosystem": [
             "Agricultural land (e.g., cropland, pasture)",
@@ -484,7 +485,7 @@ const uiSchema = {
     ],
   },
 };
-const Screen5Comp = ({ handleQ6Change, location, year, month }) => {
+const Screen5Comp = ({ handleQ6Change, location, year }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -525,10 +526,14 @@ const Screen5Comp = ({ handleQ6Change, location, year, month }) => {
       client_id: client_id,
       user_id: user_id,
       path: view_path,
-      form_data: formData,
+      form_data: [
+        {
+          formData: formData,
+          selectedOption: selectedOption,
+        },
+      ],
       location,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -578,14 +583,50 @@ const Screen5Comp = ({ handleQ6Change, location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    setSelectedOption("");
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       const form_parent = response.data.form_data;
-      setFormData(form_parent[0].data);
+      const formValues = response.data.products_services_data || [];
+      const f_data = form_parent[0]?.data[0]?.formData || [{}];
+      const option_data = form_parent[0]?.data[0]?.selectedOption || "";
+      let finalFormData;
+
+      if (formValues.length > 0 && form_parent.length === 0) {
+        finalFormData = formValues.map((item) => ({
+          NameOfProductService: item.NameOfProductService || "",
+          Country: item.Country || "",
+          Size: "",
+          Unit: "",
+          TypeOfEcosystemConverted: "",
+          ReferenceDate: "",
+          EcosystemBeforeConversion: "",
+          EcosystemAfterConversion: "",
+        }));
+        // setReadOnly(["NameOfProductService", "Country"]);
+      } else {
+        const baseFormData = Array.isArray(f_data) ? [...f_data] : [{}];
+
+        // Extract only extra rows (those beyond baseFormData length)
+        const extraRows = formValues.slice(baseFormData.length).map((item) => ({
+          NameOfProductService: item.NameOfProductService || "",
+          Country: item.Country || "",
+          Size: "",
+          Unit: "",
+          TypeOfEcosystemConverted: "",
+          ReferenceDate: "",
+          EcosystemBeforeConversion: "",
+          EcosystemAfterConversion: "",
+        }));
+
+        finalFormData = [...baseFormData, ...extraRows];
+      }
+      setFormData(finalFormData);
+      setSelectedOption(option_data);
     } catch (error) {
       console.error("API call failed:", error);
     } finally {
@@ -593,18 +634,10 @@ const Screen5Comp = ({ handleQ6Change, location, year, month }) => {
     }
   };
   //Reloading the forms -- White Beard
-  useEffect(() => {
-    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  }, [r_schema, r_ui_schema]);
-
-  // console log the form data change
-  useEffect(() => {
-    console.log("Form data is changed -", formData);
-  }, [formData]);
-
+ 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -615,7 +648,7 @@ const Screen5Comp = ({ handleQ6Change, location, year, month }) => {
     }
     // console.log('From loaded , ready for trigger')
     // loadFormData()
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -667,8 +700,8 @@ Land and sea use change: Land and sea use change refers to how humans use and ma
         <div className="">
           <div>
             <Form
-              schema={schema}
-              uiSchema={uiSchema}
+              schema={r_schema}
+              uiSchema={r_ui_schema}
               formData={formData}
               onChange={handleChange}
               validator={validator}

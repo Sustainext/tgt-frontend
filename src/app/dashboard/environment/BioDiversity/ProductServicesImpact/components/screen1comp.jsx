@@ -13,7 +13,7 @@ const widgets = {
   MultitypefiledWidget: MultitypefiledWidget,
 };
 
-const view_path = "gri-environment-energy-302-1g-2c-conversion_factor";
+const view_path = "environment_biodiversity_products_services_with_impact_on_biodiversity_screen1";
 const client_id = 1;
 const user_id = 1;
 
@@ -22,12 +22,12 @@ const schema = {
     items: {
       type: "object",
       properties: {
-        col1: {
+        NameOfProductService: {
           type: "string",
           title: "Name of Product/Service",
         },
   
-        col2: {
+        ProductService: {
           type: "string",
           title: "Product/Service",
            enum: [
@@ -35,11 +35,11 @@ const schema = {
             "Service",
           ],
         },
-        col3: {
+        Activity: {
           type: "string",
           title: "Activity",
         },
-        col4: {
+        Country: {
           type: "string",
           title: "Country or Jurisdiction",
           enum:[
@@ -273,7 +273,7 @@ const schema = {
   "Others (please specify)"
             ]
         },
-        col5: {
+        Impacts: {
           type: "string",
           title: "Impacts",
         },
@@ -287,7 +287,7 @@ const schema = {
     "ui:options": {
       titles: [
         {
-          key: "col1",
+          key: "NameOfProductService",
           title: "Name of Product/Service",
           tooltip:
             "<p>Specify the name of the product or service in organisation's supply chain with the most significant impacts on biodiversity.<br/> Supply chain: range of activities carried out by entities upstream from the organization, which provide products or services that are used in the development of the organization’s own products or services.",
@@ -295,7 +295,7 @@ const schema = {
           tooltipdispaly: "block",
         },
         {
-          key: "col2",
+          key: "ProductService",
           title: "Product/Service",
           tooltip:
             "Indicate whether the mentioned item is a product or a service that is part of the organization’s supply chain.",
@@ -303,7 +303,7 @@ const schema = {
           tooltipdispaly: "block",
         },
         {
-          key: "col3",
+          key: "Activity",
           title: "Activity",
           tooltip:
             "Specify the key supply chain activity linked to the product or service that affects biodiversity. Examples include raw material extraction, land conversion, farming, mining, processing, transportation, or waste disposal etc.",
@@ -311,7 +311,7 @@ const schema = {
           tooltipdispaly: "block",
         },
         {
-          key: "col4",
+          key: "Country",
           title: "Country or Jurisdiction",
           tooltip:
             "Enter the name of the country or specific jurisdiction where mentioned activity occurs (e.g., Indonesia, Amazon Basin, Alberta - Canada).",
@@ -319,7 +319,7 @@ const schema = {
           tooltipdispaly: "block",
         },
         {
-          key: "col5",
+          key: "Impacts",
           title: "Impacts",
           tooltip:
             "<p>Describe how the activity affects biodiversity in that specific location. Impacts can vary greatly by geography due to differences in ecosystems.<br/> e.g. Palm oil cultivation in Indonesia leads to deforestation of tropical rainforests, threatening endangered species like the orangutan.</p>",
@@ -330,7 +330,7 @@ const schema = {
       ],
     },
   };
-const Screen1Comp = ({ handleQ6Change, location, year, month }) => {
+const Screen1Comp = ({ handleQ6Change, location, year }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -369,8 +369,7 @@ const Screen1Comp = ({ handleQ6Change, location, year, month }) => {
       path: view_path,
       form_data: formData,
       location,
-      year,
-      month,
+      year
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -420,7 +419,7 @@ const Screen1Comp = ({ handleQ6Change, location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
@@ -435,18 +434,13 @@ const Screen1Comp = ({ handleQ6Change, location, year, month }) => {
     }
   };
   //Reloading the forms -- White Beard
-  useEffect(() => {
-    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  }, [r_schema, r_ui_schema]);
+  
 
   // console log the form data change
-  useEffect(() => {
-    console.log("Form data is changed -", formData);
-  }, [formData]);
-
+  
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -457,7 +451,7 @@ const Screen1Comp = ({ handleQ6Change, location, year, month }) => {
     }
     // console.log('From loaded , ready for trigger')
     // loadFormData()
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -470,8 +464,8 @@ const Screen1Comp = ({ handleQ6Change, location, year, month }) => {
       <div>
         <div>
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

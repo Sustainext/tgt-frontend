@@ -121,7 +121,7 @@ const disableAll = isReadOnly || isDisabledBySelection;
 const disabledStyle = isDisabledBySelection
   ? "opacity-70 cursor-not-allowed pointer-events-none"
   : "";
-    console.log(isDisabledBySelection,formContext,"See")
+
  const uploadFileToAzure = async (file, newFileName) => {
     // Read file content as ArrayBuffer
     console.log(file, " is the file object");
@@ -161,7 +161,6 @@ const disabledStyle = isDisabledBySelection
     }
   };
     useEffect(() => {
-    console.log(value, " is the new value");
 
     if (value?.url && value?.name) {
       setFileName(value.name);
@@ -563,12 +562,12 @@ const isFieldDisabled = (field, row) => {
           <strong className="text-[#0D024D] text-[14px]">Proceed to:</strong>
           <ul className="mt-1">
             <li>
-              <a href="/environment/water-effluents/withdrawal-all-areas" className="text-[#007EEF] underline">
+              <a onClick={()=>{formContext.handleTabClick("Water Withdrawal and Water Discharge from All Areas")}} className="text-[#007EEF] underline">
                 Water Withdrawal and Discharge from All Areas
               </a>
             </li>
             <li>
-              <a href="/environment/water-effluents/water-stress-areas" className="text-[#007EEF] underline">
+              <a onClick={()=>{formContext.handleTabClick("Water withdrawal/Discharge from areas with water stress")}} className="text-[#007EEF] underline">
                 Water Withdrawal and Discharge from Areas with Water Stress
               </a>
             </li>
@@ -631,9 +630,9 @@ const isFieldDisabled = (field, row) => {
               <th className="text-[12px]  text-center  px-2 py-2 w-[25vw] xl:w-[3vw] lg:w-[3vw] md:w-[10vw] 2xl:w-[3vw] 4k:w-[3vw] 2k:w-[3vw]"></th>
             </tr>
           </thead>
-          <tbody className="m-0 p-0 h-[70px]">
+          <tbody className="m-0 p-0">
             {localValue.map((row, rowIndex) => (
-              <tr key={rowIndex} className="">
+              <tr key={rowIndex} className="h-[50px]">
                 {Object.keys(schema.items.properties).map((key, cellIndex) => {
                   const propertySchema = schema.items.properties[key];
                   const uiSchemaField = options.titles.find(
@@ -963,7 +962,8 @@ const isFieldDisabled = (field, row) => {
                             />
                           )}
                         </div>
-                      ) : layoutType === "inputonlytext" ? (
+                      ) : 
+                      layoutType === "inputonlytext" ? (
                         <input
                           type="text"
                           required={required}
@@ -979,7 +979,28 @@ const isFieldDisabled = (field, row) => {
                           className="text-[12px]   py-2 pl-1 w-full border-b rounded-md"
                           placeholder="Enter"
                         />
-                      ) : layoutType === "inputonlynumber" ? (
+                      ) : 
+                      layoutType === "alphaNum" ?(
+                        <input
+  type="text"
+  inputMode="text"
+  pattern="[A-Za-z0-9]*"
+  required={required}
+  value={localValue[rowIndex][key] || ""}
+  onChange={(e) => {
+    const input = e.target.value;
+    const cleaned = input.replace(/[^a-zA-Z0-9]/g, ""); // only letters and digits
+    handleInputChange(rowIndex, key, cleaned);
+  }}
+  disabled={isReadOnly || isDisabledBySelection}
+  className={`text-[12px] py-2 pl-1 w-full border-b rounded-md ${
+    isDisabledBySelection ? "opacity-70 cursor-not-allowed" : ""
+  }`}
+  placeholder="Enter"
+/>
+
+                      ):
+                      layoutType === "inputonlynumber" ? (
                         <input
                           type="text"
                           inputMode="numeric"
@@ -999,7 +1020,32 @@ const isFieldDisabled = (field, row) => {
   }`}
                           placeholder="Enter"
                         />
-                      ) : layoutType === "AssignTo" ? (
+                      ):
+                      layoutType === "inputDecimal" ? (
+  <input
+    type="text"
+    inputMode="decimal"
+    pattern="^[0-9]*[.]?[0-9]*$"
+    required={required}
+    value={localValue[rowIndex][key] || ""}
+    onChange={(e) => {
+      const input = e.target.value;
+
+      // Allow only numbers and one decimal point
+      const cleaned = input
+        .replace(/[^0-9.]/g, "")              // Remove non-numeric/non-dot
+        .replace(/(\..*)\./g, "$1");          // Allow only one dot
+
+      handleInputChange(rowIndex, key, cleaned);
+    }}
+    disabled={isReadOnly || isDisabledBySelection}
+    className={`text-[12px] py-2 pl-1 w-full border-b rounded-md ${
+      isDisabledBySelection ? "opacity-70 cursor-not-allowed" : ""
+    }`}
+    placeholder="Enter"
+  />
+)
+                      : layoutType === "AssignTo" ? (
                        <div className="flex justify-center items-center mt-2 ">
         <button
           className="bg-blue-200 text-white text-[12px] 4k:text-[14px] w-[112px]   py-1 rounded-md shadow hover:bg-blue-200"

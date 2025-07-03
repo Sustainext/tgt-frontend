@@ -14,7 +14,7 @@ import Screen2 from "./screen2";
 import Screen3 from './screen3'
 import Screen4 from "./screen4";
 
-const LocationWithSignificantImpact = ({ open, apiData, setMobileopen }) => {
+const LocationWithSignificantImpact = ({ open, apiData, setMobileopen,handleTabClick }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -195,6 +195,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         month={activeMonth}
         setLocationMessage={setLocationMessage}
         setYearMessage={setYearMessage}
+        handleTabClick={handleTabClick}
       />
       <Screen3
         location={location}
