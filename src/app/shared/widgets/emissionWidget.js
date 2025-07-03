@@ -1558,7 +1558,7 @@ const EmissionWidget = React.memo(
                           }`}
                           disabled={["assigned", "approved"].includes(rowType)}
                         >
-                          <option value="">Unit</option>
+                          <option value="">{unit || "Unit"}</option>
                           {units.map((unit, index) => (
                             <option key={index} value={unit}>
                               {unit}
@@ -1612,7 +1612,7 @@ const EmissionWidget = React.memo(
                           }`}
                           disabled={["assigned", "approved"].includes(rowType)}
                         >
-                          <option value="">Unit</option>
+                          <option value="">{unit2 || "Unit"}</option>
                           {units2.map((unit, index) => (
                             <option key={index} value={unit}>
                               {unit}
