@@ -404,6 +404,7 @@ const defaultSubsections = {
         {
           id: 'management_of_material_topic',
           label: 'Management Of Material Topic',
+          field:["material_topic_management"],
           enabled: false
         }
       ]
@@ -546,6 +547,7 @@ const defaultSubsections = {
         {
           id: 'supply_chain_material_topic_management',
           label: 'Management Of Material Topic',
+          field:["material_topic_management"],
           enabled: false
         },
         {
@@ -570,6 +572,7 @@ const defaultSubsections = {
         {
           id: 'highlights_material_topic_management',
           label: 'Management Of Material Topics',
+          field:["material_topic_management"],
           enabled: false
         },
         {
@@ -595,6 +598,7 @@ const defaultSubsections = {
         {
           id: 'infrastructure_material_topic_management',
           label: 'Management Of Material Topics',
+          field:["material_topic_management"],
           enabled: false
         },
         {
@@ -612,6 +616,7 @@ const defaultSubsections = {
         {
           id: 'climate_material_topic_management',
           label: 'Management Of Material Topics',
+          field:["material_topic_management"],
           enabled: false
         },
         {
@@ -641,6 +646,7 @@ const defaultSubsections = {
         {
           id: 'tax_material_topic_management',
           label: 'Management Of Material Topic',
+          field:["material_topic_management"],
           enabled: false
         },
         {
@@ -668,6 +674,7 @@ const defaultSubsections = {
         {
           id: 'anti_corruption_material_topic_management',
           label: 'Management Of Material Topic',
+          field:["material_topic_management"],
           enabled: false
         },
         {
@@ -695,6 +702,7 @@ const defaultSubsections = {
         {
           id: 'political_contribution_material_topic_management',
           label: 'Management Of Material Topic',
+          field:["material_topic_management"],
           enabled: false
         }
       ]
@@ -707,7 +715,7 @@ const defaultSubsections = {
       field:['emissions'],
       enabled: false,
       children: [
-        { id: 'emissions_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'emissions_material_topic_management', label: 'Management Of Material Topics',field:["material_topic_management"], enabled: false },
         { id: 'scope_1_ghg_emissions', label: 'Scope 1 GHG Emissions',field:['scope_one_emissions','biogenic_c02_emissions'], enabled: false },
         { id: 'scope_2_ghg_emissions', label: 'Scope 2 GHG Emissions',field:['scope_two_emissions'], enabled: false },
         { id: 'scope_3_ghg_emissions', label: 'Scope 3 GHG Emissions',field:['scope_three_emissions','biogenic_c02_emissions_305_3c'], enabled: false },
@@ -724,7 +732,7 @@ const defaultSubsections = {
       field:['material_management_strategy'],
       enabled: false,
       children: [
-        { id: 'materials_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'materials_material_topic_management', label: 'Management Of Material Topics',field:["material_topic_management"], enabled: false },
         { id: 'recycled_input_materials', label: 'Recycled Input Materials Used',field:['recycling_process'], enabled: false },
         { id: 'reclaimed_products_packaging', label: 'Reclaimed Products And Their Packaging Materials',field:['reclamation_recycling_process'], enabled: false }
       ]
@@ -734,7 +742,7 @@ const defaultSubsections = {
       label: 'Water',
       enabled: false,
       children: [
-        { id: 'water_material_topic_management', label: 'Management Of Material Topic', enabled: false },
+        { id: 'water_material_topic_management', label: 'Management Of Material Topic',field:["material_topic_management"], enabled: false },
         { id: 'water_withdrawal', label: 'Water Withdrawal',field:['water_withdrawal_tracking'], enabled: false },
         { id: 'water_discharge_impact', label: 'Water Discharge & Management Of Associated Impact', enabled: false },
         { id: 'water_consumption', label: 'Water Consumption',field:['water_consumption_goals'], enabled: false }
@@ -745,7 +753,7 @@ const defaultSubsections = {
       label: 'Energy',
       enabled: false,
       children: [
-        { id: 'energy_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'energy_material_topic_management', label: 'Management Of Material Topics',field:["material_topic_management"], enabled: false },
         { id: 'energy_consumption_within', label: 'Energy Consumption Within The Organisation',field:['energy_consumption_within_organization'], enabled: false },
         { id: 'energy_consumption_outside', label: 'Energy Consumption Outside Of The Organisation',field:['energy_consumption_outside_organization'], enabled: false },
         { id: 'energy_intensity', label: 'Energy Intensity', enabled: false },
@@ -757,7 +765,7 @@ const defaultSubsections = {
       label: 'Waste',
       enabled: false,
       children: [
-        { id: 'waste_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'waste_material_topic_management', label: 'Management Of Material Topics',field:["material_topic_management"], enabled: false },
         { id: 'waste_generation_impacts', label: 'Waste Generation And Impacts', enabled: false },
         { id: 'waste_impact_management', label: 'Management Of Waste Related Impacts', enabled: false },
         { id: 'waste_disposed', label: 'Waste Disposed', enabled: false },
@@ -770,7 +778,7 @@ const defaultSubsections = {
       label: 'Biodiversity',
       enabled: false,
       children: [
-        { id: 'biodiversity_material_topic_management', label: 'Management Of Material Topic', enabled: false },
+        { id: 'biodiversity_material_topic_management', label: 'Management Of Material Topic',field:["material_topic_management"], enabled: false },
         { id: 'habitat_protected_restored', label: 'Habitat Protected And Restored',field:['habitat_protection_restoration_commitment'], enabled: false }
       ]
     },
@@ -780,7 +788,7 @@ const defaultSubsections = {
       field:['air_quality_protection_commitment'],
       enabled: false,
       children: [
-        { id: 'air_quality_material_topic_management', label: 'Management Of Material Topics', enabled: false }
+        { id: 'air_quality_material_topic_management', label: 'Management Of Material Topics',field:["material_topic_management"], enabled: false }
       ]
     }
   ],  
@@ -790,7 +798,7 @@ const defaultSubsections = {
       label: 'Employees',
       enabled: false,
       children: [
-        { id: 'employees_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'employees_material_topic_management', label: 'Management Of Material Topics',field:["material_topic_management"], enabled: false },
         { id: 'employee_hiring_turnover', label: 'Employee Hire, Turnover',field:['workforce_hire_retention_statement'], enabled: false },
         { id: 'employee_benefits_health', label: 'Employee Benefits And Health Services', enabled: false },
         { id: 'parental_leaves', label: 'Parental Leaves',field:['parental_leaves'], enabled: false },
@@ -803,7 +811,7 @@ const defaultSubsections = {
       label: 'Labour Management',
       enabled: false,
       children: [
-        { id: 'labour_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'labour_material_topic_management', label: 'Management Of Material Topics',field:["material_topic_management"], enabled: false },
         { id: 'non_employee_workers', label: 'Workers Who Are Not Employees', enabled: false },
         { id: 'forced_labour', label: 'Forced Or Compulsory Labour',field:['forced_labor_position'], enabled: false }
       ]
@@ -813,7 +821,7 @@ const defaultSubsections = {
       label: 'Incidents Of Child Labour',
       enabled: false,
       children: [
-        { id: 'child_labour_material_topic_management', label: 'Management Of Material Topic', enabled: false }
+        { id: 'child_labour_material_topic_management', label: 'Management Of Material Topic',field:["material_topic_management"], enabled: false }
       ]
     },
     {
@@ -821,7 +829,7 @@ const defaultSubsections = {
       label: 'Diversity, Inclusion',
       enabled: false,
       children: [
-        { id: 'diversity_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'diversity_material_topic_management', label: 'Management Of Material Topics',field:["material_topic_management"], enabled: false },
         { id: 'diversity_governance_employees', label: 'Diversity Of Governance Bodies And Employees',field:['employee_diversity_position'], enabled: false },
         { id: 'diversity_remuneration', label: 'Remuneration',field:['remuneration_practices'], enabled: false }
       ]
@@ -831,7 +839,7 @@ const defaultSubsections = {
       label: 'Training & Education',
       enabled: false,
       children: [
-        { id: 'training_material_topic_management', label: 'Management Of Material Topics', enabled: false },
+        { id: 'training_material_topic_management', label: 'Management Of Material Topics',field:["material_topic_management"], enabled: false },
         { id: 'training_programs_upgrading_skills', label: 'Programs For Upgrading Employee Skills And Transition Assistance Programs',field:['employee_skill_upgrade_programs'], enabled: false }
       ]
     },
@@ -840,7 +848,7 @@ const defaultSubsections = {
       label: 'Occupational Health And Safety',
       enabled: false,
       children: [
-        { id: 'ohs_material_topic_management', label: 'Management Of Material Topic', enabled: false },
+        { id: 'ohs_material_topic_management', label: 'Management Of Material Topic',field:["material_topic_management"], enabled: false },
         { id: 'ohs_management_system', label: 'OHS Management System', enabled: false },
         { id: 'occupational_health_services', label: 'Occupational Health Services', enabled: false },
         { id: 'worker_ohs_participation', label: 'Worker Participation, Consultation, And Communication On OHS',field:['ohs_policies'], enabled: false },
@@ -866,7 +874,7 @@ const defaultSubsections = {
       field:['violation_discrimination_policy'],
       enabled: false,
       children: [
-        { id: 'violations_material_topic_management', label: 'Management Of Material Topic', enabled: false }
+        { id: 'violations_material_topic_management', label: 'Management Of Material Topic',field:["material_topic_management"], enabled: false }
       ]
     }
   ],  
@@ -880,6 +888,7 @@ const defaultSubsections = {
         {
           id: 'community_engagement_material_topic_management',
           label: 'Management Of Material Topic',
+          field:["material_topic_management"],
           enabled: false
         },
         {
@@ -907,6 +916,7 @@ const defaultSubsections = {
         {
           id: 'products_services_material_topic_management',
           label: 'Management Of Material Topic',
+          field:["material_topic_management"],
           enabled: false
         },
         {
@@ -930,6 +940,7 @@ const defaultSubsections = {
         {
           id: 'product_labeling_material_topic_management',
           label: 'Management Of Material Topic',
+          field:["material_topic_management"],
           enabled: false
         },
         {
@@ -949,6 +960,7 @@ const defaultSubsections = {
         {
           id: 'customers_material_topic_management',
           label: 'Management Of Material Topic',
+          field:["material_topic_management"],
           enabled: false
         }
       ]
