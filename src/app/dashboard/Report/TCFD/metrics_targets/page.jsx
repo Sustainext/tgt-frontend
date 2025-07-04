@@ -202,15 +202,15 @@ const MetricsTargets = forwardRef(({ onSubmitSuccess }, ref) => {
         field: "sector_info",
         isSkipped: false,
       },
-      sector_info2: {
-        page: "metrics_targets",
-        label: "7.1 Sector Information",
-        subLabel: "Sector-Specific Information",
-        type: "textarea",
-        content: metricsTargets.sectorInfo2,
-        field: "sector_info2",
-        isSkipped: false,
-      },
+     sector_info2: {
+      page: "metrics_targets",
+      label: "7.2 Sector-Specific Information",
+      subLabel: "Add sector-specific information",
+      type: "textarea", 
+      content: metricsTargets.sectorInfo2,
+      field: "sector_info_2",
+      isSkipped: false,
+    },
     };
 
     formData.append("data", JSON.stringify(dataPayload));
@@ -322,6 +322,7 @@ const MetricsTargets = forwardRef(({ onSubmitSuccess }, ref) => {
       dispatch(setClimateTargets(reportData?.climate_targets?.content || ""));
       dispatch(setClosingRemarks(reportData?.closing_remarks?.content || ""));
       dispatch(setSectorInfo(reportData?.sector_info?.content || ""));
+      dispatch(setSectorInfo2(reportData?.sector_info2?.content || ""));
 
       console.log("Metrics & Targets TCFD Collect Data:", tcfdData);
       console.log("Loaded Redux State:", {

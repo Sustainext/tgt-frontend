@@ -9,6 +9,8 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 import { Oval } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { fetchEmissionsData, fetchApprovedTasks, fetchAssignedTasks, clearSelectedRows, setValidationErrors } from '../../../../lib/redux/features/emissionSlice';
+import { useDispatch } from "react-redux";
 
 const BulkImportModal = ({ isOpen, onClose, setIsModalOpen, showToast }) => {
   const [isFileUploaded, setIsFileUploaded] = useState(false);
@@ -19,6 +21,7 @@ const BulkImportModal = ({ isOpen, onClose, setIsModalOpen, showToast }) => {
   const [errorFileBase64, setErrorFileBase64] = useState(null);
   const [loopen, setLoOpen] = useState(false);
   const [isResultModalOpen, setIsResultModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -110,17 +113,17 @@ const BulkImportModal = ({ isOpen, onClose, setIsModalOpen, showToast }) => {
       LoaderClose();
       setIsResultModalOpen(true);
     } catch (error) {
-      const massge = error.response?.data?.message
-        toast.error(massge, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+      const massge = error.response?.data?.message;
+      toast.error(massge, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       console.error("Unexpected error:", error);
       LoaderClose();
     }
@@ -151,6 +154,17 @@ const BulkImportModal = ({ isOpen, onClose, setIsModalOpen, showToast }) => {
         setErrorFileBase64(null);
         setIsModalOpen(false);
         setIsResultModalOpen(false);
+
+        const location = localStorage.getItem("selectedLocation");
+        const year = localStorage.getItem("selectedYear");
+        const month = localStorage.getItem("selectedMonth");
+        // Fetch data
+        dispatch(fetchEmissionsData({ location, year, month }));
+        dispatch(fetchAssignedTasks({ location, year, month }));
+        dispatch(fetchApprovedTasks({ location, year, month }));
+        dispatch(clearSelectedRows());
+
+        dispatch(setValidationErrors({}));
       } else {
         toast.error("Import failed. Please try again.", {
           position: "top-right",
