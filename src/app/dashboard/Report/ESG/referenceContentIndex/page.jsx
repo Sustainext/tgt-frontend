@@ -123,7 +123,7 @@ const ReferenceContentIndex = ({
     );
   };
 
-  console.log(data,"see the data")
+  //console.log(data,"see the data")
 
   return (
     <>

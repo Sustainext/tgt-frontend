@@ -34,6 +34,12 @@ import OperationalSites from "./BioDiversity/OperationalSites/page";
 import Significantimpacts from "./BioDiversity/Significantimpacts/page";
 import Habitatprotected from "./BioDiversity/Habitatprotected/page";
 import IUCNnational from "./BioDiversity/IUCNnational/page"
+import IdentificationOfBioDiversityImpact from './BioDiversity/IdentificationOfBioDiversityImpact/page'
+import LocationWithSignificantImpact from './BioDiversity/LocationWithSignificantImpact/page'
+import EcosystemServices from  './BioDiversity/EcosystemServices/page'
+import ChangesInEcosystemUse from './BioDiversity/ChangesInEcosystemUse/page'
+import StandardMethodologies from './BioDiversity/StandardMethodologies/page'
+import ProductServicesImpact from './BioDiversity/ProductServicesImpact/page'
 import { GlobalState } from "@/Context/page";
 import {
   setHeadertext1,
@@ -587,6 +593,34 @@ useEffect(() => {
                   {activeTab === "IUCN" && (
                 <IUCNnational apiData={data} setMobileopen={setMobileopen} />
               )}  
+              {activeTab==='Identification of biodiversity impacts' && (
+                <IdentificationOfBioDiversityImpact apiData={data} setMobileopen={setMobileopen}/>
+              )}
+              {
+                activeTab==='Location with Significant impacts on Biodiversity' && (
+                  <LocationWithSignificantImpact apiData={data} setMobileopen={setMobileopen}  handleTabClick={handleTabClick}/>
+                )
+              }
+              {
+                activeTab==='Ecosystem services and beneficiaries' && (
+                  <EcosystemServices apiData={data} setMobileopen={setMobileopen}/>
+                )
+              }
+              {
+                activeTab==='Changes in Ecosystem Use and Biodiversity Condition' && (
+                  <ChangesInEcosystemUse apiData={data} setMobileopen={setMobileopen}/>
+                )
+              }
+              {
+                activeTab ==='Standards, methodologies, and assumptions' && (
+                  <StandardMethodologies apiData={data} setMobileopen={setMobileopen}/>
+                )
+              }
+              {
+                activeTab ==='Products/Services with impact on Biodiversity' && (
+                  <ProductServicesImpact apiData={data} setMobileopen={setMobileopen}/>
+                )
+              }
               
             </div>
           )}

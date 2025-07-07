@@ -169,7 +169,7 @@ const Economictablemultipal = ({ id, value, onChange, formContext }) => {
       key: "ProcessDescription",
       title: "Process Description",
       tooltip:
-        "Select the strategies and actions the organization will implement to capitalize on the opportunity.",
+        "Provide a description of the process(es) used to determine financial impact on the organization based on the mentioned risk.",
       tooltipdisplay: "block",
     },
     {

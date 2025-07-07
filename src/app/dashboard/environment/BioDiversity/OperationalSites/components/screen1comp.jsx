@@ -131,7 +131,7 @@ const uiSchema = {
         key: "col3",
         title: "Unit",
         tooltip:
-          "Select whether the target is absolute (total change) or intensity based (change per unit of business activity)",
+          "Select the appropriate unit for land size.",
         layouttype: "select",
         tooltipdispaly: "block",
       },

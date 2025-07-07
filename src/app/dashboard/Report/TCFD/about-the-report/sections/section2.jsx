@@ -15,11 +15,13 @@ const Section2 = ({ section2_2Ref, data }) => {
   const dispatch = useDispatch();
   const aboutReport = useSelector(selectAboutReport);
   const editorRef = useRef(null);
+  const orgName =
+    typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
 
   // Jodit Editor configuration
   const config = {
     readonly: false,
-    placeholder: "***** ADD TEXT*******",
+    placeholder: "Add a brief statement explaining the purpose of this report",
     height: 200,
     toolbarSticky: false,
     showCharsCounter: false,
@@ -35,7 +37,7 @@ const Section2 = ({ section2_2Ref, data }) => {
   };
 
   const loadAutoFillContent = () => {
-    const autoFillContent = `<p>This report has been prepared in alignment with the TCFD recommendations to provide stakeholders with a clear understanding of how [Company Name] identifies, manages, and responds to climate-related risks and opportunities.</p>`;
+    const autoFillContent = `<p>This report has been prepared in alignment with the TCFD recommendations to provide stakeholders with a clear understanding of how ${orgName} identifies, manages, and responds to climate-related risks and opportunities.</p>`;
     
     dispatch(setAboutReportDescription(autoFillContent));
   };
@@ -54,7 +56,7 @@ const Section2 = ({ section2_2Ref, data }) => {
           
           <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between">
             <p className="text-[15px] text-[#344054] mb-2 mt-3">
-              ***** ADD TEXT*******
+             Add a brief statement explaining the purpose of this report
             </p>
             <button
               className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"

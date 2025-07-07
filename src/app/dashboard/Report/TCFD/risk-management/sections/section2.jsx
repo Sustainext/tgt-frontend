@@ -7,9 +7,23 @@ import {
   selectRiskManagement,
 } from "../../../../../../lib/redux/features/TCFDSlice/tcfdslice";
 
-const Section2 = ({ section6_2Ref, data, orgName }) => {
+const Section2 = ({ section6_2Ref, data, tcfdCollectData, orgName }) => {
   const dispatch = useDispatch();
   const riskManagement = useSelector(selectRiskManagement);
+
+  // Extract risk management data from tcfdCollectData
+  const managementProcessData = tcfdCollectData?.climate_risk_management_process?.[0] || {};
+  const materialityData = tcfdCollectData?.materiality_determination?.[0] || {};
+
+  // Helper function to render array values
+  const renderArrayValue = (value) => {
+    if (Array.isArray(value)) {
+      return value.map((item, index) => (
+        <div key={index}>{item}</div>
+      ));
+    }
+    return value || '';
+  };
 
   return (
     <>
@@ -19,25 +33,21 @@ const Section2 = ({ section6_2Ref, data, orgName }) => {
             6.2 Climate Risk Management
           </h3>
 
-          {/* Risk Prioritization */}
-          <div className="mb-6 bg-blue-50 p-4 rounded border">
-            <p className="text-blue-600 text-sm mb-2">
-              (Response from "Describe the process your organization uses to prioritize climate-related risks, including how you assess their materiality to your business strategy, operations, and financial planning" question, without heading)
-            </p>
-            <div className="border-b border-blue-200 my-2"></div>
-            <div className="text-sm text-gray-700">
-              {data?.risk_prioritization || "Risk prioritization process details will be displayed here based on API response."}
+          <div className="mb-6">
+            {/* <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+              Risk Prioritization Process
+            </h4> */}
+            <div className="text-sm">
+              {renderArrayValue(materialityData?.Q1)}
             </div>
           </div>
 
-          {/* Risk Management Process */}
-          <div className="mb-6 bg-blue-50 p-4 rounded border">
-            <p className="text-blue-600 text-sm mb-2">
-              (Response from "Describe your organization's process for managing climate-related risks." question, without heading)
-            </p>
-            <div className="border-b border-blue-200 my-2"></div>
-            <div className="text-sm text-gray-700">
-              {data?.risk_management_process || "Risk management process details will be displayed here based on API response."}
+          <div className="mb-6">
+            {/* <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+              Climate Risk Management Process
+            </h4> */}
+            <div className="text-sm">
+              {renderArrayValue(managementProcessData?.Q1)}
             </div>
           </div>
         </div>

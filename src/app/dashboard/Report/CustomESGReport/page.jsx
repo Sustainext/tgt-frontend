@@ -238,6 +238,20 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
   const [corpName, setCorpName] = useState('');
   const [reportingPeriod,setReportingPeriod]=useState('')
 
+  function formatDate(inputDate) {
+    const date = new Date(inputDate);
+  
+    // Check for invalid date
+    if (isNaN(date)) {
+      return "Invalid date";
+    }
+  
+    const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const year = date.getFullYear();
+  
+    return `${day}-${month}-${year}`;
+  }
 
   useEffect(() => {
     // const savedSections = JSON.parse(localStorage.getItem('report_sections') || '[]');
@@ -252,7 +266,7 @@ export default function ReportBuilderPage({loadMissingFields,hasChanges}) {
     setReportName(savedReportName);
     setOrgName(savedOrgName);
     setCorpName(localStorage.getItem('reportCorpName') || '')
-    setReportingPeriod(localStorage.getItem('reportstartdate') +" to "+ localStorage.getItem('reportenddate'))
+    setReportingPeriod(formatDate(localStorage.getItem('reportstartdate')) +" to "+ formatDate(localStorage.getItem('reportenddate')))
   }, []);
 
   const handleNextStep = () => {

@@ -131,7 +131,7 @@ const SubsectionSelector = forwardRef(({ onBack, onNext }, ref) => {
             checked={isChecked}
             disabled={isDisabled}
             onChange={() => toggleSubsection(sectionId, subsection)}
-            className="w-4 h-4 green-checkbox cursor-pointer disabled:cursor-not-allowed"
+            className="w-4 h-4 green-checkbox flex-shrink-0 cursor-pointer disabled:cursor-not-allowed"
           />
           <span className={`text-[14px] ${subsection.children ? 'font-medium' : ''} text-[#2E0B34] ${isDisabled ? 'opacity-50' : ''}`}>
             {subsection.label}

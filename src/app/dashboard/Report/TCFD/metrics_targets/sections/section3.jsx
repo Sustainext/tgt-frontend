@@ -6,16 +6,54 @@ import Image from "next/image";
 import STARSVG from "../../../../../../../public/star.svg";
 import {
   setClimateTargets,
+  setClosingRemarks,
   selectMetricsTargets,
 } from "../../../../../../lib/redux/features/TCFDSlice/tcfdslice";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section3 = ({ section7_3Ref, data, orgName }) => {
+const Section3 = ({ section7_3Ref, data, tcfdCollectData, orgName }) => {
   const dispatch = useDispatch();
   const metricsTargets = useSelector(selectMetricsTargets);
   const editorRef1 = useRef(null);
   const editorRef2 = useRef(null);
+
+  // Extract targets data from tcfdCollectData
+  const climateTargets = tcfdCollectData?.targets_used_to_manage_climate_related_risks_and_opportunities_and_performance_against_targets || [];
+
+  // Helper function to safely render any data value
+  const safeRenderValue = (value) => {
+    if (value === null || value === undefined) {
+      return '';
+    }
+    
+    if (typeof value === 'object') {
+      if (value.start && value.end) {
+        return `${value.start} - ${value.end}`;
+      }
+      return JSON.stringify(value);
+    }
+    
+    return String(value);
+  };
+
+  // Helper function to render array values safely
+  const renderArrayValue = (value) => {
+    if (Array.isArray(value)) {
+      return value.join(', ');
+    }
+    
+    // Handle objects (like date ranges with start/end)
+    if (value && typeof value === 'object') {
+      if (value.start && value.end) {
+        return `${value.start} - ${value.end}`;
+      }
+      return JSON.stringify(value);
+    }
+    
+    // Handle primitive values
+    return value || '';
+  };
 
   // Jodit Editor configuration
   const config = {
@@ -37,9 +75,9 @@ const Section3 = ({ section7_3Ref, data, orgName }) => {
   // Auto-fill functions
   const loadTargetsAutoFillContent = () => {
     const autoFillContent = `<p>${orgName || '[Company Name]'} has adopted a formal process for setting and monitoring climate-related targets as part of its broader sustainability and risk management strategy. These targets guide the company's response to climate-related risks and opportunities, ensuring alignment with long-term business and sustainability goals.</p>
-
+<br/>
 <p>To ensure clarity and comparability, targets are defined using established metric categories and key performance indicators.</p>
-
+<br/>
 <p>Overall, ${orgName || '[Company Name]'}'s approach to climate target-setting reflects a commitment to proactive climate management and supports its transition to a more sustainable and resilient operating model.</p>`;
     
     dispatch(setClimateTargets(autoFillContent));
@@ -49,9 +87,9 @@ const Section3 = ({ section7_3Ref, data, orgName }) => {
   };
 
   const loadClosingRemarksAutoFillContent = () => {
-    const autoFillContent = `<p>As climate-related risks and opportunities continue to evolve, ${orgName || '[Company Name]'} remains committed to enhancing the transparency, consistency, and depth of our climate-related disclosures. This report reflects our ongoing efforts to integrate climate considerations into our governance, strategy, risk management, and performance monitoring processes. We recognize that collective action is paramount, and we will continue to strengthen our capabilities, refine our approach, and engage with stakeholders to build a resilient, low-carbon future.</p>`;
+    const autoFillContent = `<p>As climate-related risks and opportunities continue to evolve, ${orgName} remains committed to enhancing the transparency, consistency, and depth of our climate-related disclosures. This report reflects our ongoing efforts to integrate climate considerations into our governance, strategy, risk management, and performance measurement frameworks. We recognize that addressing climate change is a journey, and we will continue to strengthen our capabilities, refine our approach, and engage with stakeholders to support a resilient, low-carbon future. .</p>`;
     
-    dispatch(setClimateTargets(autoFillContent));
+    dispatch(setClosingRemarks(autoFillContent));
     if (editorRef2.current) {
       editorRef2.current.value = autoFillContent;
     }
@@ -61,44 +99,85 @@ const Section3 = ({ section7_3Ref, data, orgName }) => {
     dispatch(setClimateTargets(content));
   };
 
-  // Mock data for climate targets table
-  const mockTargetsData = [
-    { 
-      keyMetric: "Scope 1 & 2 GHG Emissions Reduction",
-      targetCategory: "Emissions Reduction",
-      targetType: "Absolute",
-      metricUnit: "% reduction from baseline",
-      baseYear: "2020"
-    },
-    { 
-      keyMetric: "Renewable Energy Procurement",
-      targetCategory: "Energy Transition",
-      targetType: "Intensity",
-      metricUnit: "% of total energy consumption",
-      baseYear: "2021"
-    },
-    { 
-      keyMetric: "Carbon Intensity Reduction",
-      targetCategory: "Emissions Intensity",
-      targetType: "Intensity",
-      metricUnit: "tCO2e per unit of production",
-      baseYear: "2020"
-    },
-    { 
-      keyMetric: "Scope 3 Emissions Reduction",
-      targetCategory: "Value Chain Emissions",
-      targetType: "Absolute",
-      metricUnit: "% reduction from baseline",
-      baseYear: "2022"
-    },
-    { 
-      keyMetric: "Water Use Efficiency",
-      targetCategory: "Resource Management",
-      targetType: "Intensity",
-      metricUnit: "m³ per unit of production",
-      baseYear: "2021"
-    }
-  ];
+  const handleClosingRemarksEditorChange = (content) => {
+    dispatch(setClosingRemarks(content));
+  };
+
+  const TargetsTable = ({ title, data, columns }) => (
+    <div className="mb-8">
+      <div className="overflow-x-auto">
+              <h4 className="my-4 text-sm font-semibold">{title}</h4>
+        <div className="border border-gray-200 rounded-lg overflow-hidden">
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="bg-gradient-to-r from-sky-500/5 to-lime-500/5">
+                {columns.map((col, index) => (
+                  <th
+                    key={index}
+                    className={`py-8 px-4 text-left text-gray-600 font-medium ${
+                      index < columns.length - 1
+                        ? "border-r border-gray-200"
+                        : ""
+                    }`}
+                  >
+                    {col}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {data && data.length > 0 ? data.map((row, index) => (
+                <tr
+                  key={index}
+                  className="bg-white border-t border-gray-200 hover:bg-gray-50 transition-colors"
+                >
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.RelatedTarget)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {renderArrayValue(row.MetricCategory)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.TargetType)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.MetricUnit)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.BaseYear)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.BaselineValue)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.TargetTimeFrame)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.TargetValue)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.TargetGoals)}
+                  </td>
+                  <td className="border-r border-gray-200 p-4 text-gray-700">
+                    {safeRenderValue(row.PerformanceIndicators)}
+                  </td>
+                  <td className="p-4 text-gray-700">
+                    {safeRenderValue(row.MethodologyUsed)}
+                  </td>
+                </tr>
+              )) : (
+                <tr className="bg-white border-t border-gray-200">
+                  <td colSpan={columns.length} className="p-4 text-center text-gray-500">
+                    No targets data available
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -129,81 +208,41 @@ const Section3 = ({ section7_3Ref, data, orgName }) => {
               config={{...config, placeholder: "Add a statement about targets set to manage climate risks and opportunities, and the company's performance against them."}}
               tabIndex={1}
               onBlur={handleTargetsEditorChange}
-              onChange={handleTargetsEditorChange}
+              onChange={() => {}}
             />
           </div>
 
-          {/* Blue placeholder for TCFD targets data */}
-          <div className="mb-6 bg-blue-50 p-4 rounded border">
-            <p className="text-blue-600 text-sm mb-2">
-              (Response from TCFD M&T-C "Targets used to manage climate related risks and opportunities and performance against targets" without heading)
-            </p>
-            <div className="text-sm text-gray-700">
-              {data?.climate_targets_response || "Climate targets and performance data will be displayed here from TCFD calculations."}
-            </div>
-          </div>
-
           {/* Climate Targets Table */}
-          <div className="mb-8">
-            <div className="overflow-x-auto">
-              <div className="border border-blue-400 rounded-lg overflow-hidden">
-                <table className="w-full border-collapse text-sm">
-                  <thead>
-                    <tr className="bg-blue-50">
-                      <th className="py-3 px-4 text-left text-gray-600 font-medium border-r border-blue-200">
-                        Key Metrics or Climate Related Target
-                      </th>
-                      <th className="py-3 px-4 text-left text-gray-600 font-medium border-r border-blue-200">
-                        Target Metric Category
-                      </th>
-                      <th className="py-3 px-4 text-left text-gray-600 font-medium border-r border-blue-200">
-                        Target Type
-                      </th>
-                      <th className="py-3 px-4 text-left text-gray-600 font-medium border-r border-blue-200">
-                        Metric Unit
-                      </th>
-                      <th className="py-3 px-4 text-left text-gray-600 font-medium">
-                        Base Year
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {(data?.climateTargetsTable || mockTargetsData).map((row, index) => (
-                      <tr
-                        key={index}
-                        className="bg-white border-t border-blue-200 hover:bg-blue-25 transition-colors"
-                      >
-                        <td className="p-4 text-gray-700 border-r border-blue-200">
-                          {row.keyMetric || "Data"}
-                        </td>
-                        <td className="p-4 text-gray-700 border-r border-blue-200">
-                          {row.targetCategory || "Data"}
-                        </td>
-                        <td className="p-4 text-gray-700 border-r border-blue-200">
-                          {row.targetType || "Data"}
-                        </td>
-                        <td className="p-4 text-gray-700 border-r border-blue-200">
-                          {row.metricUnit || "Data"}
-                        </td>
-                        <td className="p-4 text-gray-700">
-                          {row.baseYear || "Data"}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+          {climateTargets.length > 0 ? (
+            <TargetsTable
+              title="Climate Targets and Performance"
+              data={climateTargets}
+              columns={[
+                "Key Metrics or Climate Related Target",
+                "Target Metric Category",
+                "Target Type",
+                "Metric Unit",
+                "Base Year",
+                "Base line value",
+                "Target Time Frame",
+                "Target Value",
+                "Target Goals",
+                "Key Performance Indicator",
+                "Methodology Used"
+              ]}
+            />
+          ) : (
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <p className="text-blue-700 text-sm">
+                No climate targets data available. Please complete the targets questionnaire to see detailed targets and performance information here.
+              </p>
             </div>
-          </div>
+          )}
 
           {/* Closing Remarks Section */}
           <div className="mt-8">
-            <h4 className="text-[15px] text-[#344054] mb-3 font-semibold">
-              Add closing remarks here
-            </h4>
-
             <div className="xl:flex lg:flex md:flex 4k:flex 2k:flex justify-between items-start">
-              <div className="flex-1"></div>
+              <div className="text-slate-700 text-base font-normal font-['Manrope'] leading-tight">Add your closing remarks here</div>
               <button
                 className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
                 onClick={loadClosingRemarksAutoFillContent}
@@ -216,11 +255,11 @@ const Section3 = ({ section7_3Ref, data, orgName }) => {
             <div className="mb-6">
               <JoditEditor
                 ref={editorRef2}
-                value={metricsTargets.climateTargets}
-                config={{...config, placeholder: "Add closing remarks about climate targets and future commitments"}}
+                value={metricsTargets.closingRemarks}
+                config={{...config, placeholder: "Add your closing remarks here."}}
                 tabIndex={2}
-                onBlur={handleTargetsEditorChange}
-                onChange={handleTargetsEditorChange}
+                onBlur={handleClosingRemarksEditorChange}
+                onChange={() => {}}
               />
             </div>
           </div>

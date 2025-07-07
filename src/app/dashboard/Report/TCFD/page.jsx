@@ -5,7 +5,132 @@ import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { FaCheckCircle, FaFileAlt } from "react-icons/fa";
+import {
+  MdDownload,
+  MdKeyboardArrowDown,
+  MdClose,
+  MdKeyboardArrowRight,
+} from "react-icons/md";
+
+const DownloadModal = ({
+  isOpen = true,
+  onClose = () => {},
+  onExitToReports = () => {},
+  onDownload = () => {},
+  reportName = "Report A",
+}) => {
+  const [showDownloadOptions, setShowDownloadOptions] = useState(false);
+
+  const downloadOptions = [
+    { id: "pdf", label: "Download as PDF", icon: FaFileAlt },
+    // { id: 'word', label: 'Download as Word', icon: FaFileAlt }
+  ];
+
+  const handleDownloadOptionClick = (option) => {
+    onDownload(option);
+    setShowDownloadOptions(false);
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity"
+        onClick={onClose}
+      />
+
+      {/* Modal */}
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div
+          className="bg-white rounded-xl shadow-2xl w-full max-w-2xl mx-auto transform transition-all"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Close button */}
+          <div className="flex justify-end p-4 pb-0">
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <MdClose className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Content */}
+          <div className="px-6 pb-6">
+            <div className="flex justify-start items-center gap-12">
+              {/* Success Icon */}
+              <div className="flex justify-center mb-4">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                  <FaCheckCircle className="w-8 h-8 text-green-600" />
+                </div>
+              </div>
+
+              {/* Title */}
+              <h2 className="text-xl font-semibold text-gray-900 text-center mb-2">
+                {reportName} has been created.
+              </h2>
+            </div>
+
+            {/* Subtitle */}
+            <p className="text-gray-600 text-left ml-[6rem] mb-8 text-sm">
+              To proceed, select an option from the below.
+            </p>
+
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              {/* Exit to Report Module Button */}
+              <button
+                onClick={onExitToReports}
+                className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm flex items-center justify-center gap-2"
+              >
+                <FaFileAlt className="w-4 h-4" />
+                Exit to Report Module
+              </button>
+
+              {/* Download Button with Dropdown */}
+              <div className="flex-1 relative">
+                <button
+                  onClick={() => setShowDownloadOptions(!showDownloadOptions)}
+                  className="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm flex items-center justify-center gap-2"
+                >
+                  <MdDownload className="w-4 h-4" />
+                  Download Report
+                  <MdKeyboardArrowDown
+                    className={`w-4 h-4 transition-transform ${
+                      showDownloadOptions ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {/* Dropdown Menu */}
+                {showDownloadOptions && (
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                    {downloadOptions.map((option) => {
+                      const IconComponent = option.icon;
+                      return (
+                        <button
+                          key={option.id}
+                          onClick={() => handleDownloadOptionClick(option)}
+                          className="w-full px-4 py-3 text-left text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2 first:rounded-t-lg last:rounded-b-lg border-b border-gray-100 last:border-b-0"
+                        >
+                          <IconComponent className="w-4 h-4" />
+                          {option.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
 // Import components
 import MessageFromCEO from "./message-from-ceo/page";
@@ -40,15 +165,69 @@ const TCFDReport = () => {
 
   // TCFD sections definition
   const tcfdSections = [
-    { id: 'message_ceo', title: 'Message from CEO/MD/Chairman', mandatory: false, enabled: true, order: 1 },
-    { id: 'about_report', title: 'About the Report', mandatory: false, enabled: true, order: 2 },
-    { id: 'about_company', title: 'About the Company & Operations', mandatory: false, enabled: true, order: 3 },
-    { id: 'governance', title: 'Governance', mandatory: false, enabled: true, order: 4 },
-    { id: 'strategy', title: 'Strategy', mandatory: false, enabled: true, order: 5 },
-    { id: 'risk_management', title: 'Risk Management', mandatory: false, enabled: true, order: 6 },
-    { id: 'metrics_targets', title: 'Metrics and Targets', mandatory: false, enabled: true, order: 7 },
-    { id: 'tcfd_content_index', title: 'TCFD Content Index', mandatory: false, enabled: true, order: 8 },
-    { id: 'annexure', title: 'Annexure', mandatory: false, enabled: true, order: 9 },
+    {
+      id: "message_ceo",
+      title: "Message from CEO/MD/Chairman",
+      mandatory: false,
+      enabled: true,
+      order: 1,
+    },
+    {
+      id: "about_report",
+      title: "About the Report",
+      mandatory: false,
+      enabled: true,
+      order: 2,
+    },
+    {
+      id: "about_company",
+      title: "About the Company & Operations",
+      mandatory: false,
+      enabled: true,
+      order: 3,
+    },
+    {
+      id: "governance",
+      title: "Governance",
+      mandatory: false,
+      enabled: true,
+      order: 4,
+    },
+    {
+      id: "strategy",
+      title: "Strategy",
+      mandatory: false,
+      enabled: true,
+      order: 5,
+    },
+    {
+      id: "risk_management",
+      title: "Risk Management",
+      mandatory: false,
+      enabled: true,
+      order: 6,
+    },
+    {
+      id: "metrics_targets",
+      title: "Metrics and Targets",
+      mandatory: false,
+      enabled: true,
+      order: 7,
+    },
+    {
+      id: "tcfd_content_index",
+      title: "TCFD Content Index",
+      mandatory: false,
+      enabled: true,
+      order: 8,
+    },
+    {
+      id: "annexure",
+      title: "Annexure",
+      mandatory: false,
+      enabled: true,
+      order: 9,
+    },
   ];
 
   // Local state
@@ -66,7 +245,8 @@ const TCFDReport = () => {
   const [corpName, setCorpName] = useState("");
   const [missing_fields, setMissingFields] = useState([]);
   const [isValidationModalOpen, setIsValidationModalOpen] = useState(false);
-  const [loopen, setLoOpen] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
 
   // Refs for form submission - mapped to section IDs
   const sectionRefs = {
@@ -143,35 +323,98 @@ const TCFDReport = () => {
     };
 
     if (type === "next") {
-      // const isSubmitted = await submitAndProceed();
-      if (true) {
-        setCurrentPage(prev => prev + 1);
+      const isSubmitted = await submitAndProceed();
+      if (isSubmitted) {
+        setCurrentPage((prev) => prev + 1);
       }
     } else if (type === "last") {
-      // const isSubmitted = await submitAndProceed();
+      const isSubmitted = await submitAndProceed();
       if (isSubmitted) {
         // Handle final submission
         toast.success("Report completed successfully!");
+        setIsDownloadModalOpen(true);
       }
     } else {
-      // const isSubmitted = await submitAndProceed();
-      // if (isSubmitted) {
-      //   showDraftSavedToast();
-      //   setTimeout(() => {
-      //     router.push("/dashboard/Report");
-      //   }, 4000);
-      // }
+      const isSubmitted = await submitAndProceed();
+      if (isSubmitted) {
+        showDraftSavedToast();
+        setTimeout(() => {
+          router.push("/dashboard/Report");
+        }, 4000);
+      }
     }
   };
 
   const handlePreviousStep = () => {
-    setCurrentPage(prev => prev - 1);
+    setCurrentPage((prev) => prev - 1);
   };
 
   const handleSectionClick = (sectionIndex) => {
     setCurrentPage(sectionIndex);
     setIsOpenMobile(false);
   };
+
+  const handleDownload = async (reportId) => {
+    setIsDownloading(true);
+
+    try {
+      const response = await axiosInstance.get(
+        `${process.env.BACKEND_API_URL}/tcfd_framework/get-tcfd-report-pdf/${reportId}/?download=true`,
+        {
+          headers: {
+            Authorization:
+              "Bearer " + localStorage.getItem("token")?.replace(/"/g, ""),
+          },
+          responseType: "blob", // This is crucial for binary data
+        }
+      );
+
+      // Create blob from response data
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      // Create and trigger download
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", `tcfd_report_${reportId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+
+      toast.success("Report downloaded successfully!");
+    } catch (error) {
+      console.error("Error downloading file:", error);
+
+      // Show user-friendly error message
+      toast.error("Failed to download the report. Please try again later.");
+
+      // Log more details for debugging
+      if (error.response) {
+        console.error(
+          "Response error:",
+          error.response.status,
+          error.response.data
+        );
+      } else if (error.request) {
+        console.error("Request error:", error.request);
+      } else {
+        console.error("Error:", error.message);
+      }
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
+  // Add this computed value after your state declarations
+  const reportingPeriod = useMemo(() => {
+    if (fromDate && toDate) {
+      return `${fromDate} to ${toDate}`;
+    }
+    return "";
+  }, [fromDate, toDate]);
 
   // Component mapping for sections
   const renderSectionComponent = () => {
@@ -187,24 +430,42 @@ const TCFDReport = () => {
     };
 
     switch (currentSection.id) {
-      case 'message_ceo':
-        return <MessageFromCEO ref={sectionRefs.message_ceo} {...commonProps} />;
+      case "message_ceo":
+        return (
+          <MessageFromCEO ref={sectionRefs.message_ceo} {...commonProps} />
+        );
       // TODO: Add other cases as components are created
-      case 'about_report':
-        return <AboutTheReport ref={sectionRefs.about_report} {...commonProps} />;
-      case 'about_company':
-        return <AboutCompanyOperations ref={sectionRefs.about_company} {...commonProps} />;
-      case 'governance':
+      case "about_report":
+        return (
+          <AboutTheReport ref={sectionRefs.about_report} {...commonProps} />
+        );
+      case "about_company":
+        return (
+          <AboutCompanyOperations
+            ref={sectionRefs.about_company}
+            {...commonProps}
+          />
+        );
+      case "governance":
         return <Governance ref={sectionRefs.governance} {...commonProps} />;
-      case 'strategy':
+      case "strategy":
         return <Strategy ref={sectionRefs.strategy} {...commonProps} />;
-      case 'risk_management':
-        return <RiskManagement ref={sectionRefs.risk_management} {...commonProps} />;
-      case 'metrics_targets':
-        return <MetricsTargets ref={sectionRefs.metrics_targets} {...commonProps} />;
-      case 'tcfd_content_index':
-        return <TCFDContentIndex ref={sectionRefs.tcfd_content_index} {...commonProps} />;
-      case 'annexure':
+      case "risk_management":
+        return (
+          <RiskManagement ref={sectionRefs.risk_management} {...commonProps} />
+        );
+      case "metrics_targets":
+        return (
+          <MetricsTargets ref={sectionRefs.metrics_targets} {...commonProps} />
+        );
+      case "tcfd_content_index":
+        return (
+          <TCFDContentIndex
+            ref={sectionRefs.tcfd_content_index}
+            {...commonProps}
+          />
+        );
+      case "annexure":
         return <Annexure ref={sectionRefs.annexure} {...commonProps} />;
       default:
         return (
@@ -271,6 +532,9 @@ const TCFDReport = () => {
                               {orgName} {corpName ? " / " : ""}
                               {corpName}{" "}
                             </p>
+                            <p className="text-[#667085] text-[13px]">
+                              Reporting Period: {reportingPeriod}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -280,11 +544,23 @@ const TCFDReport = () => {
                         <p className="gradient-text text-[22px] font-bold pt-3 ml-3">
                           {reportName}
                         </p>
-                        <p className="mt-2 text-[#667085] text-[13px] ml-3">
-                          Organization{corpName ? " / Corporate" : ""}:{" "}
-                          {orgName} {corpName ? " / " : ""}
-                          {corpName}{" "}
-                        </p>
+                        <div className="flex items-center gap-4 mt-2 ml-3">
+                          <p className="text-[#667085] text-[13px]">
+                            Organization{corpName ? " / Corporate" : ""}:{" "}
+                            {orgName} {corpName ? " / " : ""}
+                            {corpName}
+                          </p>
+                          {reportingPeriod && (
+                            <>
+                              <span className="text-[#667085] text-[16px]">
+                                |
+                              </span>
+                              <p className="text-[#667085] text-[13px]">
+                                Reporting Period: {reportingPeriod}
+                              </p>
+                            </>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -293,7 +569,11 @@ const TCFDReport = () => {
 
               {/* Desktop navigation */}
               <div className="hidden md:block lg:block xl:block">
-                <div className="float-right mr-2 flex items-center justify-center">
+                <div
+                  className={`float-right ${
+                    currentPage === 4 ? "mr-[10rem]" : "mr-2"
+                  } flex items-center justify-center`}
+                >
                   <div className="flex items-center justify-center">
                     <button
                       style={{
@@ -360,9 +640,7 @@ const TCFDReport = () => {
           </div>
 
           <div className="xl:mx-3 md:mx-3 lg:mx-3 4k:mx-3 2k:mx-3 2xl:mx-3 my-2">
-            <div>
-              {renderSectionComponent()}
-            </div>
+            <div>{renderSectionComponent()}</div>
           </div>
         </div>
       </div>
@@ -389,6 +667,16 @@ const TCFDReport = () => {
           </div>
         </>
       )}
+
+      <DownloadModal
+        isOpen={isDownloadModalOpen}
+        onClose={() => setIsDownloadModalOpen(false)}
+        onExitToReports={() => {
+          router.push("/dashboard/Report");
+        }}
+        onDownload={() => handleDownload(reportid)}
+        reportName="TCFD Report"
+      />
 
       <ToastContainer />
     </>

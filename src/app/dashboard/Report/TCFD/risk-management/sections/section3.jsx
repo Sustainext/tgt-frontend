@@ -6,9 +6,22 @@ import {
   selectRiskManagement,
 } from "../../../../../../lib/redux/features/TCFDSlice/tcfdslice";
 
-const Section3 = ({ section6_3Ref, data, orgName }) => {
+const Section3 = ({ section6_3Ref, data, tcfdCollectData, orgName }) => {
   const dispatch = useDispatch();
   const riskManagement = useSelector(selectRiskManagement);
+
+  // Extract integration data from tcfdCollectData
+  const integrationData = tcfdCollectData?.climate_risks_integration_into_organisations_risk_management_framework?.[0] || {};
+
+  // Helper function to render array values
+  const renderArrayValue = (value) => {
+    if (Array.isArray(value)) {
+      return value.map((item, index) => (
+        <div key={index}>{item}</div>
+      ));
+    }
+    return value || '';
+  };
 
   return (
     <>
@@ -18,23 +31,17 @@ const Section3 = ({ section6_3Ref, data, orgName }) => {
             6.3 Integration with Overall Risk Management
           </h3>
 
-          {/* Integration Process */}
-          <div className="mb-6 bg-blue-50 p-4 rounded border">
-            <p className="text-blue-600 text-sm mb-2">
-              (Note for devs: A tailored version of the 'Climate risks Integration into Organisation's Risk Management Framework' section's data is required here. i.e. skip yes/no response)
-            </p>
-            <p className="text-blue-600 text-sm mb-2">
-              (If yes option is selected, fetch response from "If yes, describe how climate-related risk processes (identification, assessment, management) are integrated into your organization's overall risk management framework." question, without heading)
-            </p>
-            <div className="border-b border-blue-200 my-2"></div>
-            <p className="text-blue-600 text-sm mb-4">
-              (If 'No' option is selected skip entire section).
-            </p>
-            
-            <div className="text-sm text-gray-700">
-              {data?.risk_integration || "Risk integration process details will be displayed here based on API response when 'Yes' option is selected."}
+          {/* Only show if Q1 is Yes */}
+          {integrationData?.Q1 === 'Yes' && (
+            <div className="mb-6">
+              {/* <h4 className="text-[15px] text-[#344054] mb-2 font-semibold">
+                Integration of Climate Risk Processes into Overall Risk Management Framework
+              </h4> */}
+              <div className="text-sm">
+                {renderArrayValue(integrationData?.Q2)}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </>
