@@ -702,14 +702,20 @@ const Report = () => {
   const renderSecondSelect = () => {
     if (firstSelection === "Organization") {
       return (
-        <div className="grid grid-cols-1">
+        <div className="grid grid-cols-1 mb-3">
+           <label
+                htmlFor="cname"
+                className="text-neutral-800 text-[12px] font-normal"
+              >
+                Select Organization
+              </label>
           <select
-            className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+            className="block w-full mt-2 rounded-md border-0 py-1.5 xl:pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             value={selectedOrg}
             onChange={handleChangeallcrop}
             // onChange={(e) => setSelectedOrg(e.target.value)}
           >
-            <option value="">--Select Organization--- </option>
+            <option value="" disabled selected hidden>--Select Organization--- </option>
             {organisations?.map((org) => (
               <option key={org.id} value={org.id}>
                 {org.name}
@@ -717,29 +723,29 @@ const Report = () => {
             ))}{" "}
           </select>
           {error.selectedOrgrs && (
-            <p className="text-red-500 ml-1">{error.selectedOrgrs}</p>
+            <p className="text-red-500 ml-1 text-sm">{error.selectedOrgrs}</p>
           )}
         </div>
       );
     } else if (firstSelection === "Corporate") {
       return (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 mb-4">
-            <div className="mr-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 mb-3">
+            <div className="lg:mr-2">
               <label
                 htmlFor="cname"
                 className="text-neutral-800 text-[12px] font-normal"
               >
                 Select Organization
               </label>
-              <div className="mt-2">
+              <div className="mt-2 xl:mr-2">
                 <select
-                  className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                  className="block w-full rounded-md border-0 py-1.5 xl:pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={selectedOrg}
                   // onChange={(e) => setSelectedOrg(e.target.value)}
                   onChange={handleChangecrop}
                 >
-                  <option value="">--Select Organization--- </option>
+                  <option value="" disabled selected hidden>--Select Organization--- </option>
                   {organisations?.map((org) => (
                     <option key={org.id} value={org.id}>
                       {org.name}
@@ -748,11 +754,11 @@ const Report = () => {
                 </select>
 
                 {error.selectedOrgs && (
-                  <p className="text-red-500 ml-1">{error.selectedOrgs}</p>
+                  <p className="text-red-500 ml-1 text-sm">{error.selectedOrgs}</p>
                 )}
               </div>
             </div>
-            <div className="ml-2">
+            <div className="lg:ml-2">
               <label
                 htmlFor="cname"
                 className="text-neutral-800 text-[12px] font-normal"
@@ -761,7 +767,7 @@ const Report = () => {
               </label>
               <div className="mt-2">
                 <select
-                  className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                  className="block w-full rounded-md border-0 py-1.5 xl:pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={selectedCorp}
                   // onChange={(e) => setSelectedCorp(e.target.value)}
                   onChange={(e) => {
@@ -771,7 +777,7 @@ const Report = () => {
                     setCorpName(selected?.name || "");
                   }}
                 >
-                  <option value="">--Select Corporate--- </option>
+                  <option value="" disabled selected hidden>--Select Corporate--- </option>
                   {corporates?.map((corp) => (
                     <option key={corp.id} value={corp.id}>
                       {corp.name}
@@ -779,7 +785,7 @@ const Report = () => {
                   ))}{" "}
                 </select>
                 {error.selectedCorp && (
-                  <p className="text-red-500 ml-1">{error.selectedCorp}</p>
+                  <p className="text-red-500 ml-1 text-sm">{error.selectedCorp}</p>
                 )}
               </div>
             </div>
@@ -1047,7 +1053,7 @@ const Report = () => {
               {/* validation code end */}
               <div className="mt-2 xl:px-7 py-3">
                 <form className="w-full text-left">
-                  <div className="mr-2 mb-4 w-[101%]">
+                  <div className="lg:mr-2 mb-3 w-[101%]">
                     <label
                       htmlFor="cname"
                       className="block text-neutral-800 text-[13px] font-normal"
@@ -1073,7 +1079,7 @@ const Report = () => {
                       </p>
                     )}
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:gap-0 xl:gap-0 2xl:gap-0 4k:gap-0 mb-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:gap-0 xl:gap-0 2xl:gap-0 4k:gap-0 mb-3">
                     <div className="xl:mr-2">
                       <label
                         htmlFor="sdate"
@@ -1083,12 +1089,12 @@ const Report = () => {
                       </label>
                       <div className="mt-2 xl:mr-2">
                         <select
-                          className="block w-full rounded-md border-0 py-2 xl:pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 xl:pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           onChange={handleChangeReporttype}
                           value={reporttype}
                           name="Reporttype"
                         >
-                          <option>Select Report Type</option>
+                          <option disabled selected hidden>Select Report Type</option>
                           <option>GHG Accounting Report</option>
                           <option>GHG Report - Investments</option>
                           <option>GRI Report: In accordance With</option>
@@ -1107,7 +1113,7 @@ const Report = () => {
                       </div>
                     </div>
 
-                    <div className="xl:ml-2">
+                    <div className="xl:ml-2 mt-2 md:mt-0">
                       <label
                         htmlFor="cname"
                         className="block text-neutral-800 text-[13px] font-normal"
@@ -1116,11 +1122,11 @@ const Report = () => {
                       </label>
                       <div className="mt-2">
                         <select
-                          className="block w-full rounded-md border-0 py-2 xl:pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 xl:pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           onChange={handleFirstSelectChange}
                           value={firstSelection}
                         >
-                          <option>Select option</option>
+                          <option disabled selected hidden>Select option</option>
                           <option>Organization</option>
                           <option>Corporate</option>
                         </select>{" "}
@@ -1148,9 +1154,9 @@ const Report = () => {
                           id="yearSelect"
                           value={selectedYear}
                           onChange={handleYearChange}
-                          className="block w-full rounded-md border-0 py-2 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
+                          className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
                         >
-                          <option value="">Select Year</option>
+                          <option value="" disabled selected hidden>Select Year</option>
                           <option value="2024">2024</option>
                           <option value="2025">2025</option>
                         </select>
@@ -1162,15 +1168,15 @@ const Report = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 mb-4">
-                      <div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:gap-0 xl:gap-0 2xl:gap-0 4k:gap-0 mb-4">
+                      <div className="xl:mr-2">
                         <label
                           htmlFor="sdate"
                           className="block text-neutral-800 text-[13px] font-normal"
                         >
                           Reporting Period (From)
                         </label>
-                        <div className="mt-2 xl:mr-4">
+                        <div className="mt-2 xl:mr-2">
                           <input
                             id="sdate"
                             name="startdate"
@@ -1189,14 +1195,14 @@ const Report = () => {
                           </p>
                         )}
                       </div>
-                      <div className="xl:ml-3 w-full">
+                      <div className="xl:ml-2 mt-2 md:mt-0">
                         <label
                           htmlFor="edate"
                           className="block text-neutral-800 text-[13px] font-normal"
                         >
                           Reporting Period (To)
                         </label>
-                        <div className="mt-2 xl:mr-3">
+                        <div className="mt-2">
                           <input
                             id="edate"
                             name="enddate"
