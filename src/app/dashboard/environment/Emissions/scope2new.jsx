@@ -5,6 +5,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
   useCallback,
+  useRef
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Form from "@rjsf/core";
@@ -55,9 +56,44 @@ const Scope2 = forwardRef(
     const [activityCache, setActivityCache] = useState({});
     const [hasAutoFilled, setHasAutoFilled] = useState(false);
 
+    const formRef = useRef();
+
     const formData = Array.isArray(scope2State.data?.data)
       ? scope2State.data.data
       : [];
+
+      // Add at the top of the file, after imports
+const processActivityDetailsQueue = (() => {
+  const queue = [];
+  let isProcessing = false;
+
+  const processNext = async () => {
+    if (isProcessing || queue.length === 0) return;
+    
+    isProcessing = true;
+    const task = queue.shift();
+    
+    try {
+      await task();
+    } catch (error) {
+      console.error('Error processing activity details:', error);
+    }
+    
+    isProcessing = false;
+    
+    // Process next item in queue
+    if (queue.length > 0) {
+      setTimeout(processNext, 100);
+    }
+  };
+
+  return {
+    add: (task) => {
+      queue.push(task);
+      processNext();
+    }
+  };
+})();
 
     // Reset autofill when location, year, or month changes
     useEffect(() => {
@@ -499,19 +535,21 @@ const Scope2 = forwardRef(
             onChange={handleChange}
             validator={validator}
             widgets={{
-              EmissionWidget: (props) => (
-                <EmissionWidget
-                  {...props}
-                  scope="scope2"
-                  year={year}
-                  countryCode={countryCode}
-                  onRemove={handleRemoveRow}
-                  index={props.id.split("_")[1]}
-                  activityCache={activityCache}
-                  updateCache={updateCache}
-                />
-              ),
-            }}
+  EmissionWidget: (props) => (
+    <EmissionWidget
+      {...props}
+      scope="scope1"
+      year={year}
+      countryCode={countryCode}
+      onRemove={handleRemoveRow}
+      index={props.id.split("_")[1]}
+      activityCache={activityCache}
+      updateCache={updateCache}
+      formRef={formRef}
+      processQueue={processActivityDetailsQueue} // Add this
+    />
+  ),
+}}
           />
         </div>
         <div className="flex justify-between items-center">

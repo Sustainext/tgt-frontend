@@ -2,15 +2,20 @@
 import React, {
   useState,
   useEffect,
+  useLayoutEffect,
   forwardRef,
   useImperativeHandle,
   useCallback,
   useRef,
+  useMemo,
+  Suspense,
+  lazy,
 } from "react";
+import ReactDOM from "react-dom"; // Add this import
+import Portal from "../../../shared/components/Portal"
 import { useDispatch, useSelector } from "react-redux";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import EmissionWidget from "../../../shared/widgets/emissionWidget";
 import { Oval } from "react-loader-spinner";
 import CalculateSuccess from "./calculateSuccess";
 import {
@@ -24,6 +29,9 @@ import { debounce } from "lodash";
 import { validateEmissionsData } from "./emissionValidation";
 import { del } from "../../../utils/axiosMiddleware";
 
+// Lazy load EmissionWidget for better performance
+const LazyEmissionWidget = lazy(() => import("../../../shared/widgets/emissionWidget"));
+
 const local_schema = {
   type: "array",
   items: {
@@ -31,7 +39,7 @@ const local_schema = {
     properties: {
       Emission: {
         type: ["string","object", "null"],
-        title: "Emissionsscop2",
+        title: "Emissionsscop1",
       },
     },
   },
@@ -72,6 +80,7 @@ const Scope1 = forwardRef(
   ) => {
     const dispatch = useDispatch();
 
+    // Redux selectors
     const scope1State = useSelector((state) => state.emissions.scope1Data);
     const selectedRows = useSelector(
       (state) => state.emissions.selectedRows["scope1"]
@@ -82,6 +91,12 @@ const Scope1 = forwardRef(
     const autoFill = useSelector((state) => state.emissions.autoFill);
     const assigned_data = useSelector((state) => state.emissions.assignedTasks);
     const approved_data = useSelector((state) => state.emissions.approvedTasks);
+    const validationErrors = useSelector(
+      (state) => state.emissions.validationErrors
+    );
+    const scopeReRender = useSelector((state) => state.emissions.scopeReRender);
+
+    // Existing state
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
     const [loopen, setLoOpen] = useState(false);
@@ -89,20 +104,213 @@ const Scope1 = forwardRef(
     const [activityCache, setActivityCache] = useState({});
     const [hasAutoFilled, setHasAutoFilled] = useState(false);
 
+    // Virtual scrolling state
+    const [scrollTop, setScrollTop] = useState(0);
+    const [containerHeight, setContainerHeight] = useState(0);
+    const [itemHeight, setItemHeight] = useState(80);
+    const [isScrolling, setIsScrolling] = useState(false);
+
+    // Refs
+    const scrollContainerRef = useRef(null);
+    const scrollTimeoutRef = useRef(null);
+    const resizeObserverRef = useRef(null);
+    const formRef = useRef();
+
+    // Virtual scrolling constants
+    const VISIBLE_ITEMS = 20;
+    const OVERSCAN = 5;
+
+    // Processing queue for activity details
+    const processActivityDetailsQueue = useMemo(() => {
+      const queue = [];
+      let isProcessing = false;
+
+      const processNext = async () => {
+        if (isProcessing || queue.length === 0) return;
+        
+        isProcessing = true;
+        const task = queue.shift();
+        
+        try {
+          await task();
+        } catch (error) {
+          console.error('Error processing activity details:', error);
+        }
+        
+        isProcessing = false;
+        
+        if (queue.length > 0) {
+          setTimeout(processNext, 100);
+        }
+      };
+
+      return {
+        add: (task) => {
+          queue.push(task);
+          processNext();
+        }
+      };
+    }, []);
+
+    // Full formData from Redux
     const formData = Array.isArray(scope1State.data?.data)
       ? scope1State.data.data
       : [];
 
+    // Dynamic height calculation using useLayoutEffect
+    useLayoutEffect(() => {
+      const calculateDimensions = () => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
+
+        const viewportHeight = window.innerHeight;
+        const containerTop = container.getBoundingClientRect().top;
+        const availableHeight = viewportHeight - containerTop - 100;
+        const maxHeight = Math.min(availableHeight, viewportHeight * 0.7);
+        
+        setContainerHeight(Math.max(300, maxHeight));
+
+        const firstRow = container.querySelector('tbody > tr, tr, .emission-row, [data-row]');
+        if (firstRow) {
+          const rowRect = firstRow.getBoundingClientRect();
+          const measuredHeight = Math.max(60, rowRect.height + 4);
+          setItemHeight(measuredHeight);
+        }
+      };
+
+      calculateDimensions();
+
+      if (scrollContainerRef.current) {
+        resizeObserverRef.current = new ResizeObserver(() => {
+          calculateDimensions();
+        });
+        resizeObserverRef.current.observe(scrollContainerRef.current);
+      }
+
+      const handleResize = debounce(calculateDimensions, 100);
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        if (resizeObserverRef.current) {
+          resizeObserverRef.current.disconnect();
+        }
+      };
+    }, [formData.length]);
+
+    // Virtual scrolling calculations
+    const virtualScrollData = useMemo(() => {
+      const totalItems = formData.length;
+      
+      if (totalItems === 0 || containerHeight === 0) {
+        return {
+          startIndex: 0,
+          endIndex: 0,
+          visibleItems: [],
+          totalHeight: 0,
+          offsetY: 0,
+          visibleCount: 0
+        };
+      }
+
+      const itemsInViewport = Math.ceil(containerHeight / itemHeight);
+      const visibleCount = Math.min(VISIBLE_ITEMS, itemsInViewport + OVERSCAN);
+      const start = Math.floor(scrollTop / itemHeight);
+      const end = Math.min(start + visibleCount, totalItems);
+      const startWithOverscan = Math.max(0, start - OVERSCAN);
+      const endWithOverscan = Math.min(totalItems, end + OVERSCAN);
+
+      const visibleItems = formData.slice(startWithOverscan, endWithOverscan);
+      const totalHeight = totalItems * itemHeight;
+      const offsetY = startWithOverscan * itemHeight;
+
+      return {
+        startIndex: startWithOverscan,
+        endIndex: endWithOverscan,
+        visibleItems,
+        totalHeight,
+        offsetY,
+        visibleCount: endWithOverscan - startWithOverscan
+      };
+    }, [formData, scrollTop, itemHeight, containerHeight, VISIBLE_ITEMS, OVERSCAN]);
+
+    const { startIndex, endIndex, visibleItems, totalHeight, offsetY, visibleCount } = virtualScrollData;
+
+    // Scroll handler
+    const handleScroll = useCallback((e) => {
+      const newScrollTop = e.target.scrollTop;
+      setScrollTop(newScrollTop);
+      setIsScrolling(true);
+
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+
+      scrollTimeoutRef.current = setTimeout(() => {
+        setIsScrolling(false);
+      }, 150);
+    }, []);
+
+    // Handle changes in virtual scrolling context
+    const handleVirtualChange = useCallback((e) => {
+      const updatedFormData = [...formData];
+      
+      e.formData.forEach((changedRow, virtualIndex) => {
+        const actualIndex = startIndex + virtualIndex;
+        if (actualIndex >= 0 && actualIndex < updatedFormData.length) {
+          updatedFormData[actualIndex] = changedRow;
+        }
+      });
+      
+      dispatch(
+        updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } })
+      );
+
+      // Validation logic
+      const currentValidationErrors = validationErrors?.scope1?.fields || {};
+
+      if (Object.keys(currentValidationErrors).length > 0) {
+        const validationResult = validateEmissionsData(
+          {
+            data: { data: updatedFormData },
+          },
+          "Scope 1"
+        );
+
+        if (validationResult.hasErrors) {
+          const newValidationFields = {};
+          Object.keys(currentValidationErrors).forEach((rowIndex) => {
+            if (validationResult.fields[rowIndex]) {
+              newValidationFields[rowIndex] = validationResult.fields[rowIndex];
+            }
+          });
+
+          dispatch(
+            setValidationErrors({
+              ...validationErrors,
+              scope1: {
+                fields: newValidationFields,
+                messages: validationResult.messages,
+                emptyFields: validationResult.emptyFields,
+              },
+            })
+          );
+        } else {
+          const { scope1, ...otherScopeErrors } = validationErrors;
+          dispatch(setValidationErrors(otherScopeErrors));
+        }
+      }
+    }, [dispatch, validationErrors, formData, startIndex]);
+
+    // Imperative handle for Calculate button
     useImperativeHandle(ref, () => ({
       updateFormData: () => {
-        // Filter and format the data
+        // Use the full formData, not just visible items
         const formattedData = formData
           .filter((row) => {
-            // Only filter out assigned rows
             return !["assigned"].includes(row.Emission?.rowType);
           })
           .map((row) => {
-            // Only reorder approved rows to put Emission first
             if (row.Emission?.rowType === "approved") {
               const { id, Emission, ...rest } = row;
               return {
@@ -111,11 +319,9 @@ const Scope1 = forwardRef(
                 ...rest,
               };
             }
-            // Return other rows as is
             return row;
           });
 
-        // Only proceed with update if we have data
         if (formattedData.length > 0) {
           return updateFormData(formattedData);
         }
@@ -127,61 +333,7 @@ const Scope1 = forwardRef(
     const LoaderOpen = () => setLoOpen(true);
     const LoaderClose = () => setLoOpen(false);
 
-    const validationErrors = useSelector(
-      (state) => state.emissions.validationErrors
-    );
-
-    const handleChange = useCallback(
-      (e) => {
-        // Update the form data
-        dispatch(
-          updateScopeDataLocal({ scope: 1, data: { data: e.formData } })
-        );
-
-        // Get the current validation errors from Redux
-        const currentValidationErrors = validationErrors?.scope1?.fields || {};
-
-        // Only run validation if there are existing errors (meaning Calculate was clicked)
-        if (Object.keys(currentValidationErrors).length > 0) {
-          const validationResult = validateEmissionsData(
-            {
-              data: { data: e.formData },
-            },
-            "Scope 1"
-          );
-
-          if (validationResult.hasErrors) {
-            // Only keep validation errors for rows that previously had errors
-            const newValidationFields = {};
-            Object.keys(currentValidationErrors).forEach((rowIndex) => {
-              if (validationResult.fields[rowIndex]) {
-                newValidationFields[rowIndex] =
-                  validationResult.fields[rowIndex];
-              }
-            });
-
-            // Preserve other scopes' validation errors while updating scope1
-            dispatch(
-              setValidationErrors({
-                ...validationErrors, // Keep existing validation errors for other scopes
-                scope1: {
-                  // Only update scope1 validation errors
-                  fields: newValidationFields,
-                  messages: validationResult.messages,
-                  emptyFields: validationResult.emptyFields,
-                },
-              })
-            );
-          } else {
-            // Only remove validation errors for this scope
-            const { scope1, ...otherScopeErrors } = validationErrors;
-            dispatch(setValidationErrors(otherScopeErrors));
-          }
-        }
-      },
-      [dispatch, validationErrors]
-    );
-
+    // Add new row
     const handleAddNew = useCallback(() => {
       const newRow = { Emission: {} };
 
@@ -191,7 +343,6 @@ const Scope1 = forwardRef(
       const approvedRows = formData.filter(
         (row) => row.Emission?.rowType === "approved"
       );
-
       const regularRows = formData.filter(
         (row) =>
           !row.Emission?.rowType ||
@@ -200,7 +351,6 @@ const Scope1 = forwardRef(
       );
 
       const updatedRegularRows = [...regularRows, newRow];
-
       const updatedFormData = [
         ...assignedRows,
         ...approvedRows,
@@ -213,104 +363,87 @@ const Scope1 = forwardRef(
           data: { data: updatedFormData },
         })
       );
-    }, [formData, dispatch]);
+
+      // Scroll to new row
+      setTimeout(() => {
+        if (scrollContainerRef.current && itemHeight > 0) {
+          const newRowIndex = updatedFormData.length - 1;
+          const newScrollTop = Math.max(0, (newRowIndex * itemHeight) - (containerHeight / 2));
+          scrollContainerRef.current.scrollTop = newScrollTop;
+        }
+      }, 100);
+    }, [formData, dispatch, itemHeight, containerHeight]);
 
     const deleteTask = async (taskId) => {
       try {
         const response = await del(`organization_task_dashboard/${taskId}`);
         if (response.status === 204) {
           toast.success("Task deleted successfully");
-          
         } else {
-          console.log('response after delete failed', response);
-          
           toast.error("Failed to delete task");
         }
-      }
-      catch(error) {
+      } catch(error) {
         console.error("Error deleting task:", error);
-      }}
-        
+        toast.error("Failed to delete task");
+      }
+    };
 
+    // Remove row
     const handleRemoveRow = useCallback(
       async (index) => {
         const parsedIndex = parseInt(index, 10);
-        console.log("Removing row at index:", parsedIndex);
-
-        const rowToRemove = formData[parsedIndex];
-        console.log("Row being removed:", rowToRemove);
+        const actualIndex = parsedIndex;
+        
+        const rowToRemove = formData[actualIndex];
 
         if (!rowToRemove) {
-          console.error("Row not found");
+          console.error("Row not found at index:", actualIndex);
           return;
         }
 
         const rowType = rowToRemove.Emission?.rowType;
-        console.log("Row type:", rowType);
 
         if (rowType === "approved") {
           toast.error("Cannot delete approved task row");
           return;
         }
 
-        else if (rowType === "assigned") {
-          const deletedRow = await deleteTask(rowToRemove.id);
-          console.log("Deleted row:", deletedRow);
-          dispatch(fetchAssignedTasks())
+        if (rowType === "assigned") {
+          await deleteTask(rowToRemove.id);
+          dispatch(fetchAssignedTasks());
         }
 
-        const updatedData = formData.filter((_, i) => i !== parsedIndex);
-        console.log("Updated data after removal:", updatedData);
+        const updatedData = formData.filter((_, i) => i !== actualIndex);
 
         dispatch(
           updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
         );
 
-        // Debug validation errors
+        // Adjust scroll position if necessary
+        if (scrollContainerRef.current && updatedData.length > 0) {
+          const maxScrollTop = Math.max(0, (updatedData.length * itemHeight) - containerHeight);
+          if (scrollTop > maxScrollTop) {
+            scrollContainerRef.current.scrollTop = maxScrollTop;
+          }
+        }
+
+        // Handle validation errors
         const currentValidationErrors = validationErrors?.scope1?.fields || {};
-        console.log("Current validation errors:", currentValidationErrors);
-        console.log("Full validation state:", validationErrors);
 
         if (Object.keys(currentValidationErrors).length > 0) {
           const newValidationFields = {};
 
-          Object.entries(currentValidationErrors).forEach(
-            ([rowIdx, errors]) => {
-              const currentIndex = parseInt(rowIdx);
-              console.log(
-                "Processing row index:",
-                currentIndex,
-                "with errors:",
-                errors
-              );
+          Object.entries(currentValidationErrors).forEach(([rowIdx, errors]) => {
+            const currentIndex = parseInt(rowIdx);
 
-              if (currentIndex < parsedIndex) {
-                console.log(
-                  "Keeping errors for row before deleted row:",
-                  currentIndex
-                );
-                newValidationFields[currentIndex] = errors;
-              } else if (currentIndex > parsedIndex) {
-                console.log(
-                  "Shifting errors for row after deleted row:",
-                  currentIndex,
-                  "to",
-                  currentIndex - 1
-                );
-                newValidationFields[currentIndex - 1] = errors;
-              } else {
-                console.log("Skipping errors for deleted row:", currentIndex);
-              }
+            if (currentIndex < actualIndex) {
+              newValidationFields[currentIndex] = errors;
+            } else if (currentIndex > actualIndex) {
+              newValidationFields[currentIndex - 1] = errors;
             }
-          );
-
-          console.log(
-            "New validation fields after processing:",
-            newValidationFields
-          );
+          });
 
           if (Object.keys(newValidationFields).length > 0) {
-            console.log("Dispatching updated validation errors");
             dispatch(
               setValidationErrors({
                 scope1: {
@@ -320,7 +453,6 @@ const Scope1 = forwardRef(
               })
             );
           } else {
-            console.log("Clearing all validation errors");
             dispatch(setValidationErrors({}));
           }
         }
@@ -335,11 +467,11 @@ const Scope1 = forwardRef(
           }
         }
 
-        if (parsedIndex === 0 && updatedData.length === 0) {
+        if (actualIndex === 0 && updatedData.length === 0) {
           setAccordionOpen(false);
         }
       },
-      [formData, dispatch, setAccordionOpen, validationErrors]
+      [formData, dispatch, setAccordionOpen, validationErrors, scrollTop, itemHeight, containerHeight]
     );
 
     const updateFormData = useCallback(
@@ -368,6 +500,7 @@ const Scope1 = forwardRef(
       }));
     }, []);
 
+    // Schema setup
     useEffect(() => {
       if (
         scope1State.status === "succeeded" &&
@@ -379,8 +512,8 @@ const Scope1 = forwardRef(
       }
     }, [scope1State.status, scope1State.schema, scope1State.uiSchema]);
 
+    // Data merging effect
     useEffect(() => {
-      // Only proceed if we have all the data
       const allDataReceived =
         formData &&
         assigned_data.status === "succeeded" &&
@@ -391,13 +524,9 @@ const Scope1 = forwardRef(
 
       const debouncedDataMerge = debounce(() => {
         try {
-          // Create a map for faster lookup using ID as key
           const dataMap = new Map();
-
-          // Track items without IDs separately
           const itemsWithoutIds = [];
 
-          // First, add all current formData to establish baseline
           formData.forEach((item) => {
             if (item.id) {
               dataMap.set(item.id, item);
@@ -408,7 +537,6 @@ const Scope1 = forwardRef(
             }
           });
 
-          // Add assigned data, overwriting any existing entries
           if (assigned_data.scope1?.length) {
             assigned_data.scope1.forEach((task) => {
               dataMap.set(task.id, {
@@ -421,7 +549,6 @@ const Scope1 = forwardRef(
             });
           }
 
-          // Add approved data, only if not already assigned
           if (approved_data.scope1?.length) {
             approved_data.scope1.forEach((task) => {
               if (!dataMap.has(task.id)) {
@@ -436,15 +563,12 @@ const Scope1 = forwardRef(
             });
           }
 
-          // Handle autofill data only if autoFill is true and current formData is empty
-          // (excluding assigned and approved items)
           const hasOnlySystemEntries = Array.from(dataMap.values()).every(
             (item) =>
               item.Emission?.rowType === "assigned" ||
               item.Emission?.rowType === "approved"
           );
 
-          // Handle autofill data with enhanced filtering
           if (
             autoFill &&
             previousMonthData.status === "succeeded" &&
@@ -455,7 +579,6 @@ const Scope1 = forwardRef(
             previousMonthData.scope1Data.data.forEach((item) => {
               if (!dataMap.has(item.autofillId)) {
                 const updatedEmission = { ...item.Emission };
-                // Reset values
                 updatedEmission.Unit = "";
                 updatedEmission.Quantity = "";
                 updatedEmission.assigned_to = "";
@@ -475,13 +598,11 @@ const Scope1 = forwardRef(
             setHasAutoFilled(true);
           }
 
-          // Combine all data sources
           const updatedFormData = [
             ...Array.from(dataMap.values()),
             ...itemsWithoutIds,
           ];
 
-          // Only update if data has actually changed
           const currentDataString = JSON.stringify(formData);
           const newDataString = JSON.stringify(updatedFormData);
 
@@ -514,16 +635,96 @@ const Scope1 = forwardRef(
       JSON.stringify(previousMonthData.scope1Data?.data),
     ]);
 
+    // Reset autofill flag
     useEffect(() => {
       setHasAutoFilled(false);
     }, [location, year, month]);
 
-    const formRef = useRef();
-
-    const scopeReRender = useSelector((state) => state.emissions.scopeReRender);
-
+    // Scope re-render effect
     useEffect(() => {}, [scopeReRender]);
 
+    // Cleanup effect
+    useEffect(() => {
+      return () => {
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current);
+        }
+        if (resizeObserverRef.current) {
+          resizeObserverRef.current.disconnect();
+        }
+      };
+    }, []);
+
+// Add a ref to track previous validation errors
+const prevValidationErrorsRef = useRef();
+
+useEffect(() => {
+  const currentErrors = validationErrors?.scope1?.fields;
+  const prevErrors = prevValidationErrorsRef.current;
+  
+  // Check if validation errors have changed (new errors appeared)
+  const hasNewErrors = currentErrors && 
+    (!prevErrors || Object.keys(currentErrors).length > Object.keys(prevErrors || {}).length);
+  
+  console.log('Validation errors changed:', {
+    hasNewErrors,
+    currentErrors,
+    prevErrors,
+    hasContainer: !!scrollContainerRef.current,
+    containerHeight,
+    itemHeight
+  });
+
+  if (
+    hasNewErrors &&
+    scrollContainerRef.current && 
+    containerHeight > 0 && 
+    itemHeight > 0 &&
+    formData.length > 0
+  ) {
+    // Small delay to ensure DOM has updated
+    setTimeout(() => {
+      const container = scrollContainerRef.current;
+      if (!container) return;
+      
+      const errorRowIndices = Object.keys(currentErrors).map(Number).filter(index => !isNaN(index));
+      
+      if (errorRowIndices.length > 0) {
+        const firstErrorRowIndex = Math.min(...errorRowIndices);
+        const rowPosition = firstErrorRowIndex * itemHeight;
+        const currentScrollTop = container.scrollTop;
+        const containerHalfHeight = containerHeight / 2;
+        const rowVisiblePosition = rowPosition - currentScrollTop;
+        
+        console.log('Auto-scroll check:', {
+          firstErrorRowIndex,
+          rowPosition,
+          currentScrollTop,
+          containerHalfHeight,
+          rowVisiblePosition,
+          shouldScroll: rowVisiblePosition > containerHalfHeight
+        });
+        
+        if (rowVisiblePosition > containerHalfHeight) {
+          const maxScrollTop = Math.max(0, (formData.length * itemHeight) - containerHeight);
+          const newScrollTop = Math.min(currentScrollTop + 380, maxScrollTop);
+          
+          console.log('Auto-scrolling to:', newScrollTop);
+          
+          container.scrollTo({
+            top: newScrollTop,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }, 100);
+  }
+  
+  // Update the ref with current errors
+  prevValidationErrorsRef.current = currentErrors;
+}, [validationErrors?.scope1?.fields, containerHeight, itemHeight, formData.length]);
+
+    // Loading state
     if (scope1State.status === "loading") {
       return (
         <div className="flex items-center justify-center">
@@ -539,97 +740,210 @@ const Scope1 = forwardRef(
       );
     }
 
+    // Error state
     if (scope1State.status === "failed") {
       return <div>Error loading data: {scope1State.error}</div>;
     }
 
     return (
       <>
-      <div  className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block">
-      <div>
-          <Form
-            schema={local_schema}
-            uiSchema={local_ui_schema}
-            formData={formData}
-            onChange={handleChange}
-            validator={validator}
-            widgets={{
-              EmissionWidget: (props) => (
-                <EmissionWidget
-                  {...props}
-                  scope="scope1"
-                  year={year}
-                  countryCode={countryCode}
-                  onRemove={handleRemoveRow}
-                  index={props.id.split("_")[1]}
-                  activityCache={activityCache}
-                  updateCache={updateCache}
-                  formRef={formRef}
-                />
-              ),
+        {/* Desktop version */}
+        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block">
+          <div
+            ref={scrollContainerRef}
+            className="overflow-x-hidden"
+            style={{ 
+              height: containerHeight || '70vh',
+              maxHeight: '70vh',
+              minHeight: '300px',
+              position: 'relative',
+              paddingBottom: '210px'
             }}
-          />
-        </div>
-        <div className="flex justify-between items-center">
-          <button
-            className="mt-4 text-[#007EEF] px-4 py-2 rounded-md text-[14px]"
-            onClick={handleAddNew}
+            onScroll={handleScroll}
           >
-            + Add new
-          </button>
-          {/* {showError && (
-            <div className="text-xs text-red-500 mt-4 flex items-center">
-              <MdError />
-              <span>{dataError}</span>
+            {formData.length > 0 ? (
+              <div style={{ height: totalHeight, position: 'relative' }}>
+                <div
+                  style={{
+                    transform: `translateY(${offsetY}px)`,
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                  }}
+                >
+                  <Suspense fallback={
+                    <div className="flex items-center justify-center" style={{ height: itemHeight }}>
+                      <div className="w-4 h-4 bg-gray-400 rounded-full animate-pulse"></div>
+                    </div>
+                  }>
+                    <Form
+                      schema={local_schema}
+                      uiSchema={local_ui_schema}
+                      formData={visibleItems}
+                      onChange={handleVirtualChange}
+                      validator={validator}
+                      widgets={{
+                        EmissionWidget: (props) => (
+                          <LazyEmissionWidget
+                            {...props}
+                            scope="scope1"
+                            year={year}
+                            countryCode={countryCode}
+                            onRemove={handleRemoveRow}
+                            index={startIndex + parseInt(props.id.split("_")[1])}
+                            actualIndex={startIndex + parseInt(props.id.split("_")[1])}
+                            activityCache={activityCache}
+                            updateCache={updateCache}
+                            formRef={formRef}
+                            processQueue={processActivityDetailsQueue}
+                            containerRef={scrollContainerRef}
+                          />
+                        ),
+                      }}
+                    />
+                  </Suspense>
+                </div>
+              </div>
+            ) : (
+              <div 
+                className="flex items-center justify-center text-gray-500"
+                style={{ height: containerHeight || 300 }}
+              >
+                No data available
+              </div>
+            )}
+            
+            {/* Scroll progress indicator */}
+            {/* {isScrolling && formData.length > visibleCount && (
+              <div 
+                className="fixed bg-black bg-opacity-75 text-white px-3 py-1 rounded text-sm"
+                style={{
+                  top: '20px',
+                  right: '20px',
+                  zIndex: 9999
+                }}
+              >
+                {Math.round((scrollTop / Math.max(1, totalHeight - containerHeight)) * 100)}%
+              </div>
+            )} */}
+          </div>
+          
+          <div className="flex justify-between items-center pt-3">
+            <button
+              className="text-[#007EEF] px-4 py-2 rounded-md text-[14px] transition-colors duration-200 hover:bg-blue-50"
+              onClick={handleAddNew}
+            >
+              + Add new
+            </button>
+            <div className="text-sm text-gray-500 space-x-4">
+              {formData.length > 0 && (
+                <span>
+                  Showing {startIndex + 1}-{Math.min(endIndex, formData.length)} of {formData.length} rows
+                </span>
+              )}
             </div>
-          )} */}
-        </div>
-        </div>
-        {/* mobile version */}
-        <div  className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden">
-      <div className=" overflow-x-auto custom-scrollbar">
-          <Form
-            schema={local_schema}
-            uiSchema={local_ui_schema}
-            formData={formData}
-            onChange={handleChange}
-            validator={validator}
-            widgets={{
-              EmissionWidget: (props) => (
-                <EmissionWidget
-                  {...props}
-                  scope="scope1"
-                  year={year}
-                  countryCode={countryCode}
-                  onRemove={handleRemoveRow}
-                  index={props.id.split("_")[1]}
-                  activityCache={activityCache}
-                  updateCache={updateCache}
-                  formRef={formRef}
-                />
-              ),
-            }}
-          />
-        </div>
-        <div className="flex justify-between items-center">
-          <button
-            className="mt-4 text-[#007EEF] px-4 py-2 rounded-md text-[14px]"
-            onClick={handleAddNew}
-          >
-            + Add new
-          </button>
-          {/* {showError && (
-            <div className="text-xs text-red-500 mt-4 flex items-center">
-              <MdError />
-              <span>{dataError}</span>
-            </div>
-          )} */}
-        </div>
+          </div>
         </div>
 
+        {/* Mobile version */}
+        <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden">
+          <div
+            className="overflow-x-auto custom-scrollbar overflow-y-auto"
+            style={{ 
+              height: Math.min(containerHeight || window.innerHeight * 0.6, window.innerHeight * 0.7),
+              maxHeight: '70vh',
+              minHeight: '250px',
+              position: 'relative'
+            }}
+            onScroll={handleScroll}
+          >
+            {formData.length > 0 ? (
+              <div style={{ height: totalHeight, position: 'relative' }}>
+                <div
+                  style={{
+                    transform: `translateY(${offsetY}px)`,
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                  }}
+                >
+                  <Suspense fallback={
+                    <div className="flex items-center justify-center" style={{ height: itemHeight }}>
+                      <div className="w-3 h-3 bg-gray-400 rounded-full animate-pulse"></div>
+                    </div>
+                  }>
+                    <Form
+                      schema={local_schema}
+                      uiSchema={local_ui_schema}
+                      formData={visibleItems}
+                      onChange={handleVirtualChange}
+                      validator={validator}
+                      widgets={{
+                        EmissionWidget: (props) => (
+                          <LazyEmissionWidget
+                            {...props}
+                            scope="scope1"
+                            year={year}
+                            countryCode={countryCode}
+                            onRemove={handleRemoveRow}
+                            index={startIndex + parseInt(props.id.split("_")[1])}
+                            actualIndex={startIndex + parseInt(props.id.split("_")[1])}
+                            activityCache={activityCache}
+                            updateCache={updateCache}
+                            formRef={formRef}
+                            processQueue={processActivityDetailsQueue}
+                            containerRef={scrollContainerRef}
+                          />
+                        ),
+                      }}
+                    />
+                  </Suspense>
+                </div>
+              </div>
+            ) : (
+              <div 
+                className="flex items-center justify-center text-gray-500"
+                style={{ height: Math.min(300, window.innerHeight * 0.4) }}
+              >
+                No data available
+              </div>
+            )}
+            
+            {/* Mobile scroll indicator */}
+            {isScrolling && formData.length > visibleCount && (
+              <div 
+                className="fixed bg-black bg-opacity-75 text-white px-2 py-1 rounded text-xs"
+                style={{
+                  top: '20px',
+                  right: '20px',
+                  zIndex: 9999
+                }}
+              >
+                {Math.round((scrollTop / Math.max(1, totalHeight - containerHeight)) * 100)}%
+              </div>
+            )}
+          </div>
+          
+          <div className="flex justify-between items-center pt-2">
+            <button
+              className="text-[#007EEF] px-4 py-2 rounded-md text-[14px]"
+              onClick={handleAddNew}
+            >
+              + Add new
+            </button>
+            <div className="text-xs text-gray-500">
+              {formData.length > 0 && (
+                <span>{startIndex + 1}-{Math.min(endIndex, formData.length)} of {formData.length}</span>
+              )}
+            </div>
+          </div>
+        </div>
 
+        {/* Loading overlay */}
         {loopen && (
-          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" style={{ zIndex: 9999 }}>
             <Oval
               height={50}
               width={50}
@@ -640,15 +954,21 @@ const Scope1 = forwardRef(
             />
           </div>
         )}
+
+        {/* Success modal */}
         {modalData && (
-          <CalculateSuccess
-            data={modalData}
-            onClose={() => setModalData(null)}
-          />
+          <Portal>
+            <CalculateSuccess
+              data={modalData}
+              onClose={() => setModalData(null)}
+            />
+          </Portal>
         )}
       </>
     );
   }
 );
+
+Scope1.displayName = 'Scope1';
 
 export default Scope1;

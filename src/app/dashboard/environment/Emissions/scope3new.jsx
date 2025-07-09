@@ -5,6 +5,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
   useCallback,
+  useRef
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Form from "@rjsf/core";
@@ -53,9 +54,44 @@ const Scope3 = forwardRef(
     const [modalData, setModalData] = useState(null);
     const [activityCache, setActivityCache] = useState({});
 
+    const formRef = useRef();
+
     const formData = Array.isArray(scope3State.data?.data)
       ? scope3State.data.data
       : [];
+
+      // Add at the top of the file, after imports
+const processActivityDetailsQueue = (() => {
+  const queue = [];
+  let isProcessing = false;
+
+  const processNext = async () => {
+    if (isProcessing || queue.length === 0) return;
+    
+    isProcessing = true;
+    const task = queue.shift();
+    
+    try {
+      await task();
+    } catch (error) {
+      console.error('Error processing activity details:', error);
+    }
+    
+    isProcessing = false;
+    
+    // Process next item in queue
+    if (queue.length > 0) {
+      setTimeout(processNext, 100);
+    }
+  };
+
+  return {
+    add: (task) => {
+      queue.push(task);
+      processNext();
+    }
+  };
+})();
 
     useImperativeHandle(ref, () => ({
       updateFormData: () => {
@@ -499,19 +535,21 @@ const Scope3 = forwardRef(
             onChange={handleChange}
             validator={validator}
             widgets={{
-              EmissionWidget: (props) => (
-                <EmissionWidget
-                  {...props}
-                  scope="scope3"
-                  year={year}
-                  countryCode={countryCode}
-                  onRemove={handleRemoveRow}
-                  index={props.id.split("_")[1]}
-                  activityCache={activityCache}
-                  updateCache={updateCache}
-                />
-              ),
-            }}
+  EmissionWidget: (props) => (
+    <EmissionWidget
+      {...props}
+      scope="scope1"
+      year={year}
+      countryCode={countryCode}
+      onRemove={handleRemoveRow}
+      index={props.id.split("_")[1]}
+      activityCache={activityCache}
+      updateCache={updateCache}
+      formRef={formRef}
+      processQueue={processActivityDetailsQueue} // Add this
+    />
+  ),
+}}
           />
         </div>
         <div className="flex justify-between items-center">

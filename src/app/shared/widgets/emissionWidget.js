@@ -38,6 +38,105 @@ import { getMonthName } from "@/app/utils/dateUtils";
 import { getActivities } from "../../utils/activitiesService";
 import { fetchAutopilotSuggestions } from "@/app/utils/climatiqAutopilotApi";
 import CalculationInfoModal from "@/app/shared/components/CalculationInfoModal";
+import Portal from "../../shared/components/Portal";
+import ReactDOM from "react-dom";
+
+/**
+ * Simple positioning - just below the input element
+ */
+const ActivityDropdownPortal = ({
+  anchorRef,
+  isOpen,
+  onClose,
+  children,
+  minWidth = 210,
+  maxWidth = 810,
+  dropdownClassName = "",
+}) => {
+  const [coords, setCoords] = useState(null);
+  const dropdownRef = useRef(null);
+
+  // Calculate the position when open or anchorRef changes
+  useEffect(() => {
+    if (isOpen && anchorRef && anchorRef.current) {
+      requestAnimationFrame(() => {
+        if (anchorRef.current) {
+          const rect = anchorRef.current.getBoundingClientRect();
+
+          console.log({
+            rect
+          })
+
+          setCoords({
+            top: rect.bottom +100 + (rect.bottom * 0.09), 
+            left: rect.left +200,
+            width: Math.max(minWidth, rect.width, maxWidth),
+          });
+        }
+      });
+    }
+  }, [isOpen, anchorRef, anchorRef?.current, minWidth, maxWidth]);
+
+  // Recalculate on window resize/scroll
+  useEffect(() => {
+    if (!isOpen || !anchorRef.current) return;
+
+    const calc = () => {
+      const rect = anchorRef.current.getBoundingClientRect();
+
+      setCoords({
+        top: rect.bottom + window.scrollY + 100, // Just 5px below the input
+        left: rect.left + window.scrollX +200,
+        width: Math.max(minWidth, rect.width, maxWidth),
+      });
+    };
+
+    window.addEventListener("resize", calc);
+    window.addEventListener("scroll", calc, true);
+    return () => {
+      window.removeEventListener("resize", calc);
+      window.removeEventListener("scroll", calc, true);
+    };
+  }, [isOpen, anchorRef, anchorRef?.current, minWidth, maxWidth]);
+
+  // Click outside closes dropdown
+  useEffect(() => {
+    if (!isOpen) return;
+    function handler(e) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target) &&
+        anchorRef.current &&
+        !anchorRef.current.contains(e.target)
+      ) {
+        onClose();
+      }
+    }
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [isOpen, onClose, anchorRef]);
+
+  if (!isOpen || !coords) return null;
+
+  const el = (
+    <div
+      ref={dropdownRef}
+      className={`z-[99999] bg-white border border-gray-300 rounded shadow-lg ${dropdownClassName} max-h-[350px] overflow-auto`}
+      style={{
+        position: "absolute",
+        top: coords.top,
+        left: coords.left,
+        width: coords.width,
+        minWidth: minWidth,
+        maxWidth: maxWidth,
+      }}
+    >
+      {children}
+    </div>
+  );
+
+  return ReactDOM.createPortal(el, document.body);
+};
 
 const EmissionWidget = React.memo(
   ({
@@ -1313,16 +1412,8 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Activity Dropdown */}
-              <td className="py-2  w-[55vw] xl:w-[15vw] lg:w-[15vw] 2xl:w-[15vw] 4k:w-[15vw] 2k:w-[15vw] md:w-[15vw]">
-                <div
-                  className={`relative ${
-                    activity &&
-                    activity !== "No relevant activities found" &&
-                    rowType === "default"
-                      ? "border-b border-zinc-800"
-                      : ""
-                  }`}
-                >
+              <td className="py-2 w-[55vw] xl:w-[15vw] ...">
+                <div className="relative">
                   <input
                     ref={inputRef}
                     type="text"
@@ -1330,37 +1421,35 @@ const EmissionWidget = React.memo(
                     placeholder={getActivityPlaceholder()}
                     value={activitySearch}
                     onChange={handleSearchChange}
-                    onFocus={() => {
-                      if (isMobile) {
-                        setIsActivityModalOpen(true);
-                      } else {
-                        toggleDropdown();
-                      }
-                    }}
+                    onFocus={() => setIsDropdownActive(true)}
                     className={getFieldClass(
                       "Activity",
-                      "text-[12px] focus:outline-none xl:w-full md:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full 3xl:w-full w-[55vw] py-1"
+                      "text-[12px] focus:outline-none xl:w-full ..."
                     )}
                     disabled={["assigned", "calculated", "approved"].includes(
                       value.rowType
                     )}
                   />
                   {scopeErrors["Activity"] && (
-                    <div className="text-[12px] text-red-500  xl:absolute md:absolute lg:absolute 2xl:absolute 4k:absolute 2k:absolute relative left-0 -bottom-[28px]">
+                    <div className="text-[12px] text-red-500 absolute left-0 -bottom-[28px]">
                       {getErrorMessage("Activity")}
                     </div>
                   )}
-                  {isDropdownActive && (
-                    <div
-                      ref={dropdownRef}
-                      className="absolute left-0 top-8 z-[100] w-full bg-white rounded-lg border border-gray-300 shadow-lg max-h-64 overflow-y-auto min-w-[210px] xl:min-w-[810px] md:min-w-[810px] lg:min-w-[810px] 2xl:min-w-[810px] 4k:min-w-[810px] 2k:min-w-[810px] 3xl:min-w-[810px] mb-6"
-                      onScroll={handleDropdownScroll}
-                    >
+
+                  {/* --------- Use Portal for Activity Dropdown -------- */}
+                  <ActivityDropdownPortal
+                    anchorRef={inputRef}
+                    isOpen={isDropdownActive}
+                    onClose={() => setIsDropdownActive(false)}
+                    minWidth={210}
+                    maxWidth={810}
+                  >
+                    <div>
                       <div
                         className="p-2 border-b cursor-pointer hover:bg-gray-100"
                         onClick={() => {
                           setActivity("");
-                          toggleDropdown();
+                          setIsDropdownActive(false);
                           setActivitySearch("");
                         }}
                       >
@@ -1380,93 +1469,11 @@ const EmissionWidget = React.memo(
                           No matching activities found
                         </div>
                       ) : (
-                        // Map from visibleActivities
-                        visibleActivities.map((item, index) => {
-                          const displayText = `${item.name} - (${
-                            item.source
-                          }) - ${item.unit_type} - ${item.region} - ${
-                            item.year
-                          }${
-                            item.source_lca_activity !== "unknown"
-                              ? ` - ${item.source_lca_activity}`
-                              : ""
-                          }`;
-
-                          // For the dropdown selection value
-                          const value = `${item.name} - (${item.source}) - ${item.unit_type}`;
-
-                          // Check if this item's ID matches the currently selected activity's ID
-                          const isSelected = item.id === act_id;
-                          console.log(
-                            "isSelected:, item id, act_id",
-                            isSelected,
-                            item.id,
-                            act_id
-                          );
-
-                          return (
-                            <div
-                              key={item.id || item.activity_id || index}
-                              className={`p-2 cursor-pointer text-[12px] truncate ${
-                                isSelected
-                                  ? "bg-blue-100 font-medium"
-                                  : "hover:bg-gray-100"
-                              }`}
-                              onClick={() => {
-                                handleActivityChange(displayText);
-                                toggleDropdown();
-                                setActivitySearch("");
-                              }}
-                            >
-                              {displayText}
-                            </div>
-                          );
-                        })
-                      )}
-
-                      {hasMore && (
-                        <div className="p-2 text-center text-[12px] text-gray-500 border-t">
-                          Scroll down to load more...
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {/* mobile version */}
-                  {isActivityModalOpen && isMobile && (
-                    <div className="fixed inset-0 z-50 bg-white overflow-y-auto px-4 py-6">
-                      <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-lg font-semibold">
-                          Select Activity
-                        </h2>
-                        <button onClick={() => setIsActivityModalOpen(false)}>
-                          <MdClose size={24} />
-                        </button>
-                      </div>
-
-                      <input
-                        type="text"
-                        title={value.Activity ? value.Activity : ""}
-                        value={activitySearch}
-                        onChange={handleSearchChange}
-                        placeholder="Search activities..."
-                        className="w-full border rounded px-2 py-1 mb-4"
-                      />
-
-                      <div
-                        className="max-h-[80vh] overflow-y-auto border rounded"
-                        onScroll={handleDropdownScroll}
-                      >
-                        {isLoadingActivities ? (
-                          <p className="text-sm text-gray-500 text-center py-4">
-                            Loading...
-                          </p>
-                        ) : filteredActivities.length === 0 ? (
-                          <p className="text-sm text-gray-500 text-center py-4">
-                            No matching activities
-                          </p>
-                        ) : (
-                          visibleActivities.map((item, index) => {
-                            // const displayText = `${item.name} - (${item.source}) - ${item.unit_type}`;
+                        <div
+                          className="max-h-[300px] overflow-y-auto"
+                          onScroll={handleDropdownScroll}
+                        >
+                          {visibleActivities.map((item, index) => {
                             const displayText = `${item.name} - (${
                               item.source
                             }) - ${item.unit_type} - ${item.region} - ${
@@ -1476,31 +1483,31 @@ const EmissionWidget = React.memo(
                                 ? ` - ${item.source_lca_activity}`
                                 : ""
                             }`;
-                            const value = `${item.name} - (${item.source}) - ${item.unit_type}`;
                             return (
                               <div
-                                key={item.id || index}
-                                className="p-2 border-b text-sm hover:bg-gray-100 cursor-pointer"
+                                key={item.id || item.activity_id || index}
+                                className="p-2 cursor-pointer text-[12px] truncate hover:bg-gray-100"
                                 onClick={() => {
-                                  handleActivityChange(value);
-                                  setIsActivityModalOpen(false);
+                                  handleActivityChange(displayText);
+                                  setIsDropdownActive(false);
                                   setActivitySearch("");
                                 }}
                               >
                                 {displayText}
                               </div>
                             );
-                          })
-                        )}
-                      </div>
+                          })}
 
-                      {hasMore && (
-                        <p className="text-center text-xs text-gray-400 mt-4">
-                          Scroll to load more...
-                        </p>
+                          {hasMore && (
+                            <div className="p-2 text-center text-[12px] text-gray-500 border-t">
+                              Scroll down to load more...
+                            </div>
+                          )}
+                        </div>
                       )}
                     </div>
-                  )}
+                  </ActivityDropdownPortal>
+                  {/* --------- End Portal -------- */}
                 </div>
               </td>
 
