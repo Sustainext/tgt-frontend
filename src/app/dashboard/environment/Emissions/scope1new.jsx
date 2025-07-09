@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, {
   useState,
   useEffect,
@@ -10,36 +10,38 @@ import React, {
   useMemo,
   Suspense,
   lazy,
-} from "react";
-import ReactDOM from "react-dom"; // Add this import
-import Portal from "../../../shared/components/Portal"
-import { useDispatch, useSelector } from "react-redux";
-import Form from "@rjsf/core";
-import validator from "@rjsf/validator-ajv8";
-import { Oval } from "react-loader-spinner";
-import CalculateSuccess from "./calculateSuccess";
+} from 'react';
+import ReactDOM from 'react-dom'; // Add this import
+import Portal from '../../../shared/components/Portal';
+import { useDispatch, useSelector } from 'react-redux';
+import Form from '@rjsf/core';
+import validator from '@rjsf/validator-ajv8';
+import { Oval } from 'react-loader-spinner';
+import CalculateSuccess from './calculateSuccess';
 import {
   updateScopeData,
   updateScopeDataLocal,
   setValidationErrors,
-  fetchAssignedTasks
-} from "@/lib/redux/features/emissionSlice";
-import { toast } from "react-toastify";
-import { debounce } from "lodash";
-import { validateEmissionsData } from "./emissionValidation";
-import { del } from "../../../utils/axiosMiddleware";
+  fetchAssignedTasks,
+} from '@/lib/redux/features/emissionSlice';
+import { toast } from 'react-toastify';
+import { debounce } from 'lodash';
+import { validateEmissionsData } from './emissionValidation';
+import { del } from '../../../utils/axiosMiddleware';
 
 // Lazy load EmissionWidget for better performance
-const LazyEmissionWidget = lazy(() => import("../../../shared/widgets/emissionWidget"));
+const LazyEmissionWidget = lazy(() =>
+  import('../../../shared/widgets/emissionWidget')
+);
 
 const local_schema = {
-  type: "array",
+  type: 'array',
   items: {
-    type: "object",
+    type: 'object',
     properties: {
       Emission: {
-        type: ["string","object", "null"],
-        title: "Emissionsscop1",
+        type: ['string', 'object', 'null'],
+        title: 'Emissionsscop1',
       },
     },
   },
@@ -48,15 +50,15 @@ const local_schema = {
 const local_ui_schema = {
   items: {
     Emission: {
-      "ui:widget": "EmissionWidget",
-      "ui:options": {
+      'ui:widget': 'EmissionWidget',
+      'ui:options': {
         label: false,
       },
-      "ui:horizontal": true,
+      'ui:horizontal': true,
     },
-    "ui:order": ["Emission"],
-    "ui:options": {
-      layout: "horizontal",
+    'ui:order': ['Emission'],
+    'ui:options': {
+      layout: 'horizontal',
       addable: false,
       orderable: false,
       removable: false,
@@ -83,7 +85,7 @@ const Scope1 = forwardRef(
     // Redux selectors
     const scope1State = useSelector((state) => state.emissions.scope1Data);
     const selectedRows = useSelector(
-      (state) => state.emissions.selectedRows["scope1"]
+      (state) => state.emissions.selectedRows['scope1']
     );
     const previousMonthData = useSelector(
       (state) => state.emissions.previousMonthData
@@ -103,6 +105,11 @@ const Scope1 = forwardRef(
     const [modalData, setModalData] = useState(null);
     const [activityCache, setActivityCache] = useState({});
     const [hasAutoFilled, setHasAutoFilled] = useState(false);
+    
+    // Modal state for expanded view
+    const [isExpandedModalOpen, setIsExpandedModalOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     // Virtual scrolling state
     const [scrollTop, setScrollTop] = useState(0);
@@ -127,18 +134,18 @@ const Scope1 = forwardRef(
 
       const processNext = async () => {
         if (isProcessing || queue.length === 0) return;
-        
+
         isProcessing = true;
         const task = queue.shift();
-        
+
         try {
           await task();
         } catch (error) {
           console.error('Error processing activity details:', error);
         }
-        
+
         isProcessing = false;
-        
+
         if (queue.length > 0) {
           setTimeout(processNext, 100);
         }
@@ -148,7 +155,7 @@ const Scope1 = forwardRef(
         add: (task) => {
           queue.push(task);
           processNext();
-        }
+        },
       };
     }, []);
 
@@ -167,10 +174,12 @@ const Scope1 = forwardRef(
         const containerTop = container.getBoundingClientRect().top;
         const availableHeight = viewportHeight - containerTop - 100;
         const maxHeight = Math.min(availableHeight, viewportHeight * 0.7);
-        
+
         setContainerHeight(Math.max(300, maxHeight));
 
-        const firstRow = container.querySelector('tbody > tr, tr, .emission-row, [data-row]');
+        const firstRow = container.querySelector(
+          'tbody > tr, tr, .emission-row, [data-row]'
+        );
         if (firstRow) {
           const rowRect = firstRow.getBoundingClientRect();
           const measuredHeight = Math.max(60, rowRect.height + 4);
@@ -201,7 +210,7 @@ const Scope1 = forwardRef(
     // Virtual scrolling calculations
     const virtualScrollData = useMemo(() => {
       const totalItems = formData.length;
-      
+
       if (totalItems === 0 || containerHeight === 0) {
         return {
           startIndex: 0,
@@ -209,7 +218,7 @@ const Scope1 = forwardRef(
           visibleItems: [],
           totalHeight: 0,
           offsetY: 0,
-          visibleCount: 0
+          visibleCount: 0,
         };
       }
 
@@ -230,11 +239,25 @@ const Scope1 = forwardRef(
         visibleItems,
         totalHeight,
         offsetY,
-        visibleCount: endWithOverscan - startWithOverscan
+        visibleCount: endWithOverscan - startWithOverscan,
       };
-    }, [formData, scrollTop, itemHeight, containerHeight, VISIBLE_ITEMS, OVERSCAN]);
+    }, [
+      formData,
+      scrollTop,
+      itemHeight,
+      containerHeight,
+      VISIBLE_ITEMS,
+      OVERSCAN,
+    ]);
 
-    const { startIndex, endIndex, visibleItems, totalHeight, offsetY, visibleCount } = virtualScrollData;
+    const {
+      startIndex,
+      endIndex,
+      visibleItems,
+      totalHeight,
+      offsetY,
+      visibleCount,
+    } = virtualScrollData;
 
     // Scroll handler
     const handleScroll = useCallback((e) => {
@@ -252,55 +275,59 @@ const Scope1 = forwardRef(
     }, []);
 
     // Handle changes in virtual scrolling context
-    const handleVirtualChange = useCallback((e) => {
-      const updatedFormData = [...formData];
-      
-      e.formData.forEach((changedRow, virtualIndex) => {
-        const actualIndex = startIndex + virtualIndex;
-        if (actualIndex >= 0 && actualIndex < updatedFormData.length) {
-          updatedFormData[actualIndex] = changedRow;
-        }
-      });
-      
-      dispatch(
-        updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } })
-      );
+    const handleVirtualChange = useCallback(
+      (e) => {
+        const updatedFormData = [...formData];
 
-      // Validation logic
-      const currentValidationErrors = validationErrors?.scope1?.fields || {};
+        e.formData.forEach((changedRow, virtualIndex) => {
+          const actualIndex = startIndex + virtualIndex;
+          if (actualIndex >= 0 && actualIndex < updatedFormData.length) {
+            updatedFormData[actualIndex] = changedRow;
+          }
+        });
 
-      if (Object.keys(currentValidationErrors).length > 0) {
-        const validationResult = validateEmissionsData(
-          {
-            data: { data: updatedFormData },
-          },
-          "Scope 1"
+        dispatch(
+          updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } })
         );
 
-        if (validationResult.hasErrors) {
-          const newValidationFields = {};
-          Object.keys(currentValidationErrors).forEach((rowIndex) => {
-            if (validationResult.fields[rowIndex]) {
-              newValidationFields[rowIndex] = validationResult.fields[rowIndex];
-            }
-          });
+        // Validation logic
+        const currentValidationErrors = validationErrors?.scope1?.fields || {};
 
-          dispatch(
-            setValidationErrors({
-              ...validationErrors,
-              scope1: {
-                fields: newValidationFields,
-                messages: validationResult.messages,
-                emptyFields: validationResult.emptyFields,
-              },
-            })
+        if (Object.keys(currentValidationErrors).length > 0) {
+          const validationResult = validateEmissionsData(
+            {
+              data: { data: updatedFormData },
+            },
+            'Scope 1'
           );
-        } else {
-          const { scope1, ...otherScopeErrors } = validationErrors;
-          dispatch(setValidationErrors(otherScopeErrors));
+
+          if (validationResult.hasErrors) {
+            const newValidationFields = {};
+            Object.keys(currentValidationErrors).forEach((rowIndex) => {
+              if (validationResult.fields[rowIndex]) {
+                newValidationFields[rowIndex] =
+                  validationResult.fields[rowIndex];
+              }
+            });
+
+            dispatch(
+              setValidationErrors({
+                ...validationErrors,
+                scope1: {
+                  fields: newValidationFields,
+                  messages: validationResult.messages,
+                  emptyFields: validationResult.emptyFields,
+                },
+              })
+            );
+          } else {
+            const { scope1, ...otherScopeErrors } = validationErrors;
+            dispatch(setValidationErrors(otherScopeErrors));
+          }
         }
-      }
-    }, [dispatch, validationErrors, formData, startIndex]);
+      },
+      [dispatch, validationErrors, formData, startIndex]
+    );
 
     // Imperative handle for Calculate button
     useImperativeHandle(ref, () => ({
@@ -308,10 +335,10 @@ const Scope1 = forwardRef(
         // Use the full formData, not just visible items
         const formattedData = formData
           .filter((row) => {
-            return !["assigned"].includes(row.Emission?.rowType);
+            return !['assigned'].includes(row.Emission?.rowType);
           })
           .map((row) => {
-            if (row.Emission?.rowType === "approved") {
+            if (row.Emission?.rowType === 'approved') {
               const { id, Emission, ...rest } = row;
               return {
                 Emission,
@@ -338,16 +365,16 @@ const Scope1 = forwardRef(
       const newRow = { Emission: {} };
 
       const assignedRows = formData.filter(
-        (row) => row.Emission?.rowType === "assigned"
+        (row) => row.Emission?.rowType === 'assigned'
       );
       const approvedRows = formData.filter(
-        (row) => row.Emission?.rowType === "approved"
+        (row) => row.Emission?.rowType === 'approved'
       );
       const regularRows = formData.filter(
         (row) =>
           !row.Emission?.rowType ||
-          (row.Emission.rowType !== "assigned" &&
-            row.Emission.rowType !== "approved")
+          (row.Emission.rowType !== 'assigned' &&
+            row.Emission.rowType !== 'approved')
       );
 
       const updatedRegularRows = [...regularRows, newRow];
@@ -368,7 +395,10 @@ const Scope1 = forwardRef(
       setTimeout(() => {
         if (scrollContainerRef.current && itemHeight > 0) {
           const newRowIndex = updatedFormData.length - 1;
-          const newScrollTop = Math.max(0, (newRowIndex * itemHeight) - (containerHeight / 2));
+          const newScrollTop = Math.max(
+            0,
+            newRowIndex * itemHeight - containerHeight / 2
+          );
           scrollContainerRef.current.scrollTop = newScrollTop;
         }
       }, 100);
@@ -378,13 +408,13 @@ const Scope1 = forwardRef(
       try {
         const response = await del(`organization_task_dashboard/${taskId}`);
         if (response.status === 204) {
-          toast.success("Task deleted successfully");
+          toast.success('Task deleted successfully');
         } else {
-          toast.error("Failed to delete task");
+          toast.error('Failed to delete task');
         }
-      } catch(error) {
-        console.error("Error deleting task:", error);
-        toast.error("Failed to delete task");
+      } catch (error) {
+        console.error('Error deleting task:', error);
+        toast.error('Failed to delete task');
       }
     };
 
@@ -393,22 +423,22 @@ const Scope1 = forwardRef(
       async (index) => {
         const parsedIndex = parseInt(index, 10);
         const actualIndex = parsedIndex;
-        
+
         const rowToRemove = formData[actualIndex];
 
         if (!rowToRemove) {
-          console.error("Row not found at index:", actualIndex);
+          console.error('Row not found at index:', actualIndex);
           return;
         }
 
         const rowType = rowToRemove.Emission?.rowType;
 
-        if (rowType === "approved") {
-          toast.error("Cannot delete approved task row");
+        if (rowType === 'approved') {
+          toast.error('Cannot delete approved task row');
           return;
         }
 
-        if (rowType === "assigned") {
+        if (rowType === 'assigned') {
           await deleteTask(rowToRemove.id);
           dispatch(fetchAssignedTasks());
         }
@@ -421,7 +451,10 @@ const Scope1 = forwardRef(
 
         // Adjust scroll position if necessary
         if (scrollContainerRef.current && updatedData.length > 0) {
-          const maxScrollTop = Math.max(0, (updatedData.length * itemHeight) - containerHeight);
+          const maxScrollTop = Math.max(
+            0,
+            updatedData.length * itemHeight - containerHeight
+          );
           if (scrollTop > maxScrollTop) {
             scrollContainerRef.current.scrollTop = maxScrollTop;
           }
@@ -433,15 +466,17 @@ const Scope1 = forwardRef(
         if (Object.keys(currentValidationErrors).length > 0) {
           const newValidationFields = {};
 
-          Object.entries(currentValidationErrors).forEach(([rowIdx, errors]) => {
-            const currentIndex = parseInt(rowIdx);
+          Object.entries(currentValidationErrors).forEach(
+            ([rowIdx, errors]) => {
+              const currentIndex = parseInt(rowIdx);
 
-            if (currentIndex < actualIndex) {
-              newValidationFields[currentIndex] = errors;
-            } else if (currentIndex > actualIndex) {
-              newValidationFields[currentIndex - 1] = errors;
+              if (currentIndex < actualIndex) {
+                newValidationFields[currentIndex] = errors;
+              } else if (currentIndex > actualIndex) {
+                newValidationFields[currentIndex - 1] = errors;
+              }
             }
-          });
+          );
 
           if (Object.keys(newValidationFields).length > 0) {
             dispatch(
@@ -457,12 +492,12 @@ const Scope1 = forwardRef(
           }
         }
 
-        if (rowType === "calculated") {
+        if (rowType === 'calculated') {
           try {
             await updateFormData(updatedData);
           } catch (error) {
-            console.error("Failed to update form data:", error);
-            toast.error("Failed to update data on the server");
+            console.error('Failed to update form data:', error);
+            toast.error('Failed to update data on the server');
             return;
           }
         }
@@ -471,7 +506,15 @@ const Scope1 = forwardRef(
           setAccordionOpen(false);
         }
       },
-      [formData, dispatch, setAccordionOpen, validationErrors, scrollTop, itemHeight, containerHeight]
+      [
+        formData,
+        dispatch,
+        setAccordionOpen,
+        validationErrors,
+        scrollTop,
+        itemHeight,
+        containerHeight,
+      ]
     );
 
     const updateFormData = useCallback(
@@ -484,7 +527,7 @@ const Scope1 = forwardRef(
           successCallback();
         } catch (error) {
           setModalData({
-            message: "Oops, something went wrong",
+            message: 'Oops, something went wrong',
           });
         } finally {
           LoaderClose();
@@ -503,7 +546,7 @@ const Scope1 = forwardRef(
     // Schema setup
     useEffect(() => {
       if (
-        scope1State.status === "succeeded" &&
+        scope1State.status === 'succeeded' &&
         scope1State.schema &&
         scope1State.uiSchema
       ) {
@@ -516,9 +559,9 @@ const Scope1 = forwardRef(
     useEffect(() => {
       const allDataReceived =
         formData &&
-        assigned_data.status === "succeeded" &&
-        approved_data.status === "succeeded" &&
-        (!autoFill || (autoFill && previousMonthData.status === "succeeded"));
+        assigned_data.status === 'succeeded' &&
+        approved_data.status === 'succeeded' &&
+        (!autoFill || (autoFill && previousMonthData.status === 'succeeded'));
 
       if (!allDataReceived) return;
 
@@ -543,7 +586,7 @@ const Scope1 = forwardRef(
                 ...task,
                 Emission: {
                   ...task.Emission,
-                  rowType: "assigned",
+                  rowType: 'assigned',
                 },
               });
             });
@@ -556,7 +599,7 @@ const Scope1 = forwardRef(
                   ...task,
                   Emission: {
                     ...task.Emission,
-                    rowType: "approved",
+                    rowType: 'approved',
                   },
                 });
               }
@@ -565,13 +608,13 @@ const Scope1 = forwardRef(
 
           const hasOnlySystemEntries = Array.from(dataMap.values()).every(
             (item) =>
-              item.Emission?.rowType === "assigned" ||
-              item.Emission?.rowType === "approved"
+              item.Emission?.rowType === 'assigned' ||
+              item.Emission?.rowType === 'approved'
           );
 
           if (
             autoFill &&
-            previousMonthData.status === "succeeded" &&
+            previousMonthData.status === 'succeeded' &&
             previousMonthData.scope1Data?.data &&
             (dataMap.size === 0 ||
               (hasOnlySystemEntries && itemsWithoutIds.length === 0))
@@ -579,13 +622,13 @@ const Scope1 = forwardRef(
             previousMonthData.scope1Data.data.forEach((item) => {
               if (!dataMap.has(item.autofillId)) {
                 const updatedEmission = { ...item.Emission };
-                updatedEmission.Unit = "";
-                updatedEmission.Quantity = "";
-                updatedEmission.assigned_to = "";
+                updatedEmission.Unit = '';
+                updatedEmission.Quantity = '';
+                updatedEmission.assigned_to = '';
                 updatedEmission.file = {};
-                if (updatedEmission.unit_type?.includes("Over")) {
-                  updatedEmission.Unit2 = "";
-                  updatedEmission.Quantity2 = "";
+                if (updatedEmission.unit_type?.includes('Over')) {
+                  updatedEmission.Unit2 = '';
+                  updatedEmission.Quantity2 = '';
                 }
 
                 dataMap.set(item.autofillId, {
@@ -615,7 +658,7 @@ const Scope1 = forwardRef(
             );
           }
         } catch (error) {
-          console.error("Error merging data:", error);
+          console.error('Error merging data:', error);
         }
       }, 300);
 
@@ -655,84 +698,100 @@ const Scope1 = forwardRef(
       };
     }, []);
 
-// Add a ref to track previous validation errors
-const prevValidationErrorsRef = useRef();
+    // Add a ref to track previous validation errors
+    const prevValidationErrorsRef = useRef();
 
-useEffect(() => {
-  const currentErrors = validationErrors?.scope1?.fields;
-  const prevErrors = prevValidationErrorsRef.current;
-  
-  // Check if validation errors have changed (new errors appeared)
-  const hasNewErrors = currentErrors && 
-    (!prevErrors || Object.keys(currentErrors).length > Object.keys(prevErrors || {}).length);
-  
-  console.log('Validation errors changed:', {
-    hasNewErrors,
-    currentErrors,
-    prevErrors,
-    hasContainer: !!scrollContainerRef.current,
-    containerHeight,
-    itemHeight
-  });
+    useEffect(() => {
+      const currentErrors = validationErrors?.scope1?.fields;
+      const prevErrors = prevValidationErrorsRef.current;
 
-  if (
-    hasNewErrors &&
-    scrollContainerRef.current && 
-    containerHeight > 0 && 
-    itemHeight > 0 &&
-    formData.length > 0
-  ) {
-    // Small delay to ensure DOM has updated
-    setTimeout(() => {
-      const container = scrollContainerRef.current;
-      if (!container) return;
-      
-      const errorRowIndices = Object.keys(currentErrors).map(Number).filter(index => !isNaN(index));
-      
-      if (errorRowIndices.length > 0) {
-        const firstErrorRowIndex = Math.min(...errorRowIndices);
-        const rowPosition = firstErrorRowIndex * itemHeight;
-        const currentScrollTop = container.scrollTop;
-        const containerHalfHeight = containerHeight / 2;
-        const rowVisiblePosition = rowPosition - currentScrollTop;
-        
-        console.log('Auto-scroll check:', {
-          firstErrorRowIndex,
-          rowPosition,
-          currentScrollTop,
-          containerHalfHeight,
-          rowVisiblePosition,
-          shouldScroll: rowVisiblePosition > containerHalfHeight
-        });
-        
-        if (rowVisiblePosition > containerHalfHeight) {
-          const maxScrollTop = Math.max(0, (formData.length * itemHeight) - containerHeight);
-          const newScrollTop = Math.min(currentScrollTop + 380, maxScrollTop);
-          
-          console.log('Auto-scrolling to:', newScrollTop);
-          
-          container.scrollTo({
-            top: newScrollTop,
-            behavior: 'smooth'
-          });
-        }
+      // Check if validation errors have changed (new errors appeared)
+      const hasNewErrors =
+        currentErrors &&
+        (!prevErrors ||
+          Object.keys(currentErrors).length >
+            Object.keys(prevErrors || {}).length);
+
+      console.log('Validation errors changed:', {
+        hasNewErrors,
+        currentErrors,
+        prevErrors,
+        hasContainer: !!scrollContainerRef.current,
+        containerHeight,
+        itemHeight,
+      });
+
+      if (
+        hasNewErrors &&
+        scrollContainerRef.current &&
+        containerHeight > 0 &&
+        itemHeight > 0 &&
+        formData.length > 0
+      ) {
+        // Small delay to ensure DOM has updated
+        setTimeout(() => {
+          const container = scrollContainerRef.current;
+          if (!container) return;
+
+          const errorRowIndices = Object.keys(currentErrors)
+            .map(Number)
+            .filter((index) => !isNaN(index));
+
+          if (errorRowIndices.length > 0) {
+            const firstErrorRowIndex = Math.min(...errorRowIndices);
+            const rowPosition = firstErrorRowIndex * itemHeight;
+            const currentScrollTop = container.scrollTop;
+            const containerHalfHeight = containerHeight / 2;
+            const rowVisiblePosition = rowPosition - currentScrollTop;
+
+            console.log('Auto-scroll check:', {
+              firstErrorRowIndex,
+              rowPosition,
+              currentScrollTop,
+              containerHalfHeight,
+              rowVisiblePosition,
+              shouldScroll: rowVisiblePosition > containerHalfHeight,
+            });
+
+            if (rowVisiblePosition > containerHalfHeight) {
+              const maxScrollTop = Math.max(
+                0,
+                formData.length * itemHeight - containerHeight
+              );
+              const newScrollTop = Math.min(
+                currentScrollTop + 380,
+                maxScrollTop
+              );
+
+              console.log('Auto-scrolling to:', newScrollTop);
+
+              container.scrollTo({
+                top: newScrollTop,
+                behavior: 'smooth',
+              });
+            }
+          }
+        }, 100);
       }
-    }, 100);
-  }
-  
-  // Update the ref with current errors
-  prevValidationErrorsRef.current = currentErrors;
-}, [validationErrors?.scope1?.fields, containerHeight, itemHeight, formData.length]);
+
+      // Update the ref with current errors
+      prevValidationErrorsRef.current = currentErrors;
+    }, [
+      validationErrors?.scope1?.fields,
+      containerHeight,
+      itemHeight,
+      formData.length,
+    ]);
 
     // Loading state
-    if (scope1State.status === "loading") {
+    if (scope1State.status === 'loading') {
       return (
-        <div className="flex items-center justify-center">
+        <div className='flex items-center justify-center'>
           <Oval
             height={50}
             width={50}
-            color="#00BFFF"
-            secondaryColor="#f3f3f3"
+            color='#00BFFF'
+            secondaryColor='#f3f3f3'
             strokeWidth={2}
             strokeWidthSecondary={2}
           />
@@ -741,23 +800,23 @@ useEffect(() => {
     }
 
     // Error state
-    if (scope1State.status === "failed") {
+    if (scope1State.status === 'failed') {
       return <div>Error loading data: {scope1State.error}</div>;
     }
 
     return (
       <>
         {/* Desktop version */}
-        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block">
+        <div className='hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block'>
           <div
             ref={scrollContainerRef}
-            className="overflow-x-hidden"
-            style={{ 
+            className='overflow-x-hidden'
+            style={{
               height: containerHeight || '70vh',
               maxHeight: '70vh',
               minHeight: '300px',
               position: 'relative',
-              paddingBottom: '210px'
+              // paddingBottom: '210px'
             }}
             onScroll={handleScroll}
           >
@@ -772,11 +831,16 @@ useEffect(() => {
                     right: 0,
                   }}
                 >
-                  <Suspense fallback={
-                    <div className="flex items-center justify-center" style={{ height: itemHeight }}>
-                      <div className="w-4 h-4 bg-gray-400 rounded-full animate-pulse"></div>
-                    </div>
-                  }>
+                  <Suspense
+                    fallback={
+                      <div
+                        className='flex items-center justify-center'
+                        style={{ height: itemHeight }}
+                      >
+                        <div className='w-4 h-4 bg-gray-400 rounded-full animate-pulse'></div>
+                      </div>
+                    }
+                  >
                     <Form
                       schema={local_schema}
                       uiSchema={local_ui_schema}
@@ -787,12 +851,16 @@ useEffect(() => {
                         EmissionWidget: (props) => (
                           <LazyEmissionWidget
                             {...props}
-                            scope="scope1"
+                            scope='scope1'
                             year={year}
                             countryCode={countryCode}
                             onRemove={handleRemoveRow}
-                            index={startIndex + parseInt(props.id.split("_")[1])}
-                            actualIndex={startIndex + parseInt(props.id.split("_")[1])}
+                            index={
+                              startIndex + parseInt(props.id.split('_')[1])
+                            }
+                            actualIndex={
+                              startIndex + parseInt(props.id.split('_')[1])
+                            }
                             activityCache={activityCache}
                             updateCache={updateCache}
                             formRef={formRef}
@@ -806,55 +874,63 @@ useEffect(() => {
                 </div>
               </div>
             ) : (
-              <div 
-                className="flex items-center justify-center text-gray-500"
+              <div
+                className='flex items-center justify-center text-gray-500'
                 style={{ height: containerHeight || 300 }}
               >
                 No data available
               </div>
             )}
-            
+
             {/* Scroll progress indicator */}
-            {/* {isScrolling && formData.length > visibleCount && (
-              <div 
-                className="fixed bg-black bg-opacity-75 text-white px-3 py-1 rounded text-sm"
+            {isScrolling && formData.length > visibleCount && (
+              <div
+                className='fixed bg-black bg-opacity-75 text-white px-3 py-1 rounded text-sm'
                 style={{
-                  top: '20px',
+                  bottom: '20px',
                   right: '20px',
-                  zIndex: 9999
+                  zIndex: 9999,
                 }}
               >
-                {Math.round((scrollTop / Math.max(1, totalHeight - containerHeight)) * 100)}%
+                <span>Loading </span>
+                {Math.round(
+                  (scrollTop / Math.max(1, totalHeight - containerHeight)) * 100
+                )}
+                %
               </div>
-            )} */}
+            )}
           </div>
-          
-          <div className="flex justify-between items-center pt-3">
+
+          <div className='flex justify-between items-center pt-3'>
             <button
-              className="text-[#007EEF] px-4 py-2 rounded-md text-[14px] transition-colors duration-200 hover:bg-blue-50"
+              className='text-[#007EEF] px-4 py-2 rounded-md text-[14px] transition-colors duration-200 hover:bg-blue-50'
               onClick={handleAddNew}
             >
               + Add new
             </button>
-            <div className="text-sm text-gray-500 space-x-4">
-              {formData.length > 0 && (
-                <span>
-                  Showing {startIndex + 1}-{Math.min(endIndex, formData.length)} of {formData.length} rows
-                </span>
-              )}
-            </div>
+          </div>
+          <div className='text-xs text-gray-500 space-x-4 text-right'>
+            {formData.length > 0 && (
+              <span>
+                Showing {startIndex + 1}-{Math.min(endIndex, formData.length)}{' '}
+                of {formData.length} rows
+              </span>
+            )}
           </div>
         </div>
 
         {/* Mobile version */}
-        <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden">
+        <div className='block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden'>
           <div
-            className="overflow-x-auto custom-scrollbar overflow-y-auto"
-            style={{ 
-              height: Math.min(containerHeight || window.innerHeight * 0.6, window.innerHeight * 0.7),
+            className='overflow-x-auto custom-scrollbar overflow-y-auto'
+            style={{
+              height: Math.min(
+                containerHeight || window.innerHeight * 0.6,
+                window.innerHeight * 0.7
+              ),
               maxHeight: '70vh',
               minHeight: '250px',
-              position: 'relative'
+              position: 'relative',
             }}
             onScroll={handleScroll}
           >
@@ -869,11 +945,16 @@ useEffect(() => {
                     right: 0,
                   }}
                 >
-                  <Suspense fallback={
-                    <div className="flex items-center justify-center" style={{ height: itemHeight }}>
-                      <div className="w-3 h-3 bg-gray-400 rounded-full animate-pulse"></div>
-                    </div>
-                  }>
+                  <Suspense
+                    fallback={
+                      <div
+                        className='flex items-center justify-center'
+                        style={{ height: itemHeight }}
+                      >
+                        <div className='w-3 h-3 bg-gray-400 rounded-full animate-pulse'></div>
+                      </div>
+                    }
+                  >
                     <Form
                       schema={local_schema}
                       uiSchema={local_ui_schema}
@@ -884,12 +965,16 @@ useEffect(() => {
                         EmissionWidget: (props) => (
                           <LazyEmissionWidget
                             {...props}
-                            scope="scope1"
+                            scope='scope1'
                             year={year}
                             countryCode={countryCode}
                             onRemove={handleRemoveRow}
-                            index={startIndex + parseInt(props.id.split("_")[1])}
-                            actualIndex={startIndex + parseInt(props.id.split("_")[1])}
+                            index={
+                              startIndex + parseInt(props.id.split('_')[1])
+                            }
+                            actualIndex={
+                              startIndex + parseInt(props.id.split('_')[1])
+                            }
                             activityCache={activityCache}
                             updateCache={updateCache}
                             formRef={formRef}
@@ -903,39 +988,45 @@ useEffect(() => {
                 </div>
               </div>
             ) : (
-              <div 
-                className="flex items-center justify-center text-gray-500"
+              <div
+                className='flex items-center justify-center text-gray-500'
                 style={{ height: Math.min(300, window.innerHeight * 0.4) }}
               >
                 No data available
               </div>
             )}
-            
+
             {/* Mobile scroll indicator */}
             {isScrolling && formData.length > visibleCount && (
-              <div 
-                className="fixed bg-black bg-opacity-75 text-white px-2 py-1 rounded text-xs"
+              <div
+                className='fixed bg-black bg-opacity-75 text-white px-2 py-1 rounded text-xs'
                 style={{
                   top: '20px',
                   right: '20px',
-                  zIndex: 9999
+                  zIndex: 9999,
                 }}
               >
-                {Math.round((scrollTop / Math.max(1, totalHeight - containerHeight)) * 100)}%
+                {Math.round(
+                  (scrollTop / Math.max(1, totalHeight - containerHeight)) * 100
+                )}
+                %
               </div>
             )}
           </div>
-          
-          <div className="flex justify-between items-center pt-2">
+
+          <div className='flex justify-between items-center pt-2'>
             <button
-              className="text-[#007EEF] px-4 py-2 rounded-md text-[14px]"
+              className='text-[#007EEF] px-4 py-2 rounded-md text-[14px]'
               onClick={handleAddNew}
             >
               + Add new
             </button>
-            <div className="text-xs text-gray-500">
+            <div className='text-xs text-gray-500'>
               {formData.length > 0 && (
-                <span>{startIndex + 1}-{Math.min(endIndex, formData.length)} of {formData.length}</span>
+                <span>
+                  {startIndex + 1}-{Math.min(endIndex, formData.length)} of{' '}
+                  {formData.length}
+                </span>
               )}
             </div>
           </div>
@@ -943,12 +1034,15 @@ useEffect(() => {
 
         {/* Loading overlay */}
         {loopen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" style={{ zIndex: 9999 }}>
+          <div
+            className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'
+            style={{ zIndex: 9999 }}
+          >
             <Oval
               height={50}
               width={50}
-              color="#00BFFF"
-              secondaryColor="#f3f3f3"
+              color='#00BFFF'
+              secondaryColor='#f3f3f3'
               strokeWidth={2}
               strokeWidthSecondary={2}
             />
