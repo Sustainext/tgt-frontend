@@ -8,7 +8,7 @@ import { setReclamationRecyclingProcess } from "../../../../../../lib/redux/feat
 
 const Section13 = ({ section12_2_3Ref, data,reportType,
   sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'12.2.3':'12.2.2',
-  sectionTitle = 'Recycled Input Materials Used',
+  sectionTitle = 'Reclaimed Products and Their Packaging Materials',
   sectionOrder = 12,
  }) => {
   const content = useSelector(

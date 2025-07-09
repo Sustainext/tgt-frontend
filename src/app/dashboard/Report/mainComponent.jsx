@@ -1094,7 +1094,7 @@ const Report = () => {
                           value={reporttype}
                           name="Reporttype"
                         >
-                          <option disabled selected hidden>Select Report Type</option>
+                          <option value='' disabled selected hidden>Select Report Type</option>
                           <option>GHG Accounting Report</option>
                           <option>GHG Report - Investments</option>
                           <option>GRI Report: In accordance With</option>
@@ -1126,7 +1126,7 @@ const Report = () => {
                           onChange={handleFirstSelectChange}
                           value={firstSelection}
                         >
-                          <option disabled selected hidden>Select option</option>
+                          <option value='' disabled selected hidden>Select option</option>
                           <option>Organization</option>
                           <option>Corporate</option>
                         </select>{" "}

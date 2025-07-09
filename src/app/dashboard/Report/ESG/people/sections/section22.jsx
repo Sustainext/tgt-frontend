@@ -41,6 +41,18 @@ const Section22 = ({ section13_6_5Ref, data,reportType,
               : "No data available"
             : "No data available"}
         </p>
+         <p className="text-[15px]  mb-2 font-semibold">Health risk addressed</p>
+        <p className="text-sm mb-4">
+          {data["403-6a-health_risk"]
+            ? data["403-6a-health_risk"].data
+              ? data["403-6a-health_risk"].data.length > 0
+                ? data["403-6a-health_risk"].data[0].Q1
+                  ? data["403-6a-health_risk"].data[0].Q1
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
         <p className="text-[15px]  mb-2 font-semibold">
           Voluntary health promotion and programs offered
         </p>
@@ -56,18 +68,7 @@ const Section22 = ({ section13_6_5Ref, data,reportType,
             : "No data available"}
         </p>
 
-        <p className="text-[15px]  mb-2 font-semibold">Health risk addressed</p>
-        <p className="text-sm mb-4">
-          {data["403-6a-health_risk"]
-            ? data["403-6a-health_risk"].data
-              ? data["403-6a-health_risk"].data.length > 0
-                ? data["403-6a-health_risk"].data[0].Q1
-                  ? data["403-6a-health_risk"].data[0].Q1
-                  : "No data available"
-                : "No data available"
-              : "No data available"
-            : "No data available"}
-        </p>
+       
 
         <p className="text-[15px]  mb-2 font-semibold">
           Workers' access to the services and programs

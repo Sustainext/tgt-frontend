@@ -229,12 +229,17 @@ const handleTCFDDownloadpdf = async (id, name) => {
             )}
             Download Content Index Excel
           </button>
-          <button
+          {
+            item.report_type === "GRI Report: In accordance With" && (
+              <button
             onClick={() => console.log("Notify GRI")}
             className="flex items-center p-2 w-full text-left  text-[#d1d5db]">
             <MdOutlineEmail className="mr-2 text-[#d1d5db] w-4 h-4" /> Notify
             GRI
           </button>
+            )
+          }
+          
         </>
       )}
 
