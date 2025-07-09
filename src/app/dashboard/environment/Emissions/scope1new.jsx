@@ -28,6 +28,8 @@ import { toast } from 'react-toastify';
 import { debounce } from 'lodash';
 import { validateEmissionsData } from './emissionValidation';
 import { del } from '../../../utils/axiosMiddleware';
+import ExpandedRowsModal from '../../../shared/components/ExpandedRowsModal';
+import { CiViewTable } from 'react-icons/ci';
 
 // Lazy load EmissionWidget for better performance
 const LazyEmissionWidget = lazy(() =>
@@ -105,11 +107,9 @@ const Scope1 = forwardRef(
     const [modalData, setModalData] = useState(null);
     const [activityCache, setActivityCache] = useState({});
     const [hasAutoFilled, setHasAutoFilled] = useState(false);
-    
+
     // Modal state for expanded view
     const [isExpandedModalOpen, setIsExpandedModalOpen] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     // Virtual scrolling state
     const [scrollTop, setScrollTop] = useState(0);
@@ -909,12 +909,20 @@ const Scope1 = forwardRef(
               + Add new
             </button>
           </div>
-          <div className='text-xs text-gray-500 space-x-4 text-right'>
+          <div className='text-xs text-gray-500 space-x-4 text-right flex items-center justify-end'>
             {formData.length > 0 && (
               <span>
                 Showing {startIndex + 1}-{Math.min(endIndex, formData.length)}{' '}
                 of {formData.length} rows
               </span>
+            )}
+            {formData.length > 0 && (
+              <button
+                onClick={() => setIsExpandedModalOpen(true)}
+                className='flex items-center gap-1 ml-2 px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors'
+              >
+                <CiViewTable /> <span>View all</span>
+              </button>
             )}
           </div>
         </div>
@@ -1021,12 +1029,20 @@ const Scope1 = forwardRef(
             >
               + Add new
             </button>
-            <div className='text-xs text-gray-500'>
+            <div className='text-xs text-gray-500 flex items-center space-x-2'>
               {formData.length > 0 && (
                 <span>
                   {startIndex + 1}-{Math.min(endIndex, formData.length)} of{' '}
                   {formData.length}
                 </span>
+              )}
+              {formData.length > 0 && (
+                <button
+                  onClick={() => setIsExpandedModalOpen(true)}
+                  className='px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors'
+                >
+                  <CiViewTable /> View all
+                </button>
               )}
             </div>
           </div>
@@ -1058,6 +1074,98 @@ const Scope1 = forwardRef(
             />
           </Portal>
         )}
+
+        {/* Expanded Modal for all rows */}
+        <ExpandedRowsModal
+          isOpen={isExpandedModalOpen}
+          onClose={() => setIsExpandedModalOpen(false)}
+          title='Scope 1 - All Rows'
+          data={formData}
+          columns={[
+            {
+              key: 'Category',
+              title: 'Category',
+              render: (row) => row.Emission?.Category || '-',
+            },
+            {
+              key: 'Subcategory',
+              title: 'Sub-Category',
+              render: (row) => row.Emission?.Subcategory || '-',
+            },
+            {
+              key: 'Activity',
+              title: 'Activity',
+              render: (row) => (
+                <div
+                  className='max-w-xs truncate'
+                  title={row.Emission?.Activity}
+                >
+                  {row.Emission?.Activity || '-'}
+                </div>
+              ),
+            },
+            {
+              key: 'Quantity',
+              title: 'Quantity',
+              render: (row) => {
+                const emission = row.Emission || {};
+                const quantity = emission.Quantity || '-';
+                const quantity2 = emission.Quantity2
+                  ? ` / ${emission.Quantity2}`
+                  : '';
+                return `${quantity}${quantity2}`;
+              },
+            },
+            {
+              key: 'Unit',
+              title: 'Unit',
+              render: (row) => {
+                const emission = row.Emission || {};
+                const unit = emission.Unit || '-';
+                const unit2 = emission.Unit2 ? ` / ${emission.Unit2}` : '';
+                return `${unit}${unit2}`;
+              },
+            },
+            {
+              key: 'Status',
+              title: 'Status',
+              render: (row) => {
+                const rowType = row.Emission?.rowType || 'default';
+                return (
+                  <span
+                    className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                      rowType === 'assigned'
+                        ? 'bg-gray-100 text-gray-800'
+                        : rowType === 'approved'
+                        ? 'bg-orange-100 text-orange-800'
+                        : rowType === 'calculated'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-blue-100 text-blue-800'
+                    }`}
+                  >
+                    {rowType === 'assigned'
+                      ? 'Assigned'
+                      : rowType === 'approved'
+                      ? 'Approved'
+                      : rowType === 'calculated'
+                      ? 'Calculated'
+                      : 'Default'}
+                  </span>
+                );
+              },
+            },
+          ]}
+          getRowStatus={(row) => row.Emission?.rowType || 'default'}
+          getRowClassName={(_, rowType) => {
+            return rowType === 'assigned'
+              ? 'bg-gray-50'
+              : rowType === 'approved'
+              ? 'bg-orange-50'
+              : rowType === 'calculated'
+              ? 'bg-green-50'
+              : '';
+          }}
+        />
       </>
     );
   }
