@@ -386,7 +386,7 @@ const EconomicPerformance = forwardRef(
       }}),
     };
 
-    console.log(subsections,"look susection")
+    // console.log(subsections,"look susection")
     
     const getSubsectionsToShow = () => {
       if (reportType === "Custom ESG Report") {
@@ -574,7 +574,7 @@ const EconomicPerformance = forwardRef(
   return walk(groupedSubsections, [sectionOrder]);
 };
     const numberedSubsections = getDynamicSectionMap();
-    console.log(numberedSubsections,"kkllkkl")
+    // console.log(numberedSubsections,"kkllkkl")
 
     // Set initial active section
     useEffect(() => {
@@ -799,7 +799,7 @@ const EconomicPerformance = forwardRef(
        
      
         const renderSection = (section) => {
-          console.log(section,"see all sections")
+          // console.log(section,"see all sections")
                const SectionComponent = subsectionMapping[section.id]?.component;
                const ref = sectionRefs.current[section.id] || createRef();
                sectionRefs.current[section.id] = ref;

@@ -36,7 +36,7 @@ const ReportCreatedPopup = ({
   userEmail,
   reportType
 }) => {
-  console.log(reportType,"lll")
+  
   const [isNotifyModalOpen, setIsNotifyModalOpen] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
