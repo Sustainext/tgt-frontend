@@ -385,6 +385,8 @@ const EconomicPerformance = forwardRef(
         subSections: [],
       }}),
     };
+
+    // console.log(subsections,"look susection")
     
     const getSubsectionsToShow = () => {
       if (reportType === "Custom ESG Report") {
@@ -483,57 +485,96 @@ const EconomicPerformance = forwardRef(
     };
     const selectedSubsections = getSelectedSubsections();
 
-    const getDynamicSectionMap = () => {
-      let groupIndex = 1;
-      const dynamicMap = [];
+    // const getDynamicSectionMap = () => {
+    //   let groupIndex = 1;
+    //   const dynamicMap = [];
     
-      groupedSubsections.forEach((group) => {
-        if (group.children) {
-          const parentSelected = selectedSubsections.some((s) => s.id === group.groupId);
-          const visibleChildren = group.children.filter((child) =>
-            selectedSubsections.some((s) => s.id === child.id)
-          );
+    //   groupedSubsections.forEach((group) => {
+    //     if (group.children) {
+    //       const parentSelected = selectedSubsections.some((s) => s.id === group.groupId);
+    //       const visibleChildren = group.children.filter((child) =>
+    //         selectedSubsections.some((s) => s.id === child.id)
+    //       );
     
-          // Render the parent (if selected)
-          if (parentSelected) {
-            dynamicMap.push({
-              id: group.groupId,
-              sectionNumber: `${sectionOrder}.${groupIndex}`,
-              groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
-            });
-          }
+    //       // Render the parent (if selected)
+    //       if (parentSelected) {
+    //         dynamicMap.push({
+    //           id: group.groupId,
+    //           sectionNumber: `${sectionOrder}.${groupIndex}`,
+    //           groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
+    //         });
+    //       }
     
-          // Render children (if any selected)
-          if (visibleChildren.length > 0) {
-            let childIndex = 1;
-            visibleChildren.forEach((child) => {
-              dynamicMap.push({
-                id: child.id,
-                sectionNumber: `${sectionOrder}.${groupIndex}.${childIndex++}`,
-                groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
-              });
-            });
-          }
+    //       // Render children (if any selected)
+    //       if (visibleChildren.length > 0) {
+    //         let childIndex = 1;
+    //         visibleChildren.forEach((child) => {
+    //           dynamicMap.push({
+    //             id: child.id,
+    //             sectionNumber: `${sectionOrder}.${groupIndex}.${childIndex++}`,
+    //             groupTitle: `${sectionOrder}.${groupIndex} ${group.title}`,
+    //           });
+    //         });
+    //       }
     
-          // Increase group index if either parent or children are rendered
-          if (parentSelected || visibleChildren.length > 0) {
-            groupIndex++;
-          }
-        } else {
-          const isVisible = selectedSubsections.some((s) => s.id === group.id);
-          if (!isVisible) return;
+    //       // Increase group index if either parent or children are rendered
+    //       if (parentSelected || visibleChildren.length > 0) {
+    //         groupIndex++;
+    //       }
+    //     } else {
+    //       const isVisible = selectedSubsections.some((s) => s.id === group.id);
+    //       if (!isVisible) return;
     
-          dynamicMap.push({
-            id: group.id,
-            sectionNumber: `${sectionOrder}.${groupIndex++}`,
-          });
-        }
-      });
+    //       dynamicMap.push({
+    //         id: group.id,
+    //         sectionNumber: `${sectionOrder}.${groupIndex++}`,
+    //       });
+    //     }
+    //   });
     
-      return dynamicMap;
-    };
+    //   return dynamicMap;
+    // };
 
+
+    const getDynamicSectionMap = () => {
+  // Helper recursive function
+  function walk(node, sectionPath = [], groupTitle = '') {
+    let map = [];
+    let index = 1;
+
+    (Array.isArray(node) ? node : [node]).forEach((item) => {
+      // If the node is selected, or any of its descendants is selected, include it
+      const isSelected = selectedSubsections.some((s) => s.id === item.id);
+
+      // Is any descendant selected?
+      let visibleDescendants = [];
+      if (item.children) {
+        visibleDescendants = walk(item.children, [...sectionPath, index], groupTitle || item.label);
+      }
+
+      // Only add this node if it's selected, or if it has visible descendants
+      if (isSelected || visibleDescendants.length > 0) {
+        const currentSectionNumber = [...sectionPath, index].join('.');
+        map.push({
+          id: item.id,
+          sectionNumber: currentSectionNumber,
+          groupTitle: groupTitle ? `${currentSectionNumber} ${groupTitle}` : undefined,
+        });
+
+        // Add visible descendants, if any
+        map = map.concat(visibleDescendants);
+
+        index++;
+      }
+    });
+
+    return map;
+  }
+
+  return walk(groupedSubsections, [sectionOrder]);
+};
     const numberedSubsections = getDynamicSectionMap();
+    // console.log(numberedSubsections,"kkllkkl")
 
     // Set initial active section
     useEffect(() => {
@@ -758,6 +799,7 @@ const EconomicPerformance = forwardRef(
        
      
         const renderSection = (section) => {
+          // console.log(section,"see all sections")
                const SectionComponent = subsectionMapping[section.id]?.component;
                const ref = sectionRefs.current[section.id] || createRef();
                sectionRefs.current[section.id] = ref;
@@ -963,72 +1005,109 @@ const EconomicPerformance = forwardRef(
                 
                 
 
-                return groupedSidebar.map((item) => {
-                  if (item.children) {
-                    const isGroupSelected = selectedSubsections.some(
-                      (sec) => sec.id === item.groupId
-                    );
+                // return groupedSidebar.map((item) => {
+                //   if (item.children) {
+                //     const isGroupSelected = selectedSubsections.some(
+                //       (sec) => sec.id === item.groupId
+                //     );
                 
-                    const visibleChildren = item.children.filter((child) =>
-                      selectedSubsections.some((sec) => sec.id === child.id)
-                    );
+                //     const visibleChildren = item.children.filter((child) =>
+                //       selectedSubsections.some((sec) => sec.id === child.id)
+                //     );
+                    
+                //     // Show group if parent OR any child is selected
+                //     if (!isGroupSelected && visibleChildren.length === 0) return null;
                 
-                    // Show group if parent OR any child is selected
-                    if (!isGroupSelected && visibleChildren.length === 0) return null;
+                //     const currentGroupIndex = groupIndex++;
+                //     let childIndex = 1;
                 
-                    const currentGroupIndex = groupIndex++;
-                    let childIndex = 1;
+                //     return (
+                //       <div key={item.groupId} className="mb-2">
+                //         {/* Show the parent title (group) */}
+                //         <p
+                //           className={`text-[12px] mb-2 font-medium cursor-pointer  ${
+                //                 activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
+                //               }`}
+                //           onClick={() => scrollToSection(item.groupId)} // optional scroll to parent section
+                //         >
+                //           {sectionOrder}.{currentGroupIndex} {item.title}
+                //         </p>
                 
-                    return (
-                      <div key={item.groupId} className="mb-2">
-                        {/* Show the parent title (group) */}
-                        <p
-                          className={`text-[12px] mb-2 font-medium cursor-pointer  ${
-                                activeSection === item.groupId ? "text-blue-400" : "text-gray-600"
-                              }`}
-                          onClick={() => scrollToSection(item.groupId)} // optional scroll to parent section
-                        >
-                          {sectionOrder}.{currentGroupIndex} {item.title}
-                        </p>
+                //         {/* Render selected children */}
+                //         {visibleChildren.map((child) => {
+                //           const labelText =
+                //             child.label?.trim() !== "" ? child.label : item.title;
                 
-                        {/* Render selected children */}
-                        {visibleChildren.map((child) => {
-                          const labelText =
-                            child.label?.trim() !== "" ? child.label : item.title;
+                //           return (
+                //             <p
+                //               key={child.id}
+                //               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
+                //                 activeSection === child.id ? "text-blue-400" : ""
+                //               }`}
+                //               onClick={() => scrollToSection(child.id)}
+                //             >
+                //               {sectionOrder}.{currentGroupIndex}.{childIndex++} {labelText}
+                //             </p>
+                //           );
+                //         })}
+                //       </div>
+                //     );
+                //   } else {
+                //     // Standalone item
+                //     if (!selectedSubsections.some((sec) => sec.id === item.id)) return null;
                 
-                          return (
-                            <p
-                              key={child.id}
-                              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                                activeSection === child.id ? "text-blue-400" : ""
-                              }`}
-                              onClick={() => scrollToSection(child.id)}
-                            >
-                              {sectionOrder}.{currentGroupIndex}.{childIndex++} {labelText}
-                            </p>
-                          );
-                        })}
-                      </div>
-                    );
-                  } else {
-                    // Standalone item
-                    if (!selectedSubsections.some((sec) => sec.id === item.id)) return null;
+                //     const label = `${sectionOrder}.${groupIndex++} ${item.label}`;
+                //     return (
+                //       <p
+                //         key={item.id}
+                //         className={`text-[12px] mb-2 cursor-pointer ${
+                //           activeSection === item.id ? "text-blue-400" : ""
+                //         }`}
+                //         onClick={() => scrollToSection(item.id)}
+                //       >
+                //         {label}
+                //       </p>
+                //     );
+                //   }
+                // });
                 
-                    const label = `${sectionOrder}.${groupIndex++} ${item.label}`;
-                    return (
-                      <p
-                        key={item.id}
-                        className={`text-[12px] mb-2 cursor-pointer ${
-                          activeSection === item.id ? "text-blue-400" : ""
-                        }`}
-                        onClick={() => scrollToSection(item.id)}
-                      >
-                        {label}
-                      </p>
-                    );
-                  }
-                });
-                
+                const renderGroup = (item, indexPath = "", level = 1) => {
+    const isGroupSelected = selectedSubsections.some(
+      (sec) => sec.id === item.groupId || sec.id === item.id
+    );
+
+    const visibleChildren =
+      item.children?.filter((child) =>
+        selectedSubsections.some((sec) => sec.id === child.id || sec.id === child.groupId)
+      ) || [];
+
+    if (!isGroupSelected && visibleChildren.length === 0) return null;
+
+    const currentLabel = `${sectionOrder}.${indexPath}`;
+    const key = item.groupId || item.id;
+
+    return (
+      <div key={key} className={`mb-${level === 1 ? "2" : "1"} ml-${level * 1}`}>
+        <p
+          className={`text-[${level === 1 ? "12px" : "11px"}] mb-2 font-medium cursor-pointer ${
+            activeSection === key ? "text-blue-400" : "text-gray-600"
+          }`}
+          onClick={() => scrollToSection(key)}
+        >
+          {currentLabel} {item.title || item.label}
+        </p>
+
+        {visibleChildren.map((child, i) =>
+          renderGroup(child, `${indexPath}.${i + 1}`, level + 1)
+        )}
+      </div>
+    );
+  };
+
+  return groupedSidebar.map((item, index) =>
+    renderGroup(item, `${index + 1}`, 1)
+  );
+
               })()}
             </div>
           )}

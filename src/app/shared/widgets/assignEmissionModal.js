@@ -144,7 +144,7 @@ const AssignEmissionModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[1000]">
+    <div className="">
       {loaderStatus.show && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[1000]">
           <div className="bg-transparent p-8 rounded-lg flex flex-col items-center">
@@ -164,7 +164,7 @@ const AssignEmissionModal = ({
           </div>
         </div>
       )}
-      <div className="fixed inset-0 bg-gray-400 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center">
+      <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center">
         <div className="bg-white p-5 rounded-lg shadow-xl w-96">
           <h2 className="text-xl font-semibold">Assign user</h2>
           <p className="text-sm text-gray-600 mb-4">
@@ -219,11 +219,18 @@ const AssignEmissionModal = ({
               onChange={(e) => setSelectedUser(e.target.value)}
             >
               <option value="">Select a user</option>
-              {users.map((user) => (
+              {/* {users.map((user) => (
                 <option key={user.id} value={user.id}>
                   {user.username}
                 </option>
-              ))}
+              ))} */}
+              {users && [...users]
+                .sort((a, b) => a.username.localeCompare(b.username))
+                .map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.username}
+                  </option>
+                ))}
             </select>
           </div>
 

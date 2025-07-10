@@ -31,6 +31,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
     end: endDate ? new Date(endDate) : null,
   });
 
+  // console.log(range,"see")
   // Handle click outside the date picker
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -38,6 +39,10 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
         dateInputRef.current &&
         !dateInputRef.current.contains(event.target)
       ) {
+        // onDateChange({
+        //   start: range.start ? format(range.start, "yyyy-MM-dd") : null,
+        //   end: range.end ? format(range.end, "yyyy-MM-dd") : null,
+        // });
         setShowDatePicker(false);
         setShowMonthDropdown(false);
         setShowYearDropdown(false);
@@ -57,24 +62,60 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
   };
 
   // Handle date click
-  const handleDateClick = (day) => {
-    const strippedDate = stripTime(day);
+  // const handleDateClick = (day) => {
+  //   const strippedDate = stripTime(day);
 
-    if (!range.start || (range.start && range.end)) {
-      setRange({ start: strippedDate, end: null });
-    } else {
-      setRange((prevRange) => {
-        const newRange = { ...prevRange, end: strippedDate };
-        onDateChange({
-          start: format(stripTime(prevRange.start), "yyyy-MM-dd"),
-          end: format(strippedDate, "yyyy-MM-dd"),
-        });
-        return newRange;
+  //   if (!range.start || (range.start && range.end)) {
+  //     setRange({ start: strippedDate, end: null });
+  //   } else {
+  //     setRange((prevRange) => {
+  //       const newRange = { ...prevRange, end: strippedDate };
+  //       onDateChange({
+  //         start: format(stripTime(prevRange.start), "yyyy-MM-dd"),
+  //         end: format(strippedDate, "yyyy-MM-dd"),
+  //       });
+  //       return newRange;
+  //     });
+  //     setShowDatePicker(false);
+  //   }
+  // };
+
+ const handleDateClick = (day, whichCalendar = undefined) => {
+  const strippedDate = stripTime(day);
+
+  // If both picked and user is clicking in the END calendar, and after start, just update end
+  if (range.start && range.end && whichCalendar === "end" && strippedDate > range.start) {
+    setRange({ start: range.start, end: strippedDate });
+    if (onDateChange) {
+      onDateChange({
+        start: format(range.start, "yyyy-MM-dd"),
+        end: format(strippedDate, "yyyy-MM-dd"),
       });
       setShowDatePicker(false);
     }
-  };
+    return;
+  }
 
+  // If no start or both picked, start new selection
+  if (!range.start || (range.start && range.end)) {
+    setRange({ start: strippedDate, end: null });
+  } else if (range.start && !range.end) {
+    if (strippedDate < range.start) {
+      setRange({ start: strippedDate, end: null });
+    } else if (strippedDate.getTime() === range.start.getTime()) {
+      setRange({ start: strippedDate, end: null });
+    } else {
+      setRange({ start: range.start, end: strippedDate });
+      if (onDateChange) {
+        onDateChange({
+          start: format(range.start, "yyyy-MM-dd"),
+          end: format(strippedDate, "yyyy-MM-dd"),
+        });
+      }
+    }
+    setShowDatePicker(false);
+  }
+};
   // Handle month change
   const handleMonthChange = (setMonth, newMonth) => {
     setMonth(newMonth);
@@ -195,7 +236,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
   };
 
   // Render cells for the days in the calendar
-  const renderCells = (month) => {
+  const renderCells = (month,whichCalendar) => {
     const monthStart = startOfMonth(month);
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart);
@@ -234,7 +275,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
                 : "bg-white"
             }`}
             key={day}
-            onClick={() => handleDateClick(cloneDay)}
+            onClick={() => handleDateClick(cloneDay,whichCalendar)}
             onMouseEnter={() => setHoveredDate(day)}
             onMouseLeave={() => setHoveredDate(null)}
           >
@@ -275,6 +316,12 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
   // Toggle the date picker and calculate position
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
+    setRange(
+      {
+    start: startDate ? new Date(startDate) : null,
+    end: endDate ? new Date(endDate) : null,
+  }
+    )
     if (!showDatePicker) {
       calculatePosition();
     }
@@ -328,9 +375,19 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
               <div className="flex justify-between mt-4">
                 <button
                   className="px-4 py-1 bg-gray-200 rounded-md text-[12px]"
-                  onClick={() => setShowDatePicker(false)}
+                  onClick={() => {
+                    setRange({
+                      start: null,
+                      end: null,
+                    });
+                    // onDateChange({
+                    //   start: null,
+                    //   end: null,
+                    // });
+                    // setShowDatePicker(false);
+                  }}
                 >
-                  Cancel
+                  Reset
                 </button>
                 <button
                   className="px-4 py-1 bg-blue-500 text-white rounded-md text-[12px]"
@@ -355,24 +412,34 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
               : "top-full mt-2"
           }`}
           >
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-6 h-[260px]">
               <div className="relative xl:w-full w-5/2">
                 {renderHeader(startMonth, setStartMonth, "start")}
                 {renderDays()}
-                {renderCells(startMonth)}
+                {renderCells(startMonth,"start")}
               </div>
               <div className="relative xl:w-full w-5/2 border-l border-gray-300 xl:pl-4">
                 {renderHeader(endMonth, setEndMonth, "end")}
                 {renderDays()}
-                {renderCells(endMonth)}
+                {renderCells(endMonth,"end")}
               </div>
             </div>
             <div className="flex justify-between mt-4">
               <button
                 className="px-4 py-1 bg-gray-200 rounded-md text-[12px]"
-                onClick={() => setShowDatePicker(false)}
+                onClick={() => {
+                    setRange({
+                      start: null,
+                      end: null,
+                    });
+                    // onDateChange({
+                    //   start: null,
+                    //   end: null,
+                    // });
+                    // setShowDatePicker(false);
+                  }}
               >
-                Cancel
+                Reset
               </button>
               <button
                 className="px-4 py-1 bg-blue-500 text-white rounded-md text-[12px]"

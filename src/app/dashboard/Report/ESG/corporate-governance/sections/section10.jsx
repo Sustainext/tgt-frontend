@@ -29,7 +29,7 @@ const Section10 = ({ section9_3_4Ref, data,
           {data["2_13_a"]
             ? data["2_13_a"].has_appointed_executive_for_impact_management ==
               "No"
-              ? data["2_13_a"].has_appointed_executive_for_impact_management
+              ? 'During the reporting period, the organization had not appointed any senior executives with responsibility for the management of impacts.'
               : ""
             : "No data available"}
         </p>
@@ -47,7 +47,7 @@ const Section10 = ({ section9_3_4Ref, data,
           {data["2_13_a"]
             ? data["2_13_a"].has_delegated_impact_management_to_employees ==
               "No"
-              ? data["2_13_a"].has_delegated_impact_management_to_employees
+              ? 'Responsibility for the management of impacts had not been delegated to other employees during the reporting period.'
               : ""
             : "No data available"}
         </p>
