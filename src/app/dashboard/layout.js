@@ -8,11 +8,13 @@ import { GlobalState } from "../../Context/page";
 import StoreProvider from "../../Context/storeProvider";
 import GlobalErrorHandler from "../shared/components/GlobalErrorHandler";
 import MobileSidenav from "./mobilesidebar";
+// import { loadFromLocalStorage } from "../utils/storage";
 
 export default function DashboardLayout({ children }) {
   const { open } = GlobalState();
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
+  //  const localUserDetails = loadFromLocalStorage("userData");
 
   // Detect screen size and update state
   useEffect(() => {

@@ -62,6 +62,7 @@ const schema = {
         title: "Likelihood of impact",
         enum: ["Low", "Moderate", "High", "Not Sure"],
       },
+      
       MagnitudeofImpact: {
         type: "string",
         title: "Magnitude of Impact",

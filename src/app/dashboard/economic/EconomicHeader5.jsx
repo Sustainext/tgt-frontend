@@ -253,7 +253,7 @@ const EconomicHeader5 = ({
                   </label>
                   <div className="mt-2">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                      className="block w-full rounded-md pr-3 border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                       value={selectedOrg}
                       onChange={handleOrgChange}
                     >
@@ -283,7 +283,7 @@ const EconomicHeader5 = ({
                     </label>
                     <div className="mt-2">
                       <select
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                        className="block w-full rounded-md pr-3 border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                         value={selectedCorp}
                         onChange={handleCorpChange}
                       >
@@ -315,7 +315,7 @@ const EconomicHeader5 = ({
                     <div className="mt-2">
                       <select
                         name="location"
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                        className="block w-full pr-3 rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                         value={selectedLocation} // Using formState.location
                         onChange={handlelocationChange}
                       >

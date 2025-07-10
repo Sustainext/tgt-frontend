@@ -165,7 +165,7 @@ const uiSchema = {
         title: "Duration of Impact",
         tooltip:
           "Report the length of time that the impacts are expected to last. This could include both the duration of the direct impacts (such as the time it takes for a construction project to be completed) and the duration of any long-term or ongoing impacts (such as the time it takes for a polluted area to recover).",
-        layouttype: "input",
+        layouttype: "alphaNum",
         tooltipdispaly: "block",
       },
       {

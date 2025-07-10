@@ -147,6 +147,7 @@ const Screen1 = ({
           sdg={[
             "GRI 101-5a",
             "GRI 101-5b",
+            "GRI 101-5c"
           ]}
           display="block"
           location={location}

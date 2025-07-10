@@ -71,7 +71,7 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
           <div className="relative mb-5 md:mb-2 xl:mb-2 lg:mb-2 2xl:mb-2 4k:mb-2">
             <select
               name="location"
-              className="border m-0.5 text-[12px] text-neutral-500 appearance-none xl:w-[240px] lg:w-[240px] md:w-[240px] 2xl:w-[240px] 4k:w-[240px] w-[98%] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="border m-0.5 text-[12px] pr-7 text-neutral-500 appearance-none xl:w-[240px] lg:w-[240px] md:w-[240px] 2xl:w-[240px] 4k:w-[240px] w-[98%] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={formState.location}
               onChange={handleChange}
             >
