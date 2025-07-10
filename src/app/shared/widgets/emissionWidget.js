@@ -92,30 +92,30 @@ const ActivityDropdownPortal = ({
   }, [isOpen, anchorRef, anchorRef?.current, minWidth, maxWidth]);
 
   // Recalculate on window resize/scroll
-  // useEffect(() => {
-  //   if (!isOpen || !anchorRef.current) return;
+  useEffect(() => {
+    if (!isOpen || !anchorRef.current) return;
 
-  //   const calc = () => {
-  //     const rect = anchorRef.current.getBoundingClientRect();
+    const calc = () => {
+      const rect = anchorRef.current.getBoundingClientRect();
 
-  //     setCoords({
-  //       top:
-  //         rect.bottom +
-  //         window.scrollY +
-  //         100 +
-  //         Math.floor((rect.top - 317) / 37.7) * 48,
-  //       left: rect.left + window.scrollX + 170,
-  //       width: Math.max(minWidth, rect.width, maxWidth),
-  //     });
-  //   };
+      setCoords({
+        top:
+          rect.bottom +
+          window.scrollY +
+          120 +
+          Math.floor((rect.top - 317) / 37.7) * 10,
+        left: rect.left + window.scrollX + 170,
+        width: Math.max(minWidth, rect.width, maxWidth),
+      });
+    };
 
-  //   window.addEventListener('resize', calc);
-  //   window.addEventListener('scroll', calc, true);
-  //   return () => {
-  //     window.removeEventListener('resize', calc);
-  //     window.removeEventListener('scroll', calc, true);
-  //   };
-  // }, [isOpen, anchorRef, anchorRef?.current, minWidth, maxWidth]);
+    window.addEventListener('resize', calc);
+    window.addEventListener('scroll', calc, true);
+    return () => {
+      window.removeEventListener('resize', calc);
+      window.removeEventListener('scroll', calc, true);
+    };
+  }, [isOpen, anchorRef, anchorRef?.current, minWidth, maxWidth]);
 
   // Click outside closes dropdown
   useEffect(() => {
@@ -1949,63 +1949,75 @@ const EmissionWidget = React.memo(
           </tbody>
         </table>
 
-        <AssignEmissionModal
-          isOpen={isAssignModalOpen}
-          onClose={handleCloseAssignModal}
-          onChange={onChange}
-          index={index}
-          onRemove={onRemove}
-          taskData={{
-            location,
-            year,
-            month: getMonthName(month),
-            scope,
-            category: value.Category,
-            subcategory: value.Subcategory,
-            activity: value.Activity,
-            activity_id: value.activity_id,
-            act_id: value.act_id,
-            factor: value.factor,
-            unit_type: value.unit_type,
-            quantity1: value.Quantity,
-            quantity2: value.Quantity2,
-            unit1: value.Unit,
-            unit2: value.Unit2,
-            countryCode,
-            rowId: rowId,
-          }}
-        />
-        <MultipleAssignEmissionModal
-          isOpen={isMultipleAssignModalOpen}
-          onClose={handleCloseMultipleAssignModal}
-          onChange={onChange}
-          scope={scope}
-          onRemove={onRemove}
-          taskData={{
-            location,
-            year,
-            month: getMonthName(month),
-            scope,
-            countryCode,
-          }}
-        />
-        <CalculationInfoModal
-          isOpen={isInfoModalOpen}
-          onClose={closeInfoModal}
-          data={{
-            // calculatedAt: value.updated_At || new Date().toISOString(),
-            scope: scope,
-            category: value.Category,
-            subCategory: value.Subcategory,
-            activity: value.Activity,
-            quantity: value.Quantity,
-            unit: value.Unit,
-            emissionFactorName: value.activity_id,
-            emissionFactorValue: value.factor,
-            unique_id: value.unique_id || '0',
-          }}
-          rowData={value}
-        />
+        {isAssignModalOpen && (
+          <Portal>
+            <AssignEmissionModal
+              isOpen={isAssignModalOpen}
+              onClose={handleCloseAssignModal}
+              onChange={onChange}
+              index={index}
+              onRemove={onRemove}
+              taskData={{
+                location,
+                year,
+                month: getMonthName(month),
+                scope,
+                category: value.Category,
+                subcategory: value.Subcategory,
+                activity: value.Activity,
+                activity_id: value.activity_id,
+                act_id: value.act_id,
+                factor: value.factor,
+                unit_type: value.unit_type,
+                quantity1: value.Quantity,
+                quantity2: value.Quantity2,
+                unit1: value.Unit,
+                unit2: value.Unit2,
+                countryCode,
+                rowId: rowId,
+              }}
+            />
+          </Portal>
+        )}
+        {isMultipleAssignModalOpen && (
+          <Portal>
+            <MultipleAssignEmissionModal
+              isOpen={isMultipleAssignModalOpen}
+              onClose={handleCloseMultipleAssignModal}
+              onChange={onChange}
+              scope={scope}
+              onRemove={onRemove}
+              taskData={{
+                location,
+                year,
+                month: getMonthName(month),
+                scope,
+                countryCode,
+              }}
+            />
+          </Portal>
+        )}
+        {isInfoModalOpen && (
+          <Portal>
+            <CalculationInfoModal
+              isOpen={isInfoModalOpen}
+              onClose={closeInfoModal}
+              data={{
+                // calculatedAt: value.updated_At || new Date().toISOString(),
+                scope: scope,
+                category: value.Category,
+                subCategory: value.Subcategory,
+                activity: value.Activity,
+                quantity: value.Quantity,
+                unit: value.Unit,
+                emissionFactorName: value.activity_id,
+                emissionFactorValue: value.factor,
+                unique_id: value.unique_id || '0',
+              }}
+              rowData={value}
+            />
+          </Portal>
+        )}
       </div>
     );
   }

@@ -277,6 +277,28 @@ const NotificationsModal = ({ isOpen, onClose, triggerRef }) => {
     }
   };
 
+  const markSingleAsUnread = async (notificationId) => {
+    setMarkingAsRead((prev) => new Set([...prev, notificationId]));
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      setAllNotifications((prev) =>
+        prev.map((notification) =>
+          notification.id === notificationId
+            ? { ...notification, isUnread: true }
+            : notification
+        )
+      );
+    } catch (error) {
+      console.error('Failed to mark notification as unread');
+    } finally {
+      setMarkingAsRead((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(notificationId);
+        return newSet;
+      });
+    }
+  };
+
   const handleNotificationClick = (notification) => {
     setSelectedNotification(notification.id);
     if (notification.isUnread) {
@@ -505,11 +527,41 @@ const NotificationsModal = ({ isOpen, onClose, triggerRef }) => {
                       }
                       onMouseLeave={() => setHoveredNotification(null)}
                       onClick={() => handleNotificationClick(notification)}
+                      style={{ minHeight: 80 }} // space for buttons
                     >
-                      {/* New notification indicator */}
-                      {notification.isNew && (
-                        <div className='absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse' />
+                      {/* Dismiss icon ABSOLUTE TOP RIGHT, only if selected */}
+                      {selectedNotification === notification.id && (
+                        <button
+                          title='Dismiss notification'
+                          className='absolute top-2 right-2 z-10 p-1 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors'
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            dismissNotification(notification.id);
+                          }}
+                        >
+                          <IoClose size={18} />
+                        </button>
                       )}
+
+                      {/* Mark as unread ABSOLUTE BOTTOM RIGHT, only if selected & notification is READ */}
+                      {selectedNotification === notification.id &&
+                        !notification.isUnread && (
+                          <button
+                            title='Mark as unread'
+                            className='absolute bottom-3 right-3 z-10 p-1 text-blue-500 hover:bg-blue-50 rounded-full transition-colors'
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              markSingleAsUnread(notification.id);
+                            }}
+                            disabled={markingAsRead.has(notification.id)}
+                          >
+                            {markingAsRead.has(notification.id) ? (
+                              <span className='w-4 h-4 block animate-spin rounded-full border border-blue-400 border-t-transparent'></span>
+                            ) : (
+                              <IoNotifications size={18} />
+                            )}
+                          </button>
+                        )}
 
                       <div className='p-4'>
                         <div className='flex items-start gap-3'>
@@ -576,15 +628,20 @@ const NotificationsModal = ({ isOpen, onClose, triggerRef }) => {
                                   </p>
                                 </div>
                               </div>
-
-                              {/* Unread indicator */}
-                              {notification.isUnread && (
-                                <div className='w-2 h-2 bg-blue-500 rounded-full ml-3 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform' />
-                              )}
+                              {/* Unread indicator if not selected */}
+                              {selectedNotification !== notification.id &&
+                                notification.isUnread && (
+                                  <div className='w-2 h-2 bg-blue-500 rounded-full ml-3 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform' />
+                                )}
                             </div>
                           </div>
                         </div>
                       </div>
+
+                      {/* New notification indicator */}
+                      {notification.isNew && (
+                        <div className='absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse' />
+                      )}
                     </div>
                   ))}
 

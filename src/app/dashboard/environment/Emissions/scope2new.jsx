@@ -30,6 +30,7 @@ import { validateEmissionsData } from './emissionValidation';
 import { del } from '../../../utils/axiosMiddleware';
 import ExpandedRowsModal from '../../../shared/components/ExpandedRowsModal';
 import { CiViewTable } from 'react-icons/ci';
+import ScopeTableSkeleton from '@/app/shared/components/ScopeTableSkeleton';
 
 // Lazy load EmissionWidget for better performance
 const LazyEmissionWidget = lazy(() =>
@@ -776,10 +777,11 @@ const Scope2 = forwardRef(
             ref={scrollContainerRef}
             className='overflow-x-hidden'
             style={{
-              height: formData.length > 0 ? containerHeight || '50vh' : '150px',
-              maxHeight: formData.length > 0 ? '50vh' : '150px',
-              minHeight: formData.length > 0 ? '300px' : '150px',
+              height: containerHeight || '40vh',
+              maxHeight: '40vh',
+              minHeight: '300px',
               position: 'relative',
+              // paddingBottom: '210px'
             }}
             onScroll={handleScroll}
           >
@@ -794,16 +796,7 @@ const Scope2 = forwardRef(
                     right: 0,
                   }}
                 >
-                  <Suspense
-                    fallback={
-                      <div
-                        className='flex items-center justify-center'
-                        style={{ height: itemHeight }}
-                      >
-                        <div className='w-4 h-4 bg-gray-400 rounded-full animate-pulse'></div>
-                      </div>
-                    }
-                  >
+                  <Suspense fallback={<ScopeTableSkeleton rows={3} />}>
                     <Form
                       schema={r_schema}
                       uiSchema={r_ui_schema}
@@ -814,7 +807,7 @@ const Scope2 = forwardRef(
                         EmissionWidget: (props) => (
                           <LazyEmissionWidget
                             {...props}
-                            scope='scope2'
+                            scope='scope1'
                             year={year}
                             countryCode={countryCode}
                             onRemove={handleRemoveRow}
@@ -839,7 +832,7 @@ const Scope2 = forwardRef(
             ) : (
               <div
                 className='flex items-center justify-center text-gray-500'
-                style={{ height: '150px' }}
+                style={{ height: containerHeight || 300 }}
               >
                 No data available
               </div>
@@ -882,7 +875,7 @@ const Scope2 = forwardRef(
             {formData.length > 0 && (
               <button
                 onClick={() => setIsExpandedModalOpen(true)}
-                className='flex items-center gap-1 ml-2 px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors'
+                className='ml-2 px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors'
               >
                 <CiViewTable /> <span>View all</span>
               </button>
@@ -895,15 +888,12 @@ const Scope2 = forwardRef(
           <div
             className='overflow-x-auto custom-scrollbar overflow-y-auto'
             style={{
-              height:
-                formData.length > 0
-                  ? Math.min(
-                      containerHeight || window.innerHeight * 0.6,
-                      window.innerHeight * 0.7
-                    )
-                  : '150px',
-              maxHeight: formData.length > 0 ? '50vh' : '150px',
-              minHeight: '150px',
+              height: Math.min(
+                containerHeight || window.innerHeight * 0.6,
+                window.innerHeight * 0.7
+              ),
+              maxHeight: '40vh',
+              minHeight: '250px',
               position: 'relative',
             }}
             onScroll={handleScroll}
@@ -939,7 +929,7 @@ const Scope2 = forwardRef(
                         EmissionWidget: (props) => (
                           <LazyEmissionWidget
                             {...props}
-                            scope='scope2'
+                            scope='scope1'
                             year={year}
                             countryCode={countryCode}
                             onRemove={handleRemoveRow}
@@ -964,7 +954,7 @@ const Scope2 = forwardRef(
             ) : (
               <div
                 className='flex items-center justify-center text-gray-500'
-                style={{ height: '150px' }}
+                style={{ height: Math.min(300, window.innerHeight * 0.4) }}
               >
                 No data available
               </div>
@@ -1005,9 +995,9 @@ const Scope2 = forwardRef(
               {formData.length > 0 && (
                 <button
                   onClick={() => setIsExpandedModalOpen(true)}
-                  className='px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors'
+                  className='px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors flex items-center gap-1'
                 >
-                  <CiViewTable /> View all
+                  <CiViewTable /> <span>View all</span>
                 </button>
               )}
             </div>
@@ -1045,7 +1035,7 @@ const Scope2 = forwardRef(
         <ExpandedRowsModal
           isOpen={isExpandedModalOpen}
           onClose={() => setIsExpandedModalOpen(false)}
-          title='Scope 2 - All Rows'
+          title='Scope 1 - All Rows'
           data={formData}
           columns={[
             {
