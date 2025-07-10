@@ -406,7 +406,7 @@ measures have either restored the environment to its original state, or to a sta
                 onChange={handleChange}
                 validator={validator}
                 widgets={widgets}
-                formContext={{ locationdata }}
+                formContext={{ locationdata,scopes: "bio3" }}
               />
             </div>
           </div>

@@ -311,7 +311,7 @@ const Screen1comp = ({ selectedOrg, selectedCorp, togglestatus, year }) => {
         onChange={handleChange}
         validator={validator}
         widgets={widgets}
-        formContext={{ locationdata }}
+        formContext={{ locationdata, scopes: "bio4" }}
       />
 
       <div className="mb-6 pb-2">
