@@ -95,7 +95,7 @@ const Screen1 = ({ year, selectedOrg, selectedCorp, setOrgMessage, togglestatus 
     <div className="xl:mx-3 lg:mx-3 md:mx-3 2xl:mx-3 4k:mx-3 2k:mx-3 mx-1">
       <AccordionItem
            title="Nature & Cause of Significant impacts on Biodiversity"
-        tooltiptext="<p>Admin:This section documents information related to Significant Impacts of activities, products and services on biodiversity.</p> <p>Indirect impacts on biodiversity can include impacts in the supply chain.
+        tooltiptext="<p>This section documents information related to Significant Impacts of activities, products and services on biodiversity.</p> <p>Indirect impacts on biodiversity can include impacts in the supply chain.
 Areas of impact are not limited to areas that are formally protected and include consideration of impacts on buffer zones, as well as formally designated areas of special importance or
 sensitivity.</p>"
        

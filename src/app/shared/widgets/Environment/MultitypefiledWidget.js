@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { debounce } from "lodash";
-import { MdOutlineDeleteOutline, MdAdd,  MdOutlineFileUpload,
+import {
+  MdOutlineDeleteOutline,
+  MdAdd,
+  MdOutlineFileUpload,
   MdFilePresent,
   MdClose,
-  MdDelete,MdInfoOutline } from "react-icons/md";
+  MdDelete,
+  MdInfoOutline,
+} from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import Select from "react-select";
 import { components } from "react-select";
@@ -90,7 +95,7 @@ const MultitypefiledWidget = ({
   schema,
   formContext,
 }) => {
-  console.log(formContext,"form content")
+  console.log(formContext, "form content");
   const dropdownRefs = useRef([]);
   const [localValue, setLocalValue] = useState(value || []);
   const [othersInputs, setOthersInputs] = useState([]);
@@ -98,156 +103,109 @@ const MultitypefiledWidget = ({
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [locationDropdownOpen, setLocationDropdownOpen] = useState([]); // e.g. [true, false, ...] per row
   const [locationQuery, setLocationQuery] = useState([]);
-    const [fileName, setFileName] = useState(value?.name || null);
-  const [logfileName, setLogFileName] = useState(value?.name || null);
   const [showModal, setShowModal] = useState(false);
-  const [previewData, setPreviewData] = useState(value?.url || null);
-  const [fileType, setFileType] = useState(value?.type || "");
-  const [fileSize, setFileSize] = useState(value?.size || "");
-    const [uploadDateTime, setUploadDateTime] = useState(
-      value?.uploadDateTime || ""
-    );
- const uploadFileToAzure = async (file, newFileName) => {
-    // Read file content as ArrayBuffer
-    console.log(file, " is the file object");
+  const [modalFileObj, setModalFileObj] = useState({
+    file: null,
+    rowIndex: null,
+    key: null,
+  });
+  // Azure upload (as before)
+  const uploadFileToAzure = async (file, newFileName) => {
     const arrayBuffer = await file.arrayBuffer();
     const blob = new Blob([arrayBuffer]);
-
-    // Azure Storage configuration
     const accountName = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT;
     const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER;
     const sasToken = process.env.NEXT_PUBLIC_AZURE_SAS_TOKEN;
-
     const blobServiceClient = new BlobServiceClient(
       `https://${accountName}.blob.core.windows.net?${sasToken}`
     );
-
     const containerClient = blobServiceClient.getContainerClient(containerName);
     const blobName = newFileName || file.name;
     const blobClient = containerClient.getBlockBlobClient(blobName);
 
     try {
-      // Upload the blob to Azure Blob Storage
-      const uploadOptions = {
-        blobHTTPHeaders: {
-          blobContentType: file.type,
-        },
-      };
-
+      const uploadOptions = { blobHTTPHeaders: { blobContentType: file.type } };
       await blobClient.uploadData(blob, uploadOptions);
-
       const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
-
       return url;
     } catch (error) {
-
       console.error("Error uploading file:", error.message);
       return null;
     }
   };
-    useEffect(() => {
 
-    if (value?.url && value?.name) {
-      setFileName(value.name);
-      setPreviewData(value.url);
-      setFileType(value.type || "");
-      setFileSize(value.size || "");
-      setUploadDateTime(value.uploadDateTime || "");
-    }
-  }, [value]);
-    const handleFilleChange = async (event) => {
-    console.log("handle change called");
+  // File upload handler
+  const handleFilleChange = async (event, rowIndex, key) => {
     const selectedFile = event.target.files[0];
+    if (!selectedFile) return;
+    const newFileName = selectedFile.name;
 
-    const newFileName = selectedFile ? selectedFile.name : null;
-    console.log(selectedFile, " is the selectedFile");
-    setFileName(newFileName);
-    setLogFileName(newFileName);
-
-    if (selectedFile) {
-      const reader = new FileReader();
-      reader.readAsDataURL(selectedFile);
-
-      reader.onloadend = () => {
-        const base64String = reader.result;
-        console.log(reader, " is the reader object");
-
-        const uploadAndSetState = async () => {
-          const url = await uploadFileToAzure(selectedFile, newFileName);
-
-          onChange({
-            name: newFileName,
-            url: url,
-            type: selectedFile.type,
-            size: selectedFile.size,
-            uploadDateTime: new Date().toLocaleString(),
-          });
-
-          setPreviewData(base64String);
-          setFileType(selectedFile.type);
-          setFileSize(selectedFile.size);
-          setUploadDateTime(new Date().toLocaleString());
-        };
-
-        uploadAndSetState();
-     
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedFile);
+    reader.onloadend = async () => {
+      const base64String = reader.result;
+      const url = await uploadFileToAzure(selectedFile, newFileName);
+      const fileData = {
+        name: newFileName,
+        url,
+        type: selectedFile.type,
+        size: selectedFile.size,
+        uploadDateTime: new Date().toLocaleString(),
+        previewData: base64String, // only needed for instant preview (optional)
       };
-    }
+      setLocalValue((current) => {
+        const updated = [...current];
+        if (!updated[rowIndex]) updated[rowIndex] = {};
+        updated[rowIndex][key] = fileData;
+        return updated;
+      });
+    };
   };
 
-  const handlePreview = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
+  // File delete
+  const handleFileDelete = (rowIndex, key) => {
+    setLocalValue((current) => {
+      const updated = [...current];
+      if (updated[rowIndex]) {
+        updated[rowIndex][key] = null;
+      }
+      return updated;
+    });
     setShowModal(false);
   };
 
-  const handleDelete = () => {
-    try {
-      const resetValue = {
-        name: "",
-        url: "",
-        type: "",
-        size: "",
-        uploadDateTime: "",
-      };
+  // Preview launcher
+  const handleFilePreview = (rowIndex, key, fileObj) => {
+    setModalFileObj({ file: fileObj, rowIndex, key });
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+  const handleLocationQueryChange = (rowIndex, query, key) => {
+    const updatedQueries = [...locationQuery];
+    updatedQueries[rowIndex] = query;
+    setLocationQuery(updatedQueries);
 
-      setFileName(null);
-      setPreviewData(null);
-      onChange(resetValue);
-      setShowModal(false);
+    setLocationDropdownOpen((openArr) => {
+      const arr = [...openArr];
+      arr[rowIndex] = true;
+      return arr;
+    });
 
-  
-    } catch (error) {
-      console.error("Error deleting file:", error.message);
-    
+    // If the search input is cleared, reset everything for this cell/row
+    if (query === "") {
+      const updatedValues = [...localValue];
+      if (!updatedValues[rowIndex]) updatedValues[rowIndex] = {};
+
+      // Remove others, name, and id for the location
+      delete updatedValues[rowIndex][`${key}_others`];
+      delete updatedValues[rowIndex][`${key}_name`];
+      updatedValues[rowIndex][key] = ""; // or delete? Set empty string is safest
+
+      setLocalValue(updatedValues);
     }
   };
- const handleLocationQueryChange = (rowIndex, query, key) => {
-  const updatedQueries = [...locationQuery];
-  updatedQueries[rowIndex] = query;
-  setLocationQuery(updatedQueries);
-
-  setLocationDropdownOpen((openArr) => {
-    const arr = [...openArr];
-    arr[rowIndex] = true;
-    return arr;
-  });
-
-  // If the search input is cleared, reset everything for this cell/row
-  if (query === "") {
-    const updatedValues = [...localValue];
-    if (!updatedValues[rowIndex]) updatedValues[rowIndex] = {};
-
-    // Remove others, name, and id for the location
-    delete updatedValues[rowIndex][`${key}_others`];
-    delete updatedValues[rowIndex][`${key}_name`];
-    updatedValues[rowIndex][key] = ""; // or delete? Set empty string is safest
-
-    setLocalValue(updatedValues);
-  }
-};
   const handleLocationSelect = (rowIndex, location, key) => {
     const updatedValues = [...localValue];
     if (!updatedValues[rowIndex]) updatedValues[rowIndex] = {};
@@ -448,17 +406,17 @@ const MultitypefiledWidget = ({
   };
 
   // {for disabling autopopulate}
-//   const isFieldDisabled = (field, row, key) => {
-//   if (formContext?.readOnlyFields?.includes(key)) return true;
+  //   const isFieldDisabled = (field, row, key) => {
+  //   if (formContext?.readOnlyFields?.includes(key)) return true;
 
-//   if (field.keytack && field.disable) {
-//     let sourceValue = row[field.keytack] || "";
-//     let enableVal = field.disableIfNotValue || "Yes";
-//     return sourceValue !== enableVal;
-//   }
+  //   if (field.keytack && field.disable) {
+  //     let sourceValue = row[field.keytack] || "";
+  //     let enableVal = field.disableIfNotValue || "Yes";
+  //     return sourceValue !== enableVal;
+  //   }
 
-//   return false;
-// };
+  //   return false;
+  // };
 
   const handleAddRow = () => {
     const newRow = {};
@@ -538,7 +496,9 @@ const MultitypefiledWidget = ({
                   key={idx}
                   style={{ textAlign: "left" }}
                   className={`${
-                      item.key === "AssignTo" || item.key === "FileUpload"  ? "text-[13px]  text-neutral-950 font-[400] border-none text-center  px-2 py-2 relative w-[45vw] xl:w-[10vw] lg:w-[10vw] md:w-[10vw] 2xl:w-[10vw] 4k:w-[10vw] 2k:w-[10vw]" : "text-[13px]  text-neutral-950 font-[400] border-none text-center  px-2 py-2 relative w-[45vw] xl:w-[28vw] lg:w-[25vw] md:w-[25vw] 2xl:w-[25vw] 4k:w-[25vw] 2k:w-[25vw] "
+                    item.key === "AssignTo" || item.key === "FileUpload"
+                      ? "text-[13px]  text-neutral-950 font-[400] border-none text-center  px-2 py-2 relative w-[45vw] xl:w-[10vw] lg:w-[10vw] md:w-[10vw] 2xl:w-[10vw] 4k:w-[10vw] 2k:w-[10vw]"
+                      : "text-[13px]  text-neutral-950 font-[400] border-none text-center  px-2 py-2 relative w-[45vw] xl:w-[28vw] lg:w-[25vw] md:w-[25vw] 2xl:w-[25vw] 4k:w-[25vw] 2k:w-[25vw] "
                   } `}
                 >
                   <div className="flex h-[20px] relative ">
@@ -557,13 +517,15 @@ const MultitypefiledWidget = ({
                       place="top"
                       effect="solid"
                       style={{
-                        width: "400px",
+                        width: "500px",
+                        height: "auto",
+
                         backgroundColor: "#000",
                         color: "white",
                         fontSize: "11px",
-                        boxShadow: 3,
+                        boxShadow: "0px 0px 5px #000",
                         borderRadius: "8px",
-                        zIndex: "1000",
+                        zIndex: 1000,
                       }}
                     /> */}
                   </div>
@@ -581,7 +543,7 @@ const MultitypefiledWidget = ({
                     (title) => title.key === key
                   );
                   const layoutType = uiSchemaField?.layouttype || "select";
-           
+
                   return (
                     <td
                       key={cellIndex}
@@ -611,7 +573,11 @@ const MultitypefiledWidget = ({
                                 selectedOptions.map((opt) => opt.value)
                               )
                             }
-                            isDisabled={isFieldDisabled(uiSchemaField, row,key)}
+                            isDisabled={isFieldDisabled(
+                              uiSchemaField,
+                              row,
+                              key
+                            )}
                             styles={updatedMultiSelectStyle}
                             closeMenuOnSelect={false}
                             hideSelectedOptions={false}
@@ -652,8 +618,12 @@ const MultitypefiledWidget = ({
                             onChange={(e) =>
                               handleSelectChange(rowIndex, key, e.target.value)
                             }
-                            disabled={isFieldDisabled(uiSchemaField, row,key)}
-                            className={`text-[12px]   py-2 pl-1 w-full border-b ${isFieldDisabled(uiSchemaField, row,key)?'bg-[#fafafa] rounded-sm':''} `}
+                            disabled={isFieldDisabled(uiSchemaField, row, key)}
+                            className={`text-[12px]   py-2 pl-1 w-full border-b ${
+                              isFieldDisabled(uiSchemaField, row, key)
+                                ? "bg-[#fafafa] rounded-sm"
+                                : ""
+                            } `}
                           >
                             <option value="">Select an option</option>
                             {propertySchema.enum.map((option) => (
@@ -735,7 +705,7 @@ const MultitypefiledWidget = ({
                             (e) =>
                               handleInputChange(rowIndex, key, e.target.value) // Use the new handler here
                           }
-                          disabled={isFieldDisabled(uiSchemaField, row,key)}
+                          disabled={isFieldDisabled(uiSchemaField, row, key)}
                           className="text-[12px]   py-2 pl-1 w-full border-b rounded-md"
                           placeholder="Enter"
                         />
@@ -751,7 +721,7 @@ const MultitypefiledWidget = ({
                                 e.target.value
                               ) // Use the new handler here
                           }
-                          disabled={isFieldDisabled(uiSchemaField, row,key)}
+                          disabled={isFieldDisabled(uiSchemaField, row, key)}
                           className="text-[12px] py-1 pl-1 w-full border-b rounded-md"
                           placeholder="Enter data"
                           rows={2}
@@ -786,7 +756,6 @@ const MultitypefiledWidget = ({
                             onBlur={() => handleLocationBlur(rowIndex)}
                             placeholder="Select location..."
                             autoComplete="off"
-                           
                           />
                           {locationDropdownOpen[rowIndex] &&
                             localValue[rowIndex][`${key}_others`] ===
@@ -898,147 +867,56 @@ const MultitypefiledWidget = ({
                           placeholder="Enter"
                         />
                       ) : layoutType === "AssignTo" ? (
-                       <div className="flex justify-center items-center mt-2 ">
-        <button
-          className="bg-blue-200 text-white text-[12px] 4k:text-[14px] w-[112px]   py-1 rounded-md shadow hover:bg-blue-200"
-          type="button"
-          // onClick={openModal}
-        >
-          Assign To
-        </button>
-      </div>
+                        <div className="flex justify-center items-center mt-2 ">
+                          <button
+                            className="bg-blue-200 text-white text-[12px] 4k:text-[14px] w-[112px]   py-1 rounded-md shadow hover:bg-blue-200"
+                            type="button"
+                            // onClick={openModal}
+                          >
+                            Assign To
+                          </button>
+                        </div>
                       ) : layoutType === "FileUpload" ? (
-                       <div className="flex justify-center items-center ml-2  w-[80px]">
-                              <input
-                                type="file"
-                                id={rowIndex + formContext.scopes}
-                                onChange={handleFilleChange}
-                                style={{ display: "none" }}
-                              />
-                      
-                              {fileName ? (
-                                <label className="flex cursor-pointer ml-1">
-                                  <div className="flex items-center px-2" onClick={handlePreview}>
-                                    <MdFilePresent className="w-5 h-5 mr-1 text-green-500" />
-                                    <div className="w-[60px] truncate text-sky-600 text-[12px]">
-                                      {fileName}
-                                    </div>
-                                  </div>
-                                </label>
-                              ) : (
-                                <label htmlFor={rowIndex + formContext.scopes} className="flex cursor-pointer ml-1">
-                                  <div className="flex items-center  ">
-                                    <MdOutlineFileUpload className="w-5 h-5 mr-1 text-[#007EEF]" />
-                                    <div className="w-[60px] truncate text-[#007EEF] text-[12px] 4k:text-[14px] ml-1">
-                                      Upload
-                                    </div>
-                                  </div>
-                                </label>
-                              )}
-                      
-                              {/* Preview Modal */}
-                              {showModal && previewData && (
-                                <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-                                  <div className="bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]">
-                                    <div className="flex justify-between mt-4 mb-4">
-                                      <div>
-                                        <h5 className="mb-4 ml-2 font-semibold truncate w-[200px] overflow-hidden whitespace-nowrap">
-                                          {fileName}
-                                        </h5>
-                                      </div>
-                                      <div className="flex">
-                                        <div className="mb-4">
-                                          <button
-                                            className="px-2 py-1 mr-2 w-[150px] flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white"
-                                            onClick={() => handleDelete(rowIndex, formContext.scopes)}
-                                          >
-                                            <MdDelete className="text-xl" /> Delete File
-                                          </button>
-                                        </div>
-                                        <div>
-                                          <button
-                                            className="px-4 py-2 text-xl rounded"
-                                            onClick={handleCloseModal}
-                                          >
-                                            <MdClose />
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div className="block justify-between xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex ">
-                                      <div className="relative w-[112vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[136vw] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]">
-                                        {fileType.startsWith("image") ? (
-                                          <img
-                                            src={previewData}
-                                            alt="Preview"
-                                            className="max-w-full max-h-full object-contain"
-                                          />
-                                        ) : fileType === "application/pdf" ? (
-                                          <iframe
-                                            src={previewData}
-                                            title="PDF Preview"
-                                            className="w-full h-full object-contain"
-                                          />
-                                        ) : (
-                                          <div className="flex flex-col items-center justify-center h-full">
-                                            <p>
-                                              File preview not available.Please download and verify
-                                            </p>
-                                            <a
-                                              href={previewData}
-                                              download={fileName}
-                                              className="mt-12 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                                            >
-                                              Download File
-                                            </a>
-                                          </div>
-                                        )}
-                                      </div>
-                                      <div className="w-[211px]">
-                                        <div className="mb-4 mt-2">
-                                          <h2 className="text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide">
-                                            File information
-                                          </h2>
-                                        </div>
-                                        <div className="mb-4">
-                                          <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
-                                            FILE NAME
-                                          </h2>
-                                          <h2 className="text-[14px] leading-relaxed tracking-wide break-words">
-                                            {fileName}
-                                          </h2>
-                                        </div>
-                                        <div className="mb-4">
-                                          <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
-                                            FILE SIZE
-                                          </h2>
-                                          <h2 className="text-[14px] leading-relaxed tracking-wide">
-                                            {(fileSize / 1024).toFixed(2)} KB
-                                          </h2>
-                                        </div>
-                                        <div className="mb-4">
-                                          <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
-                                            FILE TYPE
-                                          </h2>
-                                          <h2 className="text-[14px] leading-relaxed tracking-wide break-words">
-                                            {fileType}
-                                          </h2>
-                                        </div>
-                                        <div className="mb-4">
-                                          <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
-                                            UPLOAD DATE & TIME
-                                          </h2>
-                                          <h2 className="text-[14px] leading-relaxed tracking-wide">
-                                            {uploadDateTime}
-                                          </h2>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
+                        <div className="flex justify-center items-center ml-2 w-[80px]">
+                          <input
+                            type="file"
+                            id={rowIndex + formContext.scopes + key}
+                            onChange={(e) =>
+                              handleFilleChange(e, rowIndex, key)
+                            }
+                            style={{ display: "none" }}
+                          />
+                          {row[key] && row[key].name ? (
+                            // Show file present (with preview modal launcher)
+                            <label className="flex cursor-pointer ml-1">
+                              <div
+                                className="flex items-center px-2"
+                                onClick={() =>
+                                  handleFilePreview(rowIndex, key, row[key])
+                                }
+                              >
+                                <MdFilePresent className="w-5 h-5 mr-1 text-green-500" />
+                                <div className="w-[60px] truncate text-sky-600 text-[12px]">
+                                  {row[key].name}
                                 </div>
-                              )}
-                            </div>
-                      ) :null}
+                              </div>
+                            </label>
+                          ) : (
+                            // Show upload button
+                            <label
+                              htmlFor={rowIndex + formContext.scopes + key}
+                              className="flex cursor-pointer ml-1"
+                            >
+                              <div className="flex items-center  ">
+                                <MdOutlineFileUpload className="w-5 h-5 mr-1 text-[#007EEF]" />
+                                <div className="w-[60px] truncate text-[#007EEF] text-[12px] 4k:text-[14px] ml-1">
+                                  Upload
+                                </div>
+                              </div>
+                            </label>
+                          )}
+                        </div>
+                      ) : null}
                     </td>
                   );
                 })}
@@ -1086,6 +964,102 @@ const MultitypefiledWidget = ({
           Add Row <MdAdd className="text-lg" />
         </button>
       </div>
+      {showModal && modalFileObj.file && (
+        <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%]">
+            <div className="flex justify-between mt-4 mb-4">
+              <h5 className="mb-4 ml-2 font-semibold">
+                {modalFileObj.file.name}
+              </h5>
+              <div className="flex">
+                <button
+                  className="px-2 py-1 mr-2 w-[150px] flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white"
+                  onClick={() =>
+                    handleFileDelete(modalFileObj.rowIndex, modalFileObj.key)
+                  }
+                >
+                  <MdDelete className="text-xl" /> Delete File
+                </button>
+                <button
+                  className="px-4 py-2 text-xl rounded"
+                  onClick={handleCloseModal}
+                >
+                  <MdClose />
+                </button>
+              </div>
+            </div>
+            <div className="block justify-between xl:flex">
+              <div className="relative w-[744px] h-[545px]">
+                {modalFileObj.file.type?.startsWith("image") ? (
+                  <img
+                    src={modalFileObj.file.previewData || modalFileObj.file.url}
+                    alt="Preview"
+                    className="max-w-full max-h-full object-contain"
+                  />
+                ) : modalFileObj.file.type === "application/pdf" ? (
+                  <iframe
+                    src={modalFileObj.file.url}
+                    title="PDF Preview"
+                    className="w-full h-full object-contain"
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-full">
+                    <p>
+                      File preview not available. Please download and verify.
+                    </p>
+                    <a
+                      href={modalFileObj.file.url}
+                      download={modalFileObj.file.name}
+                      className="mt-12 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    >
+                      Download File
+                    </a>
+                  </div>
+                )}
+              </div>
+              <div className="w-[211px]">
+                <div className="mb-4 mt-2">
+                  <h2 className="text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide">
+                    File information
+                  </h2>
+                </div>
+                <div className="mb-4">
+                  <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
+                    FILE NAME
+                  </h2>
+                  <h2 className="text-[14px] leading-relaxed tracking-wide break-words">
+                    {modalFileObj.file.name}
+                  </h2>
+                </div>
+                <div className="mb-4">
+                  <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
+                    FILE SIZE
+                  </h2>
+                  <h2 className="text-[14px] leading-relaxed tracking-wide">
+                    {(modalFileObj.file.size / 1024).toFixed(2)} KB
+                  </h2>
+                </div>
+                <div className="mb-4">
+                  <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
+                    FILE TYPE
+                  </h2>
+                  <h2 className="text-[14px] leading-relaxed tracking-wide break-words">
+                    {modalFileObj.file.type}
+                  </h2>
+                </div>
+                <div className="mb-4">
+                  <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
+                    UPLOAD DATE & TIME
+                  </h2>
+                  <h2 className="text-[14px] leading-relaxed tracking-wide">
+                    {modalFileObj.file.uploadDateTime}
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
