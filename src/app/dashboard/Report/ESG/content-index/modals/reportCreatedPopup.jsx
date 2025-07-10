@@ -20,6 +20,7 @@ import { ImFileExcel } from "react-icons/im";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const ReportCreatedPopup = ({
   reportname,
@@ -39,12 +40,31 @@ const ReportCreatedPopup = ({
   
   const [isNotifyModalOpen, setIsNotifyModalOpen] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [mailSend,setMailSend]=useState(false)
   const [isDownloading, setIsDownloading] = useState(false);
   const [isCIDownloading, setIsCIDownloading] = useState(false);
   const [isCIXLDownloading, setIsCIXLDownloading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [loopen, setLoOpen] = useState(false); 
+  const [pdfLink,setpdfLink]=useState('')
+  const [contentIndexLink,setcontentIndexLink]=useState('')
   const router = useRouter();
   const dropdownRef = useRef(null);
+  const notifyGRICount=typeof window !== "undefined" ? localStorage.getItem("notifyGRICount") : "";
+  const report_id =typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+ 
+     const LoaderOpen = () => {
+       setLoOpen(true);
+     };
+   
+     const LoaderClose = () => {
+       setLoOpen(false);
+     };
+  useEffect(()=>{
+    if(notifyGRICount){
+      setMailSend(true)
+    }
+  },[notifyGRICount])
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -179,6 +199,33 @@ const ReportCreatedPopup = ({
     }
   };
 
+  const getAzureLink= async()=>{
+     LoaderOpen()
+    try{
+      const response = await axiosInstance.get(
+        `esg_report/generate_azure_links/${reportid?reportid:report_id}`,
+      );
+      if(response.status==200){
+        setpdfLink(response.data.azure_pdf_url)
+        setcontentIndexLink(response.data.azure_content_index_url)
+        setIsCreateReportModalOpen(false);
+        setIsNotifyModalOpen(true);
+         LoaderClose()
+      }
+      else{
+        LoaderClose()
+        console.log(response)
+        toast.error("Opps! Something went wrong")
+      }
+    }
+    catch(error){
+      LoaderClose()
+      console.log(error)
+      toast.error("Opps! Something went wrong")
+    }
+  }
+  
+
   return (
     <>
       {isCreateReportModalOpen && (
@@ -304,17 +351,14 @@ const ReportCreatedPopup = ({
                   {
                     reportType=='GRI Report: In accordance With' && (
                        <button
-                  onClick={() => {
-                    setIsCreateReportModalOpen(false);
-                    setIsNotifyModalOpen(true);
-                  }}
+                  onClick={getAzureLink}
                   className="p-4 border w-full border-gray-200 text-[16px] text-[#343A40] rounded-md flex gap-2  hover:text-blue-500 hover:border-blue-500 group"
                 >
                   <span className="w-4.5 h-4.5 text-[#667085] mt-1 group-hover:text-blue-500">
                     <IoMailOutline />
                   </span>
                   Notify GRI
-                  {showSuccessMessage ? (
+                  {mailSend ? (
                     <IoIosCheckmarkCircle className="w-5 h-5 text-[#54B054] mt-[2px]" />
                   ) : (
                     <></>
@@ -373,7 +417,21 @@ const ReportCreatedPopup = ({
         isNotifyModalOpen={isNotifyModalOpen}
         setIsNotifyModalOpen={setIsNotifyModalOpen}
         setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+        pdfLink={pdfLink}
+        contentIndexLink={contentIndexLink}
       />
+       {loopen && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                      <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                      />
+                    </div>
+                  )}
     </>
   );
 };
