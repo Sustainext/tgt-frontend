@@ -172,8 +172,16 @@ const handleTCFDDownloadpdf = async (id, name) => {
             )}
             Download Report PDF
           </button>
-
-          <button
+            {
+              ['GRI Report: In accordance With','GRI Report: With Reference to','Custom ESG Report'].includes(item.report_type)?(
+                <button
+            className="flex items-center p-2 w-full text-left text-[#d1d5db] cursor-not-allowed"
+            disabled>
+            <BsFileEarmarkWord className="mr-2 w-4 h-4" />
+            Download Report Word
+          </button>
+              ):(
+                 <button
             className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
             onClick={() => {
               handleDownloaddocx(item.id, item.name);
@@ -185,6 +193,10 @@ const handleTCFDDownloadpdf = async (id, name) => {
             )}
             Download Report Word
           </button>
+              )
+              
+            }
+         
         </>
       )}
 
@@ -232,8 +244,8 @@ const handleTCFDDownloadpdf = async (id, name) => {
           {
             item.report_type === "GRI Report: In accordance With" && (
               <button
-            onClick={() => console.log("Notify GRI")}
-            className="flex items-center p-2 w-full text-left  text-[#d1d5db]">
+            // onClick={() => console.log("Notify GRI")}
+            className="flex items-center p-2 w-full text-left  text-[#d1d5db] cursor-not-allowed">
             <MdOutlineEmail className="mr-2 text-[#d1d5db] w-4 h-4" /> Notify
             GRI
           </button>
