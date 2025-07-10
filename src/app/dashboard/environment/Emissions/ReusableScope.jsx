@@ -11,7 +11,6 @@ import React, {
   Suspense,
   lazy,
 } from 'react';
-import ReactDOM from 'react-dom'; // Add this import
 import Portal from '../../../shared/components/Portal';
 import { useDispatch, useSelector } from 'react-redux';
 import Form from '@rjsf/core';
@@ -36,9 +35,42 @@ const LazyEmissionWidget = lazy(() =>
   import('../../../shared/widgets/emissionWidget')
 );
 
-const Scope3 = forwardRef(
+const local_schema = {
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      Emission: {
+        type: ['string', 'object', 'null'],
+        title: 'EmissionScope',
+      },
+    },
+  },
+};
+
+const local_ui_schema = {
+  items: {
+    Emission: {
+      'ui:widget': 'EmissionWidget',
+      'ui:options': {
+        label: false,
+      },
+      'ui:horizontal': true,
+    },
+    'ui:order': ['Emission'],
+    'ui:options': {
+      layout: 'horizontal',
+      addable: false,
+      orderable: false,
+      removable: false,
+    },
+  },
+};
+
+const ReusableScope = forwardRef(
   (
     {
+      scopeNumber, // 1, 2, or 3
       location,
       year,
       month,
@@ -52,9 +84,17 @@ const Scope3 = forwardRef(
   ) => {
     const dispatch = useDispatch();
 
-    // Redux selectors
-    const scope3State = useSelector((state) => state.emissions.scope3Data);
-    const climatiqData = useSelector((state) => state.emissions.climatiqData);
+    // Dynamic scope-based selectors
+    const scopeKey = `scope${scopeNumber}`;
+    const scopeName = `Scope ${scopeNumber}`;
+
+    // Redux selectors with dynamic scope
+    const scopeState = useSelector(
+      (state) => state.emissions[`${scopeKey}Data`]
+    );
+    const selectedRows = useSelector(
+      (state) => state.emissions.selectedRows[scopeKey]
+    );
     const previousMonthData = useSelector(
       (state) => state.emissions.previousMonthData
     );
@@ -66,15 +106,13 @@ const Scope3 = forwardRef(
     );
     const scopeReRender = useSelector((state) => state.emissions.scopeReRender);
 
-    // Existing state
+    // State
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
     const [loopen, setLoOpen] = useState(false);
     const [modalData, setModalData] = useState(null);
     const [activityCache, setActivityCache] = useState({});
     const [hasAutoFilled, setHasAutoFilled] = useState(false);
-
-    // Modal state for expanded view
     const [isExpandedModalOpen, setIsExpandedModalOpen] = useState(false);
 
     // Virtual scrolling state
@@ -88,6 +126,7 @@ const Scope3 = forwardRef(
     const scrollTimeoutRef = useRef(null);
     const resizeObserverRef = useRef(null);
     const formRef = useRef();
+    const prevValidationErrorsRef = useRef();
 
     // Virtual scrolling constants
     const VISIBLE_ITEMS = 20;
@@ -125,12 +164,12 @@ const Scope3 = forwardRef(
       };
     }, []);
 
-    // Full formData from Redux
-    const formData = Array.isArray(scope3State.data?.data)
-      ? scope3State.data.data
+    // Get formData with dynamic scope
+    const formData = Array.isArray(scopeState.data?.data)
+      ? scopeState.data.data
       : [];
 
-    // Dynamic height calculation using useLayoutEffect
+    // Dynamic height calculation
     useLayoutEffect(() => {
       const calculateDimensions = () => {
         const container = scrollContainerRef.current;
@@ -253,18 +292,20 @@ const Scope3 = forwardRef(
         });
 
         dispatch(
-          updateScopeDataLocal({ scope: 3, data: { data: updatedFormData } })
+          updateScopeDataLocal({
+            scope: scopeNumber,
+            data: { data: updatedFormData },
+          })
         );
 
         // Validation logic
-        const currentValidationErrors = validationErrors?.scope3?.fields || {};
+        const currentValidationErrors =
+          validationErrors?.[scopeKey]?.fields || {};
 
         if (Object.keys(currentValidationErrors).length > 0) {
           const validationResult = validateEmissionsData(
-            {
-              data: { data: updatedFormData },
-            },
-            'Scope 3'
+            { data: { data: updatedFormData } },
+            scopeName
           );
 
           if (validationResult.hasErrors) {
@@ -279,7 +320,7 @@ const Scope3 = forwardRef(
             dispatch(
               setValidationErrors({
                 ...validationErrors,
-                scope3: {
+                [scopeKey]: {
                   fields: newValidationFields,
                   messages: validationResult.messages,
                   emptyFields: validationResult.emptyFields,
@@ -287,18 +328,26 @@ const Scope3 = forwardRef(
               })
             );
           } else {
-            const { scope3, ...otherScopeErrors } = validationErrors;
+            const { [scopeKey]: removedScope, ...otherScopeErrors } =
+              validationErrors;
             dispatch(setValidationErrors(otherScopeErrors));
           }
         }
       },
-      [dispatch, validationErrors, formData, startIndex]
+      [
+        dispatch,
+        validationErrors,
+        formData,
+        startIndex,
+        scopeNumber,
+        scopeKey,
+        scopeName,
+      ]
     );
 
     // Imperative handle for Calculate button
     useImperativeHandle(ref, () => ({
       updateFormData: () => {
-        // Use the full formData, not just visible items
         const formattedData = formData
           .filter((row) => {
             return !['assigned'].includes(row.Emission?.rowType);
@@ -306,11 +355,7 @@ const Scope3 = forwardRef(
           .map((row) => {
             if (row.Emission?.rowType === 'approved') {
               const { id, Emission, ...rest } = row;
-              return {
-                Emission,
-                id,
-                ...rest,
-              };
+              return { Emission, id, ...rest };
             }
             return row;
           });
@@ -352,7 +397,7 @@ const Scope3 = forwardRef(
 
       dispatch(
         updateScopeDataLocal({
-          scope: 3,
+          scope: scopeNumber,
           data: { data: updatedFormData },
         })
       );
@@ -368,7 +413,7 @@ const Scope3 = forwardRef(
           scrollContainerRef.current.scrollTop = newScrollTop;
         }
       }, 100);
-    }, [formData, dispatch, itemHeight, containerHeight]);
+    }, [formData, dispatch, itemHeight, containerHeight, scopeNumber]);
 
     const deleteTask = async (taskId) => {
       try {
@@ -376,7 +421,6 @@ const Scope3 = forwardRef(
         if (response.status === 204) {
           toast.success('Task deleted successfully');
         } else {
-          console.log('response after delete failed', response);
           toast.error('Failed to delete task');
         }
       } catch (error) {
@@ -413,22 +457,15 @@ const Scope3 = forwardRef(
         const updatedData = formData.filter((_, i) => i !== actualIndex);
 
         dispatch(
-          updateScopeDataLocal({ scope: 3, data: { data: updatedData } })
+          updateScopeDataLocal({
+            scope: scopeNumber,
+            data: { data: updatedData },
+          })
         );
 
-        // Adjust scroll position if necessary
-        if (scrollContainerRef.current && updatedData.length > 0) {
-          const maxScrollTop = Math.max(
-            0,
-            updatedData.length * itemHeight - containerHeight
-          );
-          if (scrollTop > maxScrollTop) {
-            scrollContainerRef.current.scrollTop = maxScrollTop;
-          }
-        }
-
-        // Handle validation errors
-        const currentValidationErrors = validationErrors?.scope3?.fields || {};
+        // Handle validation errors adjustment
+        const currentValidationErrors =
+          validationErrors?.[scopeKey]?.fields || {};
 
         if (Object.keys(currentValidationErrors).length > 0) {
           const newValidationFields = {};
@@ -448,8 +485,8 @@ const Scope3 = forwardRef(
           if (Object.keys(newValidationFields).length > 0) {
             dispatch(
               setValidationErrors({
-                scope3: {
-                  ...validationErrors.scope3,
+                [scopeKey]: {
+                  ...validationErrors[scopeKey],
                   fields: newValidationFields,
                 },
               })
@@ -478,9 +515,8 @@ const Scope3 = forwardRef(
         dispatch,
         setAccordionOpen,
         validationErrors,
-        scrollTop,
-        itemHeight,
-        containerHeight,
+        scopeNumber,
+        scopeKey,
       ]
     );
 
@@ -489,7 +525,13 @@ const Scope3 = forwardRef(
         LoaderOpen();
         try {
           await dispatch(
-            updateScopeData({ scope: 3, data: { data }, location, year, month })
+            updateScopeData({
+              scope: scopeNumber,
+              data: { data },
+              location,
+              year,
+              month,
+            })
           ).unwrap();
           successCallback();
         } catch (error) {
@@ -500,7 +542,7 @@ const Scope3 = forwardRef(
           LoaderClose();
         }
       },
-      [dispatch, location, year, month, successCallback]
+      [dispatch, location, year, month, successCallback, scopeNumber]
     );
 
     const updateCache = useCallback((cacheKey, activities) => {
@@ -512,11 +554,15 @@ const Scope3 = forwardRef(
 
     // Schema setup
     useEffect(() => {
-      if (scope3State.status === 'succeeded') {
-        setRemoteSchema(scope3State.schema);
-        setRemoteUiSchema(scope3State.uiSchema);
+      if (
+        scopeState.status === 'succeeded' &&
+        scopeState.schema &&
+        scopeState.uiSchema
+      ) {
+        setRemoteSchema(scopeState.schema);
+        setRemoteUiSchema(scopeState.uiSchema);
       }
-    }, [scope3State]);
+    }, [scopeState.status, scopeState.schema, scopeState.uiSchema]);
 
     // Data merging effect
     useEffect(() => {
@@ -543,8 +589,10 @@ const Scope3 = forwardRef(
             }
           });
 
-          if (assigned_data.scope3?.length) {
-            assigned_data.scope3.forEach((task) => {
+          // Get assigned data for current scope
+          const assignedDataForScope = assigned_data[scopeKey];
+          if (assignedDataForScope?.length) {
+            assignedDataForScope.forEach((task) => {
               dataMap.set(task.id, {
                 ...task,
                 Emission: {
@@ -555,8 +603,10 @@ const Scope3 = forwardRef(
             });
           }
 
-          if (approved_data.scope3?.length) {
-            approved_data.scope3.forEach((task) => {
+          // Get approved data for current scope
+          const approvedDataForScope = approved_data[scopeKey];
+          if (approvedDataForScope?.length) {
+            approvedDataForScope.forEach((task) => {
               if (!dataMap.has(task.id)) {
                 dataMap.set(task.id, {
                   ...task,
@@ -575,14 +625,16 @@ const Scope3 = forwardRef(
               item.Emission?.rowType === 'approved'
           );
 
+          // Handle autofill for current scope
+          const previousScopeData = previousMonthData[`${scopeKey}Data`];
           if (
             autoFill &&
             previousMonthData.status === 'succeeded' &&
-            previousMonthData.scope3Data?.data &&
+            previousScopeData?.data &&
             (dataMap.size === 0 ||
               (hasOnlySystemEntries && itemsWithoutIds.length === 0))
           ) {
-            previousMonthData.scope3Data.data.forEach((item) => {
+            previousScopeData.data.forEach((item) => {
               if (!dataMap.has(item.autofillId)) {
                 const updatedEmission = { ...item.Emission };
                 updatedEmission.Unit = '';
@@ -615,7 +667,7 @@ const Scope3 = forwardRef(
           if (currentDataString !== newDataString) {
             dispatch(
               updateScopeDataLocal({
-                scope: 3,
+                scope: scopeNumber,
                 data: { data: updatedFormData },
               })
             );
@@ -636,48 +688,24 @@ const Scope3 = forwardRef(
       approved_data.status,
       previousMonthData.status,
       autoFill,
-      JSON.stringify(assigned_data.scope3),
-      JSON.stringify(approved_data.scope3),
-      JSON.stringify(previousMonthData.scope3Data?.data),
+      scopeKey,
+      scopeNumber,
+      dispatch,
+      JSON.stringify(assigned_data[scopeKey]),
+      JSON.stringify(approved_data[scopeKey]),
+      JSON.stringify(previousMonthData[`${scopeKey}Data`]?.data),
     ]);
 
-    // Scope re-render effect
-    useEffect(() => {}, [scopeReRender]);
-
-    // Cleanup effect
+    // Auto-scroll to validation errors
     useEffect(() => {
-      return () => {
-        if (scrollTimeoutRef.current) {
-          clearTimeout(scrollTimeoutRef.current);
-        }
-        if (resizeObserverRef.current) {
-          resizeObserverRef.current.disconnect();
-        }
-      };
-    }, []);
-
-    // Add a ref to track previous validation errors
-    const prevValidationErrorsRef = useRef();
-
-    useEffect(() => {
-      const currentErrors = validationErrors?.scope3?.fields;
+      const currentErrors = validationErrors?.[scopeKey]?.fields;
       const prevErrors = prevValidationErrorsRef.current;
 
-      // Check if validation errors have changed (new errors appeared)
       const hasNewErrors =
         currentErrors &&
         (!prevErrors ||
           Object.keys(currentErrors).length >
             Object.keys(prevErrors || {}).length);
-
-      console.log('Validation errors changed:', {
-        hasNewErrors,
-        currentErrors,
-        prevErrors,
-        hasContainer: !!scrollContainerRef.current,
-        containerHeight,
-        itemHeight,
-      });
 
       if (
         hasNewErrors &&
@@ -686,7 +714,6 @@ const Scope3 = forwardRef(
         itemHeight > 0 &&
         formData.length > 0
       ) {
-        // Small delay to ensure DOM has updated
         setTimeout(() => {
           const container = scrollContainerRef.current;
           if (!container) return;
@@ -702,15 +729,6 @@ const Scope3 = forwardRef(
             const containerHalfHeight = containerHeight / 2;
             const rowVisiblePosition = rowPosition - currentScrollTop;
 
-            console.log('Auto-scroll check:', {
-              firstErrorRowIndex,
-              rowPosition,
-              currentScrollTop,
-              containerHalfHeight,
-              rowVisiblePosition,
-              shouldScroll: rowVisiblePosition > containerHalfHeight,
-            });
-
             if (rowVisiblePosition > containerHalfHeight) {
               const maxScrollTop = Math.max(
                 0,
@@ -721,8 +739,6 @@ const Scope3 = forwardRef(
                 maxScrollTop
               );
 
-              console.log('Auto-scrolling to:', newScrollTop);
-
               container.scrollTo({
                 top: newScrollTop,
                 behavior: 'smooth',
@@ -732,17 +748,34 @@ const Scope3 = forwardRef(
         }, 100);
       }
 
-      // Update the ref with current errors
       prevValidationErrorsRef.current = currentErrors;
     }, [
-      validationErrors?.scope3?.fields,
+      validationErrors?.[scopeKey]?.fields,
       containerHeight,
       itemHeight,
       formData.length,
+      scopeKey,
     ]);
 
+    // Reset autofill flag
+    useEffect(() => {
+      setHasAutoFilled(false);
+    }, [location, year, month]);
+
+    // Cleanup effect
+    useEffect(() => {
+      return () => {
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current);
+        }
+        if (resizeObserverRef.current) {
+          resizeObserverRef.current.disconnect();
+        }
+      };
+    }, []);
+
     // Loading state
-    if (scope3State.status === 'loading') {
+    if (scopeState.status === 'loading') {
       return (
         <div className='flex items-center justify-center'>
           <Oval
@@ -758,8 +791,8 @@ const Scope3 = forwardRef(
     }
 
     // Error state
-    if (scope3State.status === 'failed') {
-      return <div>Error loading data: {scope3State.error}</div>;
+    if (scopeState.status === 'failed') {
+      return <div>Error loading data: {scopeState.error}</div>;
     }
 
     return (
@@ -799,8 +832,10 @@ const Scope3 = forwardRef(
                     }
                   >
                     <Form
-                      schema={r_schema}
-                      uiSchema={r_ui_schema}
+                      schema={scopeNumber === 1 ? local_schema : r_schema}
+                      uiSchema={
+                        scopeNumber === 1 ? local_ui_schema : r_ui_schema
+                      }
                       formData={visibleItems}
                       onChange={handleVirtualChange}
                       validator={validator}
@@ -808,7 +843,7 @@ const Scope3 = forwardRef(
                         EmissionWidget: (props) => (
                           <LazyEmissionWidget
                             {...props}
-                            scope='scope3'
+                            scope={scopeKey}
                             year={year}
                             countryCode={countryCode}
                             onRemove={handleRemoveRow}
@@ -924,8 +959,10 @@ const Scope3 = forwardRef(
                     }
                   >
                     <Form
-                      schema={r_schema}
-                      uiSchema={r_ui_schema}
+                      schema={scopeNumber === 1 ? local_schema : r_schema}
+                      uiSchema={
+                        scopeNumber === 1 ? local_ui_schema : r_ui_schema
+                      }
                       formData={visibleItems}
                       onChange={handleVirtualChange}
                       validator={validator}
@@ -933,7 +970,7 @@ const Scope3 = forwardRef(
                         EmissionWidget: (props) => (
                           <LazyEmissionWidget
                             {...props}
-                            scope='scope3'
+                            scope={scopeKey}
                             year={year}
                             countryCode={countryCode}
                             onRemove={handleRemoveRow}
@@ -1039,7 +1076,7 @@ const Scope3 = forwardRef(
         <ExpandedRowsModal
           isOpen={isExpandedModalOpen}
           onClose={() => setIsExpandedModalOpen(false)}
-          title='Scope 3 - All Rows'
+          title={`${scopeName} - All Rows`}
           data={formData}
           columns={[
             {
@@ -1131,6 +1168,6 @@ const Scope3 = forwardRef(
   }
 );
 
-Scope3.displayName = 'Scope3';
+ReusableScope.displayName = 'ReusableScope';
 
-export default Scope3;
+export default ReusableScope;

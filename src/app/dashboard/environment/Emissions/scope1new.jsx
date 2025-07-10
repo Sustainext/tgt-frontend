@@ -812,9 +812,9 @@ const Scope1 = forwardRef(
             ref={scrollContainerRef}
             className='overflow-x-hidden'
             style={{
-              height: containerHeight || '70vh',
-              maxHeight: '70vh',
-              minHeight: '300px',
+              height: formData.length > 0 ? containerHeight || '50vh' : '150px',
+              maxHeight: formData.length > 0 ? '50vh' : '150px',
+              minHeight: formData.length > 0 ? '300px' : '150px',
               position: 'relative',
               // paddingBottom: '210px'
             }}
@@ -876,7 +876,7 @@ const Scope1 = forwardRef(
             ) : (
               <div
                 className='flex items-center justify-center text-gray-500'
-                style={{ height: containerHeight || 300 }}
+                style={{ height: '150px' }}
               >
                 No data available
               </div>
@@ -932,12 +932,15 @@ const Scope1 = forwardRef(
           <div
             className='overflow-x-auto custom-scrollbar overflow-y-auto'
             style={{
-              height: Math.min(
-                containerHeight || window.innerHeight * 0.6,
-                window.innerHeight * 0.7
-              ),
-              maxHeight: '70vh',
-              minHeight: '250px',
+              height:
+                formData.length > 0
+                  ? Math.min(
+                      containerHeight || window.innerHeight * 0.6,
+                      window.innerHeight * 0.7
+                    )
+                  : '150px',
+              maxHeight: formData.length > 0 ? '50vh' : '150px',
+              minHeight: '150px',
               position: 'relative',
             }}
             onScroll={handleScroll}
@@ -998,7 +1001,7 @@ const Scope1 = forwardRef(
             ) : (
               <div
                 className='flex items-center justify-center text-gray-500'
-                style={{ height: Math.min(300, window.innerHeight * 0.4) }}
+                style={{ height: '150px' }}
               >
                 No data available
               </div>
