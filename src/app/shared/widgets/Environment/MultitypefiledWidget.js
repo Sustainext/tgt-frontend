@@ -516,7 +516,8 @@ const MultitypefiledWidget = ({
   };
   return (
     <>
-      <div
+    <div style={{position:'relative'}}>
+       <div
         style={{
           display: "block",
           overflowX: "auto",
@@ -551,7 +552,7 @@ const MultitypefiledWidget = ({
                       style={{ display: item.tooltipdispaly }}
                       className="cursor-pointer ml-2  float-end mt-1 w-10"
                     />
-                    <ReactTooltip
+                    {/* <ReactTooltip
                       id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
                       place="top"
                       effect="solid"
@@ -564,7 +565,7 @@ const MultitypefiledWidget = ({
                         borderRadius: "8px",
                         zIndex: "1000",
                       }}
-                    />
+                    /> */}
                   </div>
                 </th>
               ))}
@@ -680,7 +681,52 @@ const MultitypefiledWidget = ({
                             />
                           )}
                         </>
-                      ) : layoutType === "input" ? (
+                      ) : 
+                      layoutType === "alphaNum" ?(
+                        <input
+  type="text"
+  inputMode="text"
+  pattern="[A-Za-z0-9]*"
+  required={required}
+  value={localValue[rowIndex][key] || ""}
+  onChange={(e) => {
+    const input = e.target.value;
+    const cleaned = input.replace(/[^a-zA-Z0-9]/g, ""); // only letters and digits
+    handleInputChange(rowIndex, key, cleaned);
+  }}
+  disabled={isFieldDisabled(uiSchemaField, row,key)}
+  className={`text-[12px] py-2 pl-1 w-full border-b rounded-md ${
+    isFieldDisabled(uiSchemaField, row,key) ? "opacity-70 cursor-not-allowed" : ""
+  }`}
+  placeholder="Enter"
+/>
+
+                      ):
+                       layoutType === "inputDecimal" ? (
+  <input
+    type="text"
+    inputMode="decimal"
+    pattern="^[0-9]*[.]?[0-9]*$"
+    required={required}
+    value={localValue[rowIndex][key] || ""}
+    onChange={(e) => {
+      const input = e.target.value;
+
+      // Allow only numbers and one decimal point
+      const cleaned = input
+        .replace(/[^0-9.]/g, "")              // Remove non-numeric/non-dot
+        .replace(/(\..*)\./g, "$1");          // Allow only one dot
+
+      handleInputChange(rowIndex, key, cleaned);
+    }}
+    disabled={isFieldDisabled(uiSchemaField, row,key)}
+    className={`text-[12px] py-2 pl-1 w-full border-b rounded-md ${
+      isFieldDisabled(uiSchemaField, row,key) ? "opacity-70 cursor-not-allowed" : ""
+    }`}
+    placeholder="Enter"
+  />
+):
+                      layoutType === "input" ? (
                         <input
                           type="text"
                           required={required}
@@ -1011,6 +1057,25 @@ const MultitypefiledWidget = ({
           </tbody>
         </table>
       </div>
+    {options.titles.map((item) => (
+        <ReactTooltip
+          key={item.title}
+          id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+          place="top"
+          effect="solid"
+          // positionStrategy="fixed"
+          style={{
+            width: "300px",
+            backgroundColor: "#000",
+            color: "white",
+            fontSize: "11px",
+            boxShadow: "0 0 8px rgba(0,0,0,0.3)",
+            borderRadius: "8px",
+            zIndex: 99999, // Ensure it appears above everything
+          }}
+        />
+      ))}
+    </div>
       <div>
         {" "}
         <button

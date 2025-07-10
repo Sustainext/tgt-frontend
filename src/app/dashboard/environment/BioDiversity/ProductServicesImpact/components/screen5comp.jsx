@@ -698,6 +698,9 @@ Land and sea use change: Land and sea use change refers to how humans use and ma
       </div>
       {selectedOption === "yes" && (
         <div className="">
+           <label className="text-sm leading-5 mb-2 text-gray-700 flex w-[546px] px-2">
+              Sites where its activities lead to land and sea use change
+            </label>
           <div>
             <Form
               schema={r_schema}

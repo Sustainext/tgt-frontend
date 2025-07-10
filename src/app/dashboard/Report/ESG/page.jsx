@@ -568,6 +568,7 @@ const ESGReport = () => {
             isCreateReportModalOpen={isCreateReportModalOpen}
             setIsCreateReportModalOpen={setIsCreateReportModalOpen}
             setIsOmissionSubmitted={setIsOmissionSubmitted}
+            reportType={reportType}
           />
         );
       } else {
@@ -581,6 +582,7 @@ const ESGReport = () => {
             isCreateReportModalOpen={isCreateReportModalOpen}
             setIsCreateReportModalOpen={setIsCreateReportModalOpen}
             setIsOmissionSubmitted={setIsOmissionSubmitted}
+            reportType={reportType}
           />
         );
       }
@@ -616,7 +618,7 @@ const ESGReport = () => {
                                 handleNextStep("back");
                               }
                             }}
-                            className="text-[12px] text-[#667085] flex gap-2 ml-3"
+                            className="text-[12px] text-[#667085] hover:text-[#007EEF] flex gap-2 ml-3"
                           >
                             <FaArrowLeftLong className="w-3 h-3 mt-1" />
                             Back to Reports
@@ -824,6 +826,7 @@ const ESGReport = () => {
                 isCreateReportModalOpen={isCreateReportModalOpen}
                 setIsCreateReportModalOpen={setIsCreateReportModalOpen}
                 setIsOmissionSubmitted={setIsOmissionSubmitted}
+                reportType={reportType}
               />
                 </div>
               </div>
@@ -865,7 +868,7 @@ const ESGReport = () => {
                               handleNextStep("back");
                             }
                           }}
-                          className="text-[12px] text-[#667085] flex gap-2 ml-3"
+                          className="text-[12px] text-[#667085] hover:text-[#007EEF] flex gap-2 ml-3"
                         >
                           <FaArrowLeftLong className="w-3 h-3 mt-1" />
                           Back to Reports

@@ -355,7 +355,7 @@ const uiSchema = {
         title: "Quantity",
         tooltip:
           "<p>Provide details on total quantity of wild species harvested with appropriate unit.</p>",
-        layouttype: "input",
+        layouttype: "alphaNum",
         tooltipdispaly: "block",
       },
       {
@@ -371,7 +371,7 @@ const uiSchema = {
         title: "Water withdrawal",
         tooltip:
           "<p>What is the total amount of water withdrawn at the site?<br/> Water withdrawal: sum of all water drawn from surface water, groundwater, seawater, or a third party for any use over the course of the reporting period.</p>",
-        layouttype: "inputonlynumber",
+        layouttype: "inputDecimal",
         tooltipdispaly: "block",
       },
       {
@@ -379,7 +379,7 @@ const uiSchema = {
         title: "Water consumption",
         tooltip:
           "<p>What is the total water consumption at the site?<br/> Water consumption: sum of all water that has been withdrawn and incorporated into products, used in the production of crops or generated as waste, has evaporated, transpired, or been consumed by humans or livestock, or is polluted to the point of being unusable by other users, and is therefore not released back to surface water, groundwater, seawater, or a third party over the course of the reporting period.</p>",
-        layouttype: "inputonlynumber",
+        layouttype: "inputDecimal",
         tooltipdispaly: "block",
       },
       {
