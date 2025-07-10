@@ -162,3 +162,112 @@ export const getActivitiesCacheStats = () => {
     memory: JSON.stringify(Array.from(activitiesCache.entries())).length
   };
 };
+
+// Add this function to activitiesService.js
+
+/**
+ * Find an activity by its details from the activities data
+ * 
+ * @param {Object} params - Search parameters
+ * @param {string} params.activityName - The activity name
+ * @param {string} params.source - The activity source
+ * @param {string} params.year - The year
+ * @param {string} params.region - The region
+ * @param {string} params.source_lca_activity - The LCA activity (optional)
+ * @param {string} params.subcategory - The subcategory to search in
+ * @param {string} params.category - The category
+ * @param {string} params.countryCode - The country code
+ * @returns {Promise<Object|null>} - Promise resolving to activity object or null
+ */
+export const findActivityByDetails = async ({
+  activityName,
+  source,
+  year,
+  region,
+  source_lca_activity,
+  subcategory,
+  category,
+  countryCode
+}) => {
+  try {
+    // First get all activities for this subcategory
+    const activities = await getActivities({
+      category,
+      subcategory,
+      countryCode,
+      year
+    });
+
+    // Search for the activity that matches the provided details
+    const foundActivity = activities.find(activity => {
+      const nameMatch = activity.name === activityName;
+      const sourceMatch = activity.source === source;
+      const yearMatch = activity.year.toString() === year.toString();
+      const regionMatch = activity.region === region;
+      
+      // Handle source_lca_activity - it might be "unknown" or undefined
+      const lcaMatch = source_lca_activity ? 
+        activity.source_lca_activity === source_lca_activity :
+        (activity.source_lca_activity === "unknown" || !activity.source_lca_activity);
+
+      return nameMatch && sourceMatch && yearMatch && regionMatch && lcaMatch;
+    });
+
+
+    if (foundActivity) {
+      console.log('Found activity by details:', foundActivity);
+      return foundActivity;
+    } else {
+      console.log('No activity found matching the provided details');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error finding activity by details:', error);
+    return null;
+  }
+};
+
+/**
+ * Parse activity string and extract details
+ * 
+ * @param {string} activityString - The full activity string
+ * @returns {Object|null} - Parsed activity details or null
+ */
+export const parseActivityString = (activityString) => {s
+  if (!activityString) return null;
+
+  // Split by ' - ' (the separator)
+  const parts = activityString.split(' - ').map(p => p.trim());
+  
+  // Find the index of the first part with parenthesis (source)
+  let sourceIdx = null;
+  for (let i = 0; i < parts.length; i++) {
+    if (/^\(.*\)$/.test(parts[i])) {  // e.g. '(UBA)', '(IPCC)'
+      sourceIdx = i;
+      break;
+    }
+  }
+  
+  if (sourceIdx === null || sourceIdx + 4 > parts.length - 1) {
+    console.warn('Could not parse activity string reliably:', activityString);
+    return null;
+  }
+  
+  // Compose fields based on source index
+  const activityName = parts.slice(0, sourceIdx).join(' - ');  // Join in case name had hyphens
+  const source = parts[sourceIdx].replace(/[()]/g, ''); // Remove parentheses
+  const unitType = parts[sourceIdx + 1];
+  const region = parts[sourceIdx + 2];
+  const year = parts[sourceIdx + 3];
+  const source_lca_activity = parts[sourceIdx + 4] || null; // May not always exist
+  
+  return {
+    activityName,
+    source,
+    unitType,
+    region,
+    year,
+    source_lca_activity
+  };
+};
+
