@@ -31,7 +31,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
     end: endDate ? new Date(endDate) : null,
   });
 
-  console.log(range,"see")
+  // console.log(range,"see")
   // Handle click outside the date picker
   useEffect(() => {
     const handleClickOutside = (event) => {
