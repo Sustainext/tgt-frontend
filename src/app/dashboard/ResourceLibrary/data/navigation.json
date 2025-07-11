@@ -1,0 +1,54 @@
+[
+  {
+    "title": "Home",
+    "slug": "home"
+  },
+  {
+    "title": "Reporting Frameworks",
+    "children": [
+      {
+        "title": "GRI Standards",
+        "children": [
+          {
+            "title": "Reporting Principles",
+            "slug": "gri-reporting-principles"
+          },
+          {
+            "title": "Reporting in Accordance with",
+            "slug": "reporting-in-accordance"
+          },
+          {
+            "title": "With reference to",
+            "slug": "with-reference-to"
+          },
+          {
+            "title": "GRI Glossary",
+            "slug": "gri-glossary"
+          }
+        ]
+      },
+      {
+        "title": "GHG Protocol",
+        "children": [
+          {
+            "title": "Scope 1,2,3 overview",
+            "slug": "scope-overview"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Glossary and Definitions",
+    "children": [
+      {
+        "title": "ESG Terms",
+        "slug": "esg-terms"
+      }
+    ]
+  },
+  {
+    "title": "FAQ",
+    "slug": "faq"
+  }
+]

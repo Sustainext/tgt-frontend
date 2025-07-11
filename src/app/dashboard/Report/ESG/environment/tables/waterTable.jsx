@@ -1,7 +1,7 @@
 'use client';
 import { useState, useRef, useEffect } from "react";
 
-const WaterTable = ({ columns, data,consumption,total,unit }) => {
+const WaterTable = ({ columns, data,consumption,total,unit,totalCol }) => {
   return (
     <>
       <div 
@@ -53,12 +53,13 @@ const WaterTable = ({ columns, data,consumption,total,unit }) => {
                     </td>
                   
                     {/* Empty cells for the remaining columns, except the last two */}
-                    {columns.length>3?columns.slice(0, columns.length - 4).map((col, colIndex) => (
+                    {columns.length>3?columns.slice(0, columns.length - (totalCol?5:4)).map((col, colIndex) => (
                       <td key={colIndex} className="border-none p-4 text-left"></td>
                     )):''}
                   
                     {/* The last two columns for 'total' and 'unit' */}
                     <td className="border-none p-4 text-left">{total}</td>
+                    {totalCol && <td className="border-none p-4 text-left"></td> }
                     <td className="border-none p-4 text-left">{unit}</td>
                   </tr>
                   

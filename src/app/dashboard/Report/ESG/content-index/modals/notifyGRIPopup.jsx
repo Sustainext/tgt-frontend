@@ -33,6 +33,8 @@ const NotifyGRI = ({
   contentIndexLink,
   userEmail,
 }) => {
+
+  console.log(pdfLink,contentIndexLink)
   
   const [loopen, setLoOpen] = useState(false); 
    const LoaderOpen = () => {
@@ -83,6 +85,49 @@ const NotifyGRI = ({
   </div>
 );
 
+useEffect(()=>{
+setStatement(
+  <div>
+    <p>Subject: Notification of GRI Standards Use in Sustainability Reporting</p><br />
+    <p>Dear GRI Team</p><br />
+    <p>
+      Sustainext is sending this email on behalf of our client to notify GRI of their use of the GRI Standards in their sustainability reporting. Please find the details of the organization and their report below:
+    </p>
+    <br /><br />
+    <p>Legal Name of the Organization: {orgName}</p>
+    <p className="mt-0.5">
+      Link to the GRI Content Index:{" "}
+      <a
+        href={contentIndexLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: "#2563eb", textDecoration: "underline" }}
+      >
+        Link
+      </a>
+    </p>
+    <p className="mt-0.5">
+      Link to the Report:{" "}
+      <a
+        href={pdfLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: "#2563eb", textDecoration: "underline" }}
+      >
+        Link
+      </a>
+    </p>
+    <p className="mt-0.5">Statement of Use: {statement}</p>
+    <p className="mt-0.5">Contact Person: {userName}</p>
+    <p className="mt-0.5">Contact Details: {userEmail}</p>
+    <br /><br />
+    <p>Best regards,</p>
+    <p>Team Sustainext</p>
+    <br />
+  </div>
+)
+},[pdfLink,contentIndexLink])
+
  const reportid =
   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   const notifyGRICount=
@@ -102,7 +147,7 @@ typeof window !== "undefined" ? localStorage.getItem("notifyGRICount") : "";
         setShowSuccessMessage(true);
         window.localStorage.setItem("notifyGRICount", response.data.email_count);
         LoaderClose()
-        toast.success("GRI Notification Email sent successfully")
+        // toast.success("GRI Notification Email sent successfully")
         
       }
       else{
@@ -129,6 +174,7 @@ typeof window !== "undefined" ? localStorage.getItem("notifyGRICount") : "";
                   <button
                     onClick={() => {
                       setIsNotifyModalOpen(false);
+                      setShowSuccessMessage(false);
                       setIsCreateReportModalOpen(true);
                     }}
                     className="text-[12px] text-[#667085] flex gap-2 ml-1"

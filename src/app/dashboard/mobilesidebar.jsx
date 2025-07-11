@@ -29,7 +29,7 @@ import { CiSettings } from "react-icons/ci";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { useDispatch, useSelector } from "react-redux";
-import { MdOutlineAssignment } from "react-icons/md";
+import { MdOutlineAssignment,MdMenuBook } from "react-icons/md";
 import {
   fetchMaterialityData,
   setCorpID,
@@ -276,9 +276,18 @@ const MobileSidenav = () => {
       lockiconshow: false,
       spacing: true,
     },
+    {
+      id: 10,
+      title: "Resource Library",
+      icon: <MdMenuBook />,
+      link: "/dashboard/ResourceLibrary",
+      role: true,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
+    },
 
     isNewRole && {
-      id: 10,
+      id: 11,
       title: "Audit logs",
       icon: <TbNotes />,
       link: "/dashboard/Auditlogs",
@@ -287,7 +296,7 @@ const MobileSidenav = () => {
       lockiconshow: false,
     },
     {
-      id: 11,
+      id: 12,
       title: "Settings",
       icon: <CiSettings />,
       link: "/dashboard/Settings",
