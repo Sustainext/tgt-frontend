@@ -77,15 +77,13 @@ const ActivityDropdownPortal = ({
             rect.bottom +
             window.scrollY * 1.25 +
             100 +
-            Math.floor((rect.top - 317) / 37.7) * 10 +
-            150;
+            Math.floor((rect.top - 317) / 37.7) * 10;
         } else if (scope === 'scope3') {
           top =
             rect.bottom +
             window.scrollY * 1.25 +
             100 +
-            Math.floor((rect.top - 317) / 37.7) * 10 +
-            70;
+            Math.floor((rect.top - 317) / 37.7) * 10;
         } else {
           top = rect.bottom + window.scrollY * 1.25;
         }
@@ -136,15 +134,13 @@ const ActivityDropdownPortal = ({
           rect.bottom +
           window.scrollY * 1.25 +
           100 +
-          Math.floor((rect.top - 317) / 37.7) * 10 +
-          150;
+          Math.floor((rect.top - 317) / 37.7) * 10;
       } else if (scope === 'scope3') {
         top =
           rect.bottom +
           window.scrollY * 1.25 +
           100 +
-          Math.floor((rect.top - 317) / 37.7) * 10 +
-          70;
+          Math.floor((rect.top - 317) / 37.7) * 10;
       } else {
         top = rect.bottom + window.scrollY * 1.25;
       }
@@ -1876,6 +1872,7 @@ const EmissionWidget = React.memo(
 
                     {/* Preview Modal */}
                     {showModal && previewData && (
+                      <Portal>
                       <div className='fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50'>
                         <div className='bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]'>
                           <div className='flex justify-between mt-4 mb-4'>
@@ -1988,6 +1985,7 @@ const EmissionWidget = React.memo(
                           </div>
                         </div>
                       </div>
+                      </Portal>
                     )}
                   </div>
                   {value.rowType === 'calculated' && (

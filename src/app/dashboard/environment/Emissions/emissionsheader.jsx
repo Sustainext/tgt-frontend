@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { MdKeyboardArrowDown, MdSearch } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import {
   fetchPreviousMonthData,
@@ -18,6 +18,7 @@ import {
   fetchLocations,
   setValidationErrors,
 } from "@/lib/redux/features/emissionSlice";
+import EmissionsFactorsSearchModal from "../../../shared/components/EmissionFactorsSearchModal";
 
 const monthMapping = {
   Jan: 1,
@@ -57,6 +58,9 @@ const EmissionsHeader = ({
     status: locationsStatus,
     error: locationsError,
   } = useSelector((state) => state.emissions.locations);
+
+  // State for controlling the modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // useEffect(() => {
   //   if (locationsStatus === "idle") {
@@ -123,9 +127,19 @@ const EmissionsHeader = ({
     }
   };
 
+  // Function to open the modal
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
-      <div className="ml-2 mb-5">
+      <div className="ml-2 mb-5 relative">
         <div className="block mb-5 xl:flex md:flex lg:flex 2xl:flex 4k:flex">
           <div>
             <div className="relative mb-4 md:mb-0 xl:mb-0 lg:mb-0 2xl:mb-0 4k:mb-0">
@@ -226,82 +240,10 @@ const EmissionsHeader = ({
                   {climatiqData.totalScore} tCO2e{" "}
                 </span>
               </p>
+              <p></p>
             </div>
           </div>
         </div>
-        {/* <div className="flex gap-4 mb-8">
-          <div className="relative">
-            <select
-              name="location"
-              className="border m-0.5 text-[12px] text-neutral-500 appearance-none w-[240px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              value={location}
-              onChange={handleChange}
-            >
-              <option value="">
-                {getLocationSelectorMessage(locationsStatus, locationsError)}
-              </option>
-              {locations?.map((loc, index) => (
-                <option key={index} value={loc.id}>
-                  {loc.name}
-                </option>
-              ))}
-            </select>
-            <div
-              className="absolute inset-y-0 right-2 flex items-center pointer-events-none"
-              style={{ top: "50%", transform: "translateY(-50%)" }}
-            >
-              <MdKeyboardArrowDown
-                className="text-neutral-500"
-                style={{ fontSize: "16px" }}
-              />
-            </div>
-            {locationError && (
-              <p className="text-red-500 text-[12px] absolute top-9 left-0 pl-3">
-                {locationError}
-              </p>
-            )}
-          </div>
-          <div className="ml-3 relative">
-            <select
-              name="year"
-              className="border m-0.5 text-[12px] text-neutral-500 appearance-none w-[240px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              value={year}
-              onChange={handleChange}
-            >
-              <option value="">Select year</option>
-              {yearInfo.map((item) => (
-                <option value={item.slice(0, 4)} key={item}>
-                  {item.slice(0, 4)}
-                </option>
-              ))}
-            </select>
-            <div
-              className="absolute inset-y-0 right-2 flex items-center pointer-events-none"
-              style={{ top: "50%", transform: "translateY(-50%)" }}
-            >
-              <MdKeyboardArrowDown
-                className="text-neutral-500"
-                style={{ fontSize: "16px" }}
-              />
-            </div>
-            {yearError && (
-              <p className="text-red-500 text-[12px] absolute top-9 left-0 pl-3">
-                {yearError}
-              </p>
-            )}
-          </div>
-
-          <div className="w-full flex items-center justify-end me-4">
-            <div className="float-end">
-              <p className="text-[14px] text-[#0057A5]">
-                GHG Emissions for the month ={" "}
-                <span className="text-[#146152] text-[14px]">
-                  {climatiqData.totalScore} tCO2e{" "}
-                </span>
-              </p>
-            </div>
-          </div>
-        </div> */}
         <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block">
           <div className="flex justify-between mb-4">
             <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
@@ -335,7 +277,27 @@ const EmissionsHeader = ({
             </div>
           </div>
         </div>
+
+        {/* Button to open Emissions Factors Search Modal - positioned at bottom right */}
+        <button
+          onClick={handleOpenModal}
+          className="fixed bottom-6 right-6 bg-[#0057A5] hover:bg-[#004080] text-white rounded-full p-4 shadow-lg transition-all duration-300 hover:shadow-xl z-50 group"
+          title="Search Emission Factors"
+        >
+          <MdSearch className="text-xl" />
+          <span className="absolute right-16 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white text-sm rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+            Search Emission Factors
+          </span>
+        </button>
       </div>
+
+      {/* Emissions Factors Search Modal */}
+      {isModalOpen && (
+        <EmissionsFactorsSearchModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+        />
+      )}
     </>
   );
 };
