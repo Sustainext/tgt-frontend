@@ -11,19 +11,28 @@
         "children": [
           {
             "title": "Reporting Principles",
-            "slug": "gri-reporting-principles"
+            "slug": "gri-reporting-principles",
+            "sidebarTitle":"Overview of principles"
           },
           {
             "title": "Reporting in Accordance with",
-            "slug": "reporting-in-accordance"
+            "slug": "reporting-in-accordance",
+            "sidebarTitle":"Overview of in Accordance requirements"
           },
           {
             "title": "With reference to",
-            "slug": "with-reference-to"
+            "slug": "with-reference-to",
+            "sidebarTitle":"Overview of with reference to requirements"
           },
           {
             "title": "GRI Glossary",
-            "slug": "gri-glossary"
+            "slug": "gri-glossary",
+            "sidebarTitle":"Glossary"
+          },
+           {
+            "title": "GRI Materiality",
+            "slug": "gri-materiality",
+            "sidebarTitle":"GRI 3: Material Topics"
           }
         ]
       },

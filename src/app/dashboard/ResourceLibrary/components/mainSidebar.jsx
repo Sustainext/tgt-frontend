@@ -74,7 +74,7 @@ function SidebarItem({
         )}
 
         <span
-          className={`cursor-pointer select-none pr-2 rounded 
+          className={`cursor-pointer select-none pr-2 rounded mb-1 
             ${isActive ? "text-[#007EEF]" : "text-gray-700"}
             ${!hasChildren && "hover:bg-blue-50"}
             `
@@ -114,7 +114,7 @@ export default function Sidebar({ navData, activeSlug, onSelect }) {
   }
 
   return (
-    <aside className="bg-white rounded-xl shadow-md p-4 h-screen min-w-[250px] max-w-[280px] border border-gray-100 text-[15px] select-none">
+    <aside className="bg-white rounded-xl shadow-md p-4 min-h-screen min-w-[250px] max-w-[280px] border border-gray-100 text-[14px] select-none">
       {navData.map((item, idx) => (
         <SidebarItem
           key={item.slug || item.title}
