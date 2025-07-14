@@ -807,7 +807,7 @@ const Scope2 = forwardRef(
                         EmissionWidget: (props) => (
                           <LazyEmissionWidget
                             {...props}
-                            scope='scope1'
+                            scope='scope2'
                             year={year}
                             countryCode={countryCode}
                             onRemove={handleRemoveRow}
@@ -875,7 +875,7 @@ const Scope2 = forwardRef(
             {formData.length > 0 && (
               <button
                 onClick={() => setIsExpandedModalOpen(true)}
-                className='ml-2 px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors'
+                className='ml-2 px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors flex items-center'
               >
                 <CiViewTable /> <span>View all</span>
               </button>
@@ -929,7 +929,7 @@ const Scope2 = forwardRef(
                         EmissionWidget: (props) => (
                           <LazyEmissionWidget
                             {...props}
-                            scope='scope1'
+                            scope='scope2'
                             year={year}
                             countryCode={countryCode}
                             onRemove={handleRemoveRow}
