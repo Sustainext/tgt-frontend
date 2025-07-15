@@ -139,7 +139,7 @@ const MaskedPIIField = ({
       <span 
         className={`font-mono text-sm ${
           isVisible ? "text-gray-900" : "text-gray-600"
-        } ${decryptionError ? "text-red-600" : ""}`}
+        } ${decryptionError ? "text-gray-600" : ""}`}
         title={decryptionError ? `Decryption Error: ${decryptionError}` : label}
       >
         {displayData}
@@ -158,7 +158,7 @@ const MaskedPIIField = ({
       {/* Decryption Error Indicator */}
       {decryptionError && (
         <span 
-          className="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"
+          className="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
           title={`Decryption failed: ${decryptionError}`}
         >
           ⚠️
@@ -235,30 +235,5 @@ export const MaskedPhone = ({ phone, className = "", ...props }) => (
   />
 );
 
-/**
- * Simple component for displaying masked designation specifically
- */
-export const MaskedDesignation = ({ designation, className = "", ...props }) => (
-  <MaskedPIIField
-    data={designation}
-    fieldType="name"
-    label="Designation"
-    className={className}
-    {...props}
-  />
-);
-
-/**
- * Simple component for displaying masked department specifically
- */
-export const MaskedDepartment = ({ department, className = "", ...props }) => (
-  <MaskedPIIField
-    data={department}
-    fieldType="name"
-    label="Department"
-    className={className}
-    {...props}
-  />
-);
 
 export default MaskedPIIField;

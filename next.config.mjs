@@ -1,6 +1,6 @@
 const nextConfig = {
   env: {
-    BACKEND_API_URL: "https://udm-be-dev.sustainext.ai",
+    BACKEND_API_URL: "https://hk2wx6z1-8000.inc1.devtunnels.ms/",
     // BACKEND_API_URL: 'http://127.0.0.1:8000',
     NEXT_APP_ZOHO_URL_EMISSIONS:
       "https://analytics.zoho.in/open-view/283231000002209106",
@@ -23,6 +23,7 @@ const nextConfig = {
       "VcLShjMepGqKoT5t9MwsuyGPHbWwwEN6zBl62XsXPSlkdHlVXeZFeRjpi6qX7t-q",
     AUTH0_REDIRECT_URL: "https://sustainext-udm.sustainext.ai/callback",
     // AUTH0_REDIRECT_URL: "http://localhost:3000/callback",
+    FERNET_SECRET_KEY : 'VRD8W20TTSYHmK0vV1NAhb6TA_BvFqahFnO_XPpIAlb='
   },
  
   images: {

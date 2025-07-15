@@ -18,7 +18,7 @@ import SettingPanel from './settingPanel';
 import axiosInstance, { patch } from '../utils/axiosMiddleware';
 import { MdOutlineLanguage } from 'react-icons/md';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
-import { MaskedEmail, MaskedPhone, MaskedDesignation, MaskedDepartment } from '../shared/components/MaskedPIIField';
+import { MaskedEmail, MaskedPhone } from '../shared/components/MaskedPIIField';
 import 'react-tooltip/dist/react-tooltip.css';
 import { CiBellOn } from 'react-icons/ci';
 import NotificationsModal from '../shared/components/NotificationsModal';
@@ -115,11 +115,11 @@ const DashboardHeader = () => {
     const initializeUserData = () => {
       // First try to get data from Auth context
       if (userDetails?.user_detail?.[0]) {
-        const email = userDetails.user_detail[0].username;
+        const email = userDetails.user_detail[0].email;
         const first_name = userDetails.user_detail[0].first_name;
         const last_name = userDetails.user_detail[0].last_name;
         setUserData({
-          username: extractUsername(email),
+          username: userDetails.user_detail[0].username,
           email: email,
           initials: getInitials(email),
           last_name: capitalizeName(last_name),
@@ -133,7 +133,7 @@ const DashboardHeader = () => {
       if (localUserDetails?.user_detail?.[0]) {
         const email = localUserDetails.user_detail[0].username;
         setUserData({
-          username: extractUsername(email),
+          username: userDetails.user_detail[0].username,
           email: email,
           initials: getInitials(email),
         });
@@ -234,6 +234,7 @@ const DashboardHeader = () => {
 
     return () => observer.disconnect();
   }, []);
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (drawerRef.current && !drawerRef.current.contains(event.target)) {
@@ -248,6 +249,7 @@ const DashboardHeader = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
   return (
     <>
       <div className='flex bg-white xl:sticky lg:sticky 2xl:sticky md:sticky xl:top-0 lg:top-0 2xl:top-0 md:top-0  right-0 border-b border-sky-600 border-opacity-50 xl:pt-4 lg:pt-4 md:pt-4 2xl:pt-4 w-full xl:mx-2 lg:mx-2 md:mx-2 2xl:mx-2 xl:z-[100] lg:z-[100] md:z-[100] 2xl:z-[100]'>
@@ -429,6 +431,7 @@ const DashboardHeader = () => {
                     ref={drawerRef}
                     className='w-auto absolute -right-2 mt-3 bg-white border border-gray-300 rounded-lg shadow-lg'
                     onMouseEnter={() => setDropdownVisible(true)}
+                    onClick={(e) => e.stopPropagation()}
                   >
                     <div className='flex flex-col p-3'>
                       {/* User Info */}
@@ -454,9 +457,9 @@ const DashboardHeader = () => {
                         </div>
                         {userProfileData?.designation && (
                           <div className='mt-4 text-sm text-gray-700'>
-                            <MaskedDesignation designation={userProfileData.designation} className='inline' />
+                            {userProfileData.designation}
                             <br />
-                            <MaskedDepartment department={userProfileData.department} className='inline' />
+                            {userProfileData.department}
                           </div>
                         )}
                         {userProfileData?.phone && (
