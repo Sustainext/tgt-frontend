@@ -9,7 +9,7 @@ import { FaUser } from 'react-icons/fa';
 import { MdLogout } from 'react-icons/md';
 import LogoutPopup from '../../shared/components/logoutModal';
 import SettingPanel from '../settingPanel';
-import { MaskedEmail } from '../../shared/components/MaskedPIIField';
+import { MaskedEmail, MaskedPhone, MaskedDesignation, MaskedDepartment } from '../../shared/components/MaskedPIIField';
 import axiosInstance, { patch } from '../../utils/axiosMiddleware';
 import { MdOutlineLanguage } from 'react-icons/md';
 import { useSelector } from 'react-redux';
@@ -389,19 +389,15 @@ const Userprofile = () => {
                       </div>
                       {userProfileData?.designation && (
                         <div className='mt-4 text-sm text-gray-700'>
-                          {userProfileData.designation
-                            ? userProfileData.designation
-                            : ''}
+                          <MaskedDesignation designation={userProfileData.designation} className='inline' />
                           <br />
-                          {userProfileData.department
-                            ? userProfileData.department
-                            : ''}
+                          <MaskedDepartment department={userProfileData.department} className='inline' />
                         </div>
                       )}
                       {userProfileData?.phone && (
                         <div className='flex items-center text-gray-600 text-sm mt-3'>
                           <MdOutlineLocalPhone className='w-4 h-4 mr-1' />
-                          {userProfileData.phone ? userProfileData.phone : ''}
+                          <MaskedPhone phone={userProfileData.phone} className='inline' />
                         </div>
                       )}
 
