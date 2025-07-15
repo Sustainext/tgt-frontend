@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, {
   useState,
   useEffect,
@@ -10,41 +10,41 @@ import React, {
   useMemo,
   Suspense,
   lazy,
-} from 'react';
-import ReactDOM from 'react-dom'; // Add this import
-import Portal from '../../../shared/components/Portal';
-import { useDispatch, useSelector } from 'react-redux';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
-import { Oval } from 'react-loader-spinner';
-import CalculateSuccess from './calculateSuccess';
+} from "react";
+import ReactDOM from "react-dom"; // Add this import
+import Portal from "../../../shared/components/Portal";
+import { useDispatch, useSelector } from "react-redux";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
+import { Oval } from "react-loader-spinner";
+import CalculateSuccess from "./calculateSuccess";
 import {
   updateScopeData,
   updateScopeDataLocal,
   setValidationErrors,
   fetchAssignedTasks,
-} from '@/lib/redux/features/emissionSlice';
-import { toast } from 'react-toastify';
-import { debounce } from 'lodash';
-import { validateEmissionsData } from './emissionValidation';
-import { del } from '../../../utils/axiosMiddleware';
-import ExpandedRowsModal from '../../../shared/components/ExpandedRowsModal';
-import { CiViewTable } from 'react-icons/ci';
-import ScopeTableSkeleton from '@/app/shared/components/ScopeTableSkeleton';
+} from "@/lib/redux/features/emissionSlice";
+import { toast } from "react-toastify";
+import { debounce } from "lodash";
+import { validateEmissionsData } from "./emissionValidation";
+import { del } from "../../../utils/axiosMiddleware";
+import ExpandedRowsModal from "../../../shared/components/ExpandedRowsModal";
+import { CiViewTable } from "react-icons/ci";
+import ScopeTableSkeleton from "@/app/shared/components/ScopeTableSkeleton";
 
 // Lazy load EmissionWidget for better performance
 const LazyEmissionWidget = lazy(() =>
-  import('../../../shared/widgets/emissionWidget')
+  import("../../../shared/widgets/emissionWidget")
 );
 
 const local_schema = {
-  type: 'array',
+  type: "array",
   items: {
-    type: 'object',
+    type: "object",
     properties: {
       Emission: {
-        type: ['string', 'object', 'null'],
-        title: 'Emissionsscop1',
+        type: ["string", "object", "null"],
+        title: "Emissionsscop1",
       },
     },
   },
@@ -53,15 +53,15 @@ const local_schema = {
 const local_ui_schema = {
   items: {
     Emission: {
-      'ui:widget': 'EmissionWidget',
-      'ui:options': {
+      "ui:widget": "EmissionWidget",
+      "ui:options": {
         label: false,
       },
-      'ui:horizontal': true,
+      "ui:horizontal": true,
     },
-    'ui:order': ['Emission'],
-    'ui:options': {
-      layout: 'horizontal',
+    "ui:order": ["Emission"],
+    "ui:options": {
+      layout: "horizontal",
       addable: false,
       orderable: false,
       removable: false,
@@ -88,7 +88,7 @@ const Scope1 = forwardRef(
     // Redux selectors
     const scope1State = useSelector((state) => state.emissions.scope1Data);
     const selectedRows = useSelector(
-      (state) => state.emissions.selectedRows['scope1']
+      (state) => state.emissions.selectedRows["scope1"]
     );
     const previousMonthData = useSelector(
       (state) => state.emissions.previousMonthData
@@ -142,7 +142,7 @@ const Scope1 = forwardRef(
         try {
           await task();
         } catch (error) {
-          console.error('Error processing activity details:', error);
+          console.error("Error processing activity details:", error);
         }
 
         isProcessing = false;
@@ -179,7 +179,7 @@ const Scope1 = forwardRef(
         setContainerHeight(Math.max(300, maxHeight));
 
         const firstRow = container.querySelector(
-          'tbody > tr, tr, .emission-row, [data-row]'
+          "tbody > tr, tr, .emission-row, [data-row]"
         );
         if (firstRow) {
           const rowRect = firstRow.getBoundingClientRect();
@@ -198,10 +198,10 @@ const Scope1 = forwardRef(
       }
 
       const handleResize = debounce(calculateDimensions, 100);
-      window.addEventListener('resize', handleResize);
+      window.addEventListener("resize", handleResize);
 
       return () => {
-        window.removeEventListener('resize', handleResize);
+        window.removeEventListener("resize", handleResize);
         if (resizeObserverRef.current) {
           resizeObserverRef.current.disconnect();
         }
@@ -299,7 +299,7 @@ const Scope1 = forwardRef(
             {
               data: { data: updatedFormData },
             },
-            'Scope 1'
+            "Scope 1"
           );
 
           if (validationResult.hasErrors) {
@@ -336,10 +336,10 @@ const Scope1 = forwardRef(
         // Use the full formData, not just visible items
         const formattedData = formData
           .filter((row) => {
-            return !['assigned'].includes(row.Emission?.rowType);
+            return !["assigned"].includes(row.Emission?.rowType);
           })
           .map((row) => {
-            if (row.Emission?.rowType === 'approved') {
+            if (row.Emission?.rowType === "approved") {
               const { id, Emission, ...rest } = row;
               return {
                 Emission,
@@ -366,16 +366,16 @@ const Scope1 = forwardRef(
       const newRow = { Emission: {} };
 
       const assignedRows = formData.filter(
-        (row) => row.Emission?.rowType === 'assigned'
+        (row) => row.Emission?.rowType === "assigned"
       );
       const approvedRows = formData.filter(
-        (row) => row.Emission?.rowType === 'approved'
+        (row) => row.Emission?.rowType === "approved"
       );
       const regularRows = formData.filter(
         (row) =>
           !row.Emission?.rowType ||
-          (row.Emission.rowType !== 'assigned' &&
-            row.Emission.rowType !== 'approved')
+          (row.Emission.rowType !== "assigned" &&
+            row.Emission.rowType !== "approved")
       );
 
       const updatedRegularRows = [...regularRows, newRow];
@@ -409,13 +409,13 @@ const Scope1 = forwardRef(
       try {
         const response = await del(`organization_task_dashboard/${taskId}`);
         if (response.status === 204) {
-          toast.success('Task deleted successfully');
+          toast.success("Task deleted successfully");
         } else {
-          toast.error('Failed to delete task');
+          toast.error("Failed to delete task");
         }
       } catch (error) {
-        console.error('Error deleting task:', error);
-        toast.error('Failed to delete task');
+        console.error("Error deleting task:", error);
+        toast.error("Failed to delete task");
       }
     };
 
@@ -428,18 +428,18 @@ const Scope1 = forwardRef(
         const rowToRemove = formData[actualIndex];
 
         if (!rowToRemove) {
-          console.error('Row not found at index:', actualIndex);
+          console.error("Row not found at index:", actualIndex);
           return;
         }
 
         const rowType = rowToRemove.Emission?.rowType;
 
-        if (rowType === 'approved') {
-          toast.error('Cannot delete approved task row');
+        if (rowType === "approved") {
+          toast.error("Cannot delete approved task row");
           return;
         }
 
-        if (rowType === 'assigned') {
+        if (rowType === "assigned") {
           await deleteTask(rowToRemove.id);
           dispatch(fetchAssignedTasks());
         }
@@ -493,12 +493,12 @@ const Scope1 = forwardRef(
           }
         }
 
-        if (rowType === 'calculated') {
+        if (rowType === "calculated") {
           try {
             await updateFormData(updatedData);
           } catch (error) {
-            console.error('Failed to update form data:', error);
-            toast.error('Failed to update data on the server');
+            console.error("Failed to update form data:", error);
+            toast.error("Failed to update data on the server");
             return;
           }
         }
@@ -528,7 +528,7 @@ const Scope1 = forwardRef(
           successCallback();
         } catch (error) {
           setModalData({
-            message: 'Oops, something went wrong',
+            message: "Oops, something went wrong",
           });
         } finally {
           LoaderClose();
@@ -547,7 +547,7 @@ const Scope1 = forwardRef(
     // Schema setup
     useEffect(() => {
       if (
-        scope1State.status === 'succeeded' &&
+        scope1State.status === "succeeded" &&
         scope1State.schema &&
         scope1State.uiSchema
       ) {
@@ -560,9 +560,9 @@ const Scope1 = forwardRef(
     useEffect(() => {
       const allDataReceived =
         formData &&
-        assigned_data.status === 'succeeded' &&
-        approved_data.status === 'succeeded' &&
-        (!autoFill || (autoFill && previousMonthData.status === 'succeeded'));
+        assigned_data.status === "succeeded" &&
+        approved_data.status === "succeeded" &&
+        (!autoFill || (autoFill && previousMonthData.status === "succeeded"));
 
       if (!allDataReceived) return;
 
@@ -587,7 +587,7 @@ const Scope1 = forwardRef(
                 ...task,
                 Emission: {
                   ...task.Emission,
-                  rowType: 'assigned',
+                  rowType: "assigned",
                 },
               });
             });
@@ -600,7 +600,7 @@ const Scope1 = forwardRef(
                   ...task,
                   Emission: {
                     ...task.Emission,
-                    rowType: 'approved',
+                    rowType: "approved",
                   },
                 });
               }
@@ -609,13 +609,13 @@ const Scope1 = forwardRef(
 
           const hasOnlySystemEntries = Array.from(dataMap.values()).every(
             (item) =>
-              item.Emission?.rowType === 'assigned' ||
-              item.Emission?.rowType === 'approved'
+              item.Emission?.rowType === "assigned" ||
+              item.Emission?.rowType === "approved"
           );
 
           if (
             autoFill &&
-            previousMonthData.status === 'succeeded' &&
+            previousMonthData.status === "succeeded" &&
             previousMonthData.scope1Data?.data &&
             (dataMap.size === 0 ||
               (hasOnlySystemEntries && itemsWithoutIds.length === 0))
@@ -623,13 +623,13 @@ const Scope1 = forwardRef(
             previousMonthData.scope1Data.data.forEach((item) => {
               if (!dataMap.has(item.autofillId)) {
                 const updatedEmission = { ...item.Emission };
-                updatedEmission.Unit = '';
-                updatedEmission.Quantity = '';
-                updatedEmission.assigned_to = '';
+                updatedEmission.Unit = "";
+                updatedEmission.Quantity = "";
+                updatedEmission.assigned_to = "";
                 updatedEmission.file = {};
-                if (updatedEmission.unit_type?.includes('Over')) {
-                  updatedEmission.Unit2 = '';
-                  updatedEmission.Quantity2 = '';
+                if (updatedEmission.unit_type?.includes("Over")) {
+                  updatedEmission.Unit2 = "";
+                  updatedEmission.Quantity2 = "";
                 }
 
                 dataMap.set(item.autofillId, {
@@ -659,7 +659,7 @@ const Scope1 = forwardRef(
             );
           }
         } catch (error) {
-          console.error('Error merging data:', error);
+          console.error("Error merging data:", error);
         }
       }, 300);
 
@@ -713,7 +713,7 @@ const Scope1 = forwardRef(
           Object.keys(currentErrors).length >
             Object.keys(prevErrors || {}).length);
 
-      console.log('Validation errors changed:', {
+      console.log("Validation errors changed:", {
         hasNewErrors,
         currentErrors,
         prevErrors,
@@ -745,7 +745,7 @@ const Scope1 = forwardRef(
             const containerHalfHeight = containerHeight / 2;
             const rowVisiblePosition = rowPosition - currentScrollTop;
 
-            console.log('Auto-scroll check:', {
+            console.log("Auto-scroll check:", {
               firstErrorRowIndex,
               rowPosition,
               currentScrollTop,
@@ -764,11 +764,11 @@ const Scope1 = forwardRef(
                 maxScrollTop
               );
 
-              console.log('Auto-scrolling to:', newScrollTop);
+              console.log("Auto-scrolling to:", newScrollTop);
 
               container.scrollTo({
                 top: newScrollTop,
-                behavior: 'smooth',
+                behavior: "smooth",
               });
             }
           }
@@ -785,14 +785,14 @@ const Scope1 = forwardRef(
     ]);
 
     // Loading state
-    if (scope1State.status === 'loading') {
+    if (scope1State.status === "loading") {
       return (
-        <div className='flex items-center justify-center'>
+        <div className="flex items-center justify-center">
           <Oval
             height={50}
             width={50}
-            color='#00BFFF'
-            secondaryColor='#f3f3f3'
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
             strokeWidth={2}
             strokeWidthSecondary={2}
           />
@@ -801,32 +801,32 @@ const Scope1 = forwardRef(
     }
 
     // Error state
-    if (scope1State.status === 'failed') {
+    if (scope1State.status === "failed") {
       return <div>Error loading data: {scope1State.error}</div>;
     }
 
     return (
       <>
         {/* Desktop version */}
-        <div className='hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block'>
+        <div className="hidden xl:block lg:block md:block 2xl:block 4k:block 2k:block">
           <div
             ref={scrollContainerRef}
-            className='overflow-x-hidden'
+            className="overflow-x-hidden"
             style={{
-              height: containerHeight || '40vh',
-              maxHeight: '40vh',
-              minHeight: '300px',
-              position: 'relative',
+              height: containerHeight || "40vh",
+              maxHeight: "40vh",
+              minHeight: "300px",
+              position: "relative",
               // paddingBottom: '210px'
             }}
             onScroll={handleScroll}
           >
             {formData.length > 0 ? (
-              <div style={{ height: totalHeight, position: 'relative' }}>
+              <div style={{ height: totalHeight, position: "relative" }}>
                 <div
                   style={{
                     transform: `translateY(${offsetY}px)`,
-                    position: 'absolute',
+                    position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
@@ -843,15 +843,15 @@ const Scope1 = forwardRef(
                         EmissionWidget: (props) => (
                           <LazyEmissionWidget
                             {...props}
-                            scope='scope1'
+                            scope="scope1"
                             year={year}
                             countryCode={countryCode}
                             onRemove={handleRemoveRow}
                             index={
-                              startIndex + parseInt(props.id.split('_')[1])
+                              startIndex + parseInt(props.id.split("_")[1])
                             }
                             actualIndex={
-                              startIndex + parseInt(props.id.split('_')[1])
+                              startIndex + parseInt(props.id.split("_")[1])
                             }
                             activityCache={activityCache}
                             updateCache={updateCache}
@@ -867,7 +867,7 @@ const Scope1 = forwardRef(
               </div>
             ) : (
               <div
-                className='flex items-center justify-center text-gray-500'
+                className="flex items-center justify-center text-gray-500"
                 style={{ height: containerHeight || 300 }}
               >
                 No data available
@@ -877,10 +877,10 @@ const Scope1 = forwardRef(
             {/* Scroll progress indicator */}
             {isScrolling && formData.length > visibleCount && (
               <div
-                className='fixed bg-black bg-opacity-75 text-white px-3 py-1 rounded text-sm'
+                className="fixed bg-black bg-opacity-75 text-white px-3 py-1 rounded text-sm"
                 style={{
-                  bottom: '20px',
-                  right: '20px',
+                  bottom: "20px",
+                  right: "20px",
                   zIndex: 9999,
                 }}
               >
@@ -893,25 +893,25 @@ const Scope1 = forwardRef(
             )}
           </div>
 
-          <div className='flex justify-between items-center pt-3'>
+          <div className="flex justify-between items-center pt-3">
             <button
-              className='text-[#007EEF] px-4 py-2 rounded-md text-[14px] transition-colors duration-200 hover:bg-blue-50'
+              className="text-[#007EEF] px-4 py-2 rounded-md text-[14px] transition-colors duration-200 hover:bg-blue-50"
               onClick={handleAddNew}
             >
               + Add new
             </button>
           </div>
-          <div className='text-xs text-gray-500 space-x-4 text-right flex items-center justify-end'>
+          <div className="text-xs text-gray-500 space-x-4 text-right flex items-center justify-end">
             {formData.length > 0 && (
               <span>
-                Showing {startIndex + 1}-{Math.min(endIndex, formData.length)}{' '}
+                Showing {startIndex + 1}-{Math.min(endIndex, formData.length)}{" "}
                 of {formData.length} rows
               </span>
             )}
             {formData.length > 0 && (
               <button
                 onClick={() => setIsExpandedModalOpen(true)}
-                className='ml-2 px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors flex items-center gap-1'
+                className="ml-2 px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors flex items-center gap-1"
               >
                 <CiViewTable /> <span>View all</span>
               </button>
@@ -920,26 +920,26 @@ const Scope1 = forwardRef(
         </div>
 
         {/* Mobile version */}
-        <div className='block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden'>
+        <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden 2k:hidden">
           <div
-            className='overflow-x-auto custom-scrollbar overflow-y-auto'
+            className="overflow-x-auto custom-scrollbar overflow-y-auto"
             style={{
               height: Math.min(
                 containerHeight || window.innerHeight * 0.6,
                 window.innerHeight * 0.7
               ),
-              maxHeight: '40vh',
-              minHeight: '250px',
-              position: 'relative',
+              maxHeight: "40vh",
+              minHeight: "250px",
+              position: "relative",
             }}
             onScroll={handleScroll}
           >
             {formData.length > 0 ? (
-              <div style={{ height: totalHeight, position: 'relative' }}>
+              <div style={{ height: totalHeight, position: "relative" }}>
                 <div
                   style={{
                     transform: `translateY(${offsetY}px)`,
-                    position: 'absolute',
+                    position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
@@ -948,10 +948,10 @@ const Scope1 = forwardRef(
                   <Suspense
                     fallback={
                       <div
-                        className='flex items-center justify-center'
+                        className="flex items-center justify-center"
                         style={{ height: itemHeight }}
                       >
-                        <div className='w-3 h-3 bg-gray-400 rounded-full animate-pulse'></div>
+                        <div className="w-3 h-3 bg-gray-400 rounded-full animate-pulse"></div>
                       </div>
                     }
                   >
@@ -965,15 +965,15 @@ const Scope1 = forwardRef(
                         EmissionWidget: (props) => (
                           <LazyEmissionWidget
                             {...props}
-                            scope='scope1'
+                            scope="scope1"
                             year={year}
                             countryCode={countryCode}
                             onRemove={handleRemoveRow}
                             index={
-                              startIndex + parseInt(props.id.split('_')[1])
+                              startIndex + parseInt(props.id.split("_")[1])
                             }
                             actualIndex={
-                              startIndex + parseInt(props.id.split('_')[1])
+                              startIndex + parseInt(props.id.split("_")[1])
                             }
                             activityCache={activityCache}
                             updateCache={updateCache}
@@ -989,7 +989,7 @@ const Scope1 = forwardRef(
               </div>
             ) : (
               <div
-                className='flex items-center justify-center text-gray-500'
+                className="flex items-center justify-center text-gray-500"
                 style={{ height: Math.min(300, window.innerHeight * 0.4) }}
               >
                 No data available
@@ -999,10 +999,10 @@ const Scope1 = forwardRef(
             {/* Mobile scroll indicator */}
             {isScrolling && formData.length > visibleCount && (
               <div
-                className='fixed bg-black bg-opacity-75 text-white px-2 py-1 rounded text-xs'
+                className="fixed bg-black bg-opacity-75 text-white px-2 py-1 rounded text-xs"
                 style={{
-                  top: '20px',
-                  right: '20px',
+                  top: "20px",
+                  right: "20px",
                   zIndex: 9999,
                 }}
               >
@@ -1014,24 +1014,24 @@ const Scope1 = forwardRef(
             )}
           </div>
 
-          <div className='flex justify-between items-center pt-2'>
+          <div className="flex justify-between items-center pt-2">
             <button
-              className='text-[#007EEF] px-4 py-2 rounded-md text-[14px]'
+              className="text-[#007EEF] px-4 py-2 rounded-md text-[14px]"
               onClick={handleAddNew}
             >
               + Add new
             </button>
-            <div className='text-xs text-gray-500 flex items-center space-x-2'>
+            <div className="text-xs text-gray-500 flex items-center space-x-2">
               {formData.length > 0 && (
                 <span>
-                  {startIndex + 1}-{Math.min(endIndex, formData.length)} of{' '}
+                  {startIndex + 1}-{Math.min(endIndex, formData.length)} of{" "}
                   {formData.length}
                 </span>
               )}
               {formData.length > 0 && (
                 <button
                   onClick={() => setIsExpandedModalOpen(true)}
-                  className='px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors'
+                  className="px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
                 >
                   <CiViewTable /> View all
                 </button>
@@ -1043,14 +1043,14 @@ const Scope1 = forwardRef(
         {/* Loading overlay */}
         {loopen && (
           <div
-            className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
             style={{ zIndex: 9999 }}
           >
             <Oval
               height={50}
               width={50}
-              color='#00BFFF'
-              secondaryColor='#f3f3f3'
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
               strokeWidth={2}
               strokeWidthSecondary={2}
             />
@@ -1071,98 +1071,96 @@ const Scope1 = forwardRef(
         <ExpandedRowsModal
           isOpen={isExpandedModalOpen}
           onClose={() => setIsExpandedModalOpen(false)}
-          title='Scope 1 - All Rows'
+          title="Scope 1 - All Rows"
           data={formData}
           columns={[
             {
-              key: 'Category',
-              title: 'Category',
-              render: (row) => row.Emission?.Category || '-',
+              key: "Category",
+              title: "Category",
+              render: (row) => {
+                const category = row.Emission?.Category || "-";
+                const rowType = row.Emission?.rowType || "default";
+
+                // Determine dot color based on status
+                const getDotColor = (status) => {
+                  switch (status) {
+                    case "assigned":
+                      return "bg-gray-500";
+                    case "approved":
+                      return "bg-orange-500";
+                    case "calculated":
+                      return "bg-green-500";
+                    default:
+                      return "bg-green-500";
+                  }
+                };
+
+                return (
+                  <div className="flex items-center gap-2">
+                    <div
+                      className={`w-1.5 h-1.5 rounded-full ${getDotColor(rowType)}`}
+                    ></div>
+                    {category}
+                  </div>
+                );
+              },
             },
             {
-              key: 'Subcategory',
-              title: 'Sub-Category',
-              render: (row) => row.Emission?.Subcategory || '-',
+              key: "Subcategory",
+              title: "Sub-Category",
+              render: (row) => row.Emission?.Subcategory || "-",
             },
             {
-              key: 'Activity',
-              title: 'Activity',
+              key: "Activity",
+              title: "Activity",
               render: (row) => (
                 <div
-                  className='max-w-xs truncate'
+                  className="max-w-xs truncate"
                   title={row.Emission?.Activity}
                 >
-                  {row.Emission?.Activity || '-'}
+                  {row.Emission?.Activity || "-"}
                 </div>
               ),
             },
             {
-              key: 'Quantity',
-              title: 'Quantity',
+              key: "Quantity",
+              title: "Quantity",
               render: (row) => {
                 const emission = row.Emission || {};
-                const quantity = emission.Quantity || '-';
+                const quantity = emission.Quantity || "-";
                 const quantity2 = emission.Quantity2
                   ? ` / ${emission.Quantity2}`
-                  : '';
+                  : "";
                 return `${quantity}${quantity2}`;
               },
             },
             {
-              key: 'Unit',
-              title: 'Unit',
+              key: "Unit",
+              title: "Unit",
               render: (row) => {
                 const emission = row.Emission || {};
-                const unit = emission.Unit || '-';
-                const unit2 = emission.Unit2 ? ` / ${emission.Unit2}` : '';
+                const unit = emission.Unit || "-";
+                const unit2 = emission.Unit2 ? ` / ${emission.Unit2}` : "";
                 return `${unit}${unit2}`;
               },
             },
-            {
-              key: 'Status',
-              title: 'Status',
-              render: (row) => {
-                const rowType = row.Emission?.rowType || 'default';
-                return (
-                  <span
-                    className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      rowType === 'assigned'
-                        ? 'bg-gray-100 text-gray-800'
-                        : rowType === 'approved'
-                        ? 'bg-orange-100 text-orange-800'
-                        : rowType === 'calculated'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-blue-100 text-blue-800'
-                    }`}
-                  >
-                    {rowType === 'assigned'
-                      ? 'Assigned'
-                      : rowType === 'approved'
-                      ? 'Approved'
-                      : rowType === 'calculated'
-                      ? 'Calculated'
-                      : 'Default'}
-                  </span>
-                );
-              },
-            },
           ]}
-          getRowStatus={(row) => row.Emission?.rowType || 'default'}
-          getRowClassName={(_, rowType) => {
-            return rowType === 'assigned'
-              ? 'bg-gray-50'
-              : rowType === 'approved'
-              ? 'bg-orange-50'
-              : rowType === 'calculated'
-              ? 'bg-green-50'
-              : '';
-          }}
+          getRowStatus={(row) => row.Emission?.rowType || "default"}
+          // getRowClassName={(_, rowType) => {
+          //   return rowType === 'assigned'
+          //     ? 'bg-gray-50'
+          //     : rowType === 'approved'
+          //     ? 'bg-orange-50'
+          //     : rowType === 'calculated'
+          //     ? 'bg-green-50'
+          //     : '';
+          // }}
         />
       </>
     );
   }
 );
 
-Scope1.displayName = 'Scope1';
+Scope1.displayName = "Scope1";
 
 export default Scope1;
