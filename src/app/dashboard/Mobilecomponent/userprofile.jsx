@@ -1,62 +1,61 @@
-"use client";
-import React, { useEffect, useState, useRef } from "react";
-import { useAuth } from "../../../Context/auth";
-import { useRouter } from "next/navigation";
-import { loadFromLocalStorage } from "../../utils/storage";
-import Profile from "../Profile";
-import { Oval } from "react-loader-spinner";
-import { FaUser } from "react-icons/fa";
-import { MdLogout } from "react-icons/md";
-import LogoutPopup from '../../shared/components/logoutModal'
-import SettingPanel from '../settingPanel'
-import axiosInstance, { patch } from "../../utils/axiosMiddleware";
-import { MdOutlineLanguage } from "react-icons/md";
-import { useSelector } from "react-redux";
-import { MdOutlineLocalPhone,MdEdit } from "react-icons/md";
-import { IoSettingsOutline } from "react-icons/io5";
-import { BiSupport } from "react-icons/bi";
-import { Tooltip as ReactTooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css";
-
+'use client';
+import React, { useEffect, useState, useRef } from 'react';
+import { useAuth } from '../../../Context/auth';
+import { useRouter } from 'next/navigation';
+import { loadFromLocalStorage } from '../../utils/storage';
+import Profile from '../Profile';
+import { Oval } from 'react-loader-spinner';
+import { FaUser } from 'react-icons/fa';
+import { MdLogout } from 'react-icons/md';
+import LogoutPopup from '../../shared/components/logoutModal';
+import SettingPanel from '../settingPanel';
+import { MaskedEmail } from '../../shared/components/MaskedPIIField';
+import axiosInstance, { patch } from '../../utils/axiosMiddleware';
+import { MdOutlineLanguage } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { MdOutlineLocalPhone, MdEdit } from 'react-icons/md';
+import { IoSettingsOutline } from 'react-icons/io5';
+import { BiSupport } from 'react-icons/bi';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 
 const Userprofile = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [profileVisible, setProfileVisible] = useState(false);
-  const [isModalOpen,setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('profile');
-    const [refresh,setRefresh]=useState(false)
+  const [refresh, setRefresh] = useState(false);
   const [userData, setUserData] = useState({
-    username: "",
-    email: "",
-    initials: "",
-    first_name:'',
-    last_name:''
+    username: '',
+    email: '',
+    initials: '',
+    first_name: '',
+    last_name: '',
   });
   const { logout, userDetails } = useAuth(); // Get userDetails from Auth context
   const router = useRouter();
   const profileRef = useRef(null);
   const drawerRef = useRef(null);
-  const [userProfileData,setUserProfileData]=useState({
-      firstname:'',
-      lastname:'',
-      department:'',
-      designation:'',
-      jobDescription:'',
-      role:'',
-      phone:''
-    })
-
+  const [userProfileData, setUserProfileData] = useState({
+    firstname: '',
+    lastname: '',
+    department: '',
+    designation: '',
+    jobDescription: '',
+    role: '',
+    phone: '',
+  });
 
   const getInitials = (email) => {
-    if (!email) return "";
-    const username = email.split("@")[0];
-    const nameParts = username.split(".");
-    return nameParts.map((part) => part.charAt(0).toUpperCase()).join("");
+    if (!email) return '';
+    const username = email.split('@')[0];
+    const nameParts = username.split('.');
+    return nameParts.map((part) => part.charAt(0).toUpperCase()).join('');
   };
 
   const extractUsername = (input) => {
-    if (!input) return "";
-    return input.includes("@") ? input.split("@")[0] : input;
+    if (!input) return '';
+    return input.includes('@') ? input.split('@')[0] : input;
   };
 
   function capitalizeName(name) {
@@ -70,20 +69,20 @@ const Userprofile = () => {
       // First try to get data from Auth context
       if (userDetails?.user_detail?.[0]) {
         const email = userDetails.user_detail[0].username;
-        const first_name=userDetails.user_detail[0].first_name
-        const last_name= userDetails.user_detail[0].last_name
+        const first_name = userDetails.user_detail[0].first_name;
+        const last_name = userDetails.user_detail[0].last_name;
         setUserData({
           username: extractUsername(email),
           email: email,
           initials: getInitials(email),
-          last_name:capitalizeName(last_name),
-          first_name:capitalizeName(first_name)
+          last_name: capitalizeName(last_name),
+          first_name: capitalizeName(first_name),
         });
         return;
       }
 
       // Fallback to localStorage if context is empty
-      const localUserDetails = loadFromLocalStorage("userData");
+      const localUserDetails = loadFromLocalStorage('userData');
       if (localUserDetails?.user_detail?.[0]) {
         const email = localUserDetails.user_detail[0].username;
         setUserData({
@@ -107,38 +106,35 @@ const Userprofile = () => {
     return () => clearInterval(interval);
   }, [userDetails]); // Depend on userDetails from context
 
-
   useEffect(() => {
-    const user_id = parseInt(localStorage.getItem("user_id") || "0");
+    const user_id = parseInt(localStorage.getItem('user_id') || '0');
     const fetchUserDetails = async () => {
       // setLoading(true);
       try {
-        const response = await axiosInstance.get(
-          `/api/auth/user_profile/`
-        );
-       if(response.status==200){
-        const data = response.data
-        setUserProfileData({
-          firstname:data.first_name,
-          lastname:data.last_name,
-          department:data.department,
-          designation:data.designation,
-          jobDescription:data.job_description,
-          role:data.custom_role,
-          phone:data.phone,
-          profile_pic:data.profile_pic
-        })
-       }
+        const response = await axiosInstance.get(`/api/auth/user_profile/`);
+        if (response.status == 200) {
+          const data = response.data;
+          setUserProfileData({
+            firstname: data.first_name,
+            lastname: data.last_name,
+            department: data.department,
+            designation: data.designation,
+            jobDescription: data.job_description,
+            role: data.custom_role,
+            phone: data.phone,
+            profile_pic: data.profile_pic,
+          });
+        }
       } catch (error) {
         // setIsModalOpen(true);
-        console.error("Error fetching user details:", error);
+        console.error('Error fetching user details:', error);
         if (error.redirectToLogin) {
           router.push('/login');
-      }
+        }
       }
       // setLoading(false);
     };
-    fetchUserDetails()
+    fetchUserDetails();
   }, [refresh]);
 
   const toggleDropdown = () => {
@@ -148,9 +144,9 @@ const Userprofile = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      router.push("/");
+      router.push('/');
     } catch (error) {
-      console.error("Logout failed:", error);
+      console.error('Logout failed:', error);
     }
   };
 
@@ -168,9 +164,9 @@ const Userprofile = () => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -179,35 +175,35 @@ const Userprofile = () => {
   useEffect(() => {
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
-        if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
           mutation.addedNodes.forEach((node) => {
             if (
               node.nodeType === Node.ELEMENT_NODE &&
-              node.matches("._fluentc_widget-language-manager.show")
+              node.matches('._fluentc_widget-language-manager.show')
             ) {
-              node.classList.remove("show");
+              node.classList.remove('show');
             }
           });
         }
 
         if (
-          mutation.type === "attributes" &&
-          mutation.attributeName === "class"
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'class'
         ) {
           const target = mutation.target;
           if (
             target === document.body &&
-            target.classList.contains("_fluentc_widget-banner-show")
+            target.classList.contains('_fluentc_widget-banner-show')
           ) {
-            target.classList.remove("_fluentc_widget-banner-show");
+            target.classList.remove('_fluentc_widget-banner-show');
             const widgetDiv = document.querySelector(
-              "._fluentc_widget-language-manager.show"
+              '._fluentc_widget-language-manager.show'
             );
-            widgetDiv?.classList.remove("show");
+            widgetDiv?.classList.remove('show');
           }
 
-          if (target.matches("._fluentc_widget-language-manager")) {
-            setOpen(target.classList.contains("loading"));
+          if (target.matches('._fluentc_widget-language-manager')) {
+            setOpen(target.classList.contains('loading'));
           }
         }
       });
@@ -229,29 +225,35 @@ const Userprofile = () => {
     };
 
     // Attach event listener
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
       // Cleanup event listener
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
   return (
     <>
-   
-        <div className="lg:hidden xl:hidden 2xl:hidden md:block 4k:hidden block items-center h-full ">
-        <div className="flex justify-end items-center h-full  ">
-          <div className="flex">
-          
+      <div className='lg:hidden xl:hidden 2xl:hidden md:block 4k:hidden block items-center h-full '>
+        <div className='flex justify-end items-center h-full  '>
+          <div className='flex'>
             {/* <div className="text-[#007EEF] flex items-center">
               <span className="text-[#007EEF]">Hi,</span>
               <span className="me-4 text-[#007EEF]">{userData.username}</span>
             </div> */}
 
-            <div className="text-[#007EEF] flex relative items-center whitespace-nowrap">
-              <span className="text-[#007EEF] me-1">Hi,</span>
-              <span  title={userData?.first_name ? `${userData.first_name} ${userData.last_name}` : userData?.username} 
-              className="me-4 truncate max-w-[200px] overflow-hidden inline-block">
-                {userData?.first_name ? `${userData.first_name} ${userData.last_name}` : userData?.username}
+            <div className='text-[#007EEF] flex relative items-center whitespace-nowrap'>
+              <span className='text-[#007EEF] me-1'>Hi,</span>
+              <span
+                title={
+                  userData?.first_name
+                    ? `${userData.first_name} ${userData.last_name}`
+                    : userData?.username
+                }
+                className='me-4 truncate max-w-[200px] overflow-hidden inline-block'
+              >
+                {userData?.first_name
+                  ? `${userData.first_name} ${userData.last_name}`
+                  : userData?.username}
               </span>
               {/* <ReactTooltip
                                 id={`tooltip-$e1`}
@@ -268,46 +270,48 @@ const Userprofile = () => {
                                 }}
                               ></ReactTooltip> */}
             </div>
-          
-         
-            <div className="relative cursor-pointer flex-shrink-0" onClick={toggleDropdown}>
-              <div className="flex justify-center items-center">
-              {userProfileData?.profile_pic?(
-                  <div className=" w-[30px] h-[30px] flex justify-center items-center overflow-hidden">
-                  <img
-                src={userProfileData.profile_pic}
-                alt="Profile"
-                className="w-full h-full rounded-full object-cover border border-gray-300"
-              />
-               </div>
-                ):(
+
+            <div
+              className='relative cursor-pointer flex-shrink-0'
+              onClick={toggleDropdown}
+            >
+              <div className='flex justify-center items-center'>
+                {userProfileData?.profile_pic ? (
+                  <div className=' w-[30px] h-[30px] flex justify-center items-center overflow-hidden'>
+                    <img
+                      src={userProfileData.profile_pic}
+                      alt='Profile'
+                      className='w-full h-full rounded-full object-cover border border-gray-300'
+                    />
+                  </div>
+                ) : (
                   <div
-                  style={{
-                    background:
-                      "linear-gradient(rgb(0, 126, 239), rgb(42, 228, 255))",
-                    width: "30px",
-                    height: "30px",
-                    borderRadius: "50%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    color: "white",
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {userData.initials}
-                </div>
+                    style={{
+                      background:
+                        'linear-gradient(rgb(0, 126, 239), rgb(42, 228, 255))',
+                      width: '30px',
+                      height: '30px',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      color: 'white',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {userData.initials}
+                  </div>
                 )}
                 <div>
                   <svg
-                    className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv"
-                    focusable="false"
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    data-testid="ArrowDropDownOutlinedIcon"
+                    className='MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv'
+                    focusable='false'
+                    aria-hidden='true'
+                    viewBox='0 0 24 24'
+                    data-testid='ArrowDropDownOutlinedIcon'
                   >
-                    <path d="m7 10 5 5 5-5H7z"></path>
+                    <path d='m7 10 5 5 5-5H7z'></path>
                   </svg>
                 </div>
               </div>
@@ -358,60 +362,72 @@ const Userprofile = () => {
                 // </div>
                 <div
                   ref={drawerRef}
-                  className="w-auto absolute -right-2 mt-3 bg-white border border-gray-300 rounded-lg shadow-lg"
+                  className='w-auto absolute -right-2 mt-3 bg-white border border-gray-300 rounded-lg shadow-lg'
                   onMouseEnter={() => setDropdownVisible(true)}
                 >
-                  <div className="flex flex-col p-3">
+                  <div className='flex flex-col p-3'>
                     {/* User Info */}
-                    <div className="flex flex-col p-2 items-start border-b border-gray-200 pb-4">
-                      <div className="flex gap-6 items-center w-full">
-                        <div className="flex-1">
-                          <div className="text-sm font-bold text-gray-900">
+                    <div className='flex flex-col p-2 items-start border-b border-gray-200 pb-4'>
+                      <div className='flex gap-6 items-center w-full'>
+                        <div className='flex-1'>
+                          <div className='text-sm font-bold text-gray-900'>
                             {userData.username}
                           </div>
-                          <div className="text-sm text-gray-500">
-                            {userData.email}
+                          <div className='text-sm text-gray-500'>
+                            <MaskedEmail
+                              email={userData.email}
+                              className='inline'
+                            />
                           </div>
                         </div>
                         {/* Badge */}
-                        <span className="text-[10px] font-semibold text-[#FFA701] bg-orange-100 px-2 py-1 rounded-full">
-                          {userProfileData.role?userProfileData.role:'Employee'}
+                        <span className='text-[10px] font-semibold text-[#FFA701] bg-orange-100 px-2 py-1 rounded-full'>
+                          {userProfileData.role
+                            ? userProfileData.role
+                            : 'Employee'}
                         </span>
                       </div>
                       {userProfileData?.designation && (
-                         <div className="mt-4 text-sm text-gray-700">
-                         {userProfileData.designation?userProfileData.designation:''}<br />{userProfileData.department?userProfileData.department:''}
+                        <div className='mt-4 text-sm text-gray-700'>
+                          {userProfileData.designation
+                            ? userProfileData.designation
+                            : ''}
+                          <br />
+                          {userProfileData.department
+                            ? userProfileData.department
+                            : ''}
                         </div>
                       )}
-                     {userProfileData?.phone && (
-                         <div className="flex items-center text-gray-600 text-sm mt-3">
-                         <MdOutlineLocalPhone className="w-4 h-4 mr-1" />
-                         {userProfileData.phone?userProfileData.phone:''}
+                      {userProfileData?.phone && (
+                        <div className='flex items-center text-gray-600 text-sm mt-3'>
+                          <MdOutlineLocalPhone className='w-4 h-4 mr-1' />
+                          {userProfileData.phone ? userProfileData.phone : ''}
                         </div>
-                     )}
-                     
-                       {/* Edit Profile Button */}
-                    <button
-                      onClick={handleProfileClick}
-                      className="w-full mt-4 mb-2 border border-gray-300 rounded-lg py-2 text-sm font-medium text-gray-700 hover:shadow-sm  flex items-center justify-center"
-                    >
-                      
-                      Edit Profile
-                      <MdEdit className="ml-2" />
-                    </button>
+                      )}
+
+                      {/* Edit Profile Button */}
+                      <button
+                        onClick={handleProfileClick}
+                        className='w-full mt-4 mb-2 border border-gray-300 rounded-lg py-2 text-sm font-medium text-gray-700 hover:shadow-sm  flex items-center justify-center'
+                      >
+                        Edit Profile
+                        <MdEdit className='ml-2' />
+                      </button>
                     </div>
-                
-                
+
                     {/* Account Settings */}
                     <button
-                      onClick={() => {setProfileVisible(true);
-                        setDropdownVisible(false); setActiveTab('account')}}
-                      className="w-full mt-3 p-2 flex items-center hover:bg-blue-50 hover:rounded-md text-gray-700 text-sm hover:text-gray-900"
+                      onClick={() => {
+                        setProfileVisible(true);
+                        setDropdownVisible(false);
+                        setActiveTab('account');
+                      }}
+                      className='w-full mt-3 p-2 flex items-center hover:bg-blue-50 hover:rounded-md text-gray-700 text-sm hover:text-gray-900'
                     >
-                     <IoSettingsOutline className="w-4 h-4 mr-2" />
+                      <IoSettingsOutline className='w-4 h-4 mr-2' />
                       Account Settings
                     </button>
-                
+
                     {/* <button
                       // onClick={() => {setProfileVisible(true);
                       //   setDropdownVisible(false); setActiveTab('account')}}
@@ -420,26 +436,26 @@ const Userprofile = () => {
                      <MdOutlineLanguage className="w-4 h-4 mr-2" />
                       Language Settings
                     </button> */}
-                
-                
-                <div className="border-b pb-4 border-gray-200">
-                <button
-                    disabled={true}
-                      onClick={() => console.log('Account settings clicked')}
-                      className="w-full cursor-not-allowed opacity-25 mt-2 px-2 flex  items-center text-gray-700 text-sm hover:text-gray-900"
-                    >
-                     <BiSupport className="w-4 h-4 mr-2" />
-                      Support
-                    </button>
-                </div>
-                    
-                
+
+                    <div className='border-b pb-4 border-gray-200'>
+                      <button
+                        disabled={true}
+                        onClick={() => console.log('Account settings clicked')}
+                        className='w-full cursor-not-allowed opacity-25 mt-2 px-2 flex  items-center text-gray-700 text-sm hover:text-gray-900'
+                      >
+                        <BiSupport className='w-4 h-4 mr-2' />
+                        Support
+                      </button>
+                    </div>
+
                     {/* Logout */}
                     <button
-                      onClick={()=>{setIsModalOpen(true)}}
-                      className="w-full mt-2 p-2 flex items-center hover:bg-blue-50 hover:rounded-md  text-red-600 text-sm"
+                      onClick={() => {
+                        setIsModalOpen(true);
+                      }}
+                      className='w-full mt-2 p-2 flex items-center hover:bg-blue-50 hover:rounded-md  text-red-600 text-sm'
                     >
-                      <MdLogout className="mr-2 w-4 h-4" />
+                      <MdLogout className='mr-2 w-4 h-4' />
                       Logout
                     </button>
                   </div>
@@ -447,31 +463,39 @@ const Userprofile = () => {
               )}
             </div>
           </div>
-          </div>
         </div>
-     
+      </div>
+
       {profileVisible && (
-        <div
-          ref={profileRef}
-          className="fixed inset-0 bg-black bg-opacity-50"
-        >
+        <div ref={profileRef} className='fixed inset-0 bg-black bg-opacity-50'>
           {/* <Profile onClose={() => setProfileVisible(false)} /> */}
-           <SettingPanel setRefresh={setRefresh} activeTab={activeTab} setActiveTab={setActiveTab} setProfileVisible={setProfileVisible} userProfileData={userProfileData} email={userData.email} />
+          <SettingPanel
+            setRefresh={setRefresh}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            setProfileVisible={setProfileVisible}
+            userProfileData={userProfileData}
+            email={userData.email}
+          />
         </div>
       )}
       {opens && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+        <div className='fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50'>
           <Oval
             height={50}
             width={50}
-            color="#00BFFF"
-            secondaryColor="#f3f3f3"
+            color='#00BFFF'
+            secondaryColor='#f3f3f3'
             strokeWidth={2}
             strokeWidthSecondary={2}
           />
         </div>
       )}
-      <LogoutPopup handleLogout={handleLogout} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <LogoutPopup
+        handleLogout={handleLogout}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </>
   );
 };
