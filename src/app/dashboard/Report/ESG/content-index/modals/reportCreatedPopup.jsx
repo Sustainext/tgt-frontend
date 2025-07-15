@@ -351,14 +351,17 @@ const ReportCreatedPopup = ({
                   {
                     reportType=='GRI Report: In accordance With' && (
                        <button
-                  onClick={getAzureLink}
+                  onClick={()=>{
+                    setIsCreateReportModalOpen(false);
+        setIsNotifyModalOpen(true);
+                  }}
                   className="p-4 border w-full border-gray-200 text-[16px] text-[#343A40] rounded-md flex gap-2  hover:text-blue-500 hover:border-blue-500 group"
                 >
                   <span className="w-4.5 h-4.5 text-[#667085] mt-1 group-hover:text-blue-500">
                     <IoMailOutline />
                   </span>
                   Notify GRI
-                  {mailSend ? (
+                  {showSuccessMessage ? (
                     <IoIosCheckmarkCircle className="w-5 h-5 text-[#54B054] mt-[2px]" />
                   ) : (
                     <></>
