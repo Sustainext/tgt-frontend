@@ -10,6 +10,7 @@ import GeneralHeader2 from "../../GeneralHeader2";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
+import BRSRScreen1 from './BRSRScreens/screen1'
 import { Oval } from "react-loader-spinner";
 import GeneralTopBar from "../../generalTopBar";
 const Entities = ({setMobileopen}) => {
@@ -293,6 +294,15 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
       />
       <Screen3
         selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+        ref={screen3Ref}
+        togglestatus={togglestatus}
+      />
+      <BRSRScreen1
+      selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
         year={year}
