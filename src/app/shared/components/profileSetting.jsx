@@ -450,7 +450,7 @@ export default function ProfileSettings({
           <label className='block text-[14px] font-medium text-[#344054'>
             Job Description
             <span className='text-gray-500 text-[12px] ml-2'>
-              ({description.length}/140)
+              ({description?.length}/140)
             </span>
           </label>
           <input
