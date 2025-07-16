@@ -508,7 +508,7 @@ const TCFDReport = () => {
                         onClick={() => {
                           router.push("/dashboard/Report");
                         }}
-                        className="text-[12px] text-[#667085] flex gap-2 ml-3"
+                        className="text-[12px] text-[#667085] hover:text-[#007EEF] flex gap-2 ml-3"
                       >
                         <FaArrowLeftLong className="w-3 h-3 mt-1" />
                         Back to Reports

@@ -27,23 +27,48 @@ const NotifyGRI = ({
   userName,
   userEmail,
 }) => {
-  const [mailStatement, setStatement] = useState(
-    `Subject: Notification of GRI Standards Use in Sustainability Reporting
-
-Dear GRI Team,
-
-Sustainext is sending this email on behalf of our client to notify GRI of their use of the GRI Standards in their sustainability reporting. Please find the details of the organization and their report below:
-
-Legal Name of the Organization: ${orgName}
-Link to the GRI Content Index: Link 
-Link to the Report: Link
-Statement of Use: ${statement}
-Contact Person: Mr ${userName}
-Contact Details: ${userEmail}
-
-Best regards,
-Team Sustainext`
-  );
+  const [reportUrl,setReportUrl]=useState('https://sustainextstorage1.blob.core.windows.net/media/Gri_Pdf_Reports/full_report/9_accordance_nvn1.pdf')
+  const [contentIndexUrl,setContentIndexUrl]=useState('https://sustainextstorage1.blob.core.windows.net/media/Gri_Pdf_Reports/content_index/9_accordance_nvn1_content_index.pdf')
+ const [mailStatement, setStatement] = useState(
+  <div>
+    <p>Subject: Notification of GRI Standards Use in Sustainability Reporting</p><br />
+    <p>Dear GRI Team</p><br />
+    <p>
+      Sustainext is sending this email on behalf of our client to notify GRI of their use of the GRI Standards in their sustainability reporting. Please find the details of the organization and their report below:
+    </p>
+    <br /><br />
+    <p>Legal Name of the Organization: {orgName}</p>
+    <p className="mt-0.5">
+      Link to the GRI Content Index:{" "}
+      <a
+        href={contentIndexUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: "#2563eb", textDecoration: "underline" }}
+      >
+        Link
+      </a>
+    </p>
+    <p className="mt-0.5">
+      Link to the Report:{" "}
+      <a
+        href={reportUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: "#2563eb", textDecoration: "underline" }}
+      >
+        Link
+      </a>
+    </p>
+    <p className="mt-0.5">Statement of Use: {statement}</p>
+    <p className="mt-0.5">Contact Person: {userName}</p>
+    <p className="mt-0.5">Contact Details: {userEmail}</p>
+    <br /><br />
+    <p>Best regards,</p>
+    <p>Team Sustainext</p>
+    <br />
+  </div>
+);
 
   const [notified, setNotified] = useState(false);
 
@@ -128,11 +153,18 @@ Team Sustainext`
                   <p className="text-[12px] text-[#4F4F4F] font-[500] pt-4 mb-2 ml-1">
                     Preview
                   </p>
-                  <textarea
+                  {/* <textarea
                     value={mailStatement}
+                    readOnly
                     className={` shadow-none border appearance-none text-sm border-gray-400 text-[#667085] px-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-2 resize-none`}
                     rows={17}
-                  />
+                  /> */}
+                 <div
+  className="shadow-none border appearance-none text-sm border-gray-400 text-[#667085] px-2 rounded-md py-2 leading-tight cursor-default w-full mb-2 resize-none bg-white overflow-y-auto"
+  style={{ whiteSpace: 'pre-wrap', minHeight: '272px', maxHeight: '100%' }} // 16px * 17 rows ~= 272px
+>
+  {mailStatement}
+</div>
                 </div>
                 <div className="flex justify-end px-5 mb-4">
                   <button

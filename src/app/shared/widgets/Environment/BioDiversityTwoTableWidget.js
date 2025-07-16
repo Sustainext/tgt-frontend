@@ -10,6 +10,8 @@ import { components } from "react-select";
 import DateRangePickerEmission from "@/app/utils/DatePickerComponentemission";
 import { BlobServiceClient } from "@azure/storage-blob";
 import { FaExclamationTriangle } from "react-icons/fa";
+import 'react-tooltip/dist/react-tooltip.css'
+import { IoMdOpen } from "react-icons/io";
 const CustomOptionnew = ({ children, ...props }) => {
   const { isSelected, isFocused, innerProps } = props;
 
@@ -575,6 +577,7 @@ const isFieldDisabled = (field, row) => {
          </div>
         </div>
       )}
+      <div style={{position:'relative'}}>
       <div
         style={{
           display: "block",
@@ -589,19 +592,19 @@ const isFieldDisabled = (field, row) => {
           className="table-fixed border border-gray-200  w-full rounded-md"
           style={{ borderCollapse: "separate", borderSpacing: 0 }}
         >
-          <thead className="gradient-background h-[54px]">
+          <thead className="gradient-background h-[60px]">
             <tr>
               {options.titles.map((item, idx) => (
                 <th
                   key={idx}
                   style={{ textAlign: "left" }}
                   className={`${
-                      item.key === "AssignTo" || item.key === "FileUpload"  ? "text-[13px]  text-neutral-950 font-[400] border-none text-center  px-2 py-2 relative w-[45vw] xl:w-[10vw] lg:w-[10vw] md:w-[10vw] 2xl:w-[10vw] 4k:w-[10vw] 2k:w-[10vw]" : "text-[13px]  text-neutral-950 font-[400] border-none text-center  px-2 py-2 relative w-[45vw] xl:w-[28vw] lg:w-[25vw] md:w-[25vw] 2xl:w-[25vw] 4k:w-[25vw] 2k:w-[25vw] "
+                      item.key === "AssignTo" || item.key === "FileUpload"  ? "text-[13px]  text-neutral-950 font-[400] border-none text-center  px-2 py-2 w-[45vw] xl:w-[10vw] lg:w-[10vw] md:w-[10vw] 2xl:w-[10vw] 4k:w-[10vw] 2k:w-[10vw]" : "text-[13px]  text-neutral-950 font-[400] border-none text-center  px-2 py-2 relative w-[45vw] xl:w-[28vw] lg:w-[25vw] md:w-[25vw] 2xl:w-[25vw] 4k:w-[25vw] 2k:w-[25vw] "
                   } `}
                 >
-                  <div className="flex h-[20px] relative ">
-                    <p className="pl-1">{item.title}</p>
-                    <MdInfoOutline
+                  <div className="relative">
+                    <p className="pl-1 flex">{item.title}
+                       <MdInfoOutline
                       data-tooltip-id={`tooltip-${item.title.replace(
                         /\s+/g,
                         "-"
@@ -610,20 +613,32 @@ const isFieldDisabled = (field, row) => {
                       style={{ display: item.tooltipdispaly }}
                       className="cursor-pointer ml-2  float-end mt-1 w-10"
                     />
+                    {
+                      item.title==='Ecosystem type & source' && (
+                        <IoMdOpen className="mt-[3.5px] w-3.5 h-3.5 text-[#007EEF]"
+                         onClick={() => window.open("https://global-ecosystems.org/", "_blank")}
+                         data-tooltip-id={`tooltip-link`}
+                      data-tooltip-html={'View the ecosystem type & source'}
+                        />
+                      )
+                    }
                     <ReactTooltip
-                      id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+                      id={`tooltip-link`}
                       place="top"
                       effect="solid"
                       style={{
-                        width: "400px",
+                        width: "250px",
                         backgroundColor: "#000",
                         color: "white",
                         fontSize: "11px",
                         boxShadow: 3,
                         borderRadius: "8px",
-                        zIndex: "1000",
+                        zIndex: 999999,
                       }}
                     />
+                    </p>
+                   
+
                   </div>
                 </th>
               ))}
@@ -632,7 +647,7 @@ const isFieldDisabled = (field, row) => {
           </thead>
           <tbody className="m-0 p-0">
             {localValue.map((row, rowIndex) => (
-              <tr key={rowIndex} className="h-[50px]">
+              <tr key={rowIndex} className="h-[70px]">
                 {Object.keys(schema.items.properties).map((key, cellIndex) => {
                   const propertySchema = schema.items.properties[key];
                   const uiSchemaField = options.titles.find(
@@ -1205,6 +1220,27 @@ const isFieldDisabled = (field, row) => {
           </tbody>
         </table>
       </div>
+        {options.titles.map((item) => (
+    <ReactTooltip
+      key={item.title}
+      id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+      place="top"
+      effect="solid"
+      // positionStrategy="fixed"
+      style={{
+        width: "300px",
+        backgroundColor: "#000",
+        color: "white",
+        fontSize: "11px",
+        boxShadow: "0 0 8px rgba(0,0,0,0.3)",
+        borderRadius: "8px",
+        zIndex: 99999, // Ensure it appears above everything
+      }}
+    />
+  ))}
+      </div>
+     
+       
       {/* <div>
         {" "}
         <button

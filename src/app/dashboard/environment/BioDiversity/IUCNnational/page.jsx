@@ -37,6 +37,7 @@ const IUCNnational = ({ apiData, isSidepanelOpen,setMobileopen }) => {
   const [locationMessage, setLocationMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
   const [togglestatus, setToggleStatus] = useState("Organization");
+  const [orgMessage, setOrgMessage] = useState(""); 
   const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -209,6 +210,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         togglestatus={togglestatus}
+        setOrgMessage={setOrgMessage}
       />
   
     </>

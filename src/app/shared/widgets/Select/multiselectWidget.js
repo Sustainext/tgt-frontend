@@ -280,6 +280,7 @@ const MultiselectWidget = ({
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
+                zIndex:9999
               }}
             />
           </p>

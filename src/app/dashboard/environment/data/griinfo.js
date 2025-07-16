@@ -4330,8 +4330,7 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-            Conserve and sustainably use the oceans, seas and marine resources
-            for sustainable development
+         Sustainable Development Goal 15: Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss
           </p>
           <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 15.1</p>

@@ -32,7 +32,6 @@ const schema = {
             "Provisioning services",
             "Regulating services",
             "Cultural services",
-            "Supporting services",
             "Others (please specify)"
           ]
         },
@@ -57,7 +56,7 @@ const schema = {
         "ui:headingTooltip":"This section documents data corresponding to the ecosystem services.",
         "ui:widget": "MultiselectWidget",
         "ui:title": "Which ecosystem services have been affected or potentially affected by the organisation's activities?",
-        "ui:tooltipstitle":"Provide a list of ecosystem beneficiaries affected or potentially affected by the organization’s activities. The reporting organization can also be one of the beneficiaries. The organization can report the number of beneficiaries when disclosing information. Beneficiaries can include Indigenous Peoples, local communities, and other organizations.",
+        "ui:tooltipstitle":"<p>Provide a list ecosystem services affected or potentially affected by the organization’s activities.<br/>Ecosystem services occur through an ecosystem's normal functioning and can fall into one or more of the following categories:<br/> Provisioning services: Benefits people obtain from ecosystems through material outputs like food, water, timber, and other resources.<br/> Regulating and maintenance services: Contributions of ecosystems to regulating climate, water, air, and biological processes that sustain environmental stability.<br/> Cultural services: Non-material benefits people gain from ecosystems through recreation, spiritual enrichment, knowledge, and cultural identity.<br/></p>",
         "ui:headingTooltipDisplay":"block",
         "ui:options": {
           label: false,

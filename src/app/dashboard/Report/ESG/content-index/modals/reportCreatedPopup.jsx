@@ -36,6 +36,7 @@ const ReportCreatedPopup = ({
   userEmail,
   reportType
 }) => {
+  
   const [isNotifyModalOpen, setIsNotifyModalOpen] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
@@ -300,8 +301,9 @@ const ReportCreatedPopup = ({
                     </div>
                   )}
                 </div>
-
-                <button
+                  {
+                    reportType=='GRI Report: In accordance With' && (
+                       <button
                   onClick={() => {
                     setIsCreateReportModalOpen(false);
                     setIsNotifyModalOpen(true);
@@ -318,6 +320,9 @@ const ReportCreatedPopup = ({
                     <></>
                   )}
                 </button>
+                    )
+                  }
+               
               </div>
 
               <div className="flex justify-end mt-5 mb-3">
