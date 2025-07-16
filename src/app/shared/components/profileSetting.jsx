@@ -19,6 +19,7 @@ import {
 } from '../../../lib/redux/features/roles-permissionsSlice';
 import { MaskedEmail } from './MaskedPIIField';
 import { decryptPII } from '../../utils/fernetDecryption';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 export default function ProfileSettings({
   userProfileData,
@@ -35,8 +36,9 @@ export default function ProfileSettings({
   }
 
   const [phone, setPhone] = useState(
-    userProfileData.phone ? userProfileData.phone : ''
+    userProfileData.phone ? decryptPII(userProfileData.phone) : ''
   );
+  const [showPhone, setShowPhone] = useState(false);
   const [numberWithoutCountryCode, setnumberWithoutCountryCode] = useState('');
   const [firstName, setFirstName] = useState(
     capitalizeName(userProfileData.firstname ? userProfileData.firstname : '')
@@ -358,17 +360,12 @@ export default function ProfileSettings({
           <label className='block text-[14px] font-medium text-[#344054'>
             Phone Number
           </label>
-          <div className='mt-1 flex'>
+          <div className='mt-1 flex relative'>
             <PhoneInput
               country={'in'} // Default to India (91)
               value={phone}
-              onChange={(value, data) => {
+              onChange={(value) => {
                 setPhone(`+` + value);
-                //   const numberWithoutCountryCode = value.replace(
-                //     `${data.dialCode}`,
-                //     ""
-                //   );
-                //   setnumberWithoutCountryCode(numberWithoutCountryCode); // Now phone = only local number
               }}
               placeholder='Enter phone number'
               inputClass='width:100%'
@@ -376,11 +373,25 @@ export default function ProfileSettings({
               dropdownClass='border-gray-300 shadow-lg'
               inputStyle={{
                 width: '100%',
+                filter: showPhone ? 'none' : 'blur(4px)',
+                transition: 'filter 0.3s ease',
               }}
               inputProps={{
                 required: true,
               }}
             />
+            <button
+              type="button"
+              onClick={() => setShowPhone(!showPhone)}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none z-10"
+              title={showPhone ? "Hide phone number" : "Show phone number"}
+            >
+              {showPhone ? (
+                <AiOutlineEyeInvisible className="w-4 h-4" />
+              ) : (
+                <AiOutlineEye className="w-4 h-4" />
+              )}
+            </button>
           </div>
 
           {/* <div style={{ 
