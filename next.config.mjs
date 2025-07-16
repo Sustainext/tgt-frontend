@@ -23,6 +23,7 @@ const nextConfig = {
       "VcLShjMepGqKoT5t9MwsuyGPHbWwwEN6zBl62XsXPSlkdHlVXeZFeRjpi6qX7t-q",
     AUTH0_REDIRECT_URL: "https://sustainext-udm.sustainext.ai/callback",
     // AUTH0_REDIRECT_URL: "http://localhost:3000/callback",
+    FERNET_SECRET_KEY : 'erM9hVkymirZRLTmBT2JU05k3PUAc7Mrz-G2NhD2_ko='
   },
  
   images: {
