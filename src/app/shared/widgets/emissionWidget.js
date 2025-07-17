@@ -257,6 +257,9 @@ const EmissionWidget = React.memo(
     const [isMobile, setIsMobile] = useState(false);
     const [isActivityModalOpen, setIsActivityModalOpen] = useState(false);
 
+    const [tempUnit,setTempUnit]=useState(value.Unit);
+    const [tempUnit2,setTempUnit2]=useState(value.Unit2)
+
     useEffect(() => {
       const handleResize = () => {
         setIsMobile(window.innerWidth < 768); // Adjust as needed
@@ -1149,6 +1152,31 @@ const EmissionWidget = React.memo(
       );
     };
 
+    // Add this useEffect after the existing one that sets units and units2
+useEffect(() => {
+  // Check if tempUnit is still valid in the new units array
+  if (tempUnit && units.length > 0 && !units.includes(tempUnit)) {
+    setTempUnit(null);
+    setUnit(""); // Also reset the actual unit value
+    // Update the form data
+    onChange({
+      ...value,
+      Unit: "",
+    });
+  }
+
+  // Check if tempUnit2 is still valid in the new units2 array
+  if (tempUnit2 && units2.length > 0 && !units2.includes(tempUnit2)) {
+    setTempUnit2(null);
+    setUnit2(""); // Also reset the actual unit2 value
+    // Update the form data
+    onChange({
+      ...value,
+      Unit2: "",
+    });
+  }
+}, [units, units2, tempUnit, tempUnit2]);
+
     const handleSelectAll = (event) => {
       const isChecked = event.target.checked;
       console.log("Select all isChecked:", isChecked, scope);
@@ -1646,7 +1674,7 @@ const EmissionWidget = React.memo(
                           }`}
                           disabled={["assigned", "approved"].includes(rowType)}
                         >
-                          <option value="">"{"Unit"}"</option>
+                          <option value="">{tempUnit || "Unit"}</option>
                           {units.map((unit, index) => (
                             <option key={index} value={unit}>
                               {unit}
@@ -1700,7 +1728,7 @@ const EmissionWidget = React.memo(
                           }`}
                           disabled={["assigned", "approved"].includes(rowType)}
                         >
-                          <option value="">{"Unit"}</option>
+                          <option value="">{tempUnit2 || "Unit"}</option>
                           {units2.map((unit, index) => (
                             <option key={index} value={unit}>
                               {unit}
@@ -1763,7 +1791,7 @@ const EmissionWidget = React.memo(
                           },
                         }}
                       >
-                        <option value="">{"Unit"}</option>
+                        <option value="">{tempUnit || "Unit"}</option>
                         {units.map((unit, index) => (
                           <option key={index} value={unit}>
                             {unit}
