@@ -52,7 +52,8 @@ const menuConfig = (frameworkId) => [
     label: "Compliance",
     icon: <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />,
     tabs: [
-      { tab: "Laws and Regulation", label: "Laws and Regulation" }
+      { tab: "Laws and Regulation", label: "Laws and Regulation" },
+      {tab:"Transparency and Disclosures Compliances", label:"Transparency and Disclosures Compliances"}
     ]
   },
   {
@@ -92,6 +93,7 @@ const tabToSectionMap = {
   "Workforce-Employees": sections.ORG_DETAILS,
   "Workforce-Other Workers": sections.ORG_DETAILS,
   "Laws and Regulation": sections.COMPLIANCE,
+  "Transparency and Disclosures Compliances":sections.COMPLIANCE,
   "Membership & Association": sections.MEMBERSHIP,
   "Stakeholder Engagement": sections.STAKEHOLDER,
   "Collective Bargaining Agreements": sections.BARGAINING

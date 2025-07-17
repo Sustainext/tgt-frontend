@@ -49,7 +49,7 @@ axiosInstance.interceptors.response.use(
           );
 
           const { access } = refreshTokenResponse?.data;
-
+          localStorage.setItem("token",access)
           Cookies.set("token", access);
           Cookies.set("token", access, { secure: true, sameSite: "strict" });
           originalRequest.headers["Authorization"] = `Bearer ${access}`;

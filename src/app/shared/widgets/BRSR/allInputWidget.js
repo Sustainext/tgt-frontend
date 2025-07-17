@@ -72,40 +72,149 @@ const CustomMultiValueContainer = ({ children, ...props }) => {
 };
 
 const AllInputWidget = ({ id, options, value, required, onChange, schema, formContext }) => {
+ const dropdownRefs = useRef([]);
   const [localValue, setLocalValue] = useState(value || []);
   const [othersInputs, setOthersInputs] = useState([]);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [locationDropdownOpen, setLocationDropdownOpen] = useState([]); // e.g. [true, false, ...] per row
+  const [locationQuery, setLocationQuery] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [showOther, setShowOther] = useState(false);
+  const [modalFileObj, setModalFileObj] = useState({
+    file: null,
+    rowIndex: null,
+    key: null,
+  });
+  // Azure upload (as before)
+  const uploadFileToAzure = async (file, newFileName) => {
+    const arrayBuffer = await file.arrayBuffer();
+    const blob = new Blob([arrayBuffer]);
+    const accountName = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT;
+    const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER;
+    const sasToken = process.env.NEXT_PUBLIC_AZURE_SAS_TOKEN;
+    const blobServiceClient = new BlobServiceClient(
+      `https://${accountName}.blob.core.windows.net?${sasToken}`
+    );
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+    const blobName = newFileName || file.name;
+    const blobClient = containerClient.getBlockBlobClient(blobName);
 
-  const handleInputChange = (rowIndex, key, newValue) => {
-    if (newValue.length > 21) return; // Enforce 21-character limit
+    try {
+      const uploadOptions = { blobHTTPHeaders: { blobContentType: file.type } };
+      await blobClient.uploadData(blob, uploadOptions);
+      const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
+      return url;
+    } catch (error) {
+      console.error("Error uploading file:", error.message);
+      return null;
+    }
+  };
+
+  // File upload handler
+  const handleFilleChange = async (event, rowIndex, key) => {
+    const selectedFile = event.target.files[0];
+    if (!selectedFile) return;
+    const newFileName = selectedFile.name;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedFile);
+    reader.onloadend = async () => {
+      const base64String = reader.result;
+      const url = await uploadFileToAzure(selectedFile, newFileName);
+      const fileData = {
+        name: newFileName,
+        url,
+        type: selectedFile.type,
+        size: selectedFile.size,
+        uploadDateTime: new Date().toLocaleString(),
+        previewData: base64String, // only needed for instant preview (optional)
+      };
+      setLocalValue((current) => {
+        const updated = [...current];
+        if (!updated[rowIndex]) updated[rowIndex] = {};
+        updated[rowIndex][key] = fileData;
+        return updated;
+      });
+    };
+  };
+
+  // File delete
+  const handleFileDelete = (rowIndex, key) => {
+    setLocalValue((current) => {
+      const updated = [...current];
+      if (updated[rowIndex]) {
+        updated[rowIndex][key] = null;
+      }
+      return updated;
+    });
+    setShowModal(false);
+  };
+
+  // Preview launcher
+  const handleFilePreview = (rowIndex, key, fileObj) => {
+    setModalFileObj({ file: fileObj, rowIndex, key });
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+  const handleLocationQueryChange = (rowIndex, query, key) => {
+    const updatedQueries = [...locationQuery];
+    updatedQueries[rowIndex] = query;
+    setLocationQuery(updatedQueries);
+
+    setLocationDropdownOpen((openArr) => {
+      const arr = [...openArr];
+      arr[rowIndex] = true;
+      return arr;
+    });
+
+    // If the search input is cleared, reset everything for this cell/row
+    if (query === "") {
+      const updatedValues = [...localValue];
+      if (!updatedValues[rowIndex]) updatedValues[rowIndex] = {};
+
+      // Remove others, name, and id for the location
+      delete updatedValues[rowIndex][`${key}_others`];
+      delete updatedValues[rowIndex][`${key}_name`];
+      updatedValues[rowIndex][key] = ""; // or delete? Set empty string is safest
+
+      setLocalValue(updatedValues);
+    }
+  };
+  const handleLocationSelect = (rowIndex, location, key) => {
     const updatedValues = [...localValue];
     if (!updatedValues[rowIndex]) updatedValues[rowIndex] = {};
-    updatedValues[rowIndex][key] = newValue;
+    updatedValues[rowIndex][key] = location.location_id; // Store ID
+    updatedValues[rowIndex][`${key}_name`] = location.location_name; // Store name for display
+    delete updatedValues[rowIndex][`${key}_others`];
     setLocalValue(updatedValues);
-  };
-
-  const handleAddRow = () => {
-    const newRow = {};
-    Object.keys(schema.items.properties).forEach((key) => {
-      // Initialize default values
-      if (Array.isArray(schema.items.properties[key].enum)) {
-        newRow[key] = []; // Multiselect default
-      } else {
-        newRow[key] = ""; // Input or select default
-      }
+    setLocationDropdownOpen((openArr) => {
+      const arr = [...openArr];
+      arr[rowIndex] = false;
+      return arr;
     });
-    setLocalValue([...localValue, newRow]);
+    setLocationQuery((qArr) => {
+      const arr = [...qArr];
+      arr[rowIndex] = location.location_name;
+      return arr;
+    });
   };
-
-  const handleDeleteRow = (rowIndex) => {
-    const updatedValues = [...localValue];
-    updatedValues.splice(rowIndex, 1);
-    setLocalValue(updatedValues);
+  const handleLocationBlur = (rowIndex) => {
+    // This closes the dropdown if clicking outside
+    setTimeout(() => {
+      setLocationDropdownOpen((openArr) => {
+        const arr = [...openArr];
+        arr[rowIndex] = false;
+        return arr;
+      });
+    }, 100); // Small delay to allow click events
   };
-
    const updatedMultiSelectStyle = {
   control: (base) => ({
     ...base,
-    border: "1px solid #d1d5db", // Optional: Add a border (Tailwind gray-300)
+    border: "1px solid  #9CA3AF", // Optional: Add a border (Tailwind gray-300)
     padding: "4px 10px", // Equivalent to py-3
     minHeight: "38px", // Ensure height matches your other elements
     borderRadius: "0.375rem", // Add border radius (Tailwind's rounded-md style)
@@ -152,11 +261,170 @@ const AllInputWidget = ({ id, options, value, required, onChange, schema, formCo
   }),
 };
 
-  useEffect(() => {
+useEffect(() => {
     if (Array.isArray(value) && value.length > 0) {
       setLocalValue(value);
     }
   }, [value]);
+
+  useEffect(() => {
+    const initializeOthersInputs = () => {
+      const newOthersInputs = localValue.map((row) => {
+        const rowOthers = {};
+        Object.keys(row || {}).forEach((key) => {
+          if (
+            Array.isArray(row[key]) &&
+            (row[key].includes("Others (please specify)") ||
+              row[`${key}_others`])
+          ) {
+            rowOthers[key] = true;
+          } else if (
+            row[key] === "Others (please specify)" ||
+            row[`${key}_others`]
+          ) {
+            rowOthers[key] = true;
+          }
+        });
+        return rowOthers;
+      });
+      setOthersInputs(newOthersInputs);
+    };
+    initializeOthersInputs();
+  }, [localValue]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (openDropdown !== null) {
+        const dropdownElement = dropdownRefs.current[openDropdown];
+        if (dropdownElement && !dropdownElement.contains(event.target)) {
+          setOpenDropdown(null);
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openDropdown]);
+
+  const handleCheckboxChange = (rowIndex, key, values) => {
+    const updatedValues = [...localValue];
+    if (!updatedValues[rowIndex]) {
+      updatedValues[rowIndex] = {};
+    }
+
+    updatedValues[rowIndex][key] = values;
+
+    const updatedOthersInputs = [...othersInputs];
+    if (!updatedOthersInputs[rowIndex]) {
+      updatedOthersInputs[rowIndex] = {};
+    }
+
+    updatedOthersInputs[rowIndex][key] = values?.includes(
+      "Others (please specify)"
+    );
+
+    setOthersInputs(updatedOthersInputs);
+    setLocalValue(updatedValues);
+  };
+
+  const handleOtherInputChange = (rowIndex, key, newValue) => {
+    const updatedValues = [...localValue];
+    if (!updatedValues[rowIndex]) {
+      updatedValues[rowIndex] = {};
+    }
+    updatedValues[rowIndex][`${key}_others`] = newValue;
+    setLocalValue(updatedValues);
+  };
+  const getColumnsToDisableOnChange = (changedKey, newValue) => {
+    return options.titles
+      .filter(
+        (field) =>
+          field.keytack === changedKey && // depends on this column
+          field.disable &&
+          field.disable === field.key
+      )
+      .map((f) => ({
+        field: f.key,
+        disableIfNot: f.disableIfNotValue || "yes",
+      }));
+  };
+  const handleSelectChange = (rowIndex, key, selectedValue) => {
+    const updatedValues = [...localValue];
+    if (!updatedValues[rowIndex]) {
+      updatedValues[rowIndex] = {};
+    }
+    updatedValues[rowIndex][key] = selectedValue;
+
+    // Clear/disable dependent columns dynamically
+    getColumnsToDisableOnChange(key, selectedValue).forEach(
+      ({ field, disableIfNot }) => {
+        if ((selectedValue || "").toLowerCase() !== (disableIfNot || "yes")) {
+          updatedValues[rowIndex][field] = Array.isArray(
+            updatedValues[rowIndex][field]
+          )
+            ? []
+            : "";
+        }
+      }
+    );
+
+    const updatedOthersInputs = [...othersInputs];
+    if (!updatedOthersInputs[rowIndex]) {
+      updatedOthersInputs[rowIndex] = {};
+    }
+    updatedOthersInputs[rowIndex][key] =
+      selectedValue === "Others (please specify)";
+    setOthersInputs(updatedOthersInputs);
+
+    setLocalValue(updatedValues);
+  };
+  const isFieldDisabled = (field, row) => {
+    if (field.keytack && field.disable) {
+      let sourceValue = row[field.keytack] || "";
+      let enableVal = field.disableIfNotValue || "Yes";
+      return sourceValue !== enableVal;
+    }
+    return false;
+  };
+
+  // {for disabling autopopulate}
+  //   const isFieldDisabled = (field, row, key) => {
+  //   if (formContext?.readOnlyFields?.includes(key)) return true;
+
+  //   if (field.keytack && field.disable) {
+  //     let sourceValue = row[field.keytack] || "";
+  //     let enableVal = field.disableIfNotValue || "Yes";
+  //     return sourceValue !== enableVal;
+  //   }
+
+  //   return false;
+  // };
+
+  const handleAddRow = () => {
+    const newRow = {};
+    Object.keys(schema.items.properties).forEach((key) => {
+      // Initialize default values based on the schema type
+      if (Array.isArray(schema.items.properties[key].enum)) {
+        newRow[key] = []; // Multiselect default
+      } else {
+        newRow[key] = ""; // Input or select default
+      }
+    });
+    setLocalValue([...localValue, newRow]);
+    setOthersInputs([...othersInputs, {}]);
+  };
+
+  const handleDeleteRow = (rowIndex) => {
+    const updatedValues = [...localValue];
+    updatedValues.splice(rowIndex, 1);
+    setLocalValue(updatedValues);
+
+    const updatedOthersInputs = [...othersInputs];
+    updatedOthersInputs.splice(rowIndex, 1);
+    setOthersInputs(updatedOthersInputs);
+  };
 
   const debouncedUpdate = useCallback(debounce(onChange, 200), [onChange]);
 
@@ -164,20 +432,47 @@ const AllInputWidget = ({ id, options, value, required, onChange, schema, formCo
     debouncedUpdate(localValue);
   }, [localValue, debouncedUpdate]);
 
+  const handleInputChange = (rowIndex, key, newValue) => {
+    const updatedValues = [...localValue];
+    if (!updatedValues[rowIndex]) {
+      updatedValues[rowIndex] = {};
+    }
+    updatedValues[rowIndex][key] = newValue; // Directly update the value for the input field
+    setLocalValue(updatedValues);
+  };
+  const handletextareaChange = (rowIndex, key, newValue) => {
+    const updatedValues = [...localValue];
+    if (!updatedValues[rowIndex]) {
+      updatedValues[rowIndex] = {};
+    }
+    updatedValues[rowIndex][key] = newValue; // Directly update the value for the input field
+    setLocalValue(updatedValues);
+  };
+  const handleDateRangeChange = (rowIndex, key, newRange) => {
+    const updatedValues = [...localValue];
+    if (!updatedValues[rowIndex]) {
+      updatedValues[rowIndex] = {};
+    }
+    updatedValues[rowIndex][key] = newRange;
+    setLocalValue(updatedValues);
+  };
+
+  
+
   return (
     <>
       <div
         style={{
           position: "relative",
-          display: "flex",
-          flexDirection: "column",
-          gap: "1rem",
+          // display: "flex",
+          // flexDirection: "column",
+          // gap: "1rem",
         }}
       >
         {localValue.map((row, rowIndex) => (
           <div
             key={rowIndex}
-            className="flex flex-col w-full sm:flex-row sm:items-center sm:gap-4"
+            className="w-full"
           >
             {Object.keys(schema.items.properties).map((key, cellIndex) => {
               const propertySchema = schema.items.properties[key];
@@ -187,7 +482,7 @@ const AllInputWidget = ({ id, options, value, required, onChange, schema, formCo
               const layoutType = uiSchemaField?.layouttype || "input";
 
               return (
-                <div key={cellIndex} className="flex flex-col flex-grow mb-4">
+                <div key={cellIndex} className="mb-4">
                   {/* Render Field Title */}
                   <label className="text-[14px] font-regular mb-3 flex">
                     {uiSchemaField?.title}
@@ -223,16 +518,30 @@ const AllInputWidget = ({ id, options, value, required, onChange, schema, formCo
                     <input
                       type="text"
                       required={required}
-                      value={row[key] || ""}
+                      value={localValue[rowIndex][key] || ""}
                       onChange={(e) => handleInputChange(rowIndex, key, e.target.value)}
                       className="border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
-                      placeholder={`Enter Data`}
+                      placeholder={`Enter data`}
                     />
                   )}
 
+                   {layoutType === "multilinetextbox" && (
+                   <textarea
+                          required={required}
+                          value={localValue[rowIndex][key] || ""}
+                          onChange={(e) => handleInputChange(rowIndex, key, e.target.value)}
+                           className="border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+                          rows={5}
+                          placeholder="Enter data"
+                        />
+                  )}
+
+
                   {layoutType === "multiselect" && propertySchema.enum && (
+                    <div>
                     <Select
                       isMulti
+                      placeholder="Select"
                       options={propertySchema.enum.map((option) => ({
                         value: option,
                         label: option,
@@ -257,7 +566,71 @@ const AllInputWidget = ({ id, options, value, required, onChange, schema, formCo
                        styles={updatedMultiSelectStyle}
                        className="block w-1/2 text-[12px]   focus:outline-none"
                     />
+                    
+                    {othersInputs[rowIndex]?.[key] && (
+                            <input
+                              type="text"
+                              required={required}
+                              value={
+                                localValue[rowIndex][`${key}_others`] || ""
+                              }
+                              onChange={(e) =>
+                                handleOtherInputChange(
+                                  rowIndex,
+                                  key,
+                                  e.target.value
+                                )
+                              }
+                              className="mt-4 border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-[50%]"
+                              placeholder="Others Please specify"
+                            />
+                          )}
+                          </div>
                   )}
+
+                  {layoutType === "select" && propertySchema.enum && (
+                        <>
+                          <select
+                            value={
+                              typeof localValue[rowIndex][key] === "string" &&
+                              localValue[rowIndex][key].startsWith("Others")
+                                ? "Others (please specify)"
+                                : localValue[rowIndex][key] || ""
+                            }
+                            onChange={(e) =>
+                              handleSelectChange(rowIndex, key, e.target.value)
+                            }
+                           
+                            className="border text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-1/2"
+                          >
+                            <option value="">Select an option</option>
+                            {propertySchema.enum.map((option) => (
+                              <option key={option} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>
+                          {othersInputs[rowIndex]?.[key] && (
+                            <input
+                              type="text"
+                              required={required}
+                              value={
+                                localValue[rowIndex][`${key}_others`] || ""
+                              }
+                              onChange={(e) =>
+                                handleOtherInputChange(
+                                  rowIndex,
+                                  key,
+                                  e.target.value
+                                )
+                              }
+                             className="border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-1/2"
+                              placeholder="Others Please specify"
+                            />
+                          )}
+                        </>
+                      )}
+                  
 
                   {/* Numeric Field - Limit characters to 21 */}
                   {layoutType === "inputonlynumber" && (
@@ -267,7 +640,7 @@ const AllInputWidget = ({ id, options, value, required, onChange, schema, formCo
                       pattern="[0-9]*"
                       maxLength="21" // Ensure browser client validation
                       required={required}
-                      value={row[key] || ""}
+                      value={localValue[rowIndex][key] || ""}
                       onChange={(e) => {
                         // Allow only numbers and enforce 21-character length
                         const input = e.target.value.replace(/[^0-9]/g, "");
@@ -275,7 +648,7 @@ const AllInputWidget = ({ id, options, value, required, onChange, schema, formCo
                         handleInputChange(rowIndex, key, input);
                       }}
                       className="border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
-                      placeholder={`Enter ${uiSchemaField?.title}`}
+                      placeholder={`Enter data`}
                     />
                   )}
 
@@ -287,7 +660,7 @@ const AllInputWidget = ({ id, options, value, required, onChange, schema, formCo
                       pattern="[A-Za-z0-9]*"
                       maxLength="21" // Optional max length at an HTML level
                       required={required}
-                      value={row[key] || ""}
+                      value={localValue[rowIndex][key] || ""}
                       onChange={(e) => {
                         // Enforce alphanumeric and 21-digit length
                         const input = e.target.value.replace(/[^a-zA-Z0-9]/g, "");
@@ -295,7 +668,7 @@ const AllInputWidget = ({ id, options, value, required, onChange, schema, formCo
                         handleInputChange(rowIndex, key, input);
                       }}
                       className="border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
-                      placeholder={`Enter Data`}
+                      placeholder={`Enter data`}
                     />
                   )}
 
@@ -307,7 +680,7 @@ const AllInputWidget = ({ id, options, value, required, onChange, schema, formCo
                       pattern="^[0-9]*[.]?[0-9]*$"
                       maxLength="21" // Optional safety check at HTML level
                       required={required}
-                      value={row[key] || ""}
+                      value={localValue[rowIndex][key] || ""}
                       onChange={(e) => {
                         // Allow only valid decimal (numbers & single dot) and enforce 21-digit length
                         const input = e.target.value
@@ -316,8 +689,8 @@ const AllInputWidget = ({ id, options, value, required, onChange, schema, formCo
                         if (input.length > 21) return;
                         handleInputChange(rowIndex, key, input);
                       }}
-                      className="border rounded p-2 text-sm focus:outline-none"
-                      placeholder={`Enter ${uiSchemaField?.title}`}
+                      className="border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+                      placeholder={`Enter data`}
                     />
                   )}
                 </div>

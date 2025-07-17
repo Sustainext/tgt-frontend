@@ -15,6 +15,8 @@ import BusinessDetails from "./Organization-Details/Business-Details/page";
 import CollectiveBargainingAgreements from "./Collective-Barganing-Agreements/page";
 import MembershipAndAssociation from "./Membership-Association/page";
 import StakeholderEngagement from "./Stakeholder-Engagement/page";
+import TransparancyDisclosure from './Compliance/BRSRScreens/page'
+
 import {
   setHeadertext1,
   setHeadertext2,
@@ -58,7 +60,7 @@ const General = () => {
       "Workforce-Other Workers",
     ];
 
-    const wasteTabs = ["Laws and Regulation"];
+    const wasteTabs = ["Laws and Regulation","Transparency and Disclosures Compliances"];
 
     const materialTabs = ["Membership & Association"];
 
@@ -146,6 +148,10 @@ const General = () => {
 
               {activeTab === "Laws and Regulation" && (
                 <LawAndRegulations setMobileopen={setMobileopen} />
+              )}
+
+              {activeTab === "Transparency and Disclosures Compliances" && (
+                <TransparancyDisclosure setMobileopen={setMobileopen} />
               )}
 
               {activeTab === "Membership & Association" && (

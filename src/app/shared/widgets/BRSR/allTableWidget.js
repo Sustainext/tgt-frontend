@@ -489,7 +489,7 @@ const AllTableWidget = ({
           className="table-fixed   w-full rounded-md"
           style={{ borderCollapse: "separate", borderSpacing: 0 }}
         >
-          <thead className="gradient-background h-fit">
+          <thead className="gradient-background h-[60px]">
             <tr>
               {options.titles.map((item, idx) => (
                 <th

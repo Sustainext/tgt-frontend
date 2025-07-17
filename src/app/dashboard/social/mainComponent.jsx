@@ -53,6 +53,7 @@ import CustomerPrivacy2 from "./Customer-Privacy/Section2/page";
 import Ratiosstandard from "./Diversity-Inclusion/ratios-standard/page";
 import BILLs201 from "./BillS-211/page";
 import Materialtopic from "../Management-Material-topic/page";
+import BRSRScreens from './BRSRScreens/page'
 import {
   setHeadertext1,
   setHeadertext2,
@@ -696,6 +697,14 @@ const Social = () => {
                   setMobileopen={setMobileopen}
                 />
               )}
+              {
+                activeTab === "CSR" && (
+                  <BRSRScreens
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+                )
+              }
             </div>
           )}
         </div>

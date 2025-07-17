@@ -7,14 +7,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Socialdata } from "../../../social/data/socialgriinfo";
 import GeneralHeader2 from "../../GeneralHeader2";
-import Screen1 from "./screen1";
-import Screen2 from "./screen2";
-import Screen3 from "./screen3";
-import BRSRScreen1 from './BRSRScreens/screen1'
-import BRSRScreen2 from './BRSRScreens/screen2'
-import BRSRScreen3 from './BRSRScreens/screen3'
+import BRSRScreen1 from "./screen1";
+
 import GeneralTopBar from "../../generalTopBar";
-const WorkforceOtherWorkers = ({ setMobileopen }) => {
+const TransparancyDisclosure = ({ setMobileopen }) => {
   const [activeMonth, setActiveMonth] = useState("");
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -43,29 +39,14 @@ const WorkforceOtherWorkers = ({ setMobileopen }) => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
-  const griData = [
-    {
-      tagName: "GRI 2 - 8",
-      toggle: "100",
-      textColor: "#007EEF",
-      bgColor: "bg-slate-200",
-    },
-  ];
-
+  
   const brsr = [
     {
-      tagName: "BRSR A-IV-20a",
+      tagName: "BRSR-A-VII-25",
       id: "tooltip-$brsr1",
-      content: "BRSR-Section A-IV-20a",
+      content: "BRSR-Section A-VII-25",
     },
-  ];
-  const sdgData = [
-    {
-      tagName: "SDG 8",
-      toggle: "99",
-      textColor: "#fff",
-      bgColor: "bg-red-900",
-    },
+
   ];
   return (
     <>
@@ -74,19 +55,17 @@ const WorkforceOtherWorkers = ({ setMobileopen }) => {
         <GeneralTopBar
           toggleDrawer={toggleDrawer}
           brsr={brsr}
-          griData={griData}
-          sdgData={sdgData}
-          title={"Workforce-Other Workers"}
+          title={"Compliance"}
           setMobileopen={setMobileopen}
         />
         {/* <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-            <div className="text-left mb-2 ml-3 pt-5">
+           <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">General</p>
               <div className="flex">
-                <div className="h-[29px]">
+                         <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                    Workforce-Other Workers
+                  Laws and Regulation
                   </p>
                 </div>
               </div>
@@ -94,62 +73,22 @@ const WorkforceOtherWorkers = ({ setMobileopen }) => {
           </div>
           <div className="w-full float-end ">
             <div className="flex float-end border-l">
-              <div>
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("100")}
+                onClick={() => toggleDrawer("101")}
               >
-                GRI 2 - 8
+                GRI 2 - 27
               </button>
-              </div>
-          
-               <div className=" relative">
-               
-                              <button
-                                data-tooltip-id={`tooltip-$brsr2`}
-                                data-tooltip-content="BRSR-Section A-IV-20a"
-                                className="text-[#18736B] bg-slate-200 rounded-full text-[11px] w-[90px] h-[22px] ml-2 text-center pt-0.5"
-                                // onClick={() => toggleDrawer("92")}
-                              >
-                                BRSR A-IV-20a
-                              </button>
-              
-                              <ReactTooltip
-                                id={`tooltip-$brsr2`}
-                                place="bottom"
-                                effect="solid"
-                                style={{
-                                  width: "290px",
-                                  backgroundColor: "#000",
-                                  color: "white",
-                                  fontSize: "12px",
-                                  boxShadow: 3,
-                                  borderRadius: "8px",
-                                  textAlign: "center",
-                                }}
-                              ></ReactTooltip>
-                            </div>
-                            <div>
-                            <button
-                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("99")}
-              >
-                SDG 8
-              </button>
-                            </div>
-            
             </div>
           </div>
         </div> */}
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Workers who are not employees
+            Transparency and Disclosures Compliances
             {/* <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding
-to the total number of
-employee by gender, type and region."
+              data-tooltip-content="This section documents the data corresponding to the compliance with laws and regulations."
               className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
@@ -229,55 +168,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setYear={setYear}
         setToggleStatus={setToggleStatus}
       />
-      <Screen1
-        selectedOrg={selectedOrg}
-        selectedCorp={selectedCorp}
-        location={location}
-        year={year}
-        month={activeMonth}
-        togglestatus={togglestatus}
-      />
-      <Screen2
-        selectedOrg={selectedOrg}
-        selectedCorp={selectedCorp}
-        location={location}
-        year={year}
-        month={activeMonth}
-        togglestatus={togglestatus}
-      />
-      <Screen3
-        selectedOrg={selectedOrg}
-        selectedCorp={selectedCorp}
-        location={location}
-        year={year}
-        month={activeMonth}
-        togglestatus={togglestatus}
-      />
       <BRSRScreen1
-              selectedOrg={selectedOrg}
-              selectedCorp={selectedCorp}
-              location={location}
-              year={year}
-              month={activeMonth}
-              togglestatus={togglestatus}
-            />
-            <BRSRScreen2
-              selectedOrg={selectedOrg}
-              selectedCorp={selectedCorp}
-              location={location}
-              year={year}
-              month={activeMonth}
-              togglestatus={togglestatus}
-            />
-            <BRSRScreen3
-              selectedOrg={selectedOrg}
-              selectedCorp={selectedCorp}
-              location={location}
-              year={year}
-              month={activeMonth}
-              togglestatus={togglestatus}
-            />
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+        togglestatus={togglestatus}
+      />
+      
     </>
   );
 };
-export default WorkforceOtherWorkers;
+export default TransparancyDisclosure;

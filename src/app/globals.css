@@ -50,6 +50,18 @@ div[class*="Popout__PopoutContent"] {
   margin-top: 15px !important;
 }
 
+/* gren button cmd clases start */
+/* Screaming Power Widget Responsive Wrap and Spacing Fix */
+.selectUtility div.row {
+  height: unset !important;   /* or initial !important; */
+}
+#cmdButton .row {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem 1rem !important;  /* row gap, column gap */
+}
+
+/* green button cmd clasess end */
 @media (min-width: 3840px){
   div[class*="background__Container"] {
     margin-right: 300px !important;
