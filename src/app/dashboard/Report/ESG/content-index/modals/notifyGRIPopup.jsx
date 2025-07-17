@@ -10,6 +10,10 @@ import { IoMailOutline } from "react-icons/io5";
 import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
 import { MdExitToApp, MdKeyboardArrowDown } from "react-icons/md";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import axiosInstance from "@/app/utils/axiosMiddleware";
+import { Oval } from "react-loader-spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const NotifyGRI = ({
   isNotifyModalOpen,
@@ -25,11 +29,20 @@ const NotifyGRI = ({
   setIsCreateReportModalOpen,
   setIsNotifyModalOpen,
   userName,
+  pdfLink,
+  contentIndexLink,
   userEmail,
 }) => {
-  const [reportUrl,setReportUrl]=useState('https://sustainextstorage1.blob.core.windows.net/media/Gri_Pdf_Reports/full_report/9_accordance_nvn1.pdf')
-  const [contentIndexUrl,setContentIndexUrl]=useState('https://sustainextstorage1.blob.core.windows.net/media/Gri_Pdf_Reports/content_index/9_accordance_nvn1_content_index.pdf')
- const [mailStatement, setStatement] = useState(
+  
+  const [loopen, setLoOpen] = useState(false); 
+   const LoaderOpen = () => {
+     setLoOpen(true);
+   };
+ 
+   const LoaderClose = () => {
+     setLoOpen(false);
+   };
+  const [mailStatement, setStatement] = useState(
   <div>
     <p>Subject: Notification of GRI Standards Use in Sustainability Reporting</p><br />
     <p>Dear GRI Team</p><br />
@@ -41,7 +54,7 @@ const NotifyGRI = ({
     <p className="mt-0.5">
       Link to the GRI Content Index:{" "}
       <a
-        href={contentIndexUrl}
+        href={contentIndexLink}
         target="_blank"
         rel="noopener noreferrer"
         style={{ color: "#2563eb", textDecoration: "underline" }}
@@ -52,7 +65,7 @@ const NotifyGRI = ({
     <p className="mt-0.5">
       Link to the Report:{" "}
       <a
-        href={reportUrl}
+        href={pdfLink}
         target="_blank"
         rel="noopener noreferrer"
         style={{ color: "#2563eb", textDecoration: "underline" }}
@@ -70,7 +83,83 @@ const NotifyGRI = ({
   </div>
 );
 
+// useEffect(()=>{
+// setStatement(
+//   <div>
+//     <p>Subject: Notification of GRI Standards Use in Sustainability Reporting</p><br />
+//     <p>Dear GRI Team</p><br />
+//     <p>
+//       Sustainext is sending this email on behalf of our client to notify GRI of their use of the GRI Standards in their sustainability reporting. Please find the details of the organization and their report below:
+//     </p>
+//     <br /><br />
+//     <p>Legal Name of the Organization: {orgName}</p>
+//     <p className="mt-0.5">
+//       Link to the GRI Content Index:{" "}
+//       <a
+//         href={contentIndexLink}
+//         target="_blank"
+//         rel="noopener noreferrer"
+//         style={{ color: "#2563eb", textDecoration: "underline" }}
+//       >
+//         Link
+//       </a>
+//     </p>
+//     <p className="mt-0.5">
+//       Link to the Report:{" "}
+//       <a
+//         href={pdfLink}
+//         target="_blank"
+//         rel="noopener noreferrer"
+//         style={{ color: "#2563eb", textDecoration: "underline" }}
+//       >
+//         Link
+//       </a>
+//     </p>
+//     <p className="mt-0.5">Statement of Use: {statement}</p>
+//     <p className="mt-0.5">Contact Person: {userName}</p>
+//     <p className="mt-0.5">Contact Details: {userEmail}</p>
+//     <br /><br />
+//     <p>Best regards,</p>
+//     <p>Team Sustainext</p>
+//     <br />
+//   </div>
+// )
+// },[pdfLink,contentIndexLink])
+
+ const reportid =
+  typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const notifyGRICount=
+typeof window !== "undefined" ? localStorage.getItem("notifyGRICount") : "";
   const [notified, setNotified] = useState(false);
+
+  const handleNotify=async()=>{
+    LoaderOpen()
+    try{
+      const response = await axiosInstance.post(
+        `/esg_report/send-gri-notification/`,
+        {
+          report_id:reportid
+        }
+      );
+      if(response.status==200){
+        setShowSuccessMessage(true);
+        window.localStorage.setItem("notifyGRICount", response.data.email_count);
+        LoaderClose()
+        // toast.success("GRI Notification Email sent successfully")
+        
+      }
+      else{
+        LoaderClose()
+        console.log(response)
+        toast.error("Opps! Something went wrong")
+      }
+    }
+    catch(error){
+      LoaderClose()
+      console.log(error)
+      toast.error("Opps! Something went wrong")
+    }
+  }
 
   return (
     <>
@@ -82,6 +171,9 @@ const NotifyGRI = ({
                 <div>
                   <button
                     onClick={() => {
+                      // setIsNotifyModalOpen(false);
+                      // setShowSuccessMessage(false);
+                      // setIsCreateReportModalOpen(true);
                       setIsNotifyModalOpen(false);
                       setIsCreateReportModalOpen(true);
                     }}
@@ -168,7 +260,7 @@ const NotifyGRI = ({
                 </div>
                 <div className="flex justify-end px-5 mb-4">
                   <button
-                    className={`w-auto h-full  py-2 px-4 bg-[#007EEF] text-white rounded-[8px] shadow flex gap-2 ${
+                     className={`w-auto h-full  py-2 px-4 bg-[#007EEF] text-white rounded-[8px] shadow flex gap-2 ${
                       notified ? "bg-[#F5F5F5] text-[#ACACAC]" : ""
                     }`}
                     onClick={() => {
@@ -176,6 +268,7 @@ const NotifyGRI = ({
                       setNotified(true);
                     }}
                     disabled={notified}
+                    
                   >
                     {/* <GoDownload className="w-4.5 h-4.5 text-[#fff] mt-1"/> */}
                     Notify GRI
@@ -187,6 +280,18 @@ const NotifyGRI = ({
           </div>
         </div>
       )}
+      {loopen && (
+              <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                <Oval
+                  height={50}
+                  width={50}
+                  color="#00BFFF"
+                  secondaryColor="#f3f3f3"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
+              </div>
+            )}
     </>
   );
 };

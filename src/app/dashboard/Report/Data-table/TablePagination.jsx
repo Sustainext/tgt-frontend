@@ -269,6 +269,7 @@ const handleTCFDDownloadpdf = async (id, name) => {
               item.created_at,
               item.report_type,
               item.corporate_name,
+              item.gri_email_sent_count
             );
           } else {
             handleSetdata(
@@ -433,7 +434,8 @@ const handleTCFDDownloadpdf = async (id, name) => {
     name,
     created_at,
     report_type,
-    corporate_name
+    corporate_name,
+    gri_email_sent_count
   ) => {
     const newdata = {
       id: id,
@@ -451,6 +453,9 @@ const handleTCFDDownloadpdf = async (id, name) => {
     window.localStorage.setItem("reportCreatedOn", created_at);
     window.localStorage.setItem("reportType", report_type);
     window.localStorage.setItem("reportname", name);
+    if(gri_email_sent_count){
+      window.localStorage.setItem("notifyGRICount", gri_email_sent_count);
+    }
     // sessionStorage.setItem('reportData',newdata);
     // if (corporate_name !== undefined){
     // }
