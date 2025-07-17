@@ -15,6 +15,7 @@ import {
   MdChevronRight,
 } from "react-icons/md";
 import UserProfile from "../common/UserProfile";
+import { MaskedEmail } from "../../../shared/components/MaskedPIIField";
 import { useRouter } from "next/navigation";
 
 import { setUserlist } from "../../../../lib/redux/features/roles-permissionsSlice";
@@ -400,7 +401,7 @@ const ManageUsers = () => {
                                 {user.first_name} {user.last_name}
                               </p>
                               <p className="text-gray-600 whitespace-no-wrap">
-                                {user.email}
+                                <MaskedEmail email={user.email} className="inline" />
                               </p>
                             </div>
                           </div>

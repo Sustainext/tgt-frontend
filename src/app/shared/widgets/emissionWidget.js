@@ -4,6 +4,7 @@
 import React, {
   useState,
   useEffect,
+  useLayoutEffect,
   useRef,
   useCallback,
   useMemo,
@@ -52,70 +53,121 @@ const ActivityDropdownPortal = ({
   minWidth = 210,
   maxWidth = 810,
   dropdownClassName = '',
+  scope = '',
 }) => {
   const [coords, setCoords] = useState(null);
   const dropdownRef = useRef(null);
 
-  // Calculate the position when open or anchorRef changes
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isOpen && anchorRef && anchorRef.current) {
-      requestAnimationFrame(() => {
-        if (anchorRef.current) {
-          const rect = anchorRef.current.getBoundingClientRect();
+      // This will run *before* the browser paints (synchronously)
+      const updateCoords = () => {
+        const rect = anchorRef.current.getBoundingClientRect();
 
-          // console.log({
-          //   rect,
-          // });
-
-          setCoords({
-            top:
-              rect.bottom +
-              window.scrollY +
-              100 +
-              Math.floor((rect.top - 317) / 37.7) * 10,
-            left: rect.left + window.scrollX + 170,
-            width: Math.max(minWidth, rect.width, maxWidth),
-          });
-
-          console.log({
-            top:
-              rect.bottom +
-              window.scrollY +
-              100 +
-              Math.floor((rect.top - 317) / 37.7) * 48,
-            left: rect.left + window.scrollX + 170,
-            width: Math.max(minWidth, rect.width, maxWidth),
-          });
+        let top;
+        // Scope-specific logic
+        if (scope === 'scope1') {
+          top =
+            rect.bottom +
+            window.scrollY * 1.25 +
+            100 +
+            Math.floor((rect.top - 317) / 37.7) * 10;
+        } else if (scope === 'scope2') {
+          top =
+            rect.bottom +
+            window.scrollY * 1.25 +
+            100 +
+            Math.floor((rect.top - 317) / 37.7) * 10;
+        } else if (scope === 'scope3') {
+          top =
+            rect.bottom +
+            window.scrollY * 1.25 +
+            100 +
+            Math.floor((rect.top - 317) / 37.7) * 10;
+        } else {
+          top = rect.bottom + window.scrollY * 1.25;
         }
-      });
+
+        setCoords({
+          top,
+          left: rect.left + window.scrollX + 170,
+          width: Math.max(minWidth, rect.width, maxWidth),
+        });
+
+        console.log({
+          top,
+          left: rect.left + window.scrollX + 170,
+          width: Math.max(minWidth, rect.width, maxWidth),
+          scrollY: window.scrollY,
+        });
+      };
+
+      updateCoords();
+
+      // Scroll/resize listeners for live repositioning
+      window.addEventListener('resize', updateCoords);
+      window.addEventListener('scroll', updateCoords, true); // capture (true) for all scrolls
+
+      // Optionally add mutation observer or - if container could change size - a ResizeObserver too
+
+      return () => {
+        window.removeEventListener('resize', updateCoords);
+        window.removeEventListener('scroll', updateCoords, true);
+      };
     }
-  }, [isOpen, anchorRef, anchorRef?.current, minWidth, maxWidth]);
+  }, [isOpen, anchorRef, anchorRef?.current, minWidth, maxWidth, scope]);
 
-  // Recalculate on window resize/scroll
-  useEffect(() => {
-    if (!isOpen || !anchorRef.current) return;
-
-    const calc = () => {
+  useLayoutEffect(() => {
+    if (!(isOpen && anchorRef && anchorRef.current)) return;
+    const updateCoords = () => {
       const rect = anchorRef.current.getBoundingClientRect();
+      let top;
+      // Scope-specific logic
+      if (scope === 'scope1') {
+        top =
+          rect.bottom +
+          window.scrollY * 1.25 +
+          100 +
+          Math.floor((rect.top - 317) / 37.7) * 10;
+      } else if (scope === 'scope2') {
+        top =
+          rect.bottom +
+          window.scrollY * 1.25 +
+          100 +
+          Math.floor((rect.top - 317) / 37.7) * 10;
+      } else if (scope === 'scope3') {
+        top =
+          rect.bottom +
+          window.scrollY * 1.25 +
+          100 +
+          Math.floor((rect.top - 317) / 37.7) * 10;
+      } else {
+        top = rect.bottom + window.scrollY * 1.25;
+      }
 
       setCoords({
-        top:
-          rect.bottom +
-          window.scrollY +
-          120 +
-          Math.floor((rect.top - 317) / 37.7) * 10,
+        top,
         left: rect.left + window.scrollX + 170,
         width: Math.max(minWidth, rect.width, maxWidth),
       });
     };
+    updateCoords();
 
-    window.addEventListener('resize', calc);
-    window.addEventListener('scroll', calc, true);
+    // Add scroll/resize listeners (as before)
+    window.addEventListener('resize', updateCoords);
+    window.addEventListener('scroll', updateCoords, true);
+
+    // ---- [NEW] Mutation observer to capture DOM/layout changes ----
+    const observer = new MutationObserver(updateCoords);
+    // You may wish to observe document.body, or a known parent above your table
+    observer.observe(document.body, { childList: true, subtree: true });
+
     return () => {
-      window.removeEventListener('resize', calc);
-      window.removeEventListener('scroll', calc, true);
+      window.removeEventListener('resize', updateCoords);
+      window.removeEventListener('scroll', updateCoords, true);
+      observer.disconnect();
     };
-  }, [isOpen, anchorRef, anchorRef?.current, minWidth, maxWidth]);
+  }, [isOpen, anchorRef, minWidth, maxWidth, scope]);
 
   // Click outside closes dropdown
   useEffect(() => {
@@ -1461,6 +1513,7 @@ const EmissionWidget = React.memo(
                     onClose={() => setIsDropdownActive(false)}
                     minWidth={210}
                     maxWidth={810}
+                    scope={scope}
                   >
                     <div>
                       <div
@@ -1819,6 +1872,7 @@ const EmissionWidget = React.memo(
 
                     {/* Preview Modal */}
                     {showModal && previewData && (
+                      <Portal>
                       <div className='fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50'>
                         <div className='bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]'>
                           <div className='flex justify-between mt-4 mb-4'>
@@ -1931,6 +1985,7 @@ const EmissionWidget = React.memo(
                           </div>
                         </div>
                       </div>
+                      </Portal>
                     )}
                   </div>
                   {value.rowType === 'calculated' && (
