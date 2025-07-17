@@ -28,6 +28,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { useDispatch, useSelector } from "react-redux";
 import { MdOutlineAssignment } from "react-icons/md";
+import { MdMenuBook } from "react-icons/md";
 import {
   fetchMaterialityData,
   setCorpID,
@@ -271,7 +272,15 @@ const Sidenav = () => {
       lockiconshow: false,
       spacing: true,
     },
-
+    // {
+    //   id: 10,
+    //   title: "Resource Library",
+    //   icon: <MdMenuBook />,
+    //   link: "/dashboard/ResourceLibrary",
+    //   role: true,
+    //   lockicon: <MdLockOutline />,
+    //   lockiconshow: false,
+    // },
     isNewRole && {
       id: 10,
       title: "Audit logs",
