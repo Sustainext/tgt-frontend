@@ -46,8 +46,8 @@ const ReportCreatedPopup = ({
   const [isCIXLDownloading, setIsCIXLDownloading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [loopen, setLoOpen] = useState(false); 
-  const [pdfLink,setpdfLink]=useState('')
-  const [contentIndexLink,setcontentIndexLink]=useState('')
+  const [pdfLink,setpdfLink]=useState('https://sustainextstorage1.blob.core.windows.net/media/Gri_Pdf_Reports/full_report/9_accordance_nvn1.pdf')
+  const [contentIndexLink,setcontentIndexLink]=useState('https://sustainextstorage1.blob.core.windows.net/media/Gri_Pdf_Reports/content_index/9_accordance_nvn1_content_index.pdf')
   const router = useRouter();
   const dropdownRef = useRef(null);
   const notifyGRICount=typeof window !== "undefined" ? localStorage.getItem("notifyGRICount") : "";

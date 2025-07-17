@@ -53,25 +53,25 @@ const NotifyGRI = ({
     <p>Legal Name of the Organization: {orgName}</p>
     <p className="mt-0.5">
       Link to the GRI Content Index:{" "}
-      {/* <a
+      <a
         href={contentIndexLink}
         target="_blank"
         rel="noopener noreferrer"
         style={{ color: "#2563eb", textDecoration: "underline" }}
-      > */}
+      >
         Link
-      {/* </a> */}
+      </a>
     </p>
     <p className="mt-0.5">
       Link to the Report:{" "}
-      {/* <a
+      <a
         href={pdfLink}
         target="_blank"
         rel="noopener noreferrer"
         style={{ color: "#2563eb", textDecoration: "underline" }}
-      > */}
+      >
         Link
-      {/* </a> */}
+      </a>
     </p>
     <p className="mt-0.5">Statement of Use: {statement}</p>
     <p className="mt-0.5">Contact Person: {userName}</p>

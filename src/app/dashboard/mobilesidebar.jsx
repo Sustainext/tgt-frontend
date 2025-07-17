@@ -276,18 +276,18 @@ const MobileSidenav = () => {
       lockiconshow: false,
       spacing: true,
     },
-    {
-      id: 10,
-      title: "Resource Library",
-      icon: <MdMenuBook />,
-      link: "/dashboard/ResourceLibrary",
-      role: true,
-      lockicon: <MdLockOutline />,
-      lockiconshow: false,
-    },
+    // {
+    //   id: 10,
+    //   title: "Resource Library",
+    //   icon: <MdMenuBook />,
+    //   link: "/dashboard/ResourceLibrary",
+    //   role: true,
+    //   lockicon: <MdLockOutline />,
+    //   lockiconshow: false,
+    // },
 
     isNewRole && {
-      id: 11,
+      id: 10,
       title: "Audit logs",
       icon: <TbNotes />,
       link: "/dashboard/Auditlogs",
@@ -296,7 +296,7 @@ const MobileSidenav = () => {
       lockiconshow: false,
     },
     {
-      id: 12,
+      id: 11,
       title: "Settings",
       icon: <CiSettings />,
       link: "/dashboard/Settings",
