@@ -1035,92 +1035,55 @@ const Scope2 = forwardRef(
         <ExpandedRowsModal
           isOpen={isExpandedModalOpen}
           onClose={() => setIsExpandedModalOpen(false)}
-          title='Scope 1 - All Rows'
+          title="Scope 2 emissions data"
           data={formData}
           columns={[
             {
-              key: 'Category',
-              title: 'Category',
-              render: (row) => row.Emission?.Category || '-',
+              key: "Category",
+              title: "Category",
+              render: (row) =>  row.Emission?.Category || "-"
             },
             {
-              key: 'Subcategory',
-              title: 'Sub-Category',
-              render: (row) => row.Emission?.Subcategory || '-',
+              key: "Subcategory",
+              title: "Sub-Category",
+              render: (row) => row.Emission?.Subcategory || "-",
             },
             {
-              key: 'Activity',
-              title: 'Activity',
+              key: "Activity",
+              title: "Activity",
               render: (row) => (
                 <div
-                  className='max-w-xs truncate'
+                  className="max-w-xs truncate"
                   title={row.Emission?.Activity}
                 >
-                  {row.Emission?.Activity || '-'}
+                  {row.Emission?.Activity || "-"}
                 </div>
               ),
             },
             {
-              key: 'Quantity',
-              title: 'Quantity',
+              key: "Quantity",
+              title: "Quantity",
               render: (row) => {
                 const emission = row.Emission || {};
-                const quantity = emission.Quantity || '-';
+                const quantity = emission.Quantity || "-";
                 const quantity2 = emission.Quantity2
                   ? ` / ${emission.Quantity2}`
-                  : '';
+                  : "";
                 return `${quantity}${quantity2}`;
               },
             },
             {
-              key: 'Unit',
-              title: 'Unit',
+              key: "Unit",
+              title: "Unit",
               render: (row) => {
                 const emission = row.Emission || {};
-                const unit = emission.Unit || '-';
-                const unit2 = emission.Unit2 ? ` / ${emission.Unit2}` : '';
+                const unit = emission.Unit || "-";
+                const unit2 = emission.Unit2 ? ` / ${emission.Unit2}` : "";
                 return `${unit}${unit2}`;
               },
             },
-            {
-              key: 'Status',
-              title: 'Status',
-              render: (row) => {
-                const rowType = row.Emission?.rowType || 'default';
-                return (
-                  <span
-                    className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      rowType === 'assigned'
-                        ? 'bg-gray-100 text-gray-800'
-                        : rowType === 'approved'
-                        ? 'bg-orange-100 text-orange-800'
-                        : rowType === 'calculated'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-blue-100 text-blue-800'
-                    }`}
-                  >
-                    {rowType === 'assigned'
-                      ? 'Assigned'
-                      : rowType === 'approved'
-                      ? 'Approved'
-                      : rowType === 'calculated'
-                      ? 'Calculated'
-                      : 'Default'}
-                  </span>
-                );
-              },
-            },
           ]}
-          getRowStatus={(row) => row.Emission?.rowType || 'default'}
-          getRowClassName={(_, rowType) => {
-            return rowType === 'assigned'
-              ? 'bg-gray-50'
-              : rowType === 'approved'
-              ? 'bg-orange-50'
-              : rowType === 'calculated'
-              ? 'bg-green-50'
-              : '';
-          }}
+          getRowStatus={(row) => row.Emission?.rowType || "default"}
         />
       </>
     );

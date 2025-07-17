@@ -1071,39 +1071,13 @@ const Scope1 = forwardRef(
         <ExpandedRowsModal
           isOpen={isExpandedModalOpen}
           onClose={() => setIsExpandedModalOpen(false)}
-          title="Scope 1 - All Rows"
+          title="Scope emissions data"
           data={formData}
           columns={[
             {
               key: "Category",
               title: "Category",
-              render: (row) => {
-                const category = row.Emission?.Category || "-";
-                const rowType = row.Emission?.rowType || "default";
-
-                // Determine dot color based on status
-                const getDotColor = (status) => {
-                  switch (status) {
-                    case "assigned":
-                      return "bg-gray-500";
-                    case "approved":
-                      return "bg-orange-500";
-                    case "calculated":
-                      return "bg-green-500";
-                    default:
-                      return "bg-green-500";
-                  }
-                };
-
-                return (
-                  <div className="flex items-center gap-2">
-                    <div
-                      className={`w-1.5 h-1.5 rounded-full ${getDotColor(rowType)}`}
-                    ></div>
-                    {category}
-                  </div>
-                );
-              },
+              render: (row) =>  row.Emission?.Category || "-"
             },
             {
               key: "Subcategory",
@@ -1146,15 +1120,6 @@ const Scope1 = forwardRef(
             },
           ]}
           getRowStatus={(row) => row.Emission?.rowType || "default"}
-          // getRowClassName={(_, rowType) => {
-          //   return rowType === 'assigned'
-          //     ? 'bg-gray-50'
-          //     : rowType === 'approved'
-          //     ? 'bg-orange-50'
-          //     : rowType === 'calculated'
-          //     ? 'bg-green-50'
-          //     : '';
-          // }}
         />
       </>
     );
