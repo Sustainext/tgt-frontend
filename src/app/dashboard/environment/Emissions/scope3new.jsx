@@ -801,7 +801,7 @@ const Scope3 = forwardRef(
                         EmissionWidget: (props) => (
                           <LazyEmissionWidget
                             {...props}
-                            scope='scope1'
+                            scope='scope3'
                             year={year}
                             countryCode={countryCode}
                             onRemove={handleRemoveRow}
@@ -923,7 +923,7 @@ const Scope3 = forwardRef(
                         EmissionWidget: (props) => (
                           <LazyEmissionWidget
                             {...props}
-                            scope='scope1'
+                            scope='scope3'
                             year={year}
                             countryCode={countryCode}
                             onRemove={handleRemoveRow}
