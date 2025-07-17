@@ -195,18 +195,10 @@ const ExpandedRowsModal = ({
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="bg-white rounded-lg w-[95%] h-[75%] max-w-6xl flex flex-col shadow-xl">
           <div className="h-full p-6 pb-4 mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">
-            {title || "Scope 1 emissions data"}
-          </h2>
-
-          <div className="border border-gray-200 rounded-lg h-full overflow-auto py-3">
-            {/* Modal Header */}
-            <div className="flex justify-between items-start px-3">
-              <div>
-                <div className="text-sm text-gray-500 font-bold">
-                  Total no of rows: {data.length}
-                </div>
-              </div>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                {title || "Scope 1 emissions data"}
+              </h2>
               <button
                 onClick={onClose}
                 className="text-gray-400 hover:text-gray-600 text-2xl font-light leading-none"
@@ -215,38 +207,48 @@ const ExpandedRowsModal = ({
               </button>
             </div>
 
-            {/* Modal Body */}
-            <div className="flex-1 overflow-hidden">
-              <div className="h-full overflow-auto">
-                <table className="w-full border border-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Sno
-                      </th>
-                      {columns.map((column, index) => (
-                        <th
-                          key={index}
-                          className={`px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${
-                            column.key === "quantity" ? "text-right" : ""
-                          } ${column.key === "Category" ? "ml-3" : ""}`}
-                        >
-                          {column.title}
+            <div className="border border-gray-200 rounded-lg h-full overflow-auto py-3 mb-3">
+              {/* Modal Header */}
+              <div className="flex justify-between items-start px-3">
+                <div>
+                  <div className="text-sm text-gray-500 font-bold">
+                    Total no of rows: {data.length}
+                  </div>
+                </div>
+              </div>
+
+              {/* Modal Body */}
+              <div className="flex-1 overflow-hidden">
+                <div className="h-full overflow-auto">
+                  <table className="w-full border border-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Sno
                         </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white">
-                    {currentData.map((item, index) =>
-                      renderRow
-                        ? renderRow(item, index, startIndex)
-                        : defaultRenderRow(item, index)
-                    )}
-                  </tbody>
-                </table>
+                        {columns.map((column, index) => (
+                          <th
+                            key={index}
+                            className={`px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${
+                              column.key === "quantity" ? "text-right" : ""
+                            } ${column.key === "Category" ? "ml-3" : ""}`}
+                          >
+                            {column.title}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white">
+                      {currentData.map((item, index) =>
+                        renderRow
+                          ? renderRow(item, index, startIndex)
+                          : defaultRenderRow(item, index)
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-          </div>
           </div>
 
           {/* Modal Footer with Pagination */}
