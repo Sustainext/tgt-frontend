@@ -6,26 +6,26 @@ import RightSidebar from "./components/rightSidebar"
 import Content from './components/content'
 import HtmlTemplates from './data/htmlTemplates/htmlMapping';
 
-function extractSectionsFromHtml(html) {
-  if (!html) return [];
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, 'text/html');
-  // Tune this selector as needed, e.g. main sections are divs with id and maybe a class
-  const nodes = [...doc.querySelectorAll('div[id]')];
+// function extractSectionsFromHtml(html) {
+//   if (!html) return [];
+//   const parser = new DOMParser();
+//   const doc = parser.parseFromString(html, 'text/html');
+//   // Tune this selector as needed, e.g. main sections are divs with id and maybe a class
+//   const nodes = [...doc.querySelectorAll('div[id]')];
 
-  return nodes.map(div => {
-    // Get title (assume the first <p> or <h2> inside? adapt as needed!)
-    let title = '';
-    const p = div.querySelector('p,.adjustLetterSpacing,h2,h3');
-    if (p) title = p.textContent.trim();
+//   return nodes.map(div => {
+//     // Get title (assume the first <p> or <h2> inside? adapt as needed!)
+//     let title = '';
+//     const p = div.querySelector('p,.adjustLetterSpacing,h2,h3');
+//     if (p) title = p.textContent.trim();
 
-    // You may want to filter for "section level" here if your HTML is messy!
-    return {
-      slug: div.id,
-      title: title || div.id,
-    };
-  });
-}
+//     // You may want to filter for "section level" here if your HTML is messy!
+//     return {
+//       slug: div.id,
+//       title: title || div.id,
+//     };
+//   });
+// }
 
 function findSidebarTitleBySlug(nav, slug) {
   for (const item of nav) {
@@ -51,10 +51,11 @@ const ReportLibrary=()=>{
   console.log(html,activeSlug)
 
   // Dynamically extract right sidebar sections from HTML
-  const sections = useMemo(
-    () => extractSectionsFromHtml(html),
-    [html]
-  );
+  // const sections = useMemo(
+  //   () => extractSectionsFromHtml(html),
+  //   [html]
+  // );
+  const sections=[]
 
     return (
         <>
