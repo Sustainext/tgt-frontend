@@ -60,6 +60,28 @@ const Dashboard = () => {
           );
         }
 
+        //Find BRSR framework and set cookie
+      let brsrFramework = framework_data.find((f) =>
+        f.name.toLowerCase().includes("brsr")
+      );
+       if (!brsrFramework && framework_data.length > 0) {
+          brsrFramework = framework_data[0];
+          console.warn(
+            "⚠️ TCFD not found. Defaulting to first framework:",
+            selectedFramework.name
+          );
+        }
+      if (brsrFramework?.id) {
+        Cookies.set("selected_brsr_framework_id", brsrFramework.id, {
+          expires: 7,
+        });
+        console.log(
+          "✅ BRSR framework set in cookie:",
+          brsrFramework
+        );
+      }
+
+
         // Set disclosures cookie
         Cookies.set(
           "selected_disclosures",

@@ -13,7 +13,7 @@ import Screen3 from "./screen3";
 import BRSRScreen1 from './BRSRScreens/screen1'
 import { Oval } from "react-loader-spinner";
 import GeneralTopBar from "../../generalTopBar";
-const Entities = ({setMobileopen}) => {
+const Entities = ({setMobileopen,brsrFrameworkId}) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -301,7 +301,9 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         ref={screen3Ref}
         togglestatus={togglestatus}
       />
-      <BRSRScreen1
+      {
+        brsrFrameworkId ==4 && (
+           <BRSRScreen1
       selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
@@ -310,6 +312,9 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         ref={screen3Ref}
         togglestatus={togglestatus}
       />
+        )
+      }
+     
 
       <div className="mt-4 mr-1.5">
         <button

@@ -14,6 +14,7 @@ const Aside = ({
   setActiveTab,
   apiData,
   setMobileopen,
+  brsrFrameworkId
 }) => {
   const materialityEnvData = apiData && apiData.social ? apiData.social : {};
   const [isEmission, setEmisssion] = useState(false);
@@ -910,7 +911,9 @@ const Aside = ({
             )}
           </div>
           {/* brsr csr screen */}
-          <div>
+          {
+            brsrFrameworkId ==4 && (
+               <div>
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full
               ${
@@ -1012,6 +1015,9 @@ const Aside = ({
               </>
             )}
           </div>
+            )
+          }
+         
 
 
           <div>

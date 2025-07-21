@@ -254,6 +254,7 @@ export function AuthProvider({ children }) {
       Cookies.remove("permissions");
       Cookies.remove("isAdmin");
       Cookies.remove("selected_framework_id");
+      Cookies.remove("selected_brsr_framework_id");
       Cookies.remove("selected_disclosures");
       Cookies.remove("tcfd_sector");
       Cookies.remove("tcfd_sector_type");

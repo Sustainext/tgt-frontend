@@ -58,6 +58,20 @@ const uiSchema = {
          tooltip:"Enter number of plants/offices situated outside India"
        }
     ],
+    rowCalculations: [
+      { // First row
+        sum: {
+          target: "total",
+          fields: ["numPlants", "numOffices"]
+        }
+      },
+      { // Second row
+        sum: {
+          target: "total",
+          fields: ["numPlants", "numOffices"]
+        }
+      }
+    ]
   }
 };
 

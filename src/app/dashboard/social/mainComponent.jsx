@@ -72,13 +72,14 @@ import {
   setStartDate,
   setEndDate,
 } from "../../../lib/redux/features/materialitySlice";
+import Cookies from "js-cookie";
 
 const Social = () => {
   const { open } = GlobalState();
   const [activeTab, setActiveTab] = useState(
     "Management of Material topic OHS"
   );
-
+ let brsrFrameworkId = Cookies.get('selected_brsr_framework_id') || 0
   const [mobileopen, setMobileopen] = useState(false);
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
@@ -253,6 +254,7 @@ const Social = () => {
         <div className="block xl:flex lg:flex md:block 2xl:flex 4k:flex">
           <div className=" hidden xl:block lg:block md:hidden 2xl:block 4k:block">
             <Aside
+            brsrFrameworkId={brsrFrameworkId}
               activeTab={activeTab}
               handleTabClick={handleTabClick}
               apiData={data}
@@ -263,6 +265,7 @@ const Social = () => {
             <div className="block xl:hidden lg:hidden md:block 2xl:hidden 4k:hidden">
               <div>
                 <Aside
+                brsrFrameworkId={brsrFrameworkId}
                   activeTab={activeTab}
                   handleTabClick={handleTabClick}
                   apiData={data}
@@ -698,6 +701,7 @@ const Social = () => {
                 />
               )}
               {
+                brsrFrameworkId == 4 &&
                 activeTab === "CSR" && (
                   <BRSRScreens
                   apiData={data}

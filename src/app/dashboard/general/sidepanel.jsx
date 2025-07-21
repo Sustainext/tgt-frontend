@@ -16,7 +16,7 @@ const sections = {
 };
 
 // Menu/Section configuration
-const menuConfig = (frameworkId) => [
+const menuConfig = (frameworkId,brsrFrameworkId) => [
   frameworkId === "6" && {
     key: sections.TCFD,
     label: "TCFD reporting Information",
@@ -53,7 +53,7 @@ const menuConfig = (frameworkId) => [
     icon: <MdDiversity2 className="w-[16px] h-[16px] mr-2 mt-0.5" />,
     tabs: [
       { tab: "Laws and Regulation", label: "Laws and Regulation" },
-      {tab:"Transparency and Disclosures Compliances", label:"Transparency and Disclosures Compliances"}
+     brsrFrameworkId==4 && {tab:"Transparency and Disclosures Compliances", label:"Transparency and Disclosures Compliances"}
     ]
   },
   {
@@ -99,7 +99,7 @@ const tabToSectionMap = {
   "Collective Bargaining Agreements": sections.BARGAINING
 };
 
-const Aside = ({ activeTab, handleTabClick, setMobileopen }) => {
+const Aside = ({ activeTab, handleTabClick, setMobileopen,brsrFrameworkId }) => {
   const frameworkId = Cookies.get("selected_framework_id");
   const [openSection, setOpenSection] = useState(null);
 
@@ -124,7 +124,7 @@ const Aside = ({ activeTab, handleTabClick, setMobileopen }) => {
               <MdClose onClick={() => setMobileopen(false)} className="text-3xl" />
             </div>
           </button>
-          {menuConfig(frameworkId).map((section) => (
+          {menuConfig(frameworkId,brsrFrameworkId).map((section) => (
             <div key={section.key}>
               <button
                 className={`flex pl-2 py-2 mb-2 focus:outline-none w-full ${

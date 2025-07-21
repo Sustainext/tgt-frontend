@@ -99,6 +99,69 @@ const uiSchema = {
         tooltip: ""
       }
     ],
+    //  rowCalculations: [
+    //   { // Permanent Employees row
+    //     sum: {
+    //       target: "totalDifferentlyAbledEmployees",
+    //       fields: ["differentlyAbledMaleEmployees", "differentlyAbledFemaleEmployees"]
+    //     },
+    //     percentage: {
+    //       target: "percentageDifferentlyAbledMaleEmployees",
+    //       numeratorField: "differentlyAbledMaleEmployees",
+    //       denominatorField: "totalDifferentlyAbledEmployees"
+    //     },
+    //     percentage: {
+    //       target: "percentageDifferentlyAbledFemaleEmployees",
+    //       numeratorField: "differentlyAbledFemaleEmployees",
+    //       denominatorField: "totalDifferentlyAbledEmployees"
+    //     }
+    //   },
+    //   { // Other Than Permanent Employees row
+    //     sum: {
+    //       target: "totalDifferentlyAbledEmployees",
+    //       fields: ["differentlyAbledMaleEmployees", "differentlyAbledFemaleEmployees"]
+    //     },
+    //     percentage: {
+    //       target: "percentageDifferentlyAbledMaleEmployees",
+    //       numeratorField: "differentlyAbledMaleEmployees",
+    //       denominatorField: "totalDifferentlyAbledEmployees"
+    //     },
+    //     percentage: {
+    //       target: "percentageDifferentlyAbledFemaleEmployees",
+    //       numeratorField: "differentlyAbledFemaleEmployees",
+    //       denominatorField: "totalDifferentlyAbledEmployees"
+    //     }
+    //   }
+    // ],
+    // totalsRow: {
+    //   rowIndex: 2, // Index of the Total Employees row
+    //   sumFields: [
+    //     {
+    //       target: "totalDifferentlyAbledEmployees",
+    //       fields: ["totalDifferentlyAbledEmployees"] // Sum totals from both rows above
+    //     },
+    //     {
+    //       target: "differentlyAbledMaleEmployees",
+    //       fields: ["differentlyAbledMaleEmployees"] // Sum male employees
+    //     },
+    //     {
+    //       target: "differentlyAbledFemaleEmployees",
+    //       fields: ["differentlyAbledFemaleEmployees"] // Sum female employees
+    //     }
+    //   ],
+    //   percentages: [
+    //     {
+    //       target: "percentageDifferentlyAbledMaleEmployees",
+    //       numeratorField: "differentlyAbledMaleEmployees",
+    //       denominatorField: "totalDifferentlyAbledEmployees"
+    //     },
+    //     {
+    //       target: "percentageDifferentlyAbledFemaleEmployees",
+    //       numeratorField: "differentlyAbledFemaleEmployees",
+    //       denominatorField: "totalDifferentlyAbledEmployees"
+    //     }
+    //   ]
+    // }
   }
 };
 

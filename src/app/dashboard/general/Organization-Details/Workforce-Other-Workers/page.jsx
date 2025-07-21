@@ -14,7 +14,7 @@ import BRSRScreen1 from './BRSRScreens/screen1'
 import BRSRScreen2 from './BRSRScreens/screen2'
 import BRSRScreen3 from './BRSRScreens/screen3'
 import GeneralTopBar from "../../generalTopBar";
-const WorkforceOtherWorkers = ({ setMobileopen }) => {
+const WorkforceOtherWorkers = ({ setMobileopen,brsrFrameworkId }) => {
   const [activeMonth, setActiveMonth] = useState("");
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -253,7 +253,10 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         month={activeMonth}
         togglestatus={togglestatus}
       />
-      <BRSRScreen1
+      {
+        brsrFrameworkId == 4 && (
+          <div>
+              <BRSRScreen1
               selectedOrg={selectedOrg}
               selectedCorp={selectedCorp}
               location={location}
@@ -277,6 +280,10 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
               month={activeMonth}
               togglestatus={togglestatus}
             />
+          </div>
+        )
+      }
+    
     </>
   );
 };
