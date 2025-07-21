@@ -103,11 +103,6 @@ const DashboardHeader = () => {
     return initials || usernameInitials;
   };
 
-  const extractUsername = (input) => {
-    if (!input) return '';
-    return input.includes('@') ? input.split('@')[0] : input;
-  };
-
   function capitalizeName(name) {
     if (!name) return '';
     return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
@@ -138,8 +133,13 @@ const DashboardHeader = () => {
       const localUserDetails = loadFromLocalStorage('userData');
       if (localUserDetails?.user_detail?.[0]) {
         const email = localUserDetails?.user_detail[0]?.username;
+        const first_name = localUserDetails.user_detail[0].first_name;
+        const last_name = localUserDetails.user_detail[0].last_name;
+        const username = localUserDetails?.user_detail[0]?.username || '';
+        const initials = first_name.charAt(0) + last_name.charAt(0);
+         const usernameInitials = username.charAt(0);
         setUserData({
-          username: userDetails?.user_detail[0]?.username,
+          username: localUserDetails?.user_detail[0]?.username,
           email: email,
           initials:  initials || usernameInitials,
         });
