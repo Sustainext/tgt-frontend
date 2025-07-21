@@ -121,7 +121,7 @@ const DashboardHeader = () => {
         setUserData({
           username: userDetails.user_detail[0].username,
           email: email,
-          initials: getInitials(email),
+          initials: userDetails.user_detail[0].initials,
           last_name: capitalizeName(last_name),
           first_name: capitalizeName(first_name),
         });
@@ -135,7 +135,7 @@ const DashboardHeader = () => {
         setUserData({
           username: userDetails?.user_detail[0]?.username,
           email: email,
-          initials: getInitials(email),
+          initials: userDetails.user_detail[0].initials,
         });
       }
     };
