@@ -131,9 +131,9 @@ const DashboardHeader = () => {
       // Fallback to localStorage if context is empty
       const localUserDetails = loadFromLocalStorage('userData');
       if (localUserDetails?.user_detail?.[0]) {
-        const email = localUserDetails.user_detail[0].username;
+        const email = localUserDetails?.user_detail[0]?.username;
         setUserData({
-          username: userDetails.user_detail[0].username,
+          username: userDetails?.user_detail[0]?.username,
           email: email,
           initials: getInitials(email),
         });
