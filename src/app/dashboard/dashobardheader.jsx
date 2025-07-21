@@ -94,10 +94,13 @@ const DashboardHeader = () => {
   }, [refresh]);
 
   const getInitials = (email) => {
-    if (!email) return '';
-    const username = email.split('@')[0];
-    const nameParts = username.split('.');
-    return nameParts.map((part) => part.charAt(0).toUpperCase()).join('');
+    // extract first letter from first name and last name, if they are empty the split the username and take the first letter
+    const firstName = userDetails?.user_detail[0]?.first_name || '';
+    const lastName = userDetails?.user_detail[0]?.last_name || '';
+    const username = userDetails?.user_detail[0]?.username || '';
+    const initials = firstName.charAt(0) + lastName.charAt(0);
+    const usernameInitials = username.charAt(0);
+    return initials || usernameInitials;
   };
 
   const extractUsername = (input) => {
@@ -118,10 +121,13 @@ const DashboardHeader = () => {
         const email = userDetails.user_detail[0].email;
         const first_name = userDetails.user_detail[0].first_name;
         const last_name = userDetails.user_detail[0].last_name;
+        const username = userDetails?.user_detail[0]?.username || '';
+        const initials = first_name.charAt(0) + last_name.charAt(0);
+    const usernameInitials = username.charAt(0);
         setUserData({
           username: userDetails.user_detail[0].username,
           email: email,
-          initials: userDetails.user_detail[0].initials,
+          initials:  initials || usernameInitials,
           last_name: capitalizeName(last_name),
           first_name: capitalizeName(first_name),
         });
@@ -135,7 +141,7 @@ const DashboardHeader = () => {
         setUserData({
           username: userDetails?.user_detail[0]?.username,
           email: email,
-          initials: userDetails.user_detail[0].initials,
+          initials:  initials || usernameInitials,
         });
       }
     };
