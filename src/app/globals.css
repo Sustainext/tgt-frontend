@@ -49,6 +49,17 @@ div[class*="Popout__PopoutContent"] {
   transform: translate(98vw, 5vh) !important;
   margin-top: 15px !important;
 }
+.tree-elbow {
+  width: 13px !important;
+  height: 20px !important;
+  border-left: 1px solid #e5e7eb;    /* Tailwind's gray-200 */
+  border-bottom: 1px solid #e5e7eb;
+  border-bottom-left-radius: 8px;
+  margin-left: -6px;
+  margin-right: 4px;
+  margin-top: -2px;
+  flex-shrink: 0;
+}
 
 /* gren button cmd clases start */
 /* Screaming Power Widget Responsive Wrap and Spacing Fix */

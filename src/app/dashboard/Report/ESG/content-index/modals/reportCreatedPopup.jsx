@@ -20,6 +20,7 @@ import { ImFileExcel } from "react-icons/im";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const ReportCreatedPopup = ({
   reportname,
@@ -39,12 +40,31 @@ const ReportCreatedPopup = ({
   
   const [isNotifyModalOpen, setIsNotifyModalOpen] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [mailSend,setMailSend]=useState(false)
   const [isDownloading, setIsDownloading] = useState(false);
   const [isCIDownloading, setIsCIDownloading] = useState(false);
   const [isCIXLDownloading, setIsCIXLDownloading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [loopen, setLoOpen] = useState(false); 
+  const [pdfLink,setpdfLink]=useState('https://sustainextstorage1.blob.core.windows.net/media/Gri_Pdf_Reports/full_report/9_accordance_nvn1.pdf')
+  const [contentIndexLink,setcontentIndexLink]=useState('https://sustainextstorage1.blob.core.windows.net/media/Gri_Pdf_Reports/content_index/9_accordance_nvn1_content_index.pdf')
   const router = useRouter();
   const dropdownRef = useRef(null);
+  const notifyGRICount=typeof window !== "undefined" ? localStorage.getItem("notifyGRICount") : "";
+  const report_id =typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+ 
+     const LoaderOpen = () => {
+       setLoOpen(true);
+     };
+   
+     const LoaderClose = () => {
+       setLoOpen(false);
+     };
+  useEffect(()=>{
+    if(notifyGRICount){
+      setMailSend(true)
+    }
+  },[notifyGRICount])
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -179,6 +199,33 @@ const ReportCreatedPopup = ({
     }
   };
 
+  const getAzureLink= async()=>{
+     LoaderOpen()
+    try{
+      const response = await axiosInstance.get(
+        `esg_report/generate_azure_links/${reportid?reportid:report_id}`,
+      );
+      if(response.status==200){
+        setpdfLink(response.data.azure_pdf_url)
+        setcontentIndexLink(response.data.azure_content_index_url)
+        setIsCreateReportModalOpen(false);
+        setIsNotifyModalOpen(true);
+         LoaderClose()
+      }
+      else{
+        LoaderClose()
+        console.log(response)
+        toast.error("Opps! Something went wrong")
+      }
+    }
+    catch(error){
+      LoaderClose()
+      console.log(error)
+      toast.error("Opps! Something went wrong")
+    }
+  }
+  
+
   return (
     <>
       {isCreateReportModalOpen && (
@@ -304,9 +351,9 @@ const ReportCreatedPopup = ({
                   {
                     reportType=='GRI Report: In accordance With' && (
                        <button
-                  onClick={() => {
+                  onClick={()=>{
                     setIsCreateReportModalOpen(false);
-                    setIsNotifyModalOpen(true);
+        setIsNotifyModalOpen(true);
                   }}
                   className="p-4 border w-full border-gray-200 text-[16px] text-[#343A40] rounded-md flex gap-2  hover:text-blue-500 hover:border-blue-500 group"
                 >
@@ -373,7 +420,21 @@ const ReportCreatedPopup = ({
         isNotifyModalOpen={isNotifyModalOpen}
         setIsNotifyModalOpen={setIsNotifyModalOpen}
         setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+        pdfLink={pdfLink}
+        contentIndexLink={contentIndexLink}
       />
+       {loopen && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                      <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                      />
+                    </div>
+                  )}
     </>
   );
 };

@@ -184,6 +184,7 @@ const Section27 = ({ section12_5_4Ref, data,reportType,
             consumption="Total"
             unit={Tabledata[0].Unit}
             total={wasteDirectedMaterialType.total}
+            totalCol={true}
           />
         </div>
 

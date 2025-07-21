@@ -259,6 +259,9 @@ const Screen2Comp = ({ location, year,handleTabClick }) => {
       if (hasWaterData) {
         setApiDataAvailable(true);
       }
+      else{
+        setApiDataAvailable(false);
+      }
 
       if (form_parent.length > 0) {
        

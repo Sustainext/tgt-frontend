@@ -30,7 +30,7 @@ const schema = {
           title: "Which ecosystem services have been affected or potentially affected by the organisation's activities?",
           enum: [
             "Provisioning services",
-            "Regulating services",
+            "Regulating and maintenance services",
             "Cultural services",
             "Others (please specify)"
           ]

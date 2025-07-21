@@ -536,45 +536,43 @@ const EconomicPerformance = forwardRef(
     // };
 
 
-    const getDynamicSectionMap = () => {
-  // Helper recursive function
-  function walk(node, sectionPath = [], groupTitle = '') {
+ const getDynamicSectionMap = () => {
+  function walk(nodes, sectionPath = [], groupTitle = '') {
     let map = [];
-    let index = 1;
+    // Don't filter nodes, always walk all for numbering!
+    nodes.forEach((item, i) => {
+      // Section index for this item (i+1 to get 1-based indexing)
+      const thisIndex = i + 1;
+      const currentSectionNumber = [...sectionPath, thisIndex].join('.');
 
-    (Array.isArray(node) ? node : [node]).forEach((item) => {
-      // If the node is selected, or any of its descendants is selected, include it
-      const isSelected = selectedSubsections.some((s) => s.id === item.id);
+      // Check if this item is selected
+      const isSelected = selectedSubsections.some((s) => s.id === (item.groupId || item.id));
 
-      // Is any descendant selected?
+      // Descend into children regardless (for numbering, but only render visible ones)
       let visibleDescendants = [];
-      if (item.children) {
-        visibleDescendants = walk(item.children, [...sectionPath, index], groupTitle || item.label);
+      if (item.children && item.children.length > 0) {
+        visibleDescendants = walk(item.children, [...sectionPath, thisIndex], `${currentSectionNumber} ${item.title || item.label}`);
       }
 
-      // Only add this node if it's selected, or if it has visible descendants
+      // Only render if node or any descendent is selected/visible
       if (isSelected || visibleDescendants.length > 0) {
-        const currentSectionNumber = [...sectionPath, index].join('.');
         map.push({
-          id: item.id,
+          id: item.groupId || item.id,
           sectionNumber: currentSectionNumber,
-          groupTitle: groupTitle ? `${currentSectionNumber} ${groupTitle}` : undefined,
+          groupTitle: groupTitle ? groupTitle : undefined
         });
 
-        // Add visible descendants, if any
         map = map.concat(visibleDescendants);
-
-        index++;
       }
     });
-
     return map;
   }
 
+  // sectionOrder is assumed to be a string/number like "11"
   return walk(groupedSubsections, [sectionOrder]);
 };
     const numberedSubsections = getDynamicSectionMap();
-    // console.log(numberedSubsections,"kkllkkl")
+    console.log(numberedSubsections,"kkllkkl")
 
     // Set initial active section
     useEffect(() => {
