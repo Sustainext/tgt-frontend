@@ -41,6 +41,7 @@ const Governance = () => {
 
   const [mobileopen, setMobileopen] = useState(false);
   const frameworkId = Cookies.get("selected_framework_id");
+  let brsrFrameworkId = Cookies.get('selected_brsr_framework_id') || 0
   const disclosures = Cookies.get("selected_disclosures");
   const parsedDisclosures = disclosures ? JSON.parse(disclosures) : [];
   const activestap = useSelector((state) => state.Tcfd.activesection);
@@ -159,6 +160,7 @@ useEffect(() => {
               {/* Emissions start */}
               {activeTab === "Structure" && (
                 <BoardInfo
+                brsrFrameworkId={brsrFrameworkId}
                   setMobileopen={setMobileopen}
                   frameworkId={frameworkId}
                   disclosures={parsedDisclosures}

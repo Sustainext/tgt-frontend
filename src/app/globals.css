@@ -63,13 +63,12 @@ div[class*="Popout__PopoutContent"] {
 
 /* gren button cmd clases start */
 /* Screaming Power Widget Responsive Wrap and Spacing Fix */
-.selectUtility div.row {
-  height: unset !important;   /* or initial !important; */
-}
+/* .selectUtility div.row {
+  height: unset !important; 
+} */
 #cmdButton .row {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem 1rem !important;  /* row gap, column gap */
+  display: flex;
+  flex-wrap: wrap;
 }
 
 /* green button cmd clasess end */

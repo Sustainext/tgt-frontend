@@ -11,7 +11,8 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GovernancesTopBar from "../../governancesTopBar";
-const BoardInfo = ({ setMobileopen, frameworkId, disclosures }) => {
+import BRSRScreen from './BRSRScreens/page'
+const BoardInfo = ({ setMobileopen, frameworkId, disclosures,brsrFrameworkId }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [year, setYear] = useState();
   const [data, setData] = useState([]);
@@ -273,6 +274,18 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         togglestatus={togglestatus}
     
       />
+      {
+        brsrFrameworkId ==4  && (
+           <BRSRScreen
+      selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+        month={activeMonth}
+        togglestatus={togglestatus}
+      />
+        )
+      }
+     
     </>
   );
 };

@@ -150,12 +150,23 @@ const Dashboard = () => {
 
   return (
     <div className="xl:ms-6 lg:ms-6">
-      <div
-        className="my-4 gradient-text text-opacity-20 text-[22px] font-semibold leading-relaxed"
+      <div className="flex justify-between">
+        <div
+        className="my-2 gradient-text text-opacity-20 text-[22px] font-semibold leading-relaxed"
         translate="no"
       >
         Sustainext HQ
       </div>
+      <button
+  type="button"
+  className="rounded-md text-white bg-[#007EEF] hover:bg-blue-700 text-[14px] w-[150px]"
+  translate="no"
+  onClick={() => window.open('/EZGB', '_blank')}
+>
+  Screaming Power
+</button>
+      </div>
+      
 
       <div className="flex flex-col">
         <div className="flex my-6 border-b">

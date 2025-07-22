@@ -18,61 +18,118 @@ const CustomTableWidget5 = ({
     setLocalValue(value || []);
   }, [value]);
 
-  const calculateValues = (currentValues) => {
-    const newValues = [...currentValues];
+  // const calculateValues = (currentValues) => {
+  //   const newValues = [...currentValues];
     
-    // Process row calculations if defined
-    if (options.rowCalculations) {
-      options.rowCalculations.forEach((calc, rowIndex) => {
-        if (!newValues[rowIndex]) newValues[rowIndex] = {};
+  //   // Process row calculations if defined
+  //   if (options.rowCalculations) {
+  //     options.rowCalculations.forEach((calc, rowIndex) => {
+  //       if (!newValues[rowIndex]) newValues[rowIndex] = {};
         
-        // Sum calculation
-        if (calc.sum) {
-          newValues[rowIndex][calc.sum.target] = calc.sum.fields
-            .reduce((total, field) => total + (parseInt(newValues[rowIndex]?.[field]) || 0), 0)
-            .toString();
-        }
+  //       // Sum calculation
+  //       if (calc.sum) {
+  //         newValues[rowIndex][calc.sum.target] = calc.sum.fields
+  //           .reduce((total, field) => total + (parseInt(newValues[rowIndex]?.[field]) || 0), 0)
+  //           .toString();
+  //       }
         
-        // Percentage calculation
-        if (calc.percentage) {
-          const numerator = parseInt(newValues[rowIndex]?.[calc.percentage.numeratorField] || 0);
-          const denominator = parseInt(newValues[rowIndex]?.[calc.percentage.denominatorField] || 1);
-          newValues[rowIndex][calc.percentage.target] = denominator > 0 
-            ? ((numerator / denominator) * 100).toFixed(2) 
-            : "0.00";
-        }
-      });
-    }
+  //       // Percentage calculation
+  //       if (calc.percentage) {
+  //         const numerator = parseInt(newValues[rowIndex]?.[calc.percentage.numeratorField] || 0);
+  //         const denominator = parseInt(newValues[rowIndex]?.[calc.percentage.denominatorField] || 1);
+  //         newValues[rowIndex][calc.percentage.target] = denominator > 0 
+  //           ? ((numerator / denominator) * 100).toFixed(2) 
+  //           : "0.00";
+  //       }
+  //     });
+  //   }
     
-    // Process totals row if defined
-    if (options.totalsRow) {
-      const totalsRowIndex = options.totalsRow.rowIndex;
-      if (!newValues[totalsRowIndex]) newValues[totalsRowIndex] = {};
+  //   // Process totals row if defined
+  //   if (options.totalsRow) {
+  //     const totalsRowIndex = options.totalsRow.rowIndex;
+  //     if (!newValues[totalsRowIndex]) newValues[totalsRowIndex] = {};
       
-      // Sum fields for totals
-      options.totalsRow.sumFields?.forEach(({target, fields}) => {
-        newValues[totalsRowIndex][target] = fields
-          .reduce((total, field) => {
-            return total + newValues.slice(0, totalsRowIndex).reduce(
-              (rowSum, row) => rowSum + (parseInt(row[field] || 0)), 0
-            );
-          }, 0)
+  //     // Sum fields for totals
+  //     options.totalsRow.sumFields?.forEach(({target, fields}) => {
+  //       newValues[totalsRowIndex][target] = fields
+  //         .reduce((total, field) => {
+  //           return total + newValues.slice(0, totalsRowIndex).reduce(
+  //             (rowSum, row) => rowSum + (parseInt(row[field] || 0)), 0
+  //           );
+  //         }, 0)
+  //         .toString();
+  //     });
+      
+  //     // Calculate percentages for totals
+  //     options.totalsRow.percentages?.forEach(calc => {
+  //       const numerator = parseInt(newValues[totalsRowIndex]?.[calc.numeratorField] || 0);
+  //       const denominator = parseInt(newValues[totalsRowIndex]?.[calc.denominatorField] || 1);
+  //       newValues[totalsRowIndex][calc.target] = denominator > 0
+  //         ? ((numerator / denominator) * 100).toFixed(2)
+  //         : "0.00";
+  //     });
+  //   }
+    
+  //   return newValues;
+  // };
+
+  
+ const calculateValues = (currentValues) => {
+  const newValues = [...currentValues];
+
+  // Row calculations (for all but last row)
+  if (options.rowCalculations) {
+    options.rowCalculations.forEach((calc, rowIndex) => {
+      if (!newValues[rowIndex]) newValues[rowIndex] = {};
+
+      // Row sums
+      if (calc.sum) {
+        newValues[rowIndex][calc.sum.target] = calc.sum.fields
+          .reduce((total, field) => total + (parseInt(newValues[rowIndex]?.[field]) || 0), 0)
           .toString();
-      });
-      
-      // Calculate percentages for totals
-      options.totalsRow.percentages?.forEach(calc => {
-        const numerator = parseInt(newValues[totalsRowIndex]?.[calc.numeratorField] || 0);
-        const denominator = parseInt(newValues[totalsRowIndex]?.[calc.denominatorField] || 1);
-        newValues[totalsRowIndex][calc.target] = denominator > 0
+      }
+
+      // Row percentages (multi-percentage support)
+      if (calc.percentages) {
+        calc.percentages.forEach(perc => {
+          const numerator = parseInt(newValues[rowIndex]?.[perc.numeratorField] || 0);
+          const denominator = parseInt(newValues[rowIndex]?.[perc.denominatorField] || 1);
+          newValues[rowIndex][perc.target] =
+            denominator > 0
+              ? ((numerator / denominator) * 100).toFixed(2)
+              : "0.00";
+        });
+      }
+    });
+  }
+
+  // Totals row
+  if (options.totalsRow) {
+    const totalsRowIndex = options.totalsRow.rowIndex;
+    if (!newValues[totalsRowIndex]) newValues[totalsRowIndex] = {};
+
+    // Sum for each stat column
+    options.totalsRow.sumFields?.forEach(({ target, fields }) => {
+      newValues[totalsRowIndex][target] = fields.reduce((total, field) => (
+        total + newValues.slice(0, totalsRowIndex).reduce(
+          (rowSum, row) => rowSum + (parseInt(row?.[field] || 0)), 0
+        )
+      ), 0).toString();
+    });
+
+    // Percentages for totals
+    options.totalsRow.percentages?.forEach(perc => {
+      const numerator = parseInt(newValues[totalsRowIndex]?.[perc.numeratorField] || 0);
+      const denominator = parseInt(newValues[totalsRowIndex]?.[perc.denominatorField] || 1);
+      newValues[totalsRowIndex][perc.target] =
+        denominator > 0
           ? ((numerator / denominator) * 100).toFixed(2)
           : "0.00";
-      });
-    }
-    
-    return newValues;
-  };
+    });
+  }
 
+  return newValues;
+};
   const handleFieldChange = (index, key, newValue) => {
     const updatedValues = [...localValue];
     if (!updatedValues[index]) updatedValues[index] = {};
@@ -200,6 +257,7 @@ const CustomTableWidget5 = ({
                             }
                             className="text-[12px] pl-2 py-2 w-full text-left"
                             placeholder="Enter data"
+                             readOnly={rowIndex === options?.totalsRow?.rowIndex} // <--- THIS LINE!
                           />
                         )}
                       </div>
