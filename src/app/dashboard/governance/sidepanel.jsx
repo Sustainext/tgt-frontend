@@ -20,7 +20,7 @@ function isRiskDisclosureSelected(disclosures, id) {
 }
 
 // Each menu section and its tabs
-const getMenuConfig = (frameworkId, disclosures) => [
+const getMenuConfig = (frameworkId, disclosures,brsrFrameworkId) => [
   {
     key: "board",
     label: "Board Info",
@@ -109,6 +109,7 @@ const getMenuConfig = (frameworkId, disclosures) => [
     key: "policy",
     label: "Policy",
     tabs: [
+     brsrFrameworkId==4 && { key: "Policy and Management Processes", label: "Policy and Management Processes" },
       { key: "Policy Commitments", label: "Policy Commitments" },
       { key: "Implementing Commitments", label: "Implementing Commitments" }
     ]
@@ -146,6 +147,7 @@ const tabToSectionKey = {
   "Tcfd-s3": "risk",
   "Tcfd-s4": "risk",
   "Tcfd-s5": "risk",
+  "Policy and Management Processes":"policy",
   "Policy Commitments": "policy",
   "Implementing Commitments": "policy",
   Process: "remediation",
@@ -158,6 +160,7 @@ const Aside = ({
   apiData,
   setMobileopen,
   frameworkId,
+  brsrFrameworkId,
   disclosures
 }) => {
   const [openSection, setOpenSection] = useState(null);
@@ -167,7 +170,7 @@ const Aside = ({
     setOpenSection(tabToSectionKey[activeTab] || null);
   }, [activeTab]);
 
-  const menuConfig = getMenuConfig(frameworkId, disclosures);
+  const menuConfig = getMenuConfig(frameworkId, disclosures,brsrFrameworkId);
 
   return (
     <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-md h-full">

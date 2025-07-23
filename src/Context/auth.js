@@ -229,17 +229,10 @@ export function AuthProvider({ children }) {
     const logoutUrl = `${backendUrl}/api/auth/logout/`;
 
     try {
-      const response = await fetch(logoutUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${localStorage
-            .getItem("token")
-            .replace(/^"|"$/g, "")}`,
-        },
-      });
+      const response = await axiosInstance.post(logoutUrl);
+      console.log(response)
 
-      if (!response.ok) {
+      if (response.status!==200) {
         throw new Error("Failed to logout");
       }
 

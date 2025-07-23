@@ -55,6 +55,10 @@ axiosInstance.interceptors.response.use(
           originalRequest.headers["Authorization"] = `Bearer ${access}`;
           return axiosInstance(originalRequest);
         } else {
+          //remove the language selector script and div
+      const elfsightScript = document.querySelector(`script[src="https://static.elfsight.com/platform/platform.js"]`);
+      if (elfsightScript) elfsightScript.parentNode.removeChild(elfsightScript);
+      document.querySelectorAll('[class*="EmbedRoot__Root"]').forEach(node => node.remove());
           console.error("No refresh token available");
           // Dispatch the global event here
           if (typeof window !== "undefined") {

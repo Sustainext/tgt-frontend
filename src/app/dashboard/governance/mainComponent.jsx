@@ -21,6 +21,7 @@ import CompensationRatio from "./Performance-renumerations/compensation-ratio/pa
 import DetermineRemuneration from "./Performance-renumerations/Determine-remuneration/page";
 import PolicyCommitments from "./Policy/Policy-Commitments/page";
 import ImplementingCommitments from "./Policy/Implementing-commitments/page";
+import BRSRScreen from './Policy/BRSRScreens/page'
 import {
   setHeadertext1,
   setHeadertext2,
@@ -76,7 +77,7 @@ const Governance = () => {
     const supplierTabs = ["Sustainability Strategy"];
     const TaxTabs = ["Process"];
     const PoliticalTabs = ["Advice & Concerns"];
-    const PolicyTabs = ["Policy Commitments", "Implementing Commitments"];
+    const PolicyTabs = ["Policy and Management Processes","Policy Commitments", "Implementing Commitments"];
     const RiskTabs = ["Tcfd-s3", "Tcfd-s4", "Tcfd-s5"];
   useEffect(() => {
     if (emissionTabs.includes(activeTab)) {
@@ -130,6 +131,7 @@ useEffect(() => {
         <div className="block xl:flex lg:flex md:block 2xl:flex 4k:flex">
           <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block">
             <Aside
+              brsrFrameworkId={brsrFrameworkId}
               activeTab={activeTab}
               handleTabClick={handleTabClick}
               setMobileopen={setMobileopen}
@@ -141,6 +143,7 @@ useEffect(() => {
             <div className="block xl:hidden lg:hidden md:block 2xl:hidden 4k:hidden">
               <div className="">
                 <Aside
+                  brsrFrameworkId={brsrFrameworkId}
                   activeTab={activeTab}
                   handleTabClick={handleTabClick}
                   setMobileopen={setMobileopen}
@@ -221,6 +224,11 @@ useEffect(() => {
               {activeTab === "Sustainability Strategy" && (
                 <SustainabilityStrategyPage setMobileopen={setMobileopen} />
               )}
+              {
+                brsrFrameworkId ==4 && activeTab === 'Policy and Management Processes' &&(
+                  <BRSRScreen setMobileopen={setMobileopen} brsrFrameworkId={brsrFrameworkId} />
+                )
+              }
               {activeTab === "Policy Commitments" && (
                 <PolicyCommitments setMobileopen={setMobileopen} />
               )}
