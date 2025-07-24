@@ -229,17 +229,10 @@ export function AuthProvider({ children }) {
     const logoutUrl = `${backendUrl}/api/auth/logout/`;
 
     try {
-      const response = await fetch(logoutUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${localStorage
-            .getItem("token")
-            .replace(/^"|"$/g, "")}`,
-        },
-      });
+      const response = await axiosInstance.post(logoutUrl);
+      console.log(response)
 
-      if (!response.ok) {
+      if (response.status!==200) {
         throw new Error("Failed to logout");
       }
 
@@ -254,6 +247,7 @@ export function AuthProvider({ children }) {
       Cookies.remove("permissions");
       Cookies.remove("isAdmin");
       Cookies.remove("selected_framework_id");
+      Cookies.remove("selected_brsr_framework_id");
       Cookies.remove("selected_disclosures");
       Cookies.remove("tcfd_sector");
       Cookies.remove("tcfd_sector_type");

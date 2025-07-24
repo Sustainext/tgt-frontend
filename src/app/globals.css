@@ -61,6 +61,17 @@ div[class*="Popout__PopoutContent"] {
   flex-shrink: 0;
 }
 
+/* gren button cmd clases start */
+/* Screaming Power Widget Responsive Wrap and Spacing Fix */
+/* .selectUtility div.row {
+  height: unset !important; 
+} */
+#cmdButton .row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* green button cmd clasess end */
 @media (min-width: 3840px){
   div[class*="background__Container"] {
     margin-right: 300px !important;

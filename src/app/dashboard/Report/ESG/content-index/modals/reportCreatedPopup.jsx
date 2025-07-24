@@ -300,7 +300,7 @@ const ReportCreatedPopup = ({
                     <IoIosArrowDown className="mt-1" />
                   </button>
                   {isHovered && (
-                    <div className="absolute bg-white border border-gray-200 rounded-md shadow-md  w-full">
+                    <div className="absolute z-50 bg-white border border-gray-200 rounded-md shadow-md  w-full">
                       <div
                         className="p-3 hover:bg-blue-50 cursor-pointer flex items-center gap-2"
                         onClick={() => {

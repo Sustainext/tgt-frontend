@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
-const Aside = ({ activeTab, handleTabClick, setMobileopen }) => {
+const Aside = ({ activeTab, handleTabClick, setMobileopen ,brsrFrameworkId }) => {
   const toggleSidebar = () => {
     setMobileopen(false);
   };
@@ -60,6 +60,25 @@ const Aside = ({ activeTab, handleTabClick, setMobileopen }) => {
             >
               Management Approach
             </p>
+            {
+              brsrFrameworkId ==4 && (
+                <p
+              className={`text-[13px] text-[#727272]  my-2 cursor-pointer ${
+                activeTab == "materialResponsibe"
+                  ? "bg-[#007eef0d] p-2 px-5"
+                  : "bg-transparent p-2 px-5"
+              }`}
+              onClick={() => {
+                handleTabClick("materialResponsibe");
+              }}
+            >
+              Material Responsible Business 
+Conduct and Sustainability 
+Issues
+            </p>
+              )
+            }
+             
           </div>
         </div>
       </div>

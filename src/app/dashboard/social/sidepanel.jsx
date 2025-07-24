@@ -14,6 +14,7 @@ const Aside = ({
   setActiveTab,
   apiData,
   setMobileopen,
+  brsrFrameworkId
 }) => {
   const materialityEnvData = apiData && apiData.social ? apiData.social : {};
   const [isEmission, setEmisssion] = useState(false);
@@ -24,6 +25,7 @@ const Aside = ({
   const [isMaterialsVisible, setMaterialsVisible] = useState(false);
   const [isSupplierVisible, setIsSupplierVisible] = useState(false);
   const [isLegal, setIsLegal] = useState(false);
+  const [isBRSRCSR, setIsBRSRCSR] = useState(false);
   const [isTax, setTax] = useState(false);
   const [SupplyChain, setSupplyChain] = useState(false);
   const [Safety, setSafety] = useState(false);
@@ -38,6 +40,7 @@ const Aside = ({
     setEnergySectionVisible(false);
     setIsSupplierVisible(false);
     setIsLegal(false);
+    setIsBRSRCSR(false)
     setTax(false);
     setBillS211(false);
     setSafety(false);
@@ -54,6 +57,7 @@ const Aside = ({
     setEnergySectionVisible(false);
     setEmisssion(false);
     setIsLegal(false);
+    setIsBRSRCSR(false)
     setTax(false);
     setBillS211(false);
     setSafety(false);
@@ -69,6 +73,7 @@ const Aside = ({
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsLegal(false);
+    setIsBRSRCSR(false)
     setTax(false);
     setBillS211(false);
     setSafety(false);
@@ -84,6 +89,7 @@ const Aside = ({
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsLegal(false);
+    setIsBRSRCSR(false)
     setTax(false);
     setBillS211(false);
     setSafety(false);
@@ -99,6 +105,7 @@ const Aside = ({
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsLegal(false);
+    setIsBRSRCSR(false)
     setTax(false);
     setBillS211(false);
     setSafety(false);
@@ -116,6 +123,7 @@ const Aside = ({
     setEmisssion(false);
     setIsLegal(false);
     setTax(false);
+    setIsBRSRCSR(false)
     setBillS211(false);
     setSafety(false);
     setPrivacy(false);
@@ -125,6 +133,7 @@ const Aside = ({
   const toggleLegal = () => {
     setIsLegal(!isLegal);
     setWasteVisible(false);
+    setIsBRSRCSR(false)
     setMaterialsVisible(false);
     setWaterVisible(false);
     setEnergySectionVisible(false);
@@ -140,6 +149,7 @@ const Aside = ({
     setTax(!isTax);
     setWasteVisible(false);
     setMaterialsVisible(false);
+    setIsBRSRCSR(false)
     setWaterVisible(false);
     setEnergySectionVisible(false);
     setIsSupplierVisible(false);
@@ -156,6 +166,7 @@ const Aside = ({
     setTax(false);
     setWasteVisible(false);
     setMaterialsVisible(false);
+    setIsBRSRCSR(false)
     setWaterVisible(false);
     setEnergySectionVisible(false);
     setIsSupplierVisible(false);
@@ -172,7 +183,8 @@ const Aside = ({
     setSupplyChain(false);
     setTax(false);
     setWasteVisible(false);
-    setMaterialsVisible(false);
+    setMaterialsVisible(false)
+    setIsBRSRCSR(false);
     setWaterVisible(false);
     setEnergySectionVisible(false);
     setIsSupplierVisible(false);
@@ -188,6 +200,7 @@ const Aside = ({
     setSupplyChain(false);
     setTax(false);
     setWasteVisible(false);
+    setIsBRSRCSR(false)
     setMaterialsVisible(false);
     setWaterVisible(false);
     setEnergySectionVisible(false);
@@ -201,6 +214,7 @@ const Aside = ({
     setMarketing(false);
     setSafety(false);
     setSupplyChain(false);
+    setIsBRSRCSR(false)
     setTax(false);
     setWasteVisible(false);
     setMaterialsVisible(false);
@@ -217,6 +231,24 @@ const Aside = ({
     setPrivacy(false);
     setMarketing(false);
     setSafety(false);
+    setIsBRSRCSR(false)
+    setSupplyChain(false);
+    setTax(false);
+    setWasteVisible(false);
+    setMaterialsVisible(false);
+    setWaterVisible(false);
+    setEnergySectionVisible(false);
+    setIsSupplierVisible(false);
+    setEmisssion(false);
+    setIsLegal(false);
+  };
+
+  const toggleBRSRCSR = () => {
+    setBillS211(false);
+    setPrivacy(false);
+    setMarketing(false);
+    setSafety(false);
+    setIsBRSRCSR(!isBRSRCSR)
     setSupplyChain(false);
     setTax(false);
     setWasteVisible(false);
@@ -878,6 +910,116 @@ const Aside = ({
               </>
             )}
           </div>
+          {/* brsr csr screen */}
+          {
+            brsrFrameworkId ==4 && (
+               <div>
+            <button
+              className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full
+              ${
+                activeTab === "CSR"
+                  ? "text-[#007EEF]"
+                  : "bg-transparent text-[#727272] "
+              }`}
+              onClick={toggleBRSRCSR}
+            >
+              <div className="xl:w-[20%] lg:w-[20%] 2xl:w-[20%] 4k:w-[20%] 2k:w-[20%] md:w-[20%] w-[10%]">
+                <MdOutlineGroups2 className="w-5 h-5 mr-2 mt-1" />
+              </div>
+              <div className="w-[50%] text-left ">
+                <span className="indent-0 text-[13px]">
+                 Corporate Social Responsibility
+                </span>
+              </div>
+              {/* {materialityEnvData &&
+              materialityEnvData.SocCommunityRelation?.is_material_topic ? (
+                <div className="w-[20%] ml-5">
+                  <span className="text-[#007EEF] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                    M
+                  </span>
+                </div>
+              ) : (
+                <span className="w-[20%]"></span>
+              )} */}
+
+              <div className="inset-y-0  flex items-center pointer-events-none w-[20%] justify-end">
+                {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+                </span> */}
+                <MdKeyboardArrowDown
+                  className={`text-lg text-neutral-500 ${
+                    isBRSRCSR && "rotate-180"
+                  }`}
+                />
+              </div>
+            </button>
+
+            {isBRSRCSR && (
+              <>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  {/* {materialityEnvData &&
+                  materialityEnvData.SocCommunityRelation?.is_material_topic ? (
+                    <div>
+                      <div>
+                        <p className="text-[12px]  ml-4  text-gray-400">
+                          Mandatory Management Disclosure
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                            activeTab ===
+                            "Management of Material topic Human Rights"
+                              ? "text-blue-400"
+                              : "bg-transparent text-[#727272]"
+                          }`}
+                          onClick={() => {
+                            handleTabClick(
+                              "Management of Material topic Human Rights"
+                            )
+                            toggleSidebar(); // Call the sidebar close function
+                          }}
+                       
+                        >
+                          Management of Material topic
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )} */}
+
+                  {/* <div>
+                    <p className="text-[12px]  ml-4  text-gray-400">
+                      Topic disclosure
+                    </p>
+                  </div> */}
+
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "CSR"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() => {
+                        toggleSidebar();
+                        handleTabClick("CSR")
+                      }}
+                   
+                    >
+                      CSR Details
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+            )
+          }
+         
+
+
           <div>
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
