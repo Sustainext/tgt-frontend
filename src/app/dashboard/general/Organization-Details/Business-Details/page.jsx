@@ -11,8 +11,15 @@ import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import Screen4 from "./screen4";
+import BRSRScreen1 from './BRSRScreens/screen1'
+import BRSRScreen2 from './BRSRScreens/screen2'
+import BRSRScreen3 from './BRSRScreens/screen3'
+import BRSRScreen4 from './BRSRScreens/screen4'
+import BRSRScreen5 from './BRSRScreens/screen5'
+import BRSRScreen6 from './BRSRScreens/screen6'
+import BRSRScreen7 from './BRSRScreens/screen7'
 import GeneralTopBar from "../../generalTopBar";
-const BusinessDetails = ({setMobileopen}) => {
+const BusinessDetails = ({setMobileopen,brsrFrameworkId}) => {
   const [activeMonth, setActiveMonth] = useState("");
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -355,6 +362,69 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         month={activeMonth}
         togglestatus={togglestatus}
       />
+      {
+        brsrFrameworkId == 4 && (
+          <div>
+            <BRSRScreen1
+       selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+        togglestatus={togglestatus}
+      />
+      <BRSRScreen2
+       selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+        togglestatus={togglestatus}
+      />
+      <BRSRScreen3
+       selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+        togglestatus={togglestatus}
+      />
+      <BRSRScreen4
+       selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+        togglestatus={togglestatus}
+      />
+      <BRSRScreen5
+       selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+        togglestatus={togglestatus}
+      />
+      <BRSRScreen6
+       selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+        togglestatus={togglestatus}
+      />
+      <BRSRScreen7
+       selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+        togglestatus={togglestatus}
+      />
+          </div>
+        )
+      }
+      
     </>
   );
 };
