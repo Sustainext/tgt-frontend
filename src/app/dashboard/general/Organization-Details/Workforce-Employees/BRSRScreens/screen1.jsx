@@ -63,7 +63,7 @@ const uiSchema = {
       { title: "Other than Permanent Employees",tooltipdispaly:"none",
          tooltip:"Enter number of plants/offices situated outside India"
        },
-       { title: "Total Employees",tooltipdispaly:"none", layout:'readOnly',
+       { title: "Total Employees",tooltipdispaly:"none", layout:'readonly',
          tooltip:"Enter number of plants/offices situated outside India"
        }
     ],
@@ -219,7 +219,30 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
             </div>
           </div>
         </div>
-        {(togglestatus === "Corporate" && selectedCorp) ||
+         <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
+          EMPLOYEES (at the end of Financial Year)
+          <MdInfoOutline
+            data-tooltip-id={`tooltip-$e1`}
+            data-tooltip-content="This section documents data corresponding 
+to the total number of employees (including differently abled) by gender"
+            className="mt-1 ml-2 text-[15px]"
+          />
+          <ReactTooltip
+            id={`tooltip-$e1`}
+            place="top"
+            effect="solid"
+            style={{
+              width: "290px",
+              backgroundColor: "#000",
+              color: "white",
+              fontSize: "12px",
+              boxShadow: 3,
+              borderRadius: "8px",
+              textAlign: "left",
+            }}
+          ></ReactTooltip>
+        </p>
+        {/* {(togglestatus === "Corporate" && selectedCorp) ||
         (togglestatus !== "Corporate" && selectedOrg && year) ? (
           <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
           EMPLOYEES (at the end of Financial Year)
@@ -244,7 +267,7 @@ to the total number of employees (including differently abled) by gender"
             }}
           ></ReactTooltip>
         </p>
-        ) : null}
+        ) : null} */}
         {/* {selectedOrg && year && (
           <p className="flex mx-2 text-sm text-gray-700 relative">
             List all entities included in the sustainability report

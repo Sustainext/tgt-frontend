@@ -270,7 +270,32 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
             </div>
           </div>
         </div>
-        {(togglestatus === "Corporate" && selectedCorp) ||
+         <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
+          Complaints/Grievances on any of the Principles under the National Guidelines on Responsible Business Conduct:
+          <MdInfoOutline
+            data-tooltip-id={`tooltip-$e1`}
+            data-tooltip-content="This section documents data on complaints 
+related to Principles 1–9 of the NGRBC, 
+including information on number of complaints 
+filed and grievance redressal mechanism"
+            className="mt-1 ml-2 text-[15px]"
+          />
+          <ReactTooltip
+            id={`tooltip-$e1`}
+            place="top"
+            effect="solid"
+            style={{
+              width: "290px",
+              backgroundColor: "#000",
+              color: "white",
+              fontSize: "12px",
+              boxShadow: 3,
+              borderRadius: "8px",
+              textAlign: "left",
+            }}
+          ></ReactTooltip>
+        </p>
+        {/* {(togglestatus === "Corporate" && selectedCorp) ||
         (togglestatus !== "Corporate" && selectedOrg && year) ? (
           <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
           Complaints/Grievances on any of the Principles under the National Guidelines on Responsible Business Conduct:
@@ -297,7 +322,7 @@ filed and grievance redressal mechanism"
             }}
           ></ReactTooltip>
         </p>
-        ) : null}
+        ) : null} */}
         {/* {selectedOrg && year && (
           <p className="flex mx-2 text-sm text-gray-700 relative">
             List all entities included in the sustainability report

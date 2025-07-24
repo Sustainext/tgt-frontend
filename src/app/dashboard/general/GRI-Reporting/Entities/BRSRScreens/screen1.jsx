@@ -245,7 +245,32 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
             </div>
           </div>
         </div>
-        {(togglestatus === "Corporate" && selectedCorp) ||
+         <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
+          Names of Holding/Subsidiary/Associate Companies/Joint Ventures
+          <MdInfoOutline
+            data-tooltip-id={`tooltip-$e1`}
+            data-tooltip-content="This section documents data corresponding to the holding, 
+subsidiary, associate companies, 
+or joint ventures, including name, shareholding percentage, 
+and participation in Business Responsibility initiatives"
+            className="mt-1 ml-2 text-[15px]"
+          />
+          <ReactTooltip
+            id={`tooltip-$e1`}
+            place="top"
+            effect="solid"
+            style={{
+              width: "290px",
+              backgroundColor: "#000",
+              color: "white",
+              fontSize: "12px",
+              boxShadow: 3,
+              borderRadius: "8px",
+              textAlign: "left",
+            }}
+          ></ReactTooltip>
+        </p>
+        {/* {(togglestatus === "Corporate" && selectedCorp) ||
         (togglestatus !== "Corporate" && selectedOrg && year) ? (
           <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
           Names of Holding/Subsidiary/Associate Companies/Joint Ventures
@@ -272,7 +297,7 @@ and participation in Business Responsibility initiatives"
             }}
           ></ReactTooltip>
         </p>
-        ) : null}
+        ) : null} */}
         {/* {selectedOrg && year && (
           <p className="flex mx-2 text-sm text-gray-700 relative">
             List all entities included in the sustainability report

@@ -255,7 +255,7 @@ aspirational districts, and the number of project beneficiaries"
                 ? "cursor-not-allowed opacity-90"
                 : ""
             }`}
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
             disabled={
               (togglestatus === "Corporate" && !selectedCorp) ||
               (togglestatus !== "Corporate" && (!selectedOrg || !year))

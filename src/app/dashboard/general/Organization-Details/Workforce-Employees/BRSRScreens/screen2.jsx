@@ -96,61 +96,62 @@ const uiSchema = {
       {
         title: "Total Employees",
         tooltipdispaly: "none",
-        tooltip: ""
+        tooltip: "",
+        layout:'readonly'
       }
     ],
-    rowCalculations: [
-      {
-        sum: { target: "totalDifferentlyAbledEmployees", fields: ["differentlyAbledMaleEmployees", "differentlyAbledFemaleEmployees"] },
-        percentages: [
-          {
-            target: "percentageDifferentlyAbledMaleEmployees",
-            numeratorField: "differentlyAbledMaleEmployees",
-            denominatorField: "totalDifferentlyAbledEmployees"
-          },
-          {
-            target: "percentageDifferentlyAbledFemaleEmployees",
-            numeratorField: "differentlyAbledFemaleEmployees",
-            denominatorField: "totalDifferentlyAbledEmployees"
-          }
-        ]
-      },
-      {
-        sum: { target: "totalDifferentlyAbledEmployees", fields: ["differentlyAbledMaleEmployees", "differentlyAbledFemaleEmployees"] },
-        percentages: [
-          {
-            target: "percentageDifferentlyAbledMaleEmployees",
-            numeratorField: "differentlyAbledMaleEmployees",
-            denominatorField: "totalDifferentlyAbledEmployees"
-          },
-          {
-            target: "percentageDifferentlyAbledFemaleEmployees",
-            numeratorField: "differentlyAbledFemaleEmployees",
-            denominatorField: "totalDifferentlyAbledEmployees"
-          }
-        ]
-      }
-    ],
-    totalsRow: {
-      rowIndex: 2,
-      sumFields: [
-        { target: "differentlyAbledMaleEmployees", fields: ["differentlyAbledMaleEmployees"] },
-        { target: "differentlyAbledFemaleEmployees", fields: ["differentlyAbledFemaleEmployees"] },
-        { target: "totalDifferentlyAbledEmployees", fields: ["totalDifferentlyAbledEmployees"] }
-      ],
-      percentages: [
-        {
-          target: "percentageDifferentlyAbledMaleEmployees",
-          numeratorField: "differentlyAbledMaleEmployees",
-          denominatorField: "totalDifferentlyAbledEmployees"
-        },
-        {
-          target: "percentageDifferentlyAbledFemaleEmployees",
-          numeratorField: "differentlyAbledFemaleEmployees",
-          denominatorField: "totalDifferentlyAbledEmployees"
-        }
-      ]
-    }
+    // rowCalculations: [
+    //   {
+    //     sum: { target: "totalDifferentlyAbledEmployees", fields: ["differentlyAbledMaleEmployees", "differentlyAbledFemaleEmployees"] },
+    //     percentages: [
+    //       {
+    //         target: "percentageDifferentlyAbledMaleEmployees",
+    //         numeratorField: "differentlyAbledMaleEmployees",
+    //         denominatorField: "totalDifferentlyAbledEmployees"
+    //       },
+    //       {
+    //         target: "percentageDifferentlyAbledFemaleEmployees",
+    //         numeratorField: "differentlyAbledFemaleEmployees",
+    //         denominatorField: "totalDifferentlyAbledEmployees"
+    //       }
+    //     ]
+    //   },
+    //   {
+    //     sum: { target: "totalDifferentlyAbledEmployees", fields: ["differentlyAbledMaleEmployees", "differentlyAbledFemaleEmployees"] },
+    //     percentages: [
+    //       {
+    //         target: "percentageDifferentlyAbledMaleEmployees",
+    //         numeratorField: "differentlyAbledMaleEmployees",
+    //         denominatorField: "totalDifferentlyAbledEmployees"
+    //       },
+    //       {
+    //         target: "percentageDifferentlyAbledFemaleEmployees",
+    //         numeratorField: "differentlyAbledFemaleEmployees",
+    //         denominatorField: "totalDifferentlyAbledEmployees"
+    //       }
+    //     ]
+    //   }
+    // ],
+    // totalsRow: {
+    //   rowIndex: 2,
+    //   sumFields: [
+    //     { target: "differentlyAbledMaleEmployees", fields: ["differentlyAbledMaleEmployees"] },
+    //     { target: "differentlyAbledFemaleEmployees", fields: ["differentlyAbledFemaleEmployees"] },
+    //     { target: "totalDifferentlyAbledEmployees", fields: ["totalDifferentlyAbledEmployees"] }
+    //   ],
+    //   percentages: [
+    //     {
+    //       target: "percentageDifferentlyAbledMaleEmployees",
+    //       numeratorField: "differentlyAbledMaleEmployees",
+    //       denominatorField: "totalDifferentlyAbledEmployees"
+    //     },
+    //     {
+    //       target: "percentageDifferentlyAbledFemaleEmployees",
+    //       numeratorField: "differentlyAbledFemaleEmployees",
+    //       denominatorField: "totalDifferentlyAbledEmployees"
+    //     }
+    //   ]
+    // }
   }
 };
 
@@ -303,7 +304,31 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
             </div>
           </div>
         </div>
-        {(togglestatus === "Corporate" && selectedCorp) ||
+         <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
+          DIFFERENTLY ABLED EMPLOYEES (at the end of Financial Year)
+          <MdInfoOutline
+            data-tooltip-id={`tooltip-$e1`}
+            className="mt-0.5 ml-3"
+            data-tooltip-content="This section documents data corresponding 
+to the total number of differently 
+abled employees by gender "
+          />
+          <ReactTooltip
+            id={`tooltip-$e1`}
+            place="top"
+            effect="solid"
+            style={{
+              width: "290px",
+              backgroundColor: "#000",
+              color: "white",
+              fontSize: "12px",
+              boxShadow: 3,
+              borderRadius: "8px",
+              textAlign: "left",
+            }}
+          ></ReactTooltip>
+        </p>
+        {/* {(togglestatus === "Corporate" && selectedCorp) ||
         (togglestatus !== "Corporate" && selectedOrg && year) ? (
           <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
           DIFFERENTLY ABLED EMPLOYEES (at the end of Financial Year)
@@ -328,7 +353,7 @@ abled employees by gender "
             }}
           ></ReactTooltip>
         </p>
-        ) : null}
+        ) : null} */}
         {/* {selectedOrg && year && (
           <p className="flex mx-2 text-sm text-gray-700 relative">
             List all entities included in the sustainability report

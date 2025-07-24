@@ -13,6 +13,7 @@ import {
   setHeadertext2,
   setHeaderdisplay,
 } from "../../lib/redux/features/topheaderSlice";
+import { ImPowerCord } from "react-icons/im";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -157,13 +158,13 @@ const Dashboard = () => {
       >
         Sustainext HQ
       </div>
-      <button
+     <button
   type="button"
-  className="rounded-md text-white bg-[#007EEF] hover:bg-blue-700 text-[14px] w-[150px]"
-  translate="no"
+  className="mt-2 lg:mt-0 flex items-center gap-2 border border-gray-300 text-gray-500 text-sm px-4 py-2 rounded-md hover:shadow-sm bg-white"
   onClick={() => window.open('/EZGB', '_blank')}
 >
-  Screaming Power
+  <ImPowerCord className="w-4 h-4 text-gray-500" />
+  Connect Utility Provider
 </button>
       </div>
       

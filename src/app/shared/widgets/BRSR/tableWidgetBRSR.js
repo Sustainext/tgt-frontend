@@ -184,89 +184,107 @@ const CustomTableWidget5 = ({
               ))}
             </tr>
           </thead>
-          <tbody>
-            {options.rowLabels.map((rowLabel, rowIndex) => (
-              <tr key={rowIndex}>
-                {options.titles.map((column, columnIndex) => (
-                  <td key={columnIndex} className="border-b border-gray-300 text-left p-2 text-[12px]">
-                    {columnIndex === 0 ? (
-                      <div className="relative">
-                        <p className="flex gap-1">
-                          {rowLabel.title}
-                          <MdInfoOutline
-                            data-tooltip-id={`tooltip-${rowLabel.title.replace(/\s+/g, "-")}`}
-                            data-tooltip-html={rowLabel.tooltip}
-                            style={{ display: rowLabel.tooltipdispaly }}
-                            className="cursor-pointer ml-2 float-end mt-1 w-10"
-                          />
-                          <ReactTooltip
-                            id={`tooltip-${rowLabel.title.replace(/\s+/g, "-")}`}
-                            place="top"
-                            effect="solid"
-                            style={{
-                              width: "auto",
-                              height: "auto",
-                              backgroundColor: "#000",
-                              color: "white",
-                              fontSize: "11px",
-                              borderRadius: "8px",
-                              zIndex: 1000,
-                            }}
-                          />
-                        </p>
-                      </div>
-                    ) : column.layout === "readonly" ? (
-                      <input
-                        readOnly={true}
-                        value={localValue[rowIndex]?.[column.key] || ""}
-                        className="text-[12px] pl-2 py-2 w-full text-left"
-                        placeholder="Auto Calculated"
-                      />
-                    ) : (
-                      <div>
-                        {column.layout === "inputDecimal" && (
-                          <input
-                            type="text"
-                            inputMode="decimal"
-                            pattern="^[0-9]*[.]?[0-9]*$"
-                            required={required}
-                            value={localValue[rowIndex]?.[column.key] || ""}
-                            onChange={(e) => {
-                              const input = e.target.value;
-                              const cleaned = input
-                                .replace(/[^0-9.]/g, "")
-                                .replace(/(\..*)\./g, "$1");
-                              handleFieldChange(rowIndex, column.key, cleaned);
-                            }}
-                            className="text-[12px] pl-2 py-2 w-full text-left"
-                            placeholder="Enter data"
-                          />
-                        )}
-                        {column.layout === 'inputNumber' && (
-                          <input
-                            type="text"
-                            inputMode="numeric"
-                            pattern="[0-9]*"
-                            required={required}
-                            value={localValue[rowIndex]?.[column.key] || ""}
-                            onChange={e => handleFieldChange(
-                              rowIndex, 
-                              column.key, 
-                              e.target.value.replace(/[^0-9]/g, "")
-                            )
-                            }
-                            className="text-[12px] pl-2 py-2 w-full text-left"
-                            placeholder="Enter data"
-                             readOnly={rowIndex === options?.totalsRow?.rowIndex} // <--- THIS LINE!
-                          />
-                        )}
-                      </div>
-                    )}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
+         <tbody>
+  {options.rowLabels.map((rowLabel, rowIndex) => {
+    const isRowReadOnly = rowLabel.layout === "readonly";
+
+    return (
+      <tr key={rowIndex}>
+        {options.titles.map((column, columnIndex) => {
+          const cellValue = localValue[rowIndex]?.[column.key] || "";
+          const isFirstColumn = columnIndex === 0;
+
+          return (
+            <td key={columnIndex} className="border-b border-gray-300 text-left p-2 text-[12px]">
+              {isFirstColumn ? (
+                <div className="relative">
+                  <p className="flex gap-1">
+                    {rowLabel.title}
+                    <MdInfoOutline
+                      data-tooltip-id={`tooltip-${rowLabel.title.replace(/\s+/g, "-")}`}
+                      data-tooltip-html={rowLabel.tooltip}
+                      style={{ display: rowLabel.tooltipdispaly }}
+                      className="cursor-pointer ml-2 float-end mt-1 w-10"
+                    />
+                    <ReactTooltip
+                      id={`tooltip-${rowLabel.title.replace(/\s+/g, "-")}`}
+                      place="top"
+                      effect="solid"
+                      style={{
+                        width: "auto",
+                        height: "auto",
+                        backgroundColor: "#000",
+                        color: "white",
+                        fontSize: "11px",
+                        borderRadius: "8px",
+                        zIndex: 1000,
+                      }}
+                    />
+                  </p>
+                </div>
+              ) : isRowReadOnly ? (
+                <input
+                  readOnly
+                  value={cellValue}
+                  className="text-[12px] pl-2 py-2 w-full text-left bg-gray-50 text-gray-500"
+                  placeholder="Auto Calculated"
+                />
+              ) : column.layout === "readonly" ? (
+                <input
+                  readOnly
+                  value={cellValue}
+                  className="text-[12px] pl-2 py-2 w-full text-left bg-gray-50 text-gray-500"
+                  placeholder="Auto Calculated"
+                />
+              ) : (
+                <>
+                  {column.layout === "inputDecimal" && (
+                    <input
+                      type="text"
+                      inputMode="decimal"
+                      pattern="^[0-9]*[.]?[0-9]*$"
+                      required={required}
+                      value={cellValue}
+                      onChange={(e) => {
+                        const input = e.target.value;
+                        const cleaned = input
+                          .replace(/[^0-9.]/g, "")
+                          .replace(/(\..*)\./g, "$1");
+                        handleFieldChange(rowIndex, column.key, cleaned);
+                      }}
+                      className="text-[12px] pl-2 py-2 w-full text-left"
+                      placeholder="Enter data"
+                    />
+                  )}
+
+                  {column.layout === "inputNumber" && (
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      required={required}
+                      value={cellValue}
+                      onChange={(e) =>
+                        handleFieldChange(
+                          rowIndex,
+                          column.key,
+                          e.target.value.replace(/[^0-9]/g, "")
+                        )
+                      }
+                      className="text-[12px] pl-2 py-2 w-full text-left"
+                      placeholder="Enter data"
+                    />
+                  )}
+                </>
+              )}
+            </td>
+          );
+        })}
+      </tr>
+    );
+  })}
+</tbody>
+
         </table>
       </div>
       {options.titles.map((item) => (

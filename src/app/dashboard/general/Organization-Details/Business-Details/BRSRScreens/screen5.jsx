@@ -204,8 +204,6 @@ const Screen5 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
             </div>
           </div>
         </div>
-        {(togglestatus === "Corporate" && selectedCorp) ||
-        (togglestatus !== "Corporate" && selectedOrg && year) ? (
           <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
           Number of Locations
           {/* <MdInfoOutline
@@ -231,7 +229,13 @@ national and international levels"
             }}
           ></ReactTooltip> */}
         </p>
-        ) : null}
+        {/* {(togglestatus === "Corporate" && selectedCorp) ||
+        (togglestatus !== "Corporate" && selectedOrg && year) ? (
+          <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
+          Number of Locations
+          
+        </p>
+        ) : null} */}
         {/* {selectedOrg && year && (
           <p className="flex mx-2 text-sm text-gray-700 relative">
             List all entities included in the sustainability report
