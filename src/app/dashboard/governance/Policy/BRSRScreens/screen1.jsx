@@ -60,68 +60,74 @@ const schema = {
   },
 };
 
-
 const uiSchema = {
   policyDetails: {
     "ui:widget": "TableWidget",
     "ui:options": {
       titles: [
-  {
-    key: "P1",
-    title: "P1",
-    layout: "inputDropdown",
-    tooltip: "Businesses should conduct and govern themselves with integrity and in a manner that is Ethical, Transparent and Accountable.",
-  },
-  {
-    key: "P2",
-    title: "P2",
-    layout: "inputDropdown",
-    tooltip: "Businesses should provide goods and services in a manner that is sustainable and safe.",
-  },
-  {
-    key: "P3",
-    title: "P3",
-    layout: "input",
-    tooltip: "Businesses should respect and promote the well-being of all employees, including those in their value chains.",
-  },
-  {
-    key: "P4",
-    title: "P4",
-    layout: "inputDropdown",
-    tooltip: "Businesses should respect the interests of and be responsive to all their stakeholders.",
-  },
-  {
-    key: "P5",
-    title: "P5",
-    layout: "inputDropdown",
-    tooltip: "Businesses should respect and promote human rights.",
-  },
-  {
-    key: "P6",
-    title: "P6",
-    layout: "input",
-    tooltip: "Businesses should respect and make efforts to protect and restore the environment.",
-  },
-  {
-    key: "P7",
-    title: "P7",
-    layout: "input",
-    tooltip: "Businesses, when engaging in influencing public and regulatory policy, should do so in a manner that is responsible and transparent.",
-  },
-  {
-    key: "P8",
-    title: "P8",
-    layout: "input",
-    tooltip: "Businesses should promote inclusive growth and equitable development.",
-  },
-  {
-    key: "P9",
-    title: "P9",
-    layout: "input",
-    tooltip: "Businesses should engage with and provide value to their consumers in a responsible manner.",
-  }
-]
-,
+        {
+          key: "P1",
+          title: "P1",
+          layout: "inputDropdown",
+          tooltip:
+            "Businesses should conduct and govern themselves with integrity and in a manner that is Ethical, Transparent and Accountable.",
+        },
+        {
+          key: "P2",
+          title: "P2",
+          layout: "inputDropdown",
+          tooltip:
+            "Businesses should provide goods and services in a manner that is sustainable and safe.",
+        },
+        {
+          key: "P3",
+          title: "P3",
+          layout: "input",
+          tooltip:
+            "Businesses should respect and promote the well-being of all employees, including those in their value chains.",
+        },
+        {
+          key: "P4",
+          title: "P4",
+          layout: "inputDropdown",
+          tooltip:
+            "Businesses should respect the interests of and be responsive to all their stakeholders.",
+        },
+        {
+          key: "P5",
+          title: "P5",
+          layout: "inputDropdown",
+          tooltip: "Businesses should respect and promote human rights.",
+        },
+        {
+          key: "P6",
+          title: "P6",
+          layout: "input",
+          tooltip:
+            "Businesses should respect and make efforts to protect and restore the environment.",
+        },
+        {
+          key: "P7",
+          title: "P7",
+          layout: "input",
+          tooltip:
+            "Businesses, when engaging in influencing public and regulatory policy, should do so in a manner that is responsible and transparent.",
+        },
+        {
+          key: "P8",
+          title: "P8",
+          layout: "input",
+          tooltip:
+            "Businesses should promote inclusive growth and equitable development.",
+        },
+        {
+          key: "P9",
+          title: "P9",
+          layout: "input",
+          tooltip:
+            "Businesses should engage with and provide value to their consumers in a responsible manner.",
+        },
+      ],
       rowLabels: [
         {
           key: "row1",
@@ -179,8 +185,6 @@ const uiSchema = {
     },
   },
 
-
-
   reasonsNotCovered: {
     "ui:widget": "TableWidget",
     "ui:options": {
@@ -232,8 +236,6 @@ const uiSchema = {
   },
 };
 
-
-
 const Screen1 = ({
   selectedOrg,
   selectedCorp,
@@ -243,154 +245,154 @@ const Screen1 = ({
   togglestatus,
 }) => {
   const initialFormData = {
-  policyDetails: [
-    {
-      P1: "test",
-      P2: "test",
-      P3: "test",
-      P4: "test",
-      P5: "test",
-      P6: "test",
-      P7: "test",
-      P8: "test",
-      P9: "test",
-    },
-    {
-      P1: "Select",
-      P2: "Select",
-      P3: "Select",
-      P4: "Select",
-      P5: "Select",
-      P6: "Select",
-      P7: "Select",
-      P8: "Select",
-      P9: "Select",
-    },
-    {
-      P1: "",
-      P2: "",
-      P3: "",
-      P4: "",
-      P5: "",
-      P6: "",
-      P7: "",
-      P8: "",
-      P9: "",
-    },
-    {
-      P1: "Select",
-      P2: "Select",
-      P3: "Select",
-      P4: "Select",
-      P5: "Select",
-      P6: "Select",
-      P7: "Select",
-      P8: "Select",
-      P9: "Select",
-    },
-    {
-      P1: "Select",
-      P2: "Select",
-      P3: "Select",
-      P4: "Select",
-      P5: "Select",
-      P6: "Select",
-      P7: "Select",
-      P8: "Select",
-      P9: "Select",
-    },
-    {
-      P1: "",
-      P2: "",
-      P3: "",
-      P4: "",
-      P5: "",
-      P6: "",
-      P7: "",
-      P8: "",
-      P9: "",
-    },
-    {
-      P1: "",
-      P2: "",
-      P3: "",
-      P4: "",
-      P5: "",
-      P6: "",
-      P7: "",
-      P8: "",
-      P9: "",
-    },
-    {
-      P1: "",
-      P2: "",
-      P3: "",
-      P4: "",
-      P5: "",
-      P6: "",
-      P7: "",
-      P8: "",
-      P9: "",
-    },
-  ],
-  reasonsNotCovered: [
-    {
-      P1: "test 2",
-      P2: "test 2",
-      P3: "test 2",
-      P4: "test 2",
-      P5: "test 2",
-      P6: "test 2",
-      P7: "test 2",
-      P8: "test 2",
-      P9: "test 2",
-    },
-    {
-      P1: "Select",
-      P2: "Select",
-      P3: "Select",
-      P4: "Select",
-      P5: "Select",
-      P6: "Select",
-      P7: "Select",
-      P8: "Select",
-      P9: "Select",
-    },
-    {
-      P1: "Select",
-      P2: "Select",
-      P3: "Select",
-      P4: "Select",
-      P5: "Select",
-      P6: "Select",
-      P7: "Select",
-      P8: "Select",
-      P9: "Select",
-    },
-    {
-      P1: "Select",
-      P2: "Select",
-      P3: "Select",
-      P4: "Select",
-      P5: "Select",
-      P6: "Select",
-      P7: "Select",
-      P8: "Select",
-      P9: "Select",
-    },
-    {
-      P1: "",
-      P2: "",
-      P3: "",
-      P4: "",
-      P5: "",
-      P6: "",
-      P7: "",
-      P8: "",
-      P9: "",
-    },
-  ],
-};
+    policyDetails: [
+      {
+        P1: "",
+        P2: "",
+        P3: "",
+        P4: "",
+        P5: "",
+        P6: "",
+        P7: "",
+        P8: "",
+        P9: "",
+      },
+      {
+        P1: "",
+        P2: "",
+        P3: "",
+        P4: "",
+        P5: "",
+        P6: "",
+        P7: "",
+        P8: "",
+        P9: "",
+      },
+      {
+        P1: "",
+        P2: "",
+        P3: "",
+        P4: "",
+        P5: "",
+        P6: "",
+        P7: "",
+        P8: "",
+        P9: "",
+      },
+      {
+        P1: "",
+        P2: "",
+        P3: "",
+        P4: "",
+        P5: "",
+        P6: "",
+        P7: "",
+        P8: "",
+        P9: "",
+      },
+      {
+        P1: "",
+        P2: "",
+        P3: "",
+        P4: "",
+        P5: "",
+        P6: "",
+        P7: "",
+        P8: "",
+        P9: "",
+      },
+      {
+        P1: "",
+        P2: "",
+        P3: "",
+        P4: "",
+        P5: "",
+        P6: "",
+        P7: "",
+        P8: "",
+        P9: "",
+      },
+      {
+        P1: "",
+        P2: "",
+        P3: "",
+        P4: "",
+        P5: "",
+        P6: "",
+        P7: "",
+        P8: "",
+        P9: "",
+      },
+      {
+        P1: "",
+        P2: "",
+        P3: "",
+        P4: "",
+        P5: "",
+        P6: "",
+        P7: "",
+        P8: "",
+        P9: "",
+      },
+    ],
+    reasonsNotCovered: [
+      {
+        P1: "",
+        P2: "",
+        P3: "",
+        P4: "",
+        P5: "",
+        P6: "",
+        P7: "",
+        P8: "",
+        P9: "",
+      },
+      {
+        P1: "",
+        P2: "",
+        P3: "",
+        P4: "",
+        P5: "",
+        P6: "",
+        P7: "",
+        P8: "",
+        P9: "",
+      },
+      {
+        P1: "",
+        P2: "",
+        P3: "",
+        P4: "",
+        P5: "",
+        P6: "",
+        P7: "",
+        P8: "",
+        P9: "",
+      },
+      {
+        P1: "",
+        P2: "",
+        P3: "",
+        P4: "",
+        P5: "",
+        P6: "",
+        P7: "",
+        P8: "",
+        P9: "",
+      },
+      {
+        P1: "",
+        P2: "",
+        P3: "",
+        P4: "",
+        P5: "",
+        P6: "",
+        P7: "",
+        P8: "",
+        P9: "",
+      },
+    ],
+  };
 
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
@@ -487,25 +489,25 @@ const Screen1 = ({
     }
   };
 
-//   useEffect(() => {
-//     if (selectedOrg && year && togglestatus) {
-//       if (togglestatus === "Corporate" && selectedCorp) {
-//         loadFormData();
-//       } else if (togglestatus === "Corporate" && !selectedCorp) {
-//         setFormData(initialFormData);
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});
-//       } else {
-//         loadFormData();
-//       }
+  //   useEffect(() => {
+  //     if (selectedOrg && year && togglestatus) {
+  //       if (togglestatus === "Corporate" && selectedCorp) {
+  //         loadFormData();
+  //       } else if (togglestatus === "Corporate" && !selectedCorp) {
+  //         setFormData(initialFormData);
+  //         setRemoteSchema({});
+  //         setRemoteUiSchema({});
+  //       } else {
+  //         loadFormData();
+  //       }
 
-//       toastShown.current = false;
-//     } else {
-//       if (!toastShown.current) {
-//         toastShown.current = true;
-//       }
-//     }
-//   }, [selectedOrg, year, selectedCorp, togglestatus]);
+  //       toastShown.current = false;
+  //     } else {
+  //       if (!toastShown.current) {
+  //         toastShown.current = true;
+  //       }
+  //     }
+  //   }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -561,36 +563,39 @@ const Screen1 = ({
           <Form
             schema={schema}
             uiSchema={{
-      ...uiSchema,
-     reasonsNotCovered : { "ui:widget": () => null } // Hide
-    }}
+              ...uiSchema,
+              reasonsNotCovered: { "ui:widget": () => null },
+            }}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
             formContext={{
               view: "0",
-               formData: formData
+              formData: formData,
+              tableName: "policyDetails", // <-- add
             }}
           />
         </div>
         <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500] mt-10 mb-4">
-              For Each Principle Not Covered by Policy, Select the Applicable Reason(s) From Below
-              </h2>
-               <div className="mx-2">
+          For Each Principle Not Covered by Policy, Select the Applicable
+          Reason(s) From Below
+        </h2>
+        <div className="mx-2">
           <Form
             schema={schema}
-             uiSchema={{
-      ...uiSchema,
-     policyDetails : { "ui:widget": () => null } // Hide
-    }}
+            uiSchema={{
+              ...uiSchema,
+              policyDetails: { "ui:widget": () => null },
+            }}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
             formContext={{
               view: "0",
-               formData: formData
+              formData: formData,
+              tableName: "reasonsNotCovered", // <-- add
             }}
           />
         </div>
