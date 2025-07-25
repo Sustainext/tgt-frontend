@@ -25,6 +25,7 @@ const Assurance = ({setMobileopen,brsrFrameworkId}) => {
   const screen1Ref = useRef(null);
   const screen2Ref = useRef(null);
   const screen3Ref = useRef(null);
+  const screen4Ref = useRef(null);
   const [loopen, setLoOpen] = useState(false);
   const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
@@ -59,6 +60,9 @@ const Assurance = ({setMobileopen,brsrFrameworkId}) => {
       if (screen3Ref.current) {
         promises.push(screen3Ref.current());
       }
+      if (screen4Ref.current) {
+        promises.push(screen4Ref.current());
+      }
 
       await Promise.all(promises); // Wait for all submissions to complete
 
@@ -88,9 +92,9 @@ const Assurance = ({setMobileopen,brsrFrameworkId}) => {
 
   const brsr = [
     {
-      tagName: "BRSR A-I-15",
+      tagName: "BRSR-A-I-14",
       id: "tooltip-$brsr1",
-      content: "BRSR-Section A-I-15",
+      content: "BRSR-Section-A-I-14",
     },
 
   ];
@@ -279,7 +283,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         location={location}
         year={year}
         month={activeMonth}
-        ref={screen3Ref}
+        ref={screen4Ref}
         togglestatus={togglestatus}
       />
         )

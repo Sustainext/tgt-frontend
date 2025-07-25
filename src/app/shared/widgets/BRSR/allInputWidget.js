@@ -308,27 +308,51 @@ useEffect(() => {
     };
   }, [openDropdown]);
 
+  // const handleCheckboxChange = (rowIndex, key, values) => {
+  //   const updatedValues = [...localValue];
+  //   if (!updatedValues[rowIndex]) {
+  //     updatedValues[rowIndex] = {};
+  //   }
+
+  //   updatedValues[rowIndex][key] = values;
+
+  //   const updatedOthersInputs = [...othersInputs];
+  //   if (!updatedOthersInputs[rowIndex]) {
+  //     updatedOthersInputs[rowIndex] = {};
+  //   }
+
+  //   updatedOthersInputs[rowIndex][key] = values?.includes(
+  //     "Others (please specify)"
+  //   );
+
+  //   setOthersInputs(updatedOthersInputs);
+  //   setLocalValue(updatedValues);
+  // };
+
   const handleCheckboxChange = (rowIndex, key, values) => {
-    const updatedValues = [...localValue];
-    if (!updatedValues[rowIndex]) {
-      updatedValues[rowIndex] = {};
-    }
+  const updatedValues = [...localValue];
+  if (!updatedValues[rowIndex]) {
+    updatedValues[rowIndex] = {};
+  }
 
-    updatedValues[rowIndex][key] = values;
+  updatedValues[rowIndex][key] = values;
 
-    const updatedOthersInputs = [...othersInputs];
-    if (!updatedOthersInputs[rowIndex]) {
-      updatedOthersInputs[rowIndex] = {};
-    }
+  const updatedOthersInputs = [...othersInputs];
+  if (!updatedOthersInputs[rowIndex]) {
+    updatedOthersInputs[rowIndex] = {};
+  }
 
-    updatedOthersInputs[rowIndex][key] = values?.includes(
-      "Others (please specify)"
-    );
+  if (values?.includes("Others (please specify)")) {
+    updatedOthersInputs[rowIndex][key] = true;
+  } else {
+    updatedOthersInputs[rowIndex][key] = false;
+    // Remove the _others field if Others is not selected
+    delete updatedValues[rowIndex][`${key}_others`];
+  }
 
-    setOthersInputs(updatedOthersInputs);
-    setLocalValue(updatedValues);
-  };
-
+  setOthersInputs(updatedOthersInputs);
+  setLocalValue(updatedValues);
+};
   const handleOtherInputChange = (rowIndex, key, newValue) => {
     const updatedValues = [...localValue];
     if (!updatedValues[rowIndex]) {
@@ -520,7 +544,7 @@ useEffect(() => {
                       required={required}
                       value={localValue[rowIndex][key] || ""}
                       onChange={(e) => handleInputChange(rowIndex, key, e.target.value)}
-                      className="border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+                      className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
                       placeholder={`Enter data`}
                     />
                   )}
@@ -530,14 +554,14 @@ useEffect(() => {
                           required={required}
                           value={localValue[rowIndex][key] || ""}
                           onChange={(e) => handleInputChange(rowIndex, key, e.target.value)}
-                           className="border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+                           className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
                           rows={5}
                           placeholder="Enter data"
                         />
                   )}
 
 
-                  {layoutType === "multiselect" && propertySchema.enum && (
+                  {/* {layoutType === "multiselect" && propertySchema.enum && (
                     <div>
                     <Select
                       isMulti
@@ -586,7 +610,49 @@ useEffect(() => {
                             />
                           )}
                           </div>
-                  )}
+                  )} */}
+                  {layoutType === "multiselect" && propertySchema.enum && (
+  <div>
+    <Select
+      isMulti
+      placeholder="Select"
+      options={propertySchema.enum.map((option) => ({
+        value: option,
+        label: option,
+      }))}
+      value={(row[key] || []).map((option) => ({
+        value: option,
+        label: option,
+      }))}
+      onChange={(selectedOptions) => {
+        const values = (selectedOptions || []).map((opt) => opt.value);
+        handleCheckboxChange(rowIndex, key, values); // call your handler that manages 'othersInputs'
+      }}
+      closeMenuOnSelect={false}
+      hideSelectedOptions={false}
+      components={{
+        Option: CustomOptionnew,
+        MultiValueContainer: CustomMultiValueContainer,
+      }}
+      styles={updatedMultiSelectStyle}
+      className="block w-1/2 text-[12px] focus:outline-none"
+    />
+
+    {/* Show the input if "Others (please specify)" is selected */}
+    {othersInputs[rowIndex]?.[key] && (
+      <input
+        type="text"
+        required={required}
+        value={localValue[rowIndex][`${key}_others`] || ""}
+        onChange={(e) =>
+          handleOtherInputChange(rowIndex, key, e.target.value)
+        }
+        className="mt-4 border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-[50%]"
+        placeholder="Enter data"
+      />
+    )}
+  </div>
+)}
 
                   {layoutType === "select" && propertySchema.enum && (
                         <>
@@ -601,7 +667,7 @@ useEffect(() => {
                               handleSelectChange(rowIndex, key, e.target.value)
                             }
                            
-                            className="border text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-1/2"
+                            className="border text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-2.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-1/2"
                           >
                             <option value="">Select an option</option>
                             {propertySchema.enum.map((option) => (
@@ -624,7 +690,7 @@ useEffect(() => {
                                   e.target.value
                                 )
                               }
-                             className="border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-1/2"
+                             className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-1/2"
                               placeholder="Others Please specify"
                             />
                           )}
@@ -647,7 +713,7 @@ useEffect(() => {
                         if (input.length > 21) return;
                         handleInputChange(rowIndex, key, input);
                       }}
-                      className="border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+                      className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
                       placeholder={`Enter data`}
                     />
                   )}
@@ -658,7 +724,6 @@ useEffect(() => {
                       type="text"
                       inputMode="text"
                       pattern="[A-Za-z0-9]*"
-                      maxLength="21" // Optional max length at an HTML level
                       required={required}
                       value={localValue[rowIndex][key] || ""}
                       onChange={(e) => {
@@ -667,7 +732,26 @@ useEffect(() => {
                         if (input.length > 21) return;
                         handleInputChange(rowIndex, key, input);
                       }}
-                      className="border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+                      className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+                      placeholder={`Enter data`}
+                    />
+                  )}
+
+                   {layoutType === "alphaNumCapital" && (
+                    <input
+                      type="text"
+                      inputMode="text"
+                      pattern="[A-Z0-9]*"
+                      maxLength="21" // Optional max length at an HTML level
+                      required={required}
+                      value={localValue[rowIndex][key] || ""}
+                      onChange={(e) => {
+                        // Enforce alphanumeric and 21-digit length
+                        const input = e.target.value.replace(/[^A-Z0-9]/g, "");
+                        if (input.length > 21) return;
+                        handleInputChange(rowIndex, key, input);
+                      }}
+                      className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
                       placeholder={`Enter data`}
                     />
                   )}
@@ -689,7 +773,7 @@ useEffect(() => {
                         if (input.length > 21) return;
                         handleInputChange(rowIndex, key, input);
                       }}
-                      className="border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+                      className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
                       placeholder={`Enter data`}
                     />
                   )}

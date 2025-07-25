@@ -672,30 +672,60 @@ const AllTableWidget = ({
 />
 
                       ):
-                       layoutType === "inputDecimal" ? (
+//                        layoutType === "inputDecimal" ? (
+//   <input
+//     type="text"
+//     inputMode="decimal"
+//     pattern="^[0-9]*[.]?[0-9]*$"
+//     required={required}
+//     value={localValue[rowIndex][key] || ""}
+//     onChange={(e) => {
+//       const input = e.target.value;
+
+//       // Allow only numbers and one decimal point
+//       const cleaned = input
+//         .replace(/[^0-9.]/g, "")              // Remove non-numeric/non-dot
+//         .replace(/(\..*)\./g, "$1");          // Allow only one dot
+
+//       handleInputChange(rowIndex, key, cleaned);
+//     }}
+//     disabled={isFieldDisabled(uiSchemaField, row,key)}
+//     className={`text-[12px] py-2 pl-1 w-full border-b rounded-md ${
+//       isFieldDisabled(uiSchemaField, row,key) ? "opacity-70 cursor-not-allowed" : ""
+//     }`}
+//     placeholder="Enter"
+//   />
+// ):
+layoutType === "inputDecimal" ? (
   <input
     type="text"
     inputMode="decimal"
-    pattern="^[0-9]*[.]?[0-9]*$"
+    pattern="^[0-9]*[.]?[0-9]{0,2}$"
     required={required}
     value={localValue[rowIndex][key] || ""}
     onChange={(e) => {
-      const input = e.target.value;
+      let input = e.target.value;
 
       // Allow only numbers and one decimal point
-      const cleaned = input
+      input = input
         .replace(/[^0-9.]/g, "")              // Remove non-numeric/non-dot
         .replace(/(\..*)\./g, "$1");          // Allow only one dot
 
-      handleInputChange(rowIndex, key, cleaned);
+      // If there's a decimal, limit to two decimals
+      if (input.indexOf('.') >= 0) {
+        const [intPart, decPart] = input.split('.');
+        input = intPart + '.' + (decPart ? decPart.slice(0, 2) : '');
+      }
+
+      handleInputChange(rowIndex, key, input);
     }}
-    disabled={isFieldDisabled(uiSchemaField, row,key)}
+    disabled={isFieldDisabled(uiSchemaField, row, key)}
     className={`text-[12px] py-2 pl-1 w-full border-b rounded-md ${
-      isFieldDisabled(uiSchemaField, row,key) ? "opacity-70 cursor-not-allowed" : ""
+      isFieldDisabled(uiSchemaField, row, key) ? "opacity-70 cursor-not-allowed" : ""
     }`}
     placeholder="Enter"
   />
-):
+) :
                       layoutType === "input" ? (
                         <input
                           type="text"
@@ -849,7 +879,29 @@ const AllTableWidget = ({
                           className="text-[12px]   py-2 pl-1 w-full border-b rounded-md"
                           placeholder="Enter"
                         />
-                      ) : layoutType === "inputonlynumber" ? (
+                      ) :
+                      layoutType === "inputWebsite" ? (
+  <input
+    type="url"
+    required={required}
+    value={localValue[rowIndex][key] || ""}
+  onChange={e => {
+      const val = e.target.value;
+      // Only update if empty OR matches URL prefix
+      if (
+        val === "" ||
+        /^https?:\/\/.+/i.test(val)
+      ) {
+        handleInputChange(rowIndex, key, val);
+      }
+    }}
+    disabled={isFieldDisabled(uiSchemaField, row, key)}
+    className="text-[12px] py-2 pl-1 w-full border-b rounded-md"
+    placeholder="Enter website link"
+    pattern="https?://.*" // optional: only allow URLs starting with http:// or https://
+  />
+)
+                      : layoutType === "inputonlynumber" ? (
                         <input
                           type="text"
                           inputMode="numeric"

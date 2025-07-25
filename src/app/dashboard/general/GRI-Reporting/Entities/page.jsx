@@ -87,15 +87,15 @@ const Entities = ({setMobileopen,brsrFrameworkId}) => {
   ];
 
   const brsr = [
+    // {
+    //   tagName: "BRSR A-I-13",
+    //   id: "tooltip-$brsr1",
+    //   content: "BRSR-Section A-I-13",
+    // },
     {
-      tagName: "BRSR A-I-13",
-      id: "tooltip-$brsr1",
-      content: "BRSR-Section A-I-13",
-    },
-    {
-      tagName: "BRSR A-V-23a",
+      tagName: "BRSR-A-V-23-a",
       id: "tooltip-$brsr2",
-      content: "BRSR-Section A-V-23a",
+      content: "BRSR-Section-A-V-23-a",
     },
  
   ];
