@@ -26,58 +26,59 @@ const BrsrPolicyTableWidget = ({
   useEffect(() => {
     setLocalValue(value || []);
   }, [value, formContext?.formData?.policyDetails]);
-
+useEffect(() => {
+  console.log('Current policyDetails in reasonsNotCovered:', formContext?.formData?.policyDetails);
+  // ... rest of code ...
+}, [formContext?.formData?.policyDetails]);
   // This disables ALL rows for P1 if policyDetails[0].P1 !== "No"
 const isCellDisabled = (rowIndex, columnKey) => {
   const tableName = formContext?.tableName;
   const data = formContext?.formData || {};
 
   if (tableName === "reasonsNotCovered") {
-    // This works for P1..P9 because columnKey is 'P1', 'P2', ... etc
     const firstPolicyRow = data?.policyDetails?.[0] || {};
     if (firstPolicyRow[columnKey] === "Yes") {
       return true;
     }
     return false;
   }
-
   return false;
 };
   // This hook clears all reasonsNotCovered P1 once they become disabled
-useEffect(() => {
-  if (formContext?.tableName === "reasonsNotCovered") {
-    const data = formContext?.formData || {};
-    const firstPolicyRow = data?.policyDetails?.[0] || {};
-    let updatedValues = [...localValue];
-    let changed = false;
+// useEffect(() => {
+//   if (formContext?.tableName === "reasonsNotCovered") {
+//     const data = formContext?.formData || {};
+//     const firstPolicyRow = data?.policyDetails?.[0] || {};
+//     let updatedValues = [...localValue];
+//     let changed = false;
 
-    // <-- This will check all P1...P9 columns!
-    for (let i = 1; i <= 9; i++) {
-      const key = `P${i}`;
-      if (firstPolicyRow[key] === "Yes") {
-        updatedValues = updatedValues.map((row) => {
-          if (row?.[key] && row[key] !== "") {
-            changed = true;
-            return { ...row, [key]: "" };
-          }
-          return row;
-        });
-      }
-    }
-    if (changed) {
-      setLocalValue(updatedValues);
-      onChange(updatedValues);
-    }
-  }
-  // eslint-disable-next-line
-}, [formContext?.formData?.policyDetails, value]);
+//     // <-- This will check all P1...P9 columns!
+//     for (let i = 1; i <= 9; i++) {
+//       const key = `P${i}`;
+//       if (firstPolicyRow[key] === "Yes") {
+//         updatedValues = updatedValues.map((row) => {
+//           if (row?.[key] && row[key] !== "") {
+//             changed = true;
+//             return { ...row, [key]: "" };
+//           }
+//           return row;
+//         });
+//       }
+//     }
+//     if (changed) {
+//       setLocalValue(updatedValues);
+//       onChange(updatedValues);
+//     }
+//   }
+//   // eslint-disable-next-line
+// }, [formContext?.formData?.policyDetails]);
 
   const handleFieldChange = (rowIndex, columnKey, newValue) => {
     const updatedValues = [...localValue];
     if (!updatedValues[rowIndex]) updatedValues[rowIndex] = {};
     updatedValues[rowIndex][columnKey] = newValue;
     setLocalValue(updatedValues);
-     onChange(updatedValues);   
+ 
   };
 
   const debouncedUpdate = useCallback(debounce(onChange, 200), [onChange]);

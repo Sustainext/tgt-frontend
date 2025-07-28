@@ -44,42 +44,48 @@ const uiSchema = {
         title: "Differently Abled Employee Category",
         layout: "readonly",
         tooltipdispaly: "none",
-        tooltip: ""
+        tooltip: "",
+        key1: "col1",
       },
       {
         key: "totalDifferentlyAbledEmployees",
         title: "Total Differently Abled Employees",
         layout: "inputNumber",
         tooltipdispaly: "block",
-        tooltip: "Specify the total number of permanent and other than permanent differently abled employee working for the entity"
+        tooltip: "Specify the total number of permanent and other than permanent differently abled employee working for the entity",
+          key1:"col2",
       },
       {
         key: "differentlyAbledMaleEmployees",
         title: "Number Of Differently Abled Male Employees",
         layout: "inputNumber",
         tooltipdispaly: "block",
-        tooltip: "Specify the total number of permanent and other than permanent differently abled male employees working for the entity"
+        tooltip: "Specify the total number of permanent and other than permanent differently abled male employees working for the entity",
+         key1:"col3",
       },
       {
         key: "percentageDifferentlyAbledMaleEmployees",
         title: "Percentage Of Differently Abled Male Employees",
         layout: "readonly",
         tooltipdispaly: "none",
-        tooltip: ""
+        tooltip: "",
+         key1:"col4",
       },
       {
         key: "differentlyAbledFemaleEmployees",
         title: "Number Of Differently Abled Female Employees",
         layout: "inputNumber",
         tooltipdispaly: "block",
-        tooltip: "Specify the total number of permanent and other than permanent differently abled female employees working for the entity"
+        tooltip: "Specify the total number of permanent and other than permanent differently abled female employees working for the entity",
+        key1:"col5",
       },
       {
         key: "percentageDifferentlyAbledFemaleEmployees",
         title: "Percentage Of Differently Abled Female Employees",
         layout: "readonly",
         tooltipdispaly: "none",
-        tooltip: ""
+        tooltip: "",
+         key1:"col6",
       }
     ],
     rowLabels: [
