@@ -13,7 +13,7 @@ const widgets = {
  AllInputWidget:AllInputWidget
 };
 
-const view_path = "gri-general-org_details_2-1a-1b-1c-1d";
+const view_path = "brsr-social-csr-brsr-a-vi-24";
 const client_id = 1;
 const user_id = 1;
 
@@ -28,8 +28,9 @@ const schema = {
             "No"
         ]
        },
-      Q2: { type: "string", title: "Turnover (in Rs.)" },
-      Q3: { type: "string", title: "Net Worth (in Rs.)" },
+      Q2: { type: "string", title: "Turnover (INR)" },
+      Q3: { type: "string", title: "Turnover from Products/Services (INR)" },
+      Q4: { type: "string", title: "Net Worth (INR)" },
     },
   },
 };
@@ -48,17 +49,25 @@ const uiSchema = {
         },
          {
           key: "Q2",
-          title: "Turnover (in Rs.)",
+          title: "Turnover (INR)",
           tooltip:
-            "<p>Specify turnover of the entity in Rs.</p>",
+            "<p>Specify the total turnover of the entity in Indian Rupees</p>",
           layouttype: "inputDecimal",
           tooltipdispaly: "block",
         },
          {
           key: "Q3",
-          title: "Net Worth (in Rs.)",
+          title: "Turnover from Products/Services (INR) ",
           tooltip:
-            "<p>Specify net worth of the entity in Rs.</p>",
+            "<p>Enter the portion of turnover generated specifically from products and services offered by the entity, in Indian Rupees</p>",
+          layouttype: "inputDecimal",
+          tooltipdispaly: "block",
+        },
+         {
+          key: "Q4",
+          title: "Net Worth (INR)",
+          tooltip:
+            "<p>Enter the net worth of the entity in Indian Rupees</p>",
           layouttype: "inputDecimal",
           tooltipdispaly: "block",
         },
@@ -158,26 +167,26 @@ const screen1 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
     }
   };
 
-// useEffect(() => {
-//   if (selectedOrg && year && togglestatus) {
-//     if (togglestatus === "Corporate") {
-//       if (selectedCorp) {
-//         loadFormData();           // <-- Only load if a corporate is picked
-//       } else {
-//         setFormData([{}]); 
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
-//       }
-//     } else {
-//       loadFormData();             // Organization tab: always try to load
-//     }
-//     toastShown.current = false;
-//   } else {
-//     if (!toastShown.current) {
-//       toastShown.current = true;
-//     }
-//   }
-// }, [selectedOrg, year, selectedCorp, togglestatus]);
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
+      }
+    } else {
+      loadFormData();             // Organization tab: always try to load
+    }
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -237,8 +246,8 @@ aspirational districts, and the number of project beneficiaries"
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -255,7 +264,7 @@ aspirational districts, and the number of project beneficiaries"
                 ? "cursor-not-allowed opacity-90"
                 : ""
             }`}
-            // onClick={handleSubmit}
+            onClick={handleSubmit}
             disabled={
               (togglestatus === "Corporate" && !selectedCorp) ||
               (togglestatus !== "Corporate" && (!selectedOrg || !year))

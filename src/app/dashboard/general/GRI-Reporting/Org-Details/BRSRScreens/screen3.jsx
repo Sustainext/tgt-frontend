@@ -26,8 +26,7 @@ const schema = {
         enum:[
             "National Stock Exchange",
             "Bombay Stock Exchange",
-            "Metropolitan Stock Exchange of India",
-            "Others (please specify)"
+            "Metropolitan Stock Exchange of India"
         ]
        },
     },

@@ -13,7 +13,7 @@ const widgets = {
  AllInputWidget:AllInputWidget
 };
 
-const view_path = "gri-general-org_details_2-1a-1b-1c-1d";
+const view_path = "brsr-general-business-details-contribution-of-exports-brsr-a-iii-19-b";
 const client_id = 1;
 const user_id = 1;
 
@@ -135,26 +135,26 @@ const Screen6 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
     }
   };
 
-// useEffect(() => {
-//   if (selectedOrg && year && togglestatus) {
-//     if (togglestatus === "Corporate") {
-//       if (selectedCorp) {
-//         loadFormData();           // <-- Only load if a corporate is picked
-//       } else {
-//         setFormData([{}]); 
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
-//       }
-//     } else {
-//       loadFormData();             // Organization tab: always try to load
-//     }
-//     toastShown.current = false;
-//   } else {
-//     if (!toastShown.current) {
-//       toastShown.current = true;
-//     }
-//   }
-// }, [selectedOrg, year, selectedCorp, togglestatus]);
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
+      }
+    } else {
+      loadFormData();             // Organization tab: always try to load
+    }
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -212,8 +212,8 @@ of exports as a percentage of the entity's total turnover"
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

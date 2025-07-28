@@ -543,7 +543,7 @@ const AllTableWidget = ({
                     (title) => title.key === key
                   );
                   const layoutType = uiSchemaField?.layouttype || "select";
-
+                  const inputLimit = uiSchemaField?.inputLimit || "";
                   return (
                     <td
                       key={cellIndex}
@@ -906,6 +906,7 @@ layoutType === "inputDecimal" ? (
                           type="text"
                           inputMode="numeric"
                           pattern="[0-9]*"
+                          {...(inputLimit ? { maxLength: inputLimit } : {})}
                           required={required}
                           value={localValue[rowIndex][key] || ""}
                           onChange={(e) =>

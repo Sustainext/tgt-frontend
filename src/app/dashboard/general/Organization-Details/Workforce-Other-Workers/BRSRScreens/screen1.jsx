@@ -246,7 +246,7 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
             <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
                <div className="w-[90px] h-[26px] p-2 bg-[#0057a50d] bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-[#18736B] text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                 BRSR-A-IV-20-b
+                 BRSR-A-IV-20-a
                 </div>
               </div>
             </div>

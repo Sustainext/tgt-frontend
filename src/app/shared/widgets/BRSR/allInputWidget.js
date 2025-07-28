@@ -704,13 +704,11 @@ useEffect(() => {
                       type="text"
                       inputMode="numeric"
                       pattern="[0-9]*"
-                      maxLength="21" // Ensure browser client validation
                       required={required}
                       value={localValue[rowIndex][key] || ""}
                       onChange={(e) => {
                         // Allow only numbers and enforce 21-character length
                         const input = e.target.value.replace(/[^0-9]/g, "");
-                        if (input.length > 21) return;
                         handleInputChange(rowIndex, key, input);
                       }}
                       className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
@@ -756,27 +754,32 @@ useEffect(() => {
                     />
                   )}
 
-                  {/* Decimal Field - Limit characters to 21 */}
-                  {layoutType === "inputDecimal" && (
-                    <input
-                      type="text"
-                      inputMode="decimal"
-                      pattern="^[0-9]*[.]?[0-9]*$"
-                      maxLength="21" // Optional safety check at HTML level
-                      required={required}
-                      value={localValue[rowIndex][key] || ""}
-                      onChange={(e) => {
-                        // Allow only valid decimal (numbers & single dot) and enforce 21-digit length
-                        const input = e.target.value
-                          .replace(/[^0-9.]/g, "") // Remove invalid characters
-                          .replace(/(\..*)\./g, "$1"); // Allow only one dot
-                        if (input.length > 21) return;
-                        handleInputChange(rowIndex, key, input);
-                      }}
-                      className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
-                      placeholder={`Enter data`}
-                    />
-                  )}
+                  {/* Decimal Field*/}
+                 {layoutType === "inputDecimal" && (
+  <input
+    type="text"
+    inputMode="decimal"
+    pattern="^\d*(\.\d{0,2})?$"
+    required={required}
+    value={localValue[rowIndex][key] || ""}
+    onChange={e => {
+      let input = e.target.value
+        .replace(/[^0-9.]/g, '')           // Remove invalid chars
+        .replace(/(\..*)\./g, '$1');       // Allow only one dot
+
+      // Allow only two decimal places
+      if (
+        input === "" ||                          // allow blank
+        /^\d*(\.\d{0,2})?$/.test(input)          // valid int or up to 2 decimals
+      ) {
+        handleInputChange(rowIndex, key, input);
+      }
+    }}
+
+    className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+    placeholder="Enter data"
+  />
+)}
                 </div>
               );
             })}
