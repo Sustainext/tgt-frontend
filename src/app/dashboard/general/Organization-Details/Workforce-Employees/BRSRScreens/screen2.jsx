@@ -11,7 +11,7 @@ import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import AllTableWidget from "../../../../../shared/widgets/BRSR/allTableWidget";
-import TableWidget from '../../../../../shared/widgets/BRSR/tableWidgetBRSR'
+import TableWidget from '../../../../../shared/widgets/BRSR/tableWidgetRowColSum'
 const widgets = {
   TableWidget: TableWidget,
 };
@@ -44,13 +44,15 @@ const uiSchema = {
         title: "Differently Abled Employee Category",
         layout: "readonly",
         tooltipdispaly: "none",
-        tooltip: ""
+        tooltip: "",
+        key1:"col1"
       },
       {
         key: "totalDifferentlyAbledEmployees",
         title: "Total Differently Abled Employees",
         layout: "inputNumber",
         tooltipdispaly: "block",
+        key1:"col2",
         tooltip: "Specify the total number of permanent and other than permanent differently abled employee working for the entity"
       },
       {
@@ -58,6 +60,7 @@ const uiSchema = {
         title: "Number Of Differently Abled Male Employees",
         layout: "inputNumber",
         tooltipdispaly: "block",
+        key1:"col3",
         tooltip: "Specify the total number of permanent and other than permanent differently abled male employees working for the entity"
       },
       {
@@ -65,13 +68,15 @@ const uiSchema = {
         title: "Percentage Of Differently Abled Male Employees",
         layout: "readonly",
         tooltipdispaly: "none",
-        tooltip: ""
+        tooltip: "",
+        key1:"col4"
       },
       {
         key: "differentlyAbledFemaleEmployees",
         title: "Number Of Differently Abled Female Employees",
         layout: "inputNumber",
         tooltipdispaly: "block",
+        key1:"col5",
         tooltip: "Specify the total number of permanent and other than permanent differently abled female employees working for the entity"
       },
       {
@@ -79,7 +84,8 @@ const uiSchema = {
         title: "Percentage Of Differently Abled Female Employees",
         layout: "readonly",
         tooltipdispaly: "none",
-        tooltip: ""
+        tooltip: "",
+        key1:"col6"
       }
     ],
     rowLabels: [

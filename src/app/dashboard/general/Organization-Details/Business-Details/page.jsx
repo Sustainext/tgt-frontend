@@ -59,29 +59,34 @@ const BusinessDetails = ({setMobileopen,brsrFrameworkId}) => {
 
   const brsr = [
     {
-      tagName: "BRSR A-II-16",
+      tagName: "BRSR-A-I-11",
       id: "tooltip-$brsr1",
-      content: "BRSR-Section A-II-16",
+      content: "BRSR-Section-A-I-11",
     },
     {
-      tagName: "BRSR A-II-17",
+      tagName: "BRSR-A-II-16",
       id: "tooltip-$brsr2",
-      content: "BRSR-Section A-II-17",
+      content: "BRSR-Section-A-II-16",
     },
     {
-      tagName: "BRSR A-III-18",
+      tagName: "BRSR-A-III-18",
       id: "tooltip-$brsr3",
-      content: "BRSR-Section A-III-18",
+      content: "BRSR-Section-A-III-18",
     },
     {
-      tagName: "BRSR A-III-19a",
+      tagName: "BRSR-A-III-19-a",
       id: "tooltip-$brsr4",
-      content: "BRSR-Section A-III-19a",
+      content: "BRSR-Section-A-III-19-a",
     },
     {
-      tagName: "BRSR A-III-19c",
+      tagName: "BRSR-A-III-19-b",
       id: "tooltip-$brsr5",
-      content: "BRSR-Section A-III-19c",
+      content: "BRSR-Section-A-III-19-b",
+    },
+    {
+      tagName: "BRSR-A-III-19-c",
+      id: "tooltip-$brsr6",
+      content: "BRSR-Section-A-III-19-c",
     },
   ];
   return (

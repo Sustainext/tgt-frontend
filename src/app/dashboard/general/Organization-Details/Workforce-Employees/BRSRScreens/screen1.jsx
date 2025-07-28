@@ -11,7 +11,7 @@ import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import AllTableWidget from "../../../../../shared/widgets/BRSR/allTableWidget";
-import TableWidget from '../../../../../shared/widgets/BRSR/tableWidgetBRSR'
+import TableWidget from '../../../../../shared/widgets/BRSR/tableWidgetRowColSum'
 const widgets = {
   TableWidget: TableWidget,
 };
@@ -41,20 +41,25 @@ const uiSchema = {
     titles: [
       { key: "employeeCategory", title: "Employee Category", layout: "readonly",
         tooltipdispaly:"none",
-        tooltip:""
+        tooltip:"",
+        key1: "col1",
        },
       { key: "totalEmployees", title: "Total Employees", layout: "inputNumber",  
         tooltipdispaly:"block",
+        key1: "col2",
         tooltip:"Specify the total number of permanent and other then permanent employees working for the entity "},
       { key: "maleEmployees", title: "Number of Male Employees", layout: "inputNumber", 
         tooltipdispaly:"block",
+        key1: "col3",
         tooltip:"Specify the total number of permanent and other then permanent male employees working for the entity "},
       { key: "percentageMaleEmployees", title: "Percentage of Male Employees", layout: "readonly", tooltipdispaly:"none",
-        tooltip:"" },
+        tooltip:"",key1: "col4", },
          { key: "femaleEmployees", title: "Number of Female Employees", layout: "inputNumber", tooltipdispaly:"block",
-        tooltip:"Specify the total number of permanent and other then permanent female employees working for the entity " },
+        key1: "col5",
+          tooltip:"Specify the total number of permanent and other then permanent female employees working for the entity " },
          { key: "percentageFemaleEmployees", title: "Percentage of Female Employees", layout: "readonly", tooltipdispaly:"none",
-        tooltip:"" }
+       key1: "col6",
+          tooltip:"" }
     ],
     rowLabels: [
       { title: "Permanent Employees",tooltipdispaly:"none",
@@ -69,6 +74,8 @@ const uiSchema = {
     ],
   }
 };
+
+
 
 const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, ref) => {
   const [formData, setFormData] = useState([{}]);

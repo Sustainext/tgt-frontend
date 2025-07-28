@@ -11,7 +11,7 @@ import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import AllTableWidget from "../../../../../shared/widgets/BRSR/allTableWidget";
-import TableWidget from '../../../../../shared/widgets/BRSR/tableWidgetBRSR'
+import TableWidget from '../../../../../shared/widgets/BRSR/tableWidgetRowColSum'
 const widgets = {
   TableWidget: TableWidget,
 };
@@ -44,13 +44,15 @@ const uiSchema = {
         title: "Worker Category",
         layout: "readonly",
         tooltipdispaly: "none",
-        tooltip: ""
+        tooltip: "",
+        key1:"col1"
       },
       {
         key: "totalWorkers",
         title: "Total Workers",
         layout: "inputNumber",
         tooltipdispaly: "block",
+         key1:"col2",
         tooltip: "Specify the total number of permanent and other than permanent workers employed by the entity"
       },
       {
@@ -58,6 +60,7 @@ const uiSchema = {
         title: "Number Of Male Workers",
         layout: "inputNumber",
         tooltipdispaly: "block",
+         key1:"col3",
         tooltip: "Specify the total number of permanent and other than permanent male workers employed by the entity"
       },
       {
@@ -65,6 +68,7 @@ const uiSchema = {
         title: "Percentage Of Male Workers",
         layout: "readonly",
         tooltipdispaly: "none",
+         key1:"col4",
         tooltip: ""
       },
       {
@@ -72,6 +76,7 @@ const uiSchema = {
         title: "Number Of Female Workers",
         layout: "inputNumber",
         tooltipdispaly: "block",
+         key1:"col5",
         tooltip: "Specify the total number of permanent and other than permanent female workers employed by the entity"
       },
       {
@@ -79,7 +84,8 @@ const uiSchema = {
         title: "Percentage Of Female Workers",
         layout: "readonly",
         tooltipdispaly: "none",
-        tooltip: ""
+        tooltip: "",
+         key1:"col6"
       }
     ],
     rowLabels: [

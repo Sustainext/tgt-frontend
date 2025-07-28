@@ -11,7 +11,7 @@ import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import AllTableWidget from "../../../../../shared/widgets/BRSR/allTableWidget";
-import TableWidget from '../../../../../shared/widgets/BRSR/tableWidgetBRSR'
+import TableWidget from '../../../../../shared/widgets/BRSR/tableWidgetRowColSum'
 const widgets = {
   TableWidget: TableWidget,
 };
@@ -43,13 +43,15 @@ const uiSchema = {
         title: "Permanent Workers",
         layout: "readonly",
         tooltipdispaly: "none",
-        tooltip: ""
+        tooltip: "",
+        key1:"col1"
       },
       {
         key: "totalWorkersLeft",
         title: "Total Number Of Workers Who Left The Organization",
         layout: "inputNumber",
         tooltipdispaly: "block",
+        key1:"col2",
         tooltip: "Specify the total number of permanent workers who left the organization"
       },
       {
@@ -57,6 +59,7 @@ const uiSchema = {
         title: "Total Number Of Workers (At The Beginning Of The Reporting Period)",
         layout: "inputNumber",
         tooltipdispaly: "block",
+        key1:"col3",
         tooltip: "Specify the total number of permanent workers (at the beginning of the reporting period) employed by the entity"
       },
       {
@@ -64,12 +67,14 @@ const uiSchema = {
         title: "Total Number Of Workers (At The End Of The Reporting Period)",
         layout: "inputNumber",
         tooltipdispaly: "block",
+        key1:"col4",
         tooltip: "Specify the total number of permanent workers (at the end of the reporting period) employed by the entity"
       },
       {
         key: "turnoverRate",
         title: "Turnover Rate",
         layout: "readonly",
+        key1:"col5",
         tooltipdispaly: "none",
         tooltip: ""
       }
