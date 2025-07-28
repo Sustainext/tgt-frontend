@@ -20,10 +20,11 @@ const view_path = "gri-governance-policy_commitments-2-23-a-business_conduct";
 const client_id = 1;
 const user_id = 1;
 
-const schema = {
+// schema.js
+export const schema = {
   type: "object",
   properties: {
-    policyDetails: {
+    policyAndReasonTable: {
       type: "array",
       items: {
         type: "object",
@@ -39,31 +40,22 @@ const schema = {
           P9: { type: "string" },
         },
       },
-    },
-    reasonsNotCovered: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          P1: { type: "string" },
-          P2: { type: "string" },
-          P3: { type: "string" },
-          P4: { type: "string" },
-          P5: { type: "string" },
-          P6: { type: "string" },
-          P7: { type: "string" },
-          P8: { type: "string" },
-          P9: { type: "string" },
-        },
-      },
+      minItems: 13,
+      maxItems: 13,
     },
   },
 };
 
-const uiSchema = {
-  policyDetails: {
+// uiSchema.js
+export const uiSchema = {
+  policyAndReasonTable: {
     "ui:widget": "TableWidget",
     "ui:options": {
+      sectionTitles: [
+        "Policy and Management Processes",
+        "For Each Principle Not Covered by Policy, Select the Applicable Reason(s) From Below",
+      ],
+
       titles: [
         {
           key: "P1",
@@ -128,114 +120,149 @@ const uiSchema = {
             "Businesses should engage with and provide value to their consumers in a responsible manner.",
         },
       ],
+
+      // 8+5=13 rows (index 0-7: policy, 8-12: reason)
       rowLabels: [
         {
           key: "row1",
           title: "Whether your entity’s policy covers one or more principles",
           tooltip: "Answer Yes/No for each principle",
+          tooltipshow: "none",
           layout: "inputDropdown",
           options: ["Yes", "No"],
+          section: 0,
         },
         {
           key: "row2",
           title: "Has the policy been approved by the Board?",
           tooltip: "Board-level approval confirms top-level commitment",
+          tooltipshow: "none",
           layout: "inputDropdown",
           options: ["Yes", "No"],
+          section: 0,
         },
         {
           key: "row3",
           title: "Web Link of the Policy, if available",
           tooltip: "Provide direct URLs if available",
-          layout: "input", // <-- text input
+          tooltipshow: "none",
+          layout: "input",
+          section: 0,
         },
         {
           key: "row4",
           title: "Whether the policy covers Value Chain Partners (Y/N)",
           tooltip: "Covers suppliers/vendors/joint ventures",
+          tooltipshow: "none",
           layout: "inputDropdown",
           options: ["Yes", "No"],
+          section: 0,
         },
         {
           key: "row5",
-          title: "If the policy was translated into policy into procedures",
+          title: "If the policy was translated into procedures",
           tooltip: "Whether internal SOPs or frameworks were derived",
+          tooltipshow: "none",
           layout: "inputDropdown",
           options: ["Yes", "No"],
+          section: 0,
         },
         {
           key: "row6",
           title: "Web Link of procedures if available",
           tooltip: "Provide URLs to internal policy documents",
+          tooltipshow: "none",
           layout: "multiline",
+          section: 0,
         },
         {
           key: "row7",
           title: "Specific commitments towards stakeholders and their coverage",
           tooltip: "e.g. consumers, employees, communities",
+          tooltipshow: "none",
           layout: "multiline",
+          section: 0,
         },
         {
           key: "row8",
           title: "Performance of the entity against the policy",
           tooltip: "Give qualitative or quantitative metrics",
+          tooltipshow: "none",
           layout: "multiline",
+          section: 0,
         },
-      ],
-    },
-  },
-
-  reasonsNotCovered: {
-    "ui:widget": "TableWidget",
-    "ui:options": {
-      titles: Array.from({ length: 9 }, (_, i) => ({
-        key: `P${i + 1}`,
-        title: `P${i + 1}`,
-        layout: "inputDropdown",
-      })),
-      rowLabels: [
+        // Section 1: reason rows
         {
-          key: "row1",
+          key: "row9",
           title:
             "The entity does not consider the Principles material to its business",
-          tooltip: "Mark this if principle is not relevant to operations",
+          tooltip: "Mark if principle is not relevant to operations",
+          tooltipshow: "none",
+          theadtoltipshow: "none",
           layout: "inputDropdown",
           options: ["Yes", "No"],
+          section: 1,
         },
         {
-          key: "row2",
+          key: "row10",
           title:
             "The entity is not at a stage where it is in a position to formulate a policy on the Principle",
           tooltip: "Mark if policy development is in early stages",
+          tooltipshow: "none",
+          theadtoltipshow: "none",
           layout: "inputDropdown",
           options: ["Yes", "No"],
+          section: 1,
         },
         {
-          key: "row3",
+          key: "row11",
           title:
             "The entity does not have the financial or/human and technical resources available for the task",
           tooltip: "Mark if policy development is in early stages",
+          tooltipshow: "none",
+          theadtoltipshow: "none",
           layout: "inputDropdown",
           options: ["Yes", "No"],
+          section: 1,
         },
         {
-          key: "row4",
+          key: "row12",
           title: "It is planned to be done in the next financial year",
           tooltip: "Planned development in next FY",
+          tooltipshow: "none",
+          theadtoltipshow: "none",
           layout: "inputDropdown",
           options: ["Yes", "No"],
+          section: 1,
         },
         {
-          key: "row5",
+          key: "row13",
           title: "Any other reason (please specify)",
           tooltip: "Provide other reasons where applicable",
+          tooltipshow: "none",
+          theadtoltipshow: "none",
           layout: "input",
+          section: 1,
         },
       ],
     },
   },
 };
-
+const initialFormData = {
+  policyAndReasonTable: Array(13)
+    .fill()
+    .map(() => ({
+      P1: "",
+      P2: "",
+      P3: "",
+      P4: "",
+      P5: "",
+      P6: "",
+      P7: "",
+      P8: "",
+      P9: "",
+    })),
+};
 const Screen1 = ({
   selectedOrg,
   selectedCorp,
@@ -244,156 +271,6 @@ const Screen1 = ({
   month,
   togglestatus,
 }) => {
-  const initialFormData = {
-    policyDetails: [
-      {
-        P1: "",
-        P2: "",
-        P3: "",
-        P4: "",
-        P5: "",
-        P6: "",
-        P7: "",
-        P8: "",
-        P9: "",
-      },
-      {
-        P1: "",
-        P2: "",
-        P3: "",
-        P4: "",
-        P5: "",
-        P6: "",
-        P7: "",
-        P8: "",
-        P9: "",
-      },
-      {
-        P1: "",
-        P2: "",
-        P3: "",
-        P4: "",
-        P5: "",
-        P6: "",
-        P7: "",
-        P8: "",
-        P9: "",
-      },
-      {
-        P1: "",
-        P2: "",
-        P3: "",
-        P4: "",
-        P5: "",
-        P6: "",
-        P7: "",
-        P8: "",
-        P9: "",
-      },
-      {
-        P1: "",
-        P2: "",
-        P3: "",
-        P4: "",
-        P5: "",
-        P6: "",
-        P7: "",
-        P8: "",
-        P9: "",
-      },
-      {
-        P1: "",
-        P2: "",
-        P3: "",
-        P4: "",
-        P5: "",
-        P6: "",
-        P7: "",
-        P8: "",
-        P9: "",
-      },
-      {
-        P1: "",
-        P2: "",
-        P3: "",
-        P4: "",
-        P5: "",
-        P6: "",
-        P7: "",
-        P8: "",
-        P9: "",
-      },
-      {
-        P1: "",
-        P2: "",
-        P3: "",
-        P4: "",
-        P5: "",
-        P6: "",
-        P7: "",
-        P8: "",
-        P9: "",
-      },
-    ],
-    reasonsNotCovered: [
-      {
-        P1: "",
-        P2: "",
-        P3: "",
-        P4: "",
-        P5: "",
-        P6: "",
-        P7: "",
-        P8: "",
-        P9: "",
-      },
-      {
-        P1: "",
-        P2: "",
-        P3: "",
-        P4: "",
-        P5: "",
-        P6: "",
-        P7: "",
-        P8: "",
-        P9: "",
-      },
-      {
-        P1: "",
-        P2: "",
-        P3: "",
-        P4: "",
-        P5: "",
-        P6: "",
-        P7: "",
-        P8: "",
-        P9: "",
-      },
-      {
-        P1: "",
-        P2: "",
-        P3: "",
-        P4: "",
-        P5: "",
-        P6: "",
-        P7: "",
-        P8: "",
-        P9: "",
-      },
-      {
-        P1: "",
-        P2: "",
-        P3: "",
-        P4: "",
-        P5: "",
-        P6: "",
-        P7: "",
-        P8: "",
-        P9: "",
-      },
-    ],
-  };
-
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -524,81 +401,19 @@ const Screen1 = ({
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
-          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Policy and Management Processes
-              {/* <MdInfoOutline
-                data-tooltip-id={`tooltip-$e80`}
-                data-tooltip-content="Provide a description of organisation's policy commitments for responsible business conduct."
-                className="mt-1.5 ml-2 text-[15px] w-[10%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
-              />
-              <ReactTooltip
-                id={`tooltip-$e80`}
-                place="top"
-                effect="solid"
-                style={{
-                  width: "290px",
-                  backgroundColor: "#000",
-                  color: "white",
-                  fontSize: "12px",
-                  boxShadow: 3,
-                  borderRadius: "8px",
-                  textAlign: "left",
-                }}
-              ></ReactTooltip> */}
-            </h2>
-          </div>
-          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
-            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-              <div className="">
-                <div className="text-[#18736B] bg-slate-200 justify-center items-center gap-2 inline-flex w-[70px] h-[26px] p-2  rounded-lg  text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  BRSR-B
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="mx-2">
-          <Form
-            schema={schema}
-            uiSchema={{
-              ...uiSchema,
-              reasonsNotCovered: { "ui:widget": () => null },
-            }}
-            formData={formData}
-            onChange={handleChange}
-            validator={validator}
-            widgets={widgets}
-            formContext={{
-              view: "0",
-              formData: formData,
-              tableName: "policyDetails", // <-- add
-            }}
-          />
-        </div>
-        <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500] mt-10 mb-4">
-          For Each Principle Not Covered by Policy, Select the Applicable
-          Reason(s) From Below
-        </h2>
-        <div className="mx-2">
-          <Form
-            schema={schema}
-            uiSchema={{
-              ...uiSchema,
-              policyDetails: { "ui:widget": () => null },
-            }}
-            formData={formData}
-            onChange={handleChange}
-            validator={validator}
-            widgets={widgets}
-            formContext={{
-              view: "0",
-              formData: formData,
-              tableName: "reasonsNotCovered", // <-- add
-            }}
-          />
-        </div>
+        <Form
+          schema={schema}
+          uiSchema={uiSchema}
+          formData={formData}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          validator={validator}
+          widgets={widgets}
+          formContext={{
+            tableName: "policyAndReasonTable",
+            formData: formData,
+          }}
+        />
 
         <div className="mt-4">
           <button

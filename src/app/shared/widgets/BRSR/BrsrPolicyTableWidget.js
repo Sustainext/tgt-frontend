@@ -1,207 +1,252 @@
-'use client';
 import React, { useState, useEffect, useCallback } from "react";
 import { debounce } from "lodash";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
-const BrsrPolicyTableWidget = ({
-  id,
-  options,
-  value,
-  required,
-  onChange,
-  formContext, 
-  disableRules = {},
-  controllingValues = [],
-  formData,
-}) => {
+const BrsrPolicyTableWidget = ({ options, value, onChange }) => {
   const [localValue, setLocalValue] = useState(value || []);
+  const { titles, rowLabels, sectionTitles = [] } = options;
+  useEffect(() => setLocalValue(value || []), [value]);
 
-  const getTableKey = (id) => id?.replace(/^root_/, "");
-
-  // Always compute tableKey once at the top
-  const tableKey = getTableKey(id);
-
-  // This effect ensures we reset localValue when parent changes controlling data
-  useEffect(() => {
-    setLocalValue(value || []);
-  }, [value, formContext?.formData?.policyDetails]);
-useEffect(() => {
-  console.log('Current policyDetails in reasonsNotCovered:', formContext?.formData?.policyDetails);
-  // ... rest of code ...
-}, [formContext?.formData?.policyDetails]);
-  // This disables ALL rows for P1 if policyDetails[0].P1 !== "No"
-const isCellDisabled = (rowIndex, columnKey) => {
-  const tableName = formContext?.tableName;
-  const data = formContext?.formData || {};
-
-  if (tableName === "reasonsNotCovered") {
-    const firstPolicyRow = data?.policyDetails?.[0] || {};
-    if (firstPolicyRow[columnKey] === "Yes") {
-      return true;
+  // Section 2 (reason rows) - disable all columns unless main policy row[0][PX] is "No"
+  const isCellDisabled = (rowIndex, columnKey) => {
+    if (rowIndex >= 8) {
+      return localValue[0]?.[columnKey] !== "No";
     }
     return false;
-  }
-  return false;
-};
-  // This hook clears all reasonsNotCovered P1 once they become disabled
-// useEffect(() => {
-//   if (formContext?.tableName === "reasonsNotCovered") {
-//     const data = formContext?.formData || {};
-//     const firstPolicyRow = data?.policyDetails?.[0] || {};
-//     let updatedValues = [...localValue];
-//     let changed = false;
+  };
 
-//     // <-- This will check all P1...P9 columns!
-//     for (let i = 1; i <= 9; i++) {
-//       const key = `P${i}`;
-//       if (firstPolicyRow[key] === "Yes") {
-//         updatedValues = updatedValues.map((row) => {
-//           if (row?.[key] && row[key] !== "") {
-//             changed = true;
-//             return { ...row, [key]: "" };
-//           }
-//           return row;
-//         });
-//       }
-//     }
-//     if (changed) {
-//       setLocalValue(updatedValues);
-//       onChange(updatedValues);
-//     }
-//   }
-//   // eslint-disable-next-line
-// }, [formContext?.formData?.policyDetails]);
+  // Whenever reasons become disabled, clear any values in them
+  useEffect(() => {
+    let changed = false;
+    const updated = [...localValue];
+    for (let col = 1; col <= 9; ++col) {
+      const key = `P${col}`;
+      // If NOT No (Yes or blank), must clear all section 2 rows for this col
+      if (localValue[0]?.[key] !== "No") {
+        for (let row = 8; row <= 12; ++row) {
+          if (updated[row]?.[key] && updated[row][key] !== "") {
+            updated[row][key] = "";
+            changed = true;
+          }
+        }
+      }
+    }
+    if (changed) {
+      setLocalValue(updated);
+      onChange(updated);
+    }
+    // eslint-disable-next-line
+  }, [
+    localValue[0]?.P1,
+    localValue[0]?.P2,
+    localValue[0]?.P3,
+    localValue[0]?.P4,
+    localValue[0]?.P5,
+    localValue[0]?.P6,
+    localValue[0]?.P7,
+    localValue[0]?.P8,
+    localValue[0]?.P9,
+  ]);
 
   const handleFieldChange = (rowIndex, columnKey, newValue) => {
     const updatedValues = [...localValue];
     if (!updatedValues[rowIndex]) updatedValues[rowIndex] = {};
     updatedValues[rowIndex][columnKey] = newValue;
     setLocalValue(updatedValues);
- 
   };
 
   const debouncedUpdate = useCallback(debounce(onChange, 200), [onChange]);
-
   useEffect(() => {
     debouncedUpdate(localValue);
   }, [localValue, debouncedUpdate]);
 
+  // Render each section only once
+  let lastSection = -1;
+
   return (
-    <div style={{ position: 'relative' }}>
-      <div
-        style={{
-          display: "block",
-          overflowX: "auto",
-          maxWidth: "100%",
-          minWidth: "100%",
-          width: "80vw",
-        }}
-        className="mb-2 pb-2 table-scrollbar"
-      >
-        <table
-          className="table-fixed w-full rounded-md"
-          style={{ borderCollapse: "separate", borderSpacing: 0 }}
-        >
-          <thead className="gradient-background h-[60px]">
-            <tr>
-              <th className="text-[13px] text-center px-2 py-2 w-[250px]"> </th>
-              {options.titles.map((item, idx) => (
-                <th key={idx} className="text-[13px] w-[250px] text-center px-2 py-2">
-                  <div className="flex font-medium items-center justify-center">
-                    <p>{item.title}</p>
-                    {item.tooltip && (
-                      <>
-                        <MdInfoOutline
-                          data-tooltip-id={`tooltip-${item.key}`}
-                          data-tooltip-content={item.tooltip}
-                          className="ml-2 cursor-pointer"
-                        />
-                        <ReactTooltip id={`tooltip-${item.key}`}
-                          place="top"
-                          effect="solid"
-                          style={{
-                            width: "300px",
-                            backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "11px",
-                            boxShadow: "0 0 8px rgba(0,0,0,0.3)",
-                            borderRadius: "8px",
-                            zIndex: 99999,
-                          }}
-                        />
-                      </>
-                    )}
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="m-0 p-0 h-[80px]">
-            {options.rowLabels.map((rowLabel, rowIndex) => (
-              <tr key={rowIndex}>
-                <td className="text-[12px] text-left p-2 w-[250px]">
-                  <div className="flex items-start">
-                    <p>{rowLabel.title}</p>
-                  </div>
-                </td>
-                {options.titles.map((column, columnIndex) => {
-                  const layoutType = rowLabel.layout || "input";
-                  const cellValue = localValue[rowIndex]?.[column.key] || "";
-                  return (
-                    <td key={columnIndex} className="p-2 text-[12px] w-[250px] text-center">
-                      {layoutType === "inputDropdown" && (
-                        <select
-                          value={cellValue}
-                          onChange={(e) =>
-                            handleFieldChange(rowIndex, column.key, e.target.value)
-                          }
-                          disabled={isCellDisabled(rowIndex, column.key)}
-                          className={`text-[12px] py-2 pl-1 w-full border-b`}
-                        >
-                          <option className="font-medium" value="">Select</option>
-                          {rowLabel.options?.map((opt) => (
-                            <option key={opt} value={opt}>
-                              {opt}
-                            </option>
-                          ))}
-                        </select>
-                      )}
+    <div>
+      {rowLabels.map((row, rowIndex) => {
+        let sectionHeadingRow = null;
+        if (
+          row.section !== undefined &&
+          row.section !== lastSection &&
+          sectionTitles[row.section]
+        ) {
+          sectionHeadingRow = (
+            <React.Fragment key={`section-head-${row.section}`}>
+             
+              {/* Section Title, no icon */}
+              <div
+                className={"mx-2 text-[15px] text-neutral-950 font-[500] mt-10 mb-4"}
+              >
+                {sectionTitles[row.section]}
+              </div>
+              <div className="overflow-x-auto p-2 mb-2  table-scrollbar">
+                <table className="min-w-[900px] w-full border-separate border-spacing-0">
+                  <thead className="gradient-background">
+                    <tr className="">
+                      {/* FIRST COLUMN: wider */}
+                      <th className="text-[12px] font-medium text-[#20282C] text-center px-2 py-3 rounded-tl-lg min-w-[260px] max-w-[320px] w-[270px] "></th>
+                      {titles.map((item, idx) => {
+                        // Test if for every row in this SECTION, any row has `theadtoltipshow: "none"`
+                        // You only want to show the header tooltip if ALL the filtered rows do NOT have theadtooltipshow: "none"
+                        const hasTheadTooltipNone = rowLabels
+                          .filter((r) => r.section === row.section)
+                          .some((r) => r.theadtoltipshow === "none");
 
-                      {layoutType === "input" && (
-                        <input
-                          type="text"
-                          value={cellValue}
-                          onChange={(e) =>
-                            handleFieldChange(rowIndex, column.key, e.target.value)
-                          }
-                          placeholder="Enter data"
-                          className={`text-[12px] pl-2 py-2 w-full text-left border-b `}
-                          disabled={isCellDisabled(rowIndex, column.key)}
-                        />
-                      )}
-
-                      {layoutType === "multiline" && (
-                        <textarea
-                          rows={2}
-                          type="text"
-                          value={cellValue}
-                          onChange={(e) =>
-                            handleFieldChange(rowIndex, column.key, e.target.value)
-                          }
-                          placeholder="Enter data"
-                          className={`text-[12px] pl-2 py-2 w-full text-left border-b`}
-                          disabled={isCellDisabled(rowIndex, column.key)}
-                        />
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                        return (
+                          <th
+                            key={idx}
+                            className="text-[12px] font-medium text-[#20282C] px-2 py-3 min-w-[110px] max-w-[180px] w-[150px] "
+                          >
+                            <div className="flex items-center justify-center gap-[2px] relative">
+                              <span>{item.title}</span>
+                              {/* Only show icon if tooltip AND NO theadtoltipshow flag ("none") in this section */}
+                              {item.tooltip && !hasTheadTooltipNone && (
+                                <>
+                                  <MdInfoOutline
+                                    data-tooltip-id={`tooltip-header-${row.section}-${item.key}`}
+                                    data-tooltip-content={item.tooltip}
+                                    className="ml-1 "
+                                    size={12}
+                                  />
+                                  <ReactTooltip
+                                    id={`tooltip-header-${row.section}-${item.key}`}
+                                    place="top"
+                                    effect="solid"
+                                    className="z-[99999]"
+                                    style={{
+                                      width: "260px",
+                                      backgroundColor: "#222",
+                                      color: "#fff",
+                                      fontSize: "11px",
+                                      borderRadius: "7px",
+                                      textAlign: "left",
+                                      zIndex: 99999,
+                                    }}
+                                  />
+                                </>
+                              )}
+                            </div>
+                          </th>
+                        );
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rowLabels
+                      .filter((r) => r.section === row.section)
+                      .map((r, rrIdx) => {
+                        const realRowIdx = rowLabels.findIndex(
+                          (x) => x.key === r.key
+                        );
+                        return (
+                          <tr key={r.key} className="border-b border-[#e5e9ed]">
+                            {/* First column: show icon only if tooltip+not disabled */}
+                            <td className="text-[12px] font-[500] text-[#23292C] text-left align-middle  px-2 py-3 min-w-[250px] max-w-[350px] w-[270px] rounded-l-lg ">
+                              <div className="flex items-start gap-1">
+                                <span>{r.title}</span>
+                                {r.tooltip && r.tooltipshow !== "none" && (
+                                  <MdInfoOutline
+                                    title={r.tooltip}
+                                    size={13}
+                                    className="text-gray-400 mt-0.5"
+                                  />
+                                )}
+                              </div>
+                            </td>
+                            {titles.map((col, colIdx) => {
+                              const layoutType = r.layout || "input";
+                              const cellValue =
+                                localValue[realRowIdx]?.[col.key] || "";
+                              return (
+                                <td
+                                  key={colIdx}
+                                  className="p-2 text-[12px] w-[250px] text-center"
+                                >
+                                  {layoutType === "inputDropdown" && (
+                                    <div className="relative w-[250px]">
+                                      <select
+                                        className="text-[12px] font-normal border-b border-gray-200 focus:border-[#62b0a6] text-gray-800 focus:outline-none transition-all w-full  bg-transparent pr-6 py-1 px-1 mx-2 disabled:bg-[#F5F5F5] disabled:text-gray-400 "
+                                        value={cellValue}
+                                        onChange={(e) =>
+                                          handleFieldChange(
+                                            realRowIdx,
+                                            col.key,
+                                            e.target.value
+                                          )
+                                        }
+                                        disabled={isCellDisabled(
+                                          realRowIdx,
+                                          col.key
+                                        )}
+                                      >
+                                        <option value="">Select</option>
+                                        {r.options?.map((opt) => (
+                                          <option key={opt} value={opt}>
+                                            {opt}
+                                          </option>
+                                        ))}
+                                      </select>
+                                      {/* Custom chevron SVG */}
+                                     
+                                    </div>
+                                  )}
+                                  {layoutType === "input" && (
+                                    <input
+                                      type="text"
+                                      value={cellValue}
+                                      onChange={(e) =>
+                                        handleFieldChange(
+                                          realRowIdx,
+                                          col.key,
+                                          e.target.value
+                                        )
+                                      }
+                                      placeholder="Enter data"
+                                      className="text-[12px] border-0 border-b border-gray-200 bg-transparent py-1 px-1 mx-2 w-full  focus:outline-none focus:border-[#62b0a6] disabled:bg-[#F5F5F5] disabled:text-gray-400"
+                                      disabled={isCellDisabled(
+                                        realRowIdx,
+                                        col.key
+                                      )}
+                                    />
+                                  )}
+                                  {layoutType === "multiline" && (
+                                    <textarea
+                                      rows={2}
+                                      value={cellValue}
+                                      onChange={(e) =>
+                                        handleFieldChange(
+                                          realRowIdx,
+                                          col.key,
+                                          e.target.value
+                                        )
+                                      }
+                                      placeholder="Enter data"
+                                      className="text-[12px] border-0 border-b border-gray-200 bg-transparent py-1 px-1 mx-2 w-full focus:outline-none focus:border-[#62b0a6] disabled:bg-[#F5F5F5] disabled:text-gray-400 resize-none"
+                                      disabled={isCellDisabled(
+                                        realRowIdx,
+                                        col.key
+                                      )}
+                                    />
+                                  )}
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
+              </div>
+            </React.Fragment>
+          );
+          lastSection = row.section;
+        }
+        // Only render per-section, NOT per individual row
+        return sectionHeadingRow;
+      })}
     </div>
   );
 };
