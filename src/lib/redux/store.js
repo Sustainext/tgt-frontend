@@ -33,6 +33,7 @@ import reportCreationReducer from './features/reportCreationSlice'
 
 import TcfdSlice from "./features/TCFD/TcfdSlice"
 import TCFDReportReducer from "./features/TCFDSlice/tcfdslice"
+import browserReducer from "./features/browserSlice"
 const rootReducer = combineReducers({
   counter: counterReducer,
   emissions: emissionReducer,
@@ -63,7 +64,8 @@ const rootReducer = combineReducers({
   Tcfd:TcfdSlice,
   reportBuilder: reportBuilderReducer,
   reportCreation: reportCreationReducer,
-  tcfdReport: TCFDReportReducer
+  tcfdReport: TCFDReportReducer,
+  browser: browserReducer
 });
 
 export const makeStore = () => {
