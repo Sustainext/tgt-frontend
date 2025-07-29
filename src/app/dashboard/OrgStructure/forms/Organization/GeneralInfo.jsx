@@ -57,10 +57,10 @@ const initialState = {
   },
 };
 
-const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
+const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData,brsrFrameworkId }) => {
   const [formData, setFormData] = useState(initialState);
   const router = useRouter();
-
+  
   
   useEffect(() => {
     if (editData) {
@@ -336,6 +336,14 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
     if (heading === "Corporate Entity Details") {
       if (!formData.generalDetails.organisation && !editData)
         errors.organisation = "Organisation is required";
+    }
+    if(brsrFrameworkId == 4 && !formData.generalDetails.email){
+      errors.email = "E-mail is required";
+    }
+     if(formData.generalDetails.email){
+      if(!(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.generalDetails.email))){
+          errors.email = "Please enter a valid email address";
+      }
     }
 
     // Address Information validation
@@ -910,6 +918,29 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
               <p className="text-red-500 text-xs">
                 {validationErrors.subIndustry}
               </p>
+            )}
+          </div>
+
+          {/* email */}
+             <div className="space-y-2">
+            <label
+              htmlFor="name"
+              className="text-neutral-800 text-[13px] font-normal"
+            >
+              E-mail {brsrFrameworkId ==4 && <span className="text-red-500">*</span> } 
+            </label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter E-mail"
+              value={formData.generalDetails.email}
+              onChange={handleGeneralDetailsChange}
+              className={`border ${
+                validationErrors.email ? "border-red-500" : "border-gray-300"
+              } rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight`}
+            />
+            {validationErrors.email && (
+              <p className="text-red-500 text-xs">{validationErrors.email}</p>
             )}
           </div>
         </div>

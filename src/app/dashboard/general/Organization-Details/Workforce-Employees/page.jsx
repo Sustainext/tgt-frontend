@@ -57,9 +57,19 @@ const WorkforceEmployees = ({ setMobileopen,brsrFrameworkId }) => {
 
   const brsr = [
     {
-      tagName: "BRSR A-IV-20a",
+      tagName: "BRSR-A-IV-20-a",
       id: "tooltip-$brsr1",
-      content: "BRSR-Section A-IV-20a",
+      content: "BRSR-Section-A-IV-20-a",
+    },
+    {
+      tagName: "BRSR-A-IV-20-b",
+      id: "tooltip-$brsr2",
+      content: "BRSR-Section-A-IV-20-b",
+    },
+    {
+      tagName: "BRSR-A-IV-22",
+      id: "tooltip-$brsr3",
+      content: "BRSR-Section-A-IV-22",
     },
   ];
   const sdgData = [

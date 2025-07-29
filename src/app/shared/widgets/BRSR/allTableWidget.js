@@ -400,7 +400,12 @@ const AllTableWidget = ({
     if (field.keytack && field.disable) {
       let sourceValue = row[field.keytack] || "";
       let enableVal = field.disableIfNotValue || "Yes";
-      return sourceValue !== enableVal;
+       if (Array.isArray(enableVal)) {
+      return !enableVal.includes(sourceValue);
+    }
+
+    // Fallback to string match
+    return sourceValue !== enableVal;
     }
     return false;
   };

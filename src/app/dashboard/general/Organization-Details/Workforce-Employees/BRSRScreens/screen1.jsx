@@ -16,7 +16,7 @@ const widgets = {
   TableWidget: TableWidget,
 };
 
-const view_path = "gri-general-entities-list_of_entities-2-2-a";
+const view_path = "brsr-general-workforce-employees-employees-brsr-a-iv-20-a";
 const client_id = 1;
 const user_id = 1;
 
@@ -168,26 +168,26 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
       LoaderClose();
     }
   };
-// useEffect(() => {
-//   if (selectedOrg && year && togglestatus) {
-//     if (togglestatus === "Corporate") {
-//       if (selectedCorp) {
-//         loadFormData();           // <-- Only load if a corporate is picked
-//       } else {
-//         setFormData([{}]); 
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
-//       }
-//     } else {
-//       loadFormData();             // Organization tab: always try to load
-//     }
-//     toastShown.current = false;
-//   } else {
-//     if (!toastShown.current) {
-//       toastShown.current = true;
-//     }
-//   }
-// }, [selectedOrg, year, selectedCorp, togglestatus]);
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
+      }
+    } else {
+      loadFormData();             // Organization tab: always try to load
+    }
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -226,30 +226,7 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
             </div>
           </div>
         </div>
-         <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
-          EMPLOYEES (at the end of Financial Year)
-          <MdInfoOutline
-            data-tooltip-id={`tooltip-$e1`}
-            data-tooltip-content="This section documents data corresponding 
-to the total number of employees (including differently abled) by gender"
-            className="mt-1 ml-2 text-[15px]"
-          />
-          <ReactTooltip
-            id={`tooltip-$e1`}
-            place="top"
-            effect="solid"
-            style={{
-              width: "290px",
-              backgroundColor: "#000",
-              color: "white",
-              fontSize: "12px",
-              boxShadow: 3,
-              borderRadius: "8px",
-              textAlign: "left",
-            }}
-          ></ReactTooltip>
-        </p>
-        {/* {(togglestatus === "Corporate" && selectedCorp) ||
+         {(togglestatus === "Corporate" && selectedCorp) ||
         (togglestatus !== "Corporate" && selectedOrg && year) ? (
           <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
           EMPLOYEES (at the end of Financial Year)
@@ -274,7 +251,7 @@ to the total number of employees (including differently abled) by gender"
             }}
           ></ReactTooltip>
         </p>
-        ) : null} */}
+        ) : null}
         {/* {selectedOrg && year && (
           <p className="flex mx-2 text-sm text-gray-700 relative">
             List all entities included in the sustainability report
@@ -301,8 +278,8 @@ to the total number of employees (including differently abled) by gender"
         )} */}
         <div className="mx-2 mb-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
