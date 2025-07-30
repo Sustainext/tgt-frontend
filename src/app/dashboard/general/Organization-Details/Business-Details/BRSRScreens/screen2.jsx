@@ -49,7 +49,7 @@ const schema = {
           key: "MainActivity",
           title: "Description of Main Activity",
           tooltip:
-            "<p>Ensure business activity details match those disclosed in Form MGT-7 as filed with MCA</p>",
+            "<p>Ensure business activity details match those disclosed in Form MGT-7 as filed with Ministry of Corporate Affairs</p>",
           layouttype: "input",
           tooltipdispaly: "block",
         },
@@ -209,7 +209,7 @@ useEffect(() => {
         <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
           <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-             Details of Business Activities (Accounting for 90% of the Turnover)
+             Business Activities
             </h2>
           </div>
 
@@ -226,7 +226,7 @@ useEffect(() => {
         {(togglestatus === "Corporate" && selectedCorp) ||
         (togglestatus !== "Corporate" && selectedOrg && year) ? (
           <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
-          Details of Business Activities
+        Details of Business Activities (Accounting for 90% of the Turnover)
           <MdInfoOutline
             data-tooltip-id={`tooltip-$e1`}
             data-tooltip-content="This section documents data corresponding to the details of business activities of the entity"

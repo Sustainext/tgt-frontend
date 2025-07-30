@@ -162,7 +162,7 @@ const BrsrPolicyTableWidget = ({ options, value, onChange,formContext }) => {
                   <thead className="gradient-background">
                     <tr className="">
                       {/* FIRST COLUMN: wider */}
-                      <th className="text-[12px] font-medium text-[#20282C] text-center px-2 py-3 rounded-tl-lg min-w-[260px] max-w-[320px] w-[270px] "></th>
+                      <th className="text-[12px] font-medium text-[#20282C] text-center px-2 py-3 rounded-tl-lg min-w-[260px] max-w-[320px] w-[270px] ">{formContext?.tableName==='DeatailsAndReviewTable'?"Subject for Review":''}</th>
                       {titles.map((item, idx) => {
                         // Test if for every row in this SECTION, any row has `theadtoltipshow: "none"`
                         // You only want to show the header tooltip if ALL the filtered rows do NOT have theadtooltipshow: "none"
@@ -240,34 +240,43 @@ const BrsrPolicyTableWidget = ({ options, value, onChange,formContext }) => {
                                   key={colIdx}
                                   className="p-2 text-[12px] w-[250px] text-center"
                                 >
-                                  {layoutType === "inputDropdown" && (
-                                    <div className="relative w-[250px]">
-                                      <select
-                                        className="text-[12px] font-normal border-b border-gray-200 focus:border-[#62b0a6] text-gray-800 focus:outline-none transition-all w-full  bg-transparent pr-6 py-1 px-1 mx-2 disabled:bg-[#F5F5F5] disabled:text-gray-400 "
-                                        value={cellValue}
-                                        onChange={(e) =>
-                                          handleFieldChange(
-                                            realRowIdx,
-                                            col.key,
-                                            e.target.value
-                                          )
-                                        }
-                                        disabled={isCellDisabled(
-                                          realRowIdx,
-                                          col.key
-                                        )}
-                                      >
-                                        <option value="">Select</option>
-                                        {r.options?.map((opt) => (
-                                          <option key={opt} value={opt}>
-                                            {opt}
-                                          </option>
-                                        ))}
-                                      </select>
-                                      {/* Custom chevron SVG */}
-                                     
-                                    </div>
-                                  )}
+                                 {layoutType === "inputDropdown" && (
+  <div className="relative w-[250px]">
+    <select
+      className="text-[12px] font-normal border-b border-gray-200 focus:border-[#60a5fa] text-gray-800 focus:outline-none transition-all w-full  bg-transparent pr-6 py-1 px-1 mx-2 disabled:bg-[#F5F5F5] disabled:text-gray-400 "
+      value={cellValue}
+      onChange={(e) => {
+        handleFieldChange(realRowIdx, col.key, e.target.value);
+        // Optionally clear "others" when not selected:
+        // if (e.target.value !== "Others (please specify)") {
+        //   handleFieldChange(realRowIdx, `${col.key}_others`, "");
+        // }
+      }}
+      disabled={isCellDisabled(realRowIdx, col.key)}
+    >
+      <option value="">Select</option>
+      {r.options?.map((opt) => (
+        <option key={opt} value={opt}>
+          {opt}
+        </option>
+      ))}
+    </select>
+    {cellValue === "Others (please specify)" && (
+      <input
+        type="text"
+        className="mt-2 text-[12px] border-b border-gray-200 focus:border-[#60a5fa] text-gray-800 focus:outline-none transition-all w-full bg-transparent py-1 px-1 mx-2"
+        placeholder="Please specify"
+        value={
+  localValue[realRowIdx]?.[`${col.key}_others`] || ""
+}
+        onChange={e =>
+          handleFieldChange(realRowIdx, `${col.key}_others`, e.target.value)
+        }
+        disabled={isCellDisabled(realRowIdx, col.key)}
+      />
+    )}
+  </div>
+)}
                                   {layoutType === "input" && (
                                     <input
                                       type="text"
@@ -280,7 +289,7 @@ const BrsrPolicyTableWidget = ({ options, value, onChange,formContext }) => {
                                         )
                                       }
                                       placeholder="Enter data"
-                                      className="text-[12px] border-0 border-b border-gray-200 bg-transparent py-1 px-1 mx-2 w-full  focus:outline-none focus:border-[#62b0a6] disabled:bg-[#F5F5F5] disabled:text-gray-400"
+                                      className="text-[12px] border-0 border-b border-gray-200 bg-transparent py-1 px-1 mx-2 w-full  focus:outline-none focus:border-[#60a5fa] disabled:bg-[#F5F5F5] disabled:text-gray-400"
                                       disabled={isCellDisabled(
                                         realRowIdx,
                                         col.key
@@ -291,21 +300,43 @@ const BrsrPolicyTableWidget = ({ options, value, onChange,formContext }) => {
                                     <textarea
                                       rows={2}
                                       value={cellValue}
-                                      onChange={(e) =>
-                                        handleFieldChange(
-                                          realRowIdx,
-                                          col.key,
-                                          e.target.value
-                                        )
-                                      }
+                                    onChange={e =>
+      handleFieldChange(
+        realRowIdx,
+        col.key,
+        e.target.value.replace(/[^a-zA-Z0-9 \n]/g, "")
+      )
+    }
                                       placeholder="Enter data"
-                                      className="text-[12px] border-0 border-b border-gray-200 bg-transparent py-1 px-1 mx-2 w-full focus:outline-none focus:border-[#62b0a6] disabled:bg-[#F5F5F5] disabled:text-gray-400 resize-none"
+                                      className="text-[12px] border-0 border-b border-gray-200 bg-transparent py-1 px-1 mx-2 w-full focus:outline-none focus:border-[#60a5fa] disabled:bg-[#F5F5F5] disabled:text-gray-400 resize-none"
                                       disabled={isCellDisabled(
                                         realRowIdx,
                                         col.key
                                       )}
                                     />
                                   )}
+                                  {layoutType === "website" && (
+  <div>
+    <input
+    type="url"
+    value={cellValue}
+    
+    onChange={(e) =>
+      handleFieldChange(realRowIdx, col.key, e.target.value)
+    }
+    placeholder="Enter website link"
+    className="text-[12px] border-0 border-b border-gray-200 bg-transparent py-1 px-1 mx-2 w-full focus:outline-none focus:border-[#60a5fa] disabled:bg-[#F5F5F5] disabled:text-gray-400"
+    disabled={isCellDisabled(realRowIdx, col.key)}
+    pattern="https?://.*"
+    title="Please enter a valid URL starting with https://"
+  />
+  {cellValue && !/^https?:\/\/[^\s]+$/i.test(cellValue) && (
+  <div className="text-xs text-red-500 mt-1">
+    Please enter a valid URL starting with https://
+  </div>
+)}
+  </div>
+)}
                                 </td>
                               );
                             })}

@@ -16,12 +16,12 @@ const widgets = {
   TableWidget: BrsrPolicyTableWidget,
 };
  
-const view_path = "gri-governance-policy_commitments-2-23-a-business_conduct";
+const view_path = "brsr-governance-policy-and-management-process-brsr-b";
 const client_id = 1;
 const user_id = 1;
  
 // schema.js
-export const schema = {
+const schema = {
   type: "object",
   properties: {
     policyAndReasonTable: {
@@ -47,7 +47,7 @@ export const schema = {
 };
  
 // uiSchema.js
-export const uiSchema = {
+const uiSchema = {
   policyAndReasonTable: {
     "ui:widget": "TableWidget",
     "ui:options": {
@@ -146,7 +146,7 @@ export const uiSchema = {
           title: "Web Link of the Policies, if available",
           tooltip: "",
           tooltipshow: "none",
-          layout: "input",
+          layout: "website",
           section: 0,
         },
         {
@@ -293,7 +293,7 @@ const Screen1 = ({
       client_id: client_id,
       user_id: user_id,
       path: view_path,
-      form_data: formData,
+      form_data: Array.isArray(formData) ? formData : [formData],
       corporate: selectedCorp,
       organisation: selectedOrg,
       year,
@@ -356,7 +356,7 @@ const Screen1 = ({
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
-      setFormData(response.data.form_data[0].data);
+      setFormData(response.data.form_data[0].data[0]);
  
       console.log(formData, "afterapi");
     } catch (error) {
@@ -366,29 +366,30 @@ const Screen1 = ({
     }
   };
  
-  //   useEffect(() => {
-  //     if (selectedOrg && year && togglestatus) {
-  //       if (togglestatus === "Corporate" && selectedCorp) {
-  //         loadFormData();
-  //       } else if (togglestatus === "Corporate" && !selectedCorp) {
-  //         setFormData(initialFormData);
-  //         setRemoteSchema({});
-  //         setRemoteUiSchema({});
-  //       } else {
-  //         loadFormData();
-  //       }
+    useEffect(() => {
+      if (selectedOrg && year && togglestatus) {
+        if (togglestatus === "Corporate" && selectedCorp) {
+          loadFormData();
+        } else if (togglestatus === "Corporate" && !selectedCorp) {
+          setFormData(initialFormData);
+          setRemoteSchema({});
+          setRemoteUiSchema({});
+        } else {
+          loadFormData();
+        }
  
-  //       toastShown.current = false;
-  //     } else {
-  //       if (!toastShown.current) {
-  //         toastShown.current = true;
-  //       }
-  //     }
-  //   }, [selectedOrg, year, selectedCorp, togglestatus]);
+        toastShown.current = false;
+      } else {
+        if (!toastShown.current) {
+          toastShown.current = true;
+        }
+      }
+    }, [selectedOrg, year, selectedCorp, togglestatus]);
  
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
-    console.log("Form data:", formData);
+    console.log("Form data:", Array.isArray(formData) ? formData : [formData]);
+    updateFormData()
  
   };
  
@@ -401,9 +402,19 @@ const Screen1 = ({
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
+     {Object.keys(r_schema || {}).length == 0 && (
+  <h2 className="flex justify-between mx-2 text-[15px] text-neutral-950 font-[500] mt-5 mb-4">
+    Policy and Management Processes
+    <div className="float-end">
+      <div className="text-[#18736B] bg-slate-200 justify-center items-center gap-2 inline-flex w-[70px] h-[26px] p-2  rounded-lg  text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+        BRSR-B
+      </div>
+    </div>
+  </h2>
+)}
         <Form
-          schema={schema}
-          uiSchema={uiSchema}
+          schema={r_schema}
+          uiSchema={r_ui_schema}
           formData={formData}
           onChange={handleChange}
           validator={validator}

@@ -274,8 +274,9 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         month={activeMonth}
         ref={screen3Ref}
         togglestatus={togglestatus}
+         brsrFrameworkId={ brsrFrameworkId}
       />
-      {
+      {/* {
         brsrFrameworkId ==4 && (
           <BRSRScreen1
       selectedOrg={selectedOrg}
@@ -287,7 +288,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         togglestatus={togglestatus}
       />
         )
-      }
+      } */}
       
      <div className="mt-4 mr-1.5">
         <button

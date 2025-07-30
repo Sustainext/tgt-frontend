@@ -16,11 +16,11 @@ const widgets = {
   TableWidget: BrsrPolicyTableWidget,
 };
 
-const view_path = "gri-governance-policy_commitments-2-23-a-business_conduct";
+const view_path = "brsr-governance-review-of-ngrbc-by-the-company-brsr-b";
 const client_id = 1;
 const user_id = 1;
 
-export const schema = {
+const schema = {
   type: "object",
   properties: {
     DeatailsAndReviewTable: {
@@ -46,7 +46,7 @@ export const schema = {
 };
  
 // uiSchema.js
-export const uiSchema = {
+const uiSchema = {
   DeatailsAndReviewTable: {
     "ui:widget": "TableWidget",
     "ui:options": {
@@ -158,7 +158,7 @@ const Screen2 = ({
   togglestatus,
 }) => {
   const initialFormData = {
-  policyAndReasonTable: Array(4)
+  DeatailsAndReviewTable: Array(4)
     .fill()
     .map(() => ({
       P1: "",
@@ -196,7 +196,7 @@ const Screen2 = ({
       client_id: client_id,
       user_id: user_id,
       path: view_path,
-      form_data: formData,
+      form_data: Array.isArray(formData) ? formData : [formData],
       corporate: selectedCorp,
       organisation: selectedOrg,
       year,
@@ -259,7 +259,7 @@ const Screen2 = ({
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
-      setFormData(response.data.form_data[0].data);
+      setFormData(response.data.form_data[0].data[0]);
 
       console.log(formData, "afterapi");
     } catch (error) {
@@ -269,25 +269,25 @@ const Screen2 = ({
     }
   };
 
-//   useEffect(() => {
-//     if (selectedOrg && year && togglestatus) {
-//       if (togglestatus === "Corporate" && selectedCorp) {
-//         loadFormData();
-//       } else if (togglestatus === "Corporate" && !selectedCorp) {
-//         setFormData(initialFormData);
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});
-//       } else {
-//         loadFormData();
-//       }
+  useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
 
-//       toastShown.current = false;
-//     } else {
-//       if (!toastShown.current) {
-//         toastShown.current = true;
-//       }
-//     }
-//   }, [selectedOrg, year, selectedCorp, togglestatus]);
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -314,8 +314,8 @@ const Screen2 = ({
               </h2>
               
          <Form
-          schema={schema}
-          uiSchema={uiSchema}
+          schema={r_schema}
+          uiSchema={r_ui_schema}
           formData={formData}
           onChange={handleChange}
           validator={validator}

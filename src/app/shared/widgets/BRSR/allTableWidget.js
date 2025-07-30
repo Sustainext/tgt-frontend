@@ -109,6 +109,7 @@ const AllTableWidget = ({
     rowIndex: null,
     key: null,
   });
+  console.log(formContext.valdationErrors,"see this")
   // Azure upload (as before)
   const uploadFileToAzure = async (file, newFileName) => {
     const arrayBuffer = await file.arrayBuffer();
@@ -549,6 +550,8 @@ const AllTableWidget = ({
                   );
                   const layoutType = uiSchemaField?.layouttype || "select";
                   const inputLimit = uiSchemaField?.inputLimit || "";
+                   const errorMsg = formContext?.validationErrors?.[rowIndex]?.[key];
+                    const hasError = !!errorMsg;
                   return (
                     <td
                       key={cellIndex}
@@ -893,12 +896,7 @@ layoutType === "inputDecimal" ? (
   onChange={e => {
       const val = e.target.value;
       // Only update if empty OR matches URL prefix
-      if (
-        val === "" ||
-        /^https?:\/\/.+/i.test(val)
-      ) {
-        handleInputChange(rowIndex, key, val);
-      }
+       handleInputChange(rowIndex, key, val);
     }}
     disabled={isFieldDisabled(uiSchemaField, row, key)}
     className="text-[12px] py-2 pl-1 w-full border-b rounded-md"

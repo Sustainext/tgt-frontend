@@ -48,7 +48,17 @@ const Screen2 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
-  const toastShown = useRef(false);
+  const [validationErrors, setValidationErrors] = useState([]);
+    const toastShown = useRef(false);
+  
+    const validateRows = (data) => {
+    const errors = {};
+    data.forEach((row, idx) => {
+      if (!errors[idx]) errors[idx] = {};
+      if (!row.Q1) errors[idx].Q1 = "This field is required";
+    });
+    return errors;
+  };
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -134,6 +144,11 @@ const Screen2 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
       LoaderClose();
     }
   };
+  
+  useEffect(() => {
+  // Clear validation errors when org/corp/year changes
+  setValidationErrors({});
+}, [selectedOrg, selectedCorp, year]);
 
 useEffect(() => {
   if (selectedOrg && year && togglestatus) {
@@ -157,10 +172,21 @@ useEffect(() => {
 }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form data:", formData);
+  e.preventDefault();
+  const errors = validateRows(formData);
+  setValidationErrors(errors);
+
+  // Check if any error message exists
+  const hasErrors = Object.values(errors).some(
+    (row) => row && Object.values(row).some((v) => !!v)
+  );
+
+  if (!hasErrors) {
     updateFormData();
-  };
+  } else {
+    console.log("validation error");
+  }
+};
 
   return (
     <>
@@ -219,6 +245,9 @@ location of its headquarters, countries of operation etc. "
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{validationErrors,
+               setValidationErrors: setValidationErrors
+            }}
           />
         </div>
         <div className="mt-4">

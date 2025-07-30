@@ -28,9 +28,6 @@ const schema = {
             "No"
         ]
        },
-      Q2: { type: "string", title: "Turnover (INR)" },
-      Q3: { type: "string", title: "Turnover from Products/Services (INR)" },
-      Q4: { type: "string", title: "Net Worth (INR)" },
     },
   },
 };
@@ -47,30 +44,7 @@ const uiSchema = {
           layouttype: "select",
           tooltipdispaly: "block",
         },
-         {
-          key: "Q2",
-          title: "Turnover (INR)",
-          tooltip:
-            "<p>Specify the total turnover of the entity in Indian Rupees</p>",
-          layouttype: "inputDecimal",
-          tooltipdispaly: "block",
-        },
-         {
-          key: "Q3",
-          title: "Turnover from Products/Services (INR) ",
-          tooltip:
-            "<p>Enter the portion of turnover generated specifically from products and services offered by the entity, in Indian Rupees</p>",
-          layouttype: "inputDecimal",
-          tooltipdispaly: "block",
-        },
-         {
-          key: "Q4",
-          title: "Net Worth (INR)",
-          tooltip:
-            "<p>Enter the net worth of the entity in Indian Rupees</p>",
-          layouttype: "inputDecimal",
-          tooltipdispaly: "block",
-        },
+       
       ],
     },
   };

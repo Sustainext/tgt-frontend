@@ -71,7 +71,7 @@ const CustomMultiValueContainer = ({ children, ...props }) => {
   return null;
 };
 
-const AllInputWidget = ({ id, options, value, required, onChange, schema, formContext }) => {
+const AllInputWidget = ({ id, options, value, required, onChange, schema, formContext,name }) => {
  const dropdownRefs = useRef([]);
   const [localValue, setLocalValue] = useState(value || []);
   const [othersInputs, setOthersInputs] = useState([]);
@@ -86,6 +86,9 @@ const AllInputWidget = ({ id, options, value, required, onChange, schema, formCo
     rowIndex: null,
     key: null,
   });
+
+  const { validationErrors } = formContext || {};
+
   // Azure upload (as before)
   const uploadFileToAzure = async (file, newFileName) => {
     const arrayBuffer = await file.arrayBuffer();
@@ -211,55 +214,6 @@ const AllInputWidget = ({ id, options, value, required, onChange, schema, formCo
       });
     }, 100); // Small delay to allow click events
   };
-   const updatedMultiSelectStyle = {
-  control: (base) => ({
-    ...base,
-    border: "1px solid  #9CA3AF", // Optional: Add a border (Tailwind gray-300)
-    padding: "4px 10px", // Equivalent to py-3
-    minHeight: "38px", // Ensure height matches your other elements
-    borderRadius: "0.375rem", // Add border radius (Tailwind's rounded-md style)
-    boxShadow: "none", // Remove any additional shadow
-    ":hover": {
-      borderColor: "#0369a1", // Optional: Add hover effect for border color (blue-600 Tailwind equivalent)
-    },
-  }),
-  valueContainer: (base) => ({
-    ...base,
-    padding: "0", // Reset inner padding to fit the custom height
-  }),
-  menu: (provided) => ({
-    ...provided,
-    position: "relative",
-    bottom: "100%",
-    top: 0,
-    zIndex: 1000,
-    borderRadius: "0.375rem", // Add border radius to the dropdown menu as well
-    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.12)", // Optional: Add a subtle shadow
-  }),
-  menuList: (provided) => ({
-    ...provided,
-    maxHeight: "200px",
-    borderRadius: "0.375rem", // Add border radius to the dropdown list items
-  }),
-  multiValue: (base) => ({
-    ...base,
-    backgroundColor: "#dbeafe", // Light blue background (Tailwind's blue-100)
-    borderRadius: "0.375rem", // Rounded corners (border radius)
-  }),
-  multiValueLabel: (base) => ({
-    ...base,
-    color: "#1e40af", // Blue text (Tailwind's blue-800)
-    fontWeight: "600",
-  }),
-  multiValueRemove: (base) => ({
-    ...base,
-    color: "#6A6E70",
-    ":hover": {
-      backgroundColor: "rgba(0, 0, 0, 0.1)", // Optional: Add a hover effect for remove button
-      color: "black", // Change the 'x' icon color on hover
-    },
-  }),
-};
 
 useEffect(() => {
     if (Array.isArray(value) && value.length > 0) {
@@ -329,6 +283,8 @@ useEffect(() => {
   //   setLocalValue(updatedValues);
   // };
 
+ 
+
   const handleCheckboxChange = (rowIndex, key, values) => {
   const updatedValues = [...localValue];
   if (!updatedValues[rowIndex]) {
@@ -352,6 +308,7 @@ useEffect(() => {
 
   setOthersInputs(updatedOthersInputs);
   setLocalValue(updatedValues);
+
 };
   const handleOtherInputChange = (rowIndex, key, newValue) => {
     const updatedValues = [...localValue];
@@ -403,6 +360,18 @@ useEffect(() => {
     setOthersInputs(updatedOthersInputs);
 
     setLocalValue(updatedValues);
+     if (formContext?.setValidationErrors) {
+    formContext.setValidationErrors(prev => {
+      const newErrors = {...prev};
+      if (newErrors[rowIndex]?.[key]) {
+        delete newErrors[rowIndex][key];
+        if (Object.keys(newErrors[rowIndex]).length === 0) {
+          delete newErrors[rowIndex];
+        }
+      }
+      return newErrors;
+    });
+  }
   };
   const isFieldDisabled = (field, row) => {
     if (field.keytack && field.disable) {
@@ -463,6 +432,19 @@ useEffect(() => {
     }
     updatedValues[rowIndex][key] = newValue; // Directly update the value for the input field
     setLocalValue(updatedValues);
+
+     if (formContext?.setValidationErrors) {
+    formContext.setValidationErrors(prev => {
+      const newErrors = {...prev};
+      if (newErrors[rowIndex]?.[key]) {
+        delete newErrors[rowIndex][key];
+        if (Object.keys(newErrors[rowIndex]).length === 0) {
+          delete newErrors[rowIndex];
+        }
+      }
+      return newErrors;
+    });
+  }
   };
   const handletextareaChange = (rowIndex, key, newValue) => {
     const updatedValues = [...localValue];
@@ -485,301 +467,323 @@ useEffect(() => {
 
   return (
     <>
-      <div
-        style={{
-          position: "relative",
-          // display: "flex",
-          // flexDirection: "column",
-          // gap: "1rem",
-        }}
-      >
+      <div style={{ position: "relative" }}>
         {localValue.map((row, rowIndex) => (
-          <div
-            key={rowIndex}
-            className="w-full"
-          >
+          <div key={rowIndex} className="w-full">
             {Object.keys(schema.items.properties).map((key, cellIndex) => {
               const propertySchema = schema.items.properties[key];
-              const uiSchemaField = options.titles.find(
-                (title) => title.key === key
-              );
+              const uiSchemaField = options.titles.find((title) => title.key === key);
               const layoutType = uiSchemaField?.layouttype || "input";
+              const errorMsg = validationErrors?.[rowIndex]?.[key];
 
               return (
                 <div key={cellIndex} className="mb-4">
-                  {/* Render Field Title */}
+                  {/* Field Title */}
                   <label className="text-[14px] font-regular mb-3 flex">
                     {uiSchemaField?.title}
                     <MdInfoOutline
-                      data-tooltip-id={`tooltip-${uiSchemaField?.title?.replace(
-                        /\s+/g,
-                        "-"
-                      )}`}
+                      data-tooltip-id={`tooltip-${uiSchemaField?.title?.replace(/\s+/g, "-")}`}
                       data-tooltip-html={uiSchemaField?.tooltip}
                       style={{ display: uiSchemaField?.tooltipdispaly }}
-                      className="cursor-pointer ml-2  float-end mt-1 w-10"
+                      className="cursor-pointer ml-2 float-end mt-1 w-10"
                     />
                   </label>
-                  
-                    <ReactTooltip
-                      id={`tooltip-${uiSchemaField?.title?.replace(/\s+/g, "-")}`}
-                      place="top"
-                      effect="solid"
-                      style={{
-                        width: "auto",
-                        height: "auto",
+                  <ReactTooltip
+                    id={`tooltip-${uiSchemaField?.title?.replace(/\s+/g, "-")}`}
+                    place="top"
+                    effect="solid"
+                    style={{
+                      width: "auto",
+                      height: "auto",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "11px",
+                      borderRadius: "8px",
+                      zIndex: 1000,
+                    }}
+                  />
 
-                        backgroundColor: "#000",
-                        color: "white",
-                        fontSize: "11px",
-                        borderRadius: "8px",
-                        zIndex: 1000,
-                      }}
-                    />
-
-                  {/* Render Input Field */}
+                  {/* Inputs and error messages */}
                   {layoutType === "input" && (
-                    <input
-                      type="text"
-                      required={required}
-                      value={localValue[rowIndex][key] || ""}
-                      onChange={(e) => handleInputChange(rowIndex, key, e.target.value)}
-                      className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
-                      placeholder={`Enter data`}
-                    />
+                    <div>
+                      <input
+                        type="text"
+                        required={required}
+                        value={localValue[rowIndex][key] || ""}
+                        onChange={(e) =>
+                          handleInputChange(rowIndex, key, e.target.value)
+                        }
+                        className={`border appearance-none text-[12px] ${errorMsg?'border-red-500':'border-gray-400'} text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+                        placeholder={`Enter data`}
+                      />
+                      {errorMsg && (
+                        <div className="text-red-500 text-[12px] mt-1">
+                          {errorMsg}
+                        </div>
+                      )}
+                    </div>
                   )}
 
-                   {layoutType === "multilinetextbox" && (
-                   <textarea
+                  {layoutType === "multilinetextbox" && (
+                    <div>
+                      <textarea
+                        required={required}
+                        value={localValue[rowIndex][key] || ""}
+                        onChange={(e) =>
+                          handleInputChange(rowIndex, key, e.target.value)
+                        }
+                         className={`border appearance-none text-[12px] ${errorMsg?'border-red-500':'border-gray-400'} text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+                        rows={5}
+                        placeholder="Enter data"
+                      />
+                      {errorMsg && (
+                        <div className="text-red-500 text-[12px] mt-1">
+                          {errorMsg}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {layoutType === "multiselect" && propertySchema.enum && (
+                    <div>
+                      <Select
+                        isMulti
+                        placeholder="Select"
+                        options={propertySchema.enum.map((option) => ({
+                          value: option,
+                          label: option,
+                        }))}
+                        value={(row[key] || []).map((option) => ({
+                          value: option,
+                          label: option,
+                        }))}
+                        onChange={(selectedOptions) => {
+                          const values = (selectedOptions || []).map((opt) => opt.value);
+                          handleCheckboxChange(rowIndex, key, values);
+                        }}
+                        closeMenuOnSelect={false}
+                        hideSelectedOptions={false}
+                        components={{
+                          Option: CustomOptionnew,
+                          MultiValueContainer: CustomMultiValueContainer,
+                        }}
+                        styles={
+                          {
+  control: (base) => ({
+    ...base,
+    border: errorMsg?'1px solid red':"1px solid  #9CA3AF", // Optional: Add a border (Tailwind gray-300)
+    padding: "4px 10px", // Equivalent to py-3
+    minHeight: "38px", // Ensure height matches your other elements
+    borderRadius: "0.375rem", // Add border radius (Tailwind's rounded-md style)
+    boxShadow: "none", // Remove any additional shadow
+    ":hover": {
+      borderColor: errorMsg?"red":"#0369a1", // Optional: Add hover effect for border color (blue-600 Tailwind equivalent)
+    },
+  }),
+  valueContainer: (base) => ({
+    ...base,
+    padding: "0", // Reset inner padding to fit the custom height
+  }),
+  menu: (provided) => ({
+    ...provided,
+    position: "relative",
+    bottom: "100%",
+    top: 0,
+    zIndex: 1000,
+    borderRadius: "0.375rem", // Add border radius to the dropdown menu as well
+    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.12)", // Optional: Add a subtle shadow
+  }),
+  menuList: (provided) => ({
+    ...provided,
+    maxHeight: "200px",
+    borderRadius: "0.375rem", // Add border radius to the dropdown list items
+  }),
+  multiValue: (base) => ({
+    ...base,
+    backgroundColor: "#dbeafe", // Light blue background (Tailwind's blue-100)
+    borderRadius: "0.375rem", // Rounded corners (border radius)
+  }),
+  multiValueLabel: (base) => ({
+    ...base,
+    color: "#1e40af", // Blue text (Tailwind's blue-800)
+    fontWeight: "600",
+  }),
+  multiValueRemove: (base) => ({
+    ...base,
+    color: "#6A6E70",
+    ":hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.1)", // Optional: Add a hover effect for remove button
+      color: "black", // Change the 'x' icon color on hover
+    },
+  }),
+}
+                        }
+                        className={`block w-1/2 text-[12px] focus:outline-none}`}
+                      />
+                      {othersInputs[rowIndex]?.[key] && (
+                        <input
+                          type="text"
                           required={required}
-                          value={localValue[rowIndex][key] || ""}
-                          onChange={(e) => handleInputChange(rowIndex, key, e.target.value)}
-                           className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
-                          rows={5}
+                          value={localValue[rowIndex][`${key}_others`] || ""}
+                          onChange={(e) =>
+                            handleOtherInputChange(rowIndex, key, e.target.value)
+                          }
+                           className={`mt-4 border appearance-none text-[12px] ${errorMsg?'border-red-500':'border-gray-400'} text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-[50%]`}
                           placeholder="Enter data"
                         />
+                      )}
+                      {errorMsg && (
+                        <div className="text-red-500 text-[12px] mt-1">
+                          {errorMsg}
+                        </div>
+                      )}
+                    </div>
                   )}
-
-
-                  {/* {layoutType === "multiselect" && propertySchema.enum && (
-                    <div>
-                    <Select
-                      isMulti
-                      placeholder="Select"
-                      options={propertySchema.enum.map((option) => ({
-                        value: option,
-                        label: option,
-                      }))}
-                      value={(row[key] || []).map((option) => ({
-                        value: option,
-                        label: option,
-                      }))}
-                      onChange={(selectedOptions) =>
-                        handleInputChange(
-                          rowIndex,
-                          key,
-                          selectedOptions.map((opt) => opt.value)
-                        )
-                      }
-                       closeMenuOnSelect={false}
-                            hideSelectedOptions={false}
-                      components={{
-                        Option: CustomOptionnew,
-                        MultiValueContainer: CustomMultiValueContainer,
-                      }}
-                       styles={updatedMultiSelectStyle}
-                       className="block w-1/2 text-[12px]   focus:outline-none"
-                    />
-                    
-                    {othersInputs[rowIndex]?.[key] && (
-                            <input
-                              type="text"
-                              required={required}
-                              value={
-                                localValue[rowIndex][`${key}_others`] || ""
-                              }
-                              onChange={(e) =>
-                                handleOtherInputChange(
-                                  rowIndex,
-                                  key,
-                                  e.target.value
-                                )
-                              }
-                              className="mt-4 border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-[50%]"
-                              placeholder="Others Please specify"
-                            />
-                          )}
-                          </div>
-                  )} */}
-                  {layoutType === "multiselect" && propertySchema.enum && (
-  <div>
-    <Select
-      isMulti
-      placeholder="Select"
-      options={propertySchema.enum.map((option) => ({
-        value: option,
-        label: option,
-      }))}
-      value={(row[key] || []).map((option) => ({
-        value: option,
-        label: option,
-      }))}
-      onChange={(selectedOptions) => {
-        const values = (selectedOptions || []).map((opt) => opt.value);
-        handleCheckboxChange(rowIndex, key, values); // call your handler that manages 'othersInputs'
-      }}
-      closeMenuOnSelect={false}
-      hideSelectedOptions={false}
-      components={{
-        Option: CustomOptionnew,
-        MultiValueContainer: CustomMultiValueContainer,
-      }}
-      styles={updatedMultiSelectStyle}
-      className="block w-1/2 text-[12px] focus:outline-none"
-    />
-
-    {/* Show the input if "Others (please specify)" is selected */}
-    {othersInputs[rowIndex]?.[key] && (
-      <input
-        type="text"
-        required={required}
-        value={localValue[rowIndex][`${key}_others`] || ""}
-        onChange={(e) =>
-          handleOtherInputChange(rowIndex, key, e.target.value)
-        }
-        className="mt-4 border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-[50%]"
-        placeholder="Enter data"
-      />
-    )}
-  </div>
-)}
 
                   {layoutType === "select" && propertySchema.enum && (
-                        <>
-                          <select
-                            value={
-                              typeof localValue[rowIndex][key] === "string" &&
-                              localValue[rowIndex][key].startsWith("Others")
-                                ? "Others (please specify)"
-                                : localValue[rowIndex][key] || ""
-                            }
-                            onChange={(e) =>
-                              handleSelectChange(rowIndex, key, e.target.value)
-                            }
-                           
-                            className="border text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-2.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-1/2"
-                          >
-                            <option value="">Select an option</option>
-                            {propertySchema.enum.map((option) => (
-                              <option key={option} value={option}>
-                                {option}
-                              </option>
-                            ))}
-                          </select>
-                          {othersInputs[rowIndex]?.[key] && (
-                            <input
-                              type="text"
-                              required={required}
-                              value={
-                                localValue[rowIndex][`${key}_others`] || ""
-                              }
-                              onChange={(e) =>
-                                handleOtherInputChange(
-                                  rowIndex,
-                                  key,
-                                  e.target.value
-                                )
-                              }
-                             className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-1/2"
-                              placeholder="Others Please specify"
-                            />
-                          )}
-                        </>
+                    <div>
+                      <select
+                        value={
+                          typeof localValue[rowIndex][key] === "string" &&
+                          localValue[rowIndex][key].startsWith("Others")
+                            ? "Others (please specify)"
+                            : localValue[rowIndex][key] || ""
+                        }
+                        onChange={(e) =>
+                          handleSelectChange(rowIndex, key, e.target.value)
+                        }
+                        className="border text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-2.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-1/2"
+                      >
+                        <option value="">Select an option</option>
+                        {propertySchema.enum.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                      {othersInputs[rowIndex]?.[key] && (
+                        <input
+                          type="text"
+                          required={required}
+                          value={localValue[rowIndex][`${key}_others`] || ""}
+                          onChange={(e) =>
+                            handleOtherInputChange(rowIndex, key, e.target.value)
+                          }
+                           className={`border appearance-none text-[12px] ${errorMsg?'border-red-500':'border-gray-400'} text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-1/2`}
+                          placeholder="Others Please specify"
+                        />
                       )}
-                  
+                      {errorMsg && (
+                        <div className="text-red-500 text-[12px] mt-1">
+                          {errorMsg}
+                        </div>
+                      )}
+                    </div>
+                  )}
 
-                  {/* Numeric Field - Limit characters to 21 */}
                   {layoutType === "inputonlynumber" && (
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      required={required}
-                      value={localValue[rowIndex][key] || ""}
-                      onChange={(e) => {
-                        // Allow only numbers and enforce 21-character length
-                        const input = e.target.value.replace(/[^0-9]/g, "");
-                        handleInputChange(rowIndex, key, input);
-                      }}
-                      className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
-                      placeholder={`Enter data`}
-                    />
+                    <div>
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        required={required}
+                        value={localValue[rowIndex][key] || ""}
+                        onChange={(e) => {
+                          const input = e.target.value.replace(/[^0-9]/g, "");
+                          handleInputChange(rowIndex, key, input);
+                        }}
+                         className={`border appearance-none text-[12px] ${errorMsg?'border-red-500':'border-gray-400'} text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+                        placeholder={`Enter data`}
+                      />
+                      {errorMsg && (
+                        <div className="text-red-500 text-[12px] mt-1">
+                          {errorMsg}
+                        </div>
+                      )}
+                    </div>
                   )}
 
-                  {/* Alphanumeric Field - Limit characters to 21 */}
                   {layoutType === "alphaNum" && (
-                    <input
-                      type="text"
-                      inputMode="text"
-                      pattern="[A-Za-z0-9]*"
-                      required={required}
-                      value={localValue[rowIndex][key] || ""}
-                      onChange={(e) => {
-                        // Enforce alphanumeric and 21-digit length
-                        const input = e.target.value.replace(/[^a-zA-Z0-9]/g, "");
-                        if (input.length > 21) return;
-                        handleInputChange(rowIndex, key, input);
-                      }}
-                      className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
-                      placeholder={`Enter data`}
-                    />
+                    <div>
+                      <input
+                        type="text"
+                        inputMode="text"
+                        pattern="[A-Za-z0-9]*"
+                        required={required}
+                        value={localValue[rowIndex][key] || ""}
+                        onChange={(e) => {
+                          const input = e.target.value.replace(/[^a-zA-Z0-9]/g, "");
+                          if (input.length > 21) return;
+                          handleInputChange(rowIndex, key, input);
+                        }}
+                        className={`border appearance-none text-[12px] ${errorMsg ? 'border-red-500' : 'border-gray-400'} text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+                        placeholder={`Enter data`}
+                      />
+                      {errorMsg && (
+                        <div className="text-red-500 text-[12px] mt-1">
+                          {errorMsg}
+                        </div>
+                      )}
+                    </div>
                   )}
 
-                   {layoutType === "alphaNumCapital" && (
-                    <input
-                      type="text"
-                      inputMode="text"
-                      pattern="[A-Z0-9]*"
-                      maxLength="21" // Optional max length at an HTML level
-                      required={required}
-                      value={localValue[rowIndex][key] || ""}
-                      onChange={(e) => {
-                        // Enforce alphanumeric and 21-digit length
-                        const input = e.target.value.replace(/[^A-Z0-9]/g, "");
-                        if (input.length > 21) return;
-                        handleInputChange(rowIndex, key, input);
-                      }}
-                      className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
-                      placeholder={`Enter data`}
-                    />
+                  {layoutType === "alphaNumCapital" && (
+                    <div>
+                      <input
+                        type="text"
+                        inputMode="text"
+                        pattern="[A-Z0-9]*"
+                        maxLength="21"
+                        required={required}
+                        value={localValue[rowIndex][key] || ""}
+                        onChange={(e) => {
+                          const input = e.target.value.replace(/[^A-Z0-9]/g, "");
+                          if (input.length > 21) return;
+                          handleInputChange(rowIndex, key, input);
+                        }}
+                         className={`border appearance-none text-[12px] ${errorMsg?'border-red-500':'border-gray-400'} text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+                        placeholder={`Enter data`}
+                      />
+                      {errorMsg && (
+                        <div className="text-red-500 text-[12px] mt-1">
+                          {errorMsg}
+                        </div>
+                      )}
+                    </div>
                   )}
 
-                  {/* Decimal Field*/}
-                 {layoutType === "inputDecimal" && (
-  <input
-    type="text"
-    inputMode="decimal"
-    pattern="^\d*(\.\d{0,2})?$"
-    required={required}
-    value={localValue[rowIndex][key] || ""}
-    onChange={e => {
-      let input = e.target.value
-        .replace(/[^0-9.]/g, '')           // Remove invalid chars
-        .replace(/(\..*)\./g, '$1');       // Allow only one dot
+                  {layoutType === "inputDecimal" && (
+                    <div>
+                      <input
+                        type="text"
+                        inputMode="decimal"
+                        pattern="^\d*(\.\d{0,2})?$"
+                        required={required}
+                        value={localValue[rowIndex][key] || ""}
+                        onChange={e => {
+                          let input = e.target.value
+                            .replace(/[^0-9.]/g, '')
+                            .replace(/(\..*)\./g, '$1');
+                          if (
+                            input === "" ||
+                            /^\d*(\.\d{0,2})?$/.test(input)
+                          ) {
+                            handleInputChange(rowIndex, key, input);
+                          }
+                        }}
+                         className={`border appearance-none text-[12px] ${errorMsg?'border-red-500':'border-gray-400'} text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+                        placeholder="Enter data"
+                      />
+                      {errorMsg && (
+                        <div className="text-red-500 text-[12px] mt-1">
+                          {errorMsg}
+                        </div>
+                      )}
+                    </div>
+                  )}
 
-      // Allow only two decimal places
-      if (
-        input === "" ||                          // allow blank
-        /^\d*(\.\d{0,2})?$/.test(input)          // valid int or up to 2 decimals
-      ) {
-        handleInputChange(rowIndex, key, input);
-      }
-    }}
-
-    className="border appearance-none text-[12px] border-gray-400 text-neutral-700 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
-    placeholder="Enter data"
-  />
-)}
+                  {/* ... keep your other custom layoutTypes as needed */}
                 </div>
               );
             })}

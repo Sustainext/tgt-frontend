@@ -128,6 +128,7 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const { open } = GlobalState();
+  const [validationErrors, setValidationErrors] = useState({});
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -136,6 +137,28 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
   const LoaderClose = () => {
     setLoOpen(false);
   };
+  const validateRows = (rows = []) => {
+  const errors = {};
+  rows.forEach((row, idx) => {
+    errors[idx] = {}; // for each row
+    Object.entries(r_schema?.items?.properties || schema.items.properties).forEach(([col, def]) => {
+      // if empty or (for arrays) length 0
+      if (
+        row[col] === undefined ||
+        row[col] === "" ||
+        (Array.isArray(row[col]) && row[col].length === 0)
+      ) {
+        errors[idx][col] = "Required";
+      }
+      // Add extra logic per type if you want (ex: number validation for Percent)
+    });
+  });
+  // Remove empty error rows (optional)
+  Object.keys(errors).forEach(idx => {
+    if (Object.keys(errors[idx]).length === 0) delete errors[idx];
+  });
+  return errors;
+};
 
   const handleChange = (e) => {
     setFormData(e.formData);
@@ -233,11 +256,25 @@ useEffect(() => {
   }
 }, [selectedOrg, year, selectedCorp, togglestatus]);
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   updateFormData();
+  //   console.log("test form data", formData);
+  // };
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
+
+  // get current schema (remote or default as appropriate)
+  const errors = validateRows(formData);
+  setValidationErrors(errors);
+
+  const hasErrors = Object.values(errors).some(row => Object.values(row).some(Boolean));
+  if (!hasErrors) {
     updateFormData();
-    console.log("test form data", formData);
-  };
+  } else {
+    toast.error("Please fill all fields before submitting.");
+  }
+};
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
@@ -331,6 +368,7 @@ filed and grievance redressal mechanism"
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+             formContext={{ validationErrors }}
           />
         </div>
         <div className="mt-4">
