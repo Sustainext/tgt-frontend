@@ -241,5 +241,158 @@ If you need to revert these changes:
 
 ---
 
-*Last updated: 2025-07-30*
+## 6. EmissionWidget Table Column Alignment Fix (`src/app/shared/widgets/emissionWidget.js`)
+
+### Column Alignment and Responsive Width Issues
+**Problem**: Table columns in emissionWidget were misaligned vertically and used inconsistent viewport-based widths instead of proper percentage-based scaling
+**Solution**: Standardized table structure with percentage-based column widths and proper vertical alignment
+
+#### Table Header Structure (Already Fixed):
+```jsx
+// CURRENT - Fixed header structure with percentage widths
+<table className="w-full table-fixed">
+  <thead className='bg-gray-50'>
+    <tr>
+      <th className='h-[44px] w-12 border-b border-gray-300 px-2'>
+        <div className='flex justify-center items-center h-full'>
+          {/* Checkbox */}
+        </div>
+      </th>
+      <th className='h-[44px] w-[20%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-2'>
+        <div className='flex items-center h-full'>Category</div>
+      </th>
+      <th className='h-[44px] w-[20%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-2'>
+        <div className='flex items-center h-full'>Sub-Category</div>
+      </th>
+      <th className='h-[44px] w-[25%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-2'>
+        <div className='flex items-center h-full'>Activity</div>
+      </th>
+      <th className='h-[44px] w-[20%] border-b border-gray-300 text-[12px] text-right text-[#667085] px-2'>
+        <div className='flex items-center justify-end h-full'>Quantity</div>
+      </th>
+      <th className='h-[44px] w-[10%] border-b border-gray-300 text-[12px] text-center text-[#667085] px-2'>
+        <div className='flex items-center justify-center h-full'>Assignee</div>
+      </th>
+      <th className='h-[44px] w-[5%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-2'>
+        <div className='flex items-center h-full'>Actions</div>
+      </th>
+    </tr>
+  </thead>
+```
+
+#### Table Body Row Structure (NEW FIXES):
+
+**Category Column:**
+```jsx
+// BEFORE - Inconsistent viewport widths
+<td className={`py-2 px-1 pl-2 w-[25vw] xl:w-[15vw] lg:w-[15vw] 2xl:w-[15vw] 4k:w-[15vw] 2k:w-[15vw] md:w-[15vw] relative`}>
+  <select className="text-[12px] focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full py-1">
+
+// AFTER - Fixed percentage width with vertical alignment
+<td className={`w-[20%] py-2 px-2 relative`}>
+  <div className='flex items-center h-full'>
+    <select className="text-[12px] focus:outline-none w-full py-1">
+  </div>
+```
+
+**Sub-Category Column:**
+```jsx
+// BEFORE
+<td className='py-2 px-1 w-[25vw] xl:w-[15vw] lg:w-[15vw] 2xl:w-[15vw] 4k:w-[15vw] 2k:w-[15vw] md:w-[15vw] relative'>
+  <select className="text-[12px] focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full py-1">
+
+// AFTER
+<td className='w-[20%] py-2 px-2 relative'>
+  <div className='flex items-center h-full'>
+    <select className="text-[12px] focus:outline-none w-full py-1">
+  </div>
+```
+
+**Activity Column:**
+```jsx
+// BEFORE
+<td className='py-2 w-[55vw] xl:w-[15vw] ...'>
+  <input className="text-[12px] focus:outline-none xl:w-full ...">
+
+// AFTER  
+<td className='w-[25%] py-2 px-2'>
+  <input className="text-[12px] focus:outline-none w-full py-1">
+```
+
+**Quantity Column:**
+```jsx
+// BEFORE - Complex viewport-based widths
+<td className='w-[35vw] xl:w-[24vw] lg:w-[24vw] 2xl:w-[24vw] 4k:w-[24vw] 2k:w-[24vw] md:w-[24vw]'>
+  <div className='grid grid-flow-col-dense'>
+    <div className='flex justify-end relative w-full'>
+      <input className='w-[15.5vw] xl:w-[5vw] lg:w-[5vw] 2xl:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] md:w-[5vw] text-right'>
+
+// AFTER - Fixed percentage width with proper alignment
+<td className='w-[20%] py-2 px-2'>
+  <div className='flex items-center justify-end h-full'>
+    <div className='grid grid-flow-col-dense'>
+      <div className='flex justify-end relative'>
+        <input className='w-20 text-right pe-1 focus:border-b focus:border-blue-300'>
+```
+
+**Assignee Column:**
+```jsx
+// BEFORE
+<td className='py-2 text-center w-[5vw]'>
+  <button className="w-[112px] py-1">
+
+// AFTER  
+<td className='w-[10%] py-2 px-2'>
+  <div className='flex items-center justify-center h-full'>
+    <button className="w-full max-w-28 py-1">
+  </div>
+```
+
+**Actions Column:**
+```jsx
+// BEFORE
+<td className='py-3 w-[5vw]'>
+  <div className='flex justify-left'>
+
+// AFTER
+<td className='w-[5%] py-2 px-2'>
+  <div className='flex items-center h-full'>
+    <div className='flex justify-start'>
+```
+
+### Key Improvements Made:
+1. **Consistent Column Widths**: All columns now use percentage-based widths that match the header structure
+   - Category: 20%
+   - Sub-Category: 20% 
+   - Activity: 25%
+   - Quantity: 20%
+   - Assignee: 10%
+   - Actions: 5%
+
+2. **Proper Vertical Alignment**: Added `flex items-center h-full` containers to center content vertically in each cell
+
+3. **Removed Viewport Dependencies**: Eliminated complex viewport-width classes like `w-[25vw] xl:w-[15vw] lg:w-[15vw]` that broke responsive design
+
+4. **Simplified Input Widths**: Replaced complex width calculations with fixed `w-20` for quantity inputs and `w-full` for dropdowns
+
+5. **Consistent Padding**: Standardized `py-2 px-2` padding across all cells
+
+6. **Improved Responsiveness**: Table now scales dynamically as percentage widths adjust with container size changes
+
+### Files Modified in This Update:
+- `✅ src/app/globals.css` - Zoom normalization (COMPLETED)
+- `✅ src/app/dashboard/layout.js` - Layout structure (COMPLETED) 
+- `✅ src/app/dashboard/dashobardheader.jsx` - Z-index fix (COMPLETED)
+- `✅ src/lib/redux/features/browserSlice.js` - Container height (COMPLETED)
+- `🔄 src/app/shared/widgets/emissionWidget.js` - Table column alignment (IN PROGRESS)
+
+### Current Status:
+- Table header structure: ✅ COMPLETED (fixed in previous session)
+- Table body alignment: 🔄 IN PROGRESS (partially fixed, may need completion)
+- Column width scaling: ✅ COMPLETED
+- Vertical alignment: ✅ COMPLETED
+
+---
+
+*Last updated: 2025-07-31*
 *Changes tested on: Chrome, Safari, Edge*

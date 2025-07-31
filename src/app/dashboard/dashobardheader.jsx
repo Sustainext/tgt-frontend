@@ -258,7 +258,7 @@ const DashboardHeader = () => {
 
   return (
     <>
-      <div className='flex bg-white xl:sticky lg:sticky 2xl:sticky md:sticky xl:top-0 lg:top-0 2xl:top-0 md:top-0  right-0 border-b border-sky-600 border-opacity-50 xl:pt-4 lg:pt-4 md:pt-4 2xl:pt-4 w-full xl:mx-2 lg:mx-2 md:mx-2 2xl:mx-2 xl:z-[100] lg:z-[100] md:z-[100] 2xl:z-[100]'>
+      <div className='flex bg-white xl:sticky lg:sticky 2xl:sticky md:sticky xl:top-0 lg:top-0 2xl:top-0 md:top-0  right-0 border-b border-sky-600 border-opacity-50 xl:pt-4 lg:pt-4 md:pt-4 2xl:pt-4 w-full xl:z-[50] lg:z-[50] md:z-[50] 2xl:z-[50]'>
         <div
           className={`flex justify-start items-center my-2 gap-1 px-2 xl:ml-0 lg:ml-0 2xl:ml-0 md:ml-0  ${
             open ? 'w-[84%]' : 'w-[84%]'
