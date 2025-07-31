@@ -139,7 +139,7 @@ const EmissionsHeader = ({
 
   return (
     <>
-      <div className="ml-2 mb-5 relative">
+      <div className="mb-5 relative">
         <div className="block mb-5 xl:flex md:flex lg:flex 2xl:flex 4k:flex">
           <div>
             <div className="relative mb-4 md:mb-0 xl:mb-0 lg:mb-0 2xl:mb-0 4k:mb-0">
