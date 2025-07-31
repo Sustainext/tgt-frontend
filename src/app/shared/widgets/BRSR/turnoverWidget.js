@@ -4,7 +4,7 @@ import { debounce } from "lodash";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
-const CustomTableWidgetRowColSum = ({
+const TurnoverWidget = ({
   id,
   options,
   value,
@@ -27,52 +27,63 @@ const CustomTableWidgetRowColSum = ({
     return obj;
   };
 
-  const calculateValues = (currentValues) => {
-    const newValues = [...currentValues];
-    for (let i = 0; i < 3; i++) {
-      if (!newValues[i]) newValues[i] = {};
-    }
+  
 
-    const key1ToKey = getKey1ToKey();
+  const calculateTurnoverValues = (currentValues) => {
+  const newValues = [...currentValues];
+  for (let i = 0; i < 3; i++) {
+    if (!newValues[i]) newValues[i] = {};
+  }
 
-    // [0,1] rows: percent of male/female
-    [0, 1].forEach((idx) => {
-      const row = newValues[idx];
-      const total = parseFloat(row[key1ToKey.col2]) || 0;
-      const male  = parseFloat(row[key1ToKey.col3]) || 0;
-      const female= parseFloat(row[key1ToKey.col5]) || 0;
-      row[key1ToKey.col4] = total > 0 ? ((male / total) * 100).toFixed(2) : "0.00";
-      row[key1ToKey.col6] = total > 0 ? ((female / total) * 100).toFixed(2) : "0.00";
-    });
+  const key1ToKey = getKey1ToKey();
 
-    // Last row (index 2) sums
-    const sumField = (colKey1) =>
-      [0, 1].reduce(
-        (acc, idx) => acc + (parseFloat(newValues[idx][key1ToKey[colKey1]]) || 0),
-        0
-      );
-    const lastIdx = 2;
+  // Calculate turnover rate for each row (Male/Female)
+  [0, 1].forEach((idx) => {
+    const row = newValues[idx];
+    const left = parseFloat(row[key1ToKey.col2]) || 0;    // Employees who left (col2)
+    const beginning = parseFloat(row[key1ToKey.col3]) || 0; // Beginning (col3)
+    const end = parseFloat(row[key1ToKey.col4]) || 0;      // End (col4)
+    
+    // Calculate average: (col3 + col4)/2
+    const average = (beginning + end) / 2;
+    
+    // Turnover rate formula: (col2 / average) * 100
+    row[key1ToKey.col5] = average > 0 
+      ? ((left / average) * 100).toFixed(2) 
+      : "0.00";
+  });
 
-    newValues[lastIdx][key1ToKey.col2] = sumField("col2").toString();
-    newValues[lastIdx][key1ToKey.col3] = sumField("col3").toString();
-    newValues[lastIdx][key1ToKey.col5] = sumField("col5").toString();
+  // Calculate totals for last row
+  const lastIdx = 2;
+  
+  // Sum columns 2-4 for the total row
+  const sumField = (colKey1) => [0, 1].reduce(
+    (acc, idx) => acc + (parseFloat(newValues[idx][key1ToKey[colKey1]]) || 0), 0
+  );
 
-    const t = parseFloat(newValues[lastIdx][key1ToKey.col2]) || 0;
-    const m = parseFloat(newValues[lastIdx][key1ToKey.col3]) || 0;
-    const f = parseFloat(newValues[lastIdx][key1ToKey.col5]) || 0;
-    newValues[lastIdx][key1ToKey.col4] = t > 0 ? ((m / t) * 100).toFixed(2) : "0.00";
-    newValues[lastIdx][key1ToKey.col6] = t > 0 ? ((f / t) * 100).toFixed(2) : "0.00";
+  newValues[lastIdx][key1ToKey.col2] = sumField("col2").toString();
+  newValues[lastIdx][key1ToKey.col3] = sumField("col3").toString();
+  newValues[lastIdx][key1ToKey.col4] = sumField("col4").toString();
 
-    return newValues;
-  };
+  // Calculate total turnover rate using the same formula
+  const totalLeft = parseFloat(newValues[lastIdx][key1ToKey.col2]) || 0;
+  const totalBeginning = parseFloat(newValues[lastIdx][key1ToKey.col3]) || 0;
+  const totalEnd = parseFloat(newValues[lastIdx][key1ToKey.col4]) || 0;
+  const totalAvg = (totalBeginning + totalEnd) / 2;
+  
+  newValues[lastIdx][key1ToKey.col5] = totalAvg > 0 
+    ? ((totalLeft / totalAvg) * 100).toFixed(2) 
+    : "0.00";
 
+  return newValues;
+};
 
   const handleFieldChange = (index, key, newValue) => {
     const updatedValues = [...localValue];
     if (!updatedValues[index]) updatedValues[index] = {};
     updatedValues[index][key] = newValue;
 
-    const calculatedValues = calculateValues(updatedValues);
+    const calculatedValues = calculateTurnoverValues(updatedValues);
     setLocalValue(calculatedValues);
   };
 
@@ -260,4 +271,4 @@ const CustomTableWidgetRowColSum = ({
   );
 };
 
-export default CustomTableWidgetRowColSum;
+export default TurnoverWidget;

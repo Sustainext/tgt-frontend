@@ -110,6 +110,7 @@ const AllTableWidget = ({
     key: null,
   });
   console.log(formContext.valdationErrors,"see this")
+  
   // Azure upload (as before)
   const uploadFileToAzure = async (file, newFileName) => {
     const arrayBuffer = await file.arrayBuffer();
@@ -461,6 +462,16 @@ const AllTableWidget = ({
     }
     updatedValues[rowIndex][key] = newValue; // Directly update the value for the input field
     setLocalValue(updatedValues);
+    onChange(updatedValues)
+    //   if (formContext?.validationErrors?.[rowIndex]?.[key]) {
+    //   const num = parseFloat(newValue);
+    //   if (newValue === "" || (!isNaN(num) && num <= 100)) {
+    //     formContext.clearFieldError(rowIndex, key);
+    //   }
+    // }
+    if (formContext?.validationErrors?.[rowIndex]?.[key]) {
+    formContext.clearFieldError(rowIndex, key);
+  }
   };
   const handletextareaChange = (rowIndex, key, newValue) => {
     const updatedValues = [...localValue];
@@ -705,6 +716,43 @@ const AllTableWidget = ({
 //   />
 // ):
 layoutType === "inputDecimal" ? (
+ <div>
+   <input
+    type="text"
+    inputMode="decimal"
+    pattern="^[0-9]*[.]?[0-9]{0,2}$"
+    required={required}
+    value={localValue[rowIndex][key] || ""}
+    onChange={(e) => {
+      let input = e.target.value;
+
+      // Allow only numbers and one decimal point
+      input = input
+        .replace(/[^0-9.]/g, "")              // Remove non-numeric/non-dot
+        .replace(/(\..*)\./g, "$1");          // Allow only one dot
+
+      // If there's a decimal, limit to two decimals
+      if (input.indexOf('.') >= 0) {
+        const [intPart, decPart] = input.split('.');
+        input = intPart + '.' + (decPart ? decPart.slice(0, 2) : '');
+      }
+
+      handleInputChange(rowIndex, key, input);
+    }}
+    disabled={isFieldDisabled(uiSchemaField, row, key)}
+    className={`text-[12px] py-2 pl-1 w-full border-b rounded-md ${formContext?.validationErrors?.[rowIndex]?.[key]?'border-red-500':''} ${
+      isFieldDisabled(uiSchemaField, row, key) ? "opacity-70 cursor-not-allowed" : ""
+    }`}
+    placeholder="Enter"
+  />
+   {formContext?.validationErrors?.[rowIndex]?.[key] && (
+      <div className="absolute text-red-500 text-xs mt-1">
+        {formContext.validationErrors[rowIndex][key]}
+      </div>
+    )}
+ </div>
+):
+ layoutType === "inputPercentage" ? (
   <input
     type="text"
     inputMode="decimal"
@@ -731,9 +779,9 @@ layoutType === "inputDecimal" ? (
     className={`text-[12px] py-2 pl-1 w-full border-b rounded-md ${
       isFieldDisabled(uiSchemaField, row, key) ? "opacity-70 cursor-not-allowed" : ""
     }`}
-    placeholder="Enter"
+    placeholder="Enter data"
   />
-) :
+):
                       layoutType === "input" ? (
                         <input
                           type="text"
@@ -889,7 +937,8 @@ layoutType === "inputDecimal" ? (
                         />
                       ) :
                       layoutType === "inputWebsite" ? (
-  <input
+  <div>
+    <input
     type="url"
     required={required}
     value={localValue[rowIndex][key] || ""}
@@ -899,10 +948,16 @@ layoutType === "inputDecimal" ? (
        handleInputChange(rowIndex, key, val);
     }}
     disabled={isFieldDisabled(uiSchemaField, row, key)}
-    className="text-[12px] py-2 pl-1 w-full border-b rounded-md"
+    className={`text-[12px] py-2 pl-1 w-full border-b rounded-md ${formContext?.validationErrors?.[rowIndex]?.[key]?'border-red-500':''}`}
     placeholder="Enter website link"
     pattern="https?://.*" // optional: only allow URLs starting with http:// or https://
   />
+   {formContext?.validationErrors?.[rowIndex]?.[key] && (
+      <div className="absolute text-red-500 text-xs mt-1">
+        {formContext.validationErrors[rowIndex][key]}
+      </div>
+    )}
+  </div>
 )
                       : layoutType === "inputonlynumber" ? (
                         <input

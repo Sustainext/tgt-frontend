@@ -128,7 +128,43 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const { open } = GlobalState();
-  const [validationErrors, setValidationErrors] = useState({});
+  const [showWebError,setshowWebError] = useState(false)
+   const [formContext, setFormContext] = useState({
+     validationErrors: {}, // Initialize validation errors
+     showWebError: false // Track if any percentage exceeds 100%
+   });
+ 
+   // Update formContext when showWebError changes
+   useEffect(() => {
+     setFormContext(prev => ({
+       ...prev,
+       showWebError: showWebError
+     }));
+   }, [showWebError]);
+   const clearFieldError = (rowIndex, fieldName) => {
+     setFormContext(prev => {
+       // If no error exists for this field, do nothing
+       if (!prev.validationErrors[rowIndex]?.[fieldName]) {
+         return prev;
+       }
+       
+       // Create a deep copy of validationErrors
+       const newErrors = JSON.parse(JSON.stringify(prev.validationErrors));
+       
+       // Remove the specific error
+       delete newErrors[rowIndex][fieldName];
+       
+       // If no more errors for this row, remove the row entry
+       if (Object.keys(newErrors[rowIndex]).length === 0) {
+         delete newErrors[rowIndex];
+       }
+       
+       return {
+         ...prev,
+         validationErrors: newErrors
+       };
+     });
+   };
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -137,34 +173,57 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  const validateRows = (rows = []) => {
-  const errors = {};
-  rows.forEach((row, idx) => {
-    errors[idx] = {}; // for each row
-    Object.entries(r_schema?.items?.properties || schema.items.properties).forEach(([col, def]) => {
-      // if empty or (for arrays) length 0
-      if (
-        row[col] === undefined ||
-        row[col] === "" ||
-        (Array.isArray(row[col]) && row[col].length === 0)
-      ) {
-        errors[idx][col] = "Required";
-      }
-      // Add extra logic per type if you want (ex: number validation for Percent)
-    });
-  });
-  // Remove empty error rows (optional)
-  Object.keys(errors).forEach(idx => {
-    if (Object.keys(errors[idx]).length === 0) delete errors[idx];
-  });
-  return errors;
-};
+//   const validateRows = (rows = []) => {
+//   const errors = {};
+//   rows.forEach((row, idx) => {
+//     errors[idx] = {}; // for each row
+//     Object.entries(r_schema?.items?.properties || schema.items.properties).forEach(([col, def]) => {
+//       // if empty or (for arrays) length 0
+//       if (
+//         row[col] === undefined ||
+//         row[col] === "" ||
+//         (Array.isArray(row[col]) && row[col].length === 0)
+//       ) {
+//         errors[idx][col] = "Required";
+//       }
+//       // Add extra logic per type if you want (ex: number validation for Percent)
+//     });
+//   });
+//   // Remove empty error rows (optional)
+//   Object.keys(errors).forEach(idx => {
+//     if (Object.keys(errors[idx]).length === 0) delete errors[idx];
+//   });
+//   return errors;
+// };
 
   const handleChange = (e) => {
     setFormData(e.formData);
   };
 
   const updateFormData = async () => {
+   const validationErrors = {};
+  let hasInvalidWebsite = false;
+  
+  const urlRegex = /^(https?:\/\/)?[\w.-]+\.[a-z]{2,}(\/\S*)?$/i;
+
+  formData.forEach((row, index) => {
+    if (row.Weblink && !urlRegex.test(row.Weblink)) {
+      validationErrors[index] = {
+        ...validationErrors[index],
+        Weblink: "Please enter a valid URL"
+      };
+      hasInvalidWebsite = true;
+    }
+  });
+
+  // If validation fails, show errors and abort
+  if (hasInvalidWebsite) {
+    setFormContext(prev => ({
+      ...prev,
+      validationErrors
+    }));
+    return;
+  }
     const data = {
       client_id: client_id,
       user_id: user_id,
@@ -256,31 +315,31 @@ useEffect(() => {
   }
 }, [selectedOrg, year, selectedCorp, togglestatus]);
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   updateFormData();
-  //   console.log("test form data", formData);
-  // };
   const handleSubmit = (e) => {
-  e.preventDefault();
-
-  // get current schema (remote or default as appropriate)
-  const errors = validateRows(formData);
-  setValidationErrors(errors);
-
-  const hasErrors = Object.values(errors).some(row => Object.values(row).some(Boolean));
-  if (!hasErrors) {
+    e.preventDefault();
     updateFormData();
-  } else {
-    toast.error("Please fill all fields before submitting.");
-  }
-};
+    console.log("test form data", formData);
+  };
+//   const handleSubmit = (e) => {
+//   e.preventDefault();
+
+//   // get current schema (remote or default as appropriate)
+//   const errors = validateRows(formData);
+//   setValidationErrors(errors);
+
+//   const hasErrors = Object.values(errors).some(row => Object.values(row).some(Boolean));
+//   if (!hasErrors) {
+//     updateFormData();
+//   } else {
+//     toast.error("Please fill all fields before submitting.");
+//   }
+// };
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
     console.log("Form data newData:", newData);
   };
-  useImperativeHandle(ref, () => updateFormData);
+  // useImperativeHandle(ref, () => updateFormData);
   return (
     <>
     <div
@@ -368,7 +427,10 @@ filed and grievance redressal mechanism"
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-             formContext={{ validationErrors }}
+             formContext={{
+        ...formContext,
+        clearFieldError // Add the error-clearing function
+      }}
           />
         </div>
         <div className="mt-4">

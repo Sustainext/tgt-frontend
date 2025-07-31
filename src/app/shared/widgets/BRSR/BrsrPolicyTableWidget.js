@@ -328,11 +328,11 @@ const BrsrPolicyTableWidget = ({ options, value, onChange,formContext }) => {
     className="text-[12px] border-0 border-b border-gray-200 bg-transparent py-1 px-1 mx-2 w-full focus:outline-none focus:border-[#60a5fa] disabled:bg-[#F5F5F5] disabled:text-gray-400"
     disabled={isCellDisabled(realRowIdx, col.key)}
     pattern="https?://.*"
-    title="Please enter a valid URL starting with https://"
+    // title="Please enter a valid URL"
   />
   {cellValue && !/^https?:\/\/[^\s]+$/i.test(cellValue) && (
-  <div className="text-xs text-red-500 mt-1">
-    Please enter a valid URL starting with https://
+  <div className="text-xs text-left ml-1 text-red-500 mt-1">
+    Please enter a valid URL
   </div>
 )}
   </div>

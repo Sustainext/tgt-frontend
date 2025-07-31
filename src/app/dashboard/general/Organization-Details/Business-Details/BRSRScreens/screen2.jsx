@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef,useImperativeHandle, forwardRef } fr
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
+import {FaExclamationTriangle} from 'react-icons/fa'
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -81,6 +82,44 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const { open } = GlobalState();
+  const [showWarning,setShowWarning] = useState(false)
+  const [showPercentage,setShowPercentage] = useState(false)
+  const [formContext, setFormContext] = useState({
+    validationErrors: {}, // Initialize validation errors
+    showPercentage: false // Track if any percentage exceeds 100%
+  });
+
+  // Update formContext when showPercentage changes
+  useEffect(() => {
+    setFormContext(prev => ({
+      ...prev,
+      showPercentage: showPercentage
+    }));
+  }, [showPercentage]);
+  const clearFieldError = (rowIndex, fieldName) => {
+    setFormContext(prev => {
+      // If no error exists for this field, do nothing
+      if (!prev.validationErrors[rowIndex]?.[fieldName]) {
+        return prev;
+      }
+      
+      // Create a deep copy of validationErrors
+      const newErrors = JSON.parse(JSON.stringify(prev.validationErrors));
+      
+      // Remove the specific error
+      delete newErrors[rowIndex][fieldName];
+      
+      // If no more errors for this row, remove the row entry
+      if (Object.keys(newErrors[rowIndex]).length === 0) {
+        delete newErrors[rowIndex];
+      }
+      
+      return {
+        ...prev,
+        validationErrors: newErrors
+      };
+    });
+  };
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -95,6 +134,37 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
   };
 
   const updateFormData = async () => {
+   let total = 0;
+    let hasInvalidRow = false;
+    const validationErrors = {};
+    
+    setShowWarning(false);
+    setShowPercentage(false);
+
+    for (let i = 0; i < formData.length; i++) {
+      const row = formData[i];
+      const value = parseFloat(row.PercentageTurnOver);
+      validationErrors[i] = {};
+
+      if (!isNaN(value)) {
+        if (value > 100) {
+          validationErrors[i].PercentageTurnOver = "Ensure the % of Turnover of the Entity does not exceed 100%";
+          setShowPercentage(true);
+          hasInvalidRow = true;
+        }
+        total += value;
+      }
+    }
+
+    if (total < 90) {
+      setShowWarning(true);
+      return;
+    }
+
+    if (hasInvalidRow) {
+      setFormContext(prev => ({ ...prev, validationErrors }));
+      return;
+    }
     const data = {
       client_id: client_id,
       user_id: user_id,
@@ -196,7 +266,7 @@ useEffect(() => {
     setFormData(newData);
     console.log("Form data newData:", newData);
   };
-  useImperativeHandle(ref, () => updateFormData);
+  // useImperativeHandle(ref, () => updateFormData);
   return (
     <>
     <div
@@ -272,6 +342,18 @@ useEffect(() => {
             ></ReactTooltip>
           </p>
         )} */}
+        {showWarning && (
+           <div className="bg-orange-50 border-l-2 flex items-start gap-4 border-orange-500 p-4 mb-4 text-sm rounded max-w-[800px]">
+                       <div className="flex-shrink-0">
+                                    <FaExclamationTriangle className="text-[#F98845] w-4 h-4 mt-1" />
+                                  </div>
+                   <div>
+                       {/* <strong className="text-[#0D024D] text-[14px]">Data Missing in Water and Effluents Section</strong><br /> */}
+                    <p className="mb-2">As per disclosure requirements, ensure the listed items together account for at least 90% of the entity’s total turnover</p>
+                    {/* <strong className="text-[#0D024D] text-[14px]">Proceed to:</strong> */}
+                   </div>
+                  </div>
+        )}
         <div className="mx-2 mb-2">
           <Form
             schema={r_schema}
@@ -280,6 +362,10 @@ useEffect(() => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{
+        ...formContext,
+        clearFieldError // Add the error-clearing function
+      }}
           />
         </div>
         <div className="mt-4">

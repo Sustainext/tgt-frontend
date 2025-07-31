@@ -48,7 +48,20 @@ const Screen6 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
-  const toastShown = useRef(false);
+ const [validationErrors, setValidationErrors] = useState([]);
+   const toastShown = useRef(false);
+ useEffect(() => {
+   // Clear validation errors when org/corp/year changes
+   setValidationErrors({});
+ }, [selectedOrg, selectedCorp, year]);
+   const validateRows = (data) => {
+   const errors = {};
+   data.forEach((row, idx) => {
+     if (!errors[idx]) errors[idx] = {};
+     if (row.Q1>100) errors[idx].Q1 = "Ensure the contribution of exports does not exceed 100%";
+   });
+   return errors;
+ };
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -156,12 +169,27 @@ useEffect(() => {
   }
 }, [selectedOrg, year, selectedCorp, togglestatus]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form data:", formData);
-    updateFormData();
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Form data:", formData);
+  //   updateFormData();
+  // };
+ const handleSubmit = (e) => {
+  e.preventDefault();
+  const errors = validateRows(formData);
+  setValidationErrors(errors);
 
+  // Check if any error message exists
+  const hasErrors = Object.values(errors).some(
+    (row) => row && Object.values(row).some((v) => !!v)
+  );
+
+  if (!hasErrors) {
+    updateFormData();
+  } else {
+    console.log("validation error");
+  }
+};
   return (
     <>
       <div
@@ -218,6 +246,9 @@ of exports as a percentage of the entity's total turnover"
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+             formContext={{validationErrors,
+               setValidationErrors: setValidationErrors
+            }}
           />
         </div>
         <div className="mt-4">

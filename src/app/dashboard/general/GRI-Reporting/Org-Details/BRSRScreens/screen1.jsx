@@ -169,22 +169,11 @@ useEffect(() => {
   }
 }, [selectedOrg, year, selectedCorp, togglestatus]);
 
-  const handleSubmit = (e) => {
-  e.preventDefault();
-  const errors = validateRows(formData);
-  setValidationErrors(errors);
-
-  // Check if any error message exists
-  const hasErrors = Object.values(errors).some(
-    (row) => row && Object.values(row).some((v) => !!v)
-  );
-
-  if (!hasErrors) {
+ const handleSubmit = (e) => {
+    e.preventDefault();
     updateFormData();
-  } else {
-    console.log("validation error");
-  }
-};
+    console.log("test form data", formData);
+  };
 
   return (
     <>
