@@ -67,7 +67,7 @@ export default function DashboardLayout({ children }) {
   }, []);
 
   return (
-    <section className=''>
+    <section className='overflow-x-hidden'>
       <GlobalErrorHandler />
       {isMobile ? (
         // **Mobile Version**
@@ -105,7 +105,7 @@ export default function DashboardLayout({ children }) {
             className={`flex-1 h-full flex flex-col transition-all duration-300`}
           >
             {/* Fixed Header and Elfsight Widget */}
-            <div className='flex-shrink-0 mr-2'>
+            <div className='flex-shrink-0'>
               <DashboardHeader />
               <div className='elfsight-widget mb-5 mx-2'>
                 <div

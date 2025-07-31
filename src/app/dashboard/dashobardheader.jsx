@@ -258,10 +258,10 @@ const DashboardHeader = () => {
 
   return (
     <>
-      <div className='flex bg-white xl:sticky lg:sticky 2xl:sticky md:sticky xl:top-0 lg:top-0 2xl:top-0 md:top-0  right-0 border-b border-sky-600 border-opacity-50 xl:pt-4 lg:pt-4 md:pt-4 2xl:pt-4 w-full xl:mx-2 lg:mx-2 md:mx-2 2xl:mx-2 xl:z-[100] lg:z-[100] md:z-[100] 2xl:z-[100]'>
+      <div className='flex bg-white xl:sticky lg:sticky 2xl:sticky md:sticky xl:top-0 lg:top-0 2xl:top-0 md:top-0  right-0 border-b border-sky-600 border-opacity-50 xl:pt-4 lg:pt-4 md:pt-4 2xl:pt-4 w-full xl:ml-2 lg:ml-2 md:ml-2 2xl:ml-2 xl:z-[100] lg:z-[100] md:z-[100] 2xl:z-[100]'>
         <div
           className={`flex justify-start items-center my-2 gap-1 px-2 xl:ml-0 lg:ml-0 2xl:ml-0 md:ml-0  ${
-            open ? 'w-[82%]' : 'w-[82%]'
+            open ? 'w-[80%]' : 'w-[80%]'
           }`}
         >
           <Link href='/dashboard'>
@@ -291,7 +291,10 @@ const DashboardHeader = () => {
 
           <span className='text-[#222222] hover:text-[#222222]'>{text2}</span>
         </div>
-        <div className='lg:block xl:block 2xl:block md:block hidden w-[15%]'>
+        <div
+          className='lg:block xl:block 2xl:block md:block hidden w-[18%]'
+          style={{ position: 'relative', zIndex: 10000 }}
+        >
           <div className='flex justify-end items-center  '>
             <div className='flex justify-between items-center'>
               <div className='text-[#007EEF] flex relative items-center whitespace-nowrap'>
@@ -324,28 +327,28 @@ const DashboardHeader = () => {
                   ></ReactTooltip> */}
               </div>
 
-              <motion.div
+              <div
                 ref={bellIconRef}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
                 className='flex items-center mx-3 rounded-md hover:bg-gray-100 hover:shadow-sm p-1 cursor-pointer transition-all duration-200'
-                onClick={() => setNotificationsVisible(!notificationsVisible)}
+                onClick={() => {
+                  console.log('Notification clicked!');
+                  setNotificationsVisible(!notificationsVisible);
+                }}
               >
                 <div className='relative'>
                   <CiBellOn style={{ fontSize: '22px' }} />
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className='absolute -top-1 -right-1 bg-gradient-to-r from-sky-500 to-lime-500 text-white text-xs px-1 rounded-full'
-                  >
+                  <span className='absolute -top-1 -right-1 bg-gradient-to-r from-sky-500 to-lime-500 text-white text-xs px-1 rounded-full'>
                     2
-                  </motion.span>
+                  </span>
                 </div>
-              </motion.div>
+              </div>
 
               <div
                 className='relative cursor-pointer flex-shrink-0'
-                onClick={toggleDropdown}
+                onClick={() => {
+                  console.log('Profile clicked!');
+                  toggleDropdown();
+                }}
               >
                 <div className='flex justify-center items-center'>
                   {userProfileData?.profile_pic ? (
