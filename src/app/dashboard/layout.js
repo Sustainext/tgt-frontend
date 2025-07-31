@@ -113,7 +113,7 @@ export default function DashboardLayout({ children }) {
             </div>
             
             {/* Scrollable Content */}
-            <div className="flex-1 overflow-y-hidden mx-2 pr-6">
+            <div className="flex-1 overflow-y-hidden mx-2 pr-6 mb-6">
               {children}
             </div>
           </div>

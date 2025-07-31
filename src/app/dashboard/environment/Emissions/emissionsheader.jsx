@@ -289,13 +289,13 @@ const EmissionsHeader = ({
         {/* Button to open Emissions Factors Search Modal - positioned at bottom right */}
         <button
           onClick={handleOpenModal}
-          className="fixed bottom-6 right-6 bg-[#0057A5] hover:bg-[#004080] text-white rounded-full p-4 shadow-lg transition-all duration-300 hover:shadow-xl z-50 group"
+          className="float-right bg-[#004080] text-white rounded-full p-2 transition-all duration-300 z-50 group mb-4 mr-4"
           title="Search Emission Factors"
         >
           <MdSearch className="text-xl" />
-          <span className="absolute right-16 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white text-sm rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+          {/* <span className="absolute right-16 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white text-sm rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
             Search Emission Factors
-          </span>
+          </span> */}
         </button>
       </div>
 
