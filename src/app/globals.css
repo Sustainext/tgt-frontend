@@ -158,20 +158,20 @@ div[class*='Popout__PopoutContent'] {
 }
 
 /* Full HD (1920x1080) */
-@media (min-width: 1920px) and (max-width: 2559px) {
+/* @media (min-width: 1920px) and (max-width: 2559px) {
   body {
     zoom: 1;
     overflow-x: hidden;
   }
-}
+} */
 
 /* Default Zoom for smaller screens */
-@media (max-width: 1919px) {
+/* @media (max-width: 1919px) {
   body {
     zoom: 1;
     overflow-x: hidden;
   }
-}
+} */
 
 
 
