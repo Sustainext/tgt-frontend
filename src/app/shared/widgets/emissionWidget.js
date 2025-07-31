@@ -1900,7 +1900,7 @@ const EmissionWidget = React.memo(
                               </div>
                             </div>
                             <div className='block  xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex '>
-                              <div className='relative w-[112vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[136vw] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]'>
+                              <div className='relative w-[90vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[60vh] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]'>
                                 {fileType.startsWith('image') ? (
                                   <img
                                     src={previewData}
