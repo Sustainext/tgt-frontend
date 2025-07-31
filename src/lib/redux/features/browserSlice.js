@@ -39,7 +39,7 @@ export const selectIsDetected = (state) => state.browser.isDetected;
 export const selectBrowserClasses = (state) => {
   const { isChromiumBased } = state.browser;
   return {
-    containerHeight: isChromiumBased ? 'min-h-[100vh]' : 'min-h-[100vh]',
+    containerHeight: isChromiumBased ? 'min-h-[100vh]' : 'min-h-[125vh]',
     gridHeight: isChromiumBased ? 'h-screen' : 'min-h-screen',
     formPadding: isChromiumBased ? 'p-16' : 'p-8 md:p-16',
     logoContainer: isChromiumBased ? '' : 'p-8',
