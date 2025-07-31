@@ -22,10 +22,21 @@ export function AuthProvider({ children }) {
   );
   const router = useRouter();
 
+  // Environment-aware cookie configuration
+  const getCookieOptions = () => {
+    const isLocalhost = typeof window !== 'undefined' && 
+      (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    
+    return {
+      secure: !isLocalhost, // false for localhost, true for production
+      sameSite: isLocalhost ? "lax" : "strict" // lax for localhost, strict for production
+    };
+  };
+
   const setToken = (token) => {
     setTokenState(token);
     if (token) {
-      Cookies.set("token", token, { secure: true, sameSite: "strict" }); // Set token in cookies
+      Cookies.set("token", token, getCookieOptions()); // Set token in cookies
     } else {
       Cookies.remove("token"); // Remove token from cookies
     }
@@ -86,18 +97,10 @@ export function AuthProvider({ children }) {
       saveToLocalStorage("custom_role", newrole);
       saveToLocalStorage("isAdmin", Boolean(newrole));
       saveToLocalStorage("textcustomrole", customrole);
-      Cookies.set("permissions", JSON.stringify(permissions), {
-        secure: true,
-        sameSite: "strict",
-      });
-      Cookies.set("refresh", JSON.stringify(refreshToken), {
-        secure: true,
-        sameSite: "strict",
-      });
-      Cookies.set("isAdmin", JSON.stringify(newrole), {
-        secure: true,
-        sameSite: "strict",
-      });
+      const cookieOptions = getCookieOptions();
+      Cookies.set("permissions", JSON.stringify(permissions), cookieOptions);
+      Cookies.set("refresh", JSON.stringify(refreshToken), cookieOptions);
+      Cookies.set("isAdmin", JSON.stringify(newrole), cookieOptions);
       const isFirstLogin = userData.needs_password_reset;
       // const isFirstLogin = 1;
       if (isFirstLogin) {
