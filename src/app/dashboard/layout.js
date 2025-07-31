@@ -67,7 +67,7 @@ export default function DashboardLayout({ children }) {
   }, []);
 
   return (
-    <section className="h-[125vh] overflow-hidden">
+    <section>
       <GlobalErrorHandler />
       {isMobile ? (
         // **Mobile Version**
@@ -93,7 +93,7 @@ export default function DashboardLayout({ children }) {
         // **Desktop Version**
         <div className="xl:flex lg:flex md:hidden 2xl:flex w-full h-full hidden">
           {/* Fixed Sidebar */}
-          <div className="fixed top-0 left-0 h-full z-40">
+          <div className="sticky top-0 left-0 h-full z-40">
             <div className="h-full overflow-y-auto">
               <Sidenav />
             </div>
@@ -101,11 +101,8 @@ export default function DashboardLayout({ children }) {
           
           {/* Main Content Area */}
           <div
-            className={`flex-1 h-full flex flex-col transition-all duration-300 ${
-              open
-                ? "xl:ml-[243px] lg:ml-[243px] 2xl:ml-[243px] md:ml-[243px] sm:ml-[0px]"
-                : "xl:ml-[74px] 2xl:ml-[74px] lg:ml-[74px] md:ml-[74px] sm:ml-[0px]"
-            }`}
+            className={`flex-1 h-full flex flex-col transition-all duration-300`
+            }
           >
             {/* Fixed Header and Elfsight Widget */}
             <div className="flex-shrink-0">
@@ -116,7 +113,7 @@ export default function DashboardLayout({ children }) {
             </div>
             
             {/* Scrollable Content */}
-            <div className="flex-1 overflow-y-auto mx-2">
+            <div className="flex-1 overflow-y-auto mx-2 pr-6">
               {children}
             </div>
           </div>
