@@ -19,7 +19,7 @@ import {
   MdOutlinePersonAddAlt,
   MdLockOutline,
 } from "react-icons/md";
-import { TbNotes } from "react-icons/tb";
+import { TbNotes,TbPlugConnected } from "react-icons/tb";
 import { LiaHomeSolid } from "react-icons/lia";
 import Link from "next/link";
 import { GlobalState } from "../../Context/page";
@@ -270,6 +270,16 @@ const Sidenav = () => {
       role: true,
       lockicon: <MdLockOutline />,
       lockiconshow: false,
+      spacing: false,
+    },
+    {
+      id: 10,
+      title: "Connect My Data",
+      icon: <TbPlugConnected />,
+      link: "/dashboard/ConnectData",
+      role: true,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
       spacing: true,
     },
     // {
@@ -282,7 +292,7 @@ const Sidenav = () => {
     //   lockiconshow: false,
     // },
     isNewRole && {
-      id: 10,
+      id: 11,
       title: "Audit logs",
       icon: <TbNotes />,
       link: "/dashboard/Auditlogs",
@@ -291,7 +301,7 @@ const Sidenav = () => {
       lockiconshow: false,
     },
     {
-      id: 11,
+      id: 12,
       title: "Settings",
       icon: <CiSettings />,
       link: "/dashboard/Settings",

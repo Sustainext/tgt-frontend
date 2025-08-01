@@ -26,7 +26,7 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Q1: {
+      Q2: {
         type: "string",
         title:
           "Does the entity have a specified Committee of the Board/ Director responsible for decision making on sustainability related issues?",
@@ -34,14 +34,14 @@ const schema = {
       },
     },
       dependencies: {
-      Q1: {
+      Q2: {
         oneOf: [
           {
             properties: {
-              Q1: {
+              Q2: {
                 enum: ["Yes"],
               },
-              Q2: {
+              Q1: {
         type: "array",
         title:
           "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment and people",
@@ -64,8 +64,8 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1","Q2"],
-     Q1: {
+    "ui:order": ["Q2","Q1"],
+     Q2: {
       "ui:title": "Does the entity have a specified Committee of the Board/ Director responsible for decision making on sustainability related issues?",
       "ui:tooltip":
         "Indicate whether the entity has assigned a Committee of the Board/Director responsible for decision-making on sustainability-related issues",
@@ -76,7 +76,7 @@ const uiSchema = {
         label: false,
       },
     },
-    Q2: {
+    Q1: {
       "ui:title":
         "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment and people",
       "ui:tooltip":
@@ -307,8 +307,8 @@ useEffect(() => {
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

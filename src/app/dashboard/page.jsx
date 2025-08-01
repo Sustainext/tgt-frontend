@@ -158,14 +158,14 @@ const Dashboard = () => {
       >
         Sustainext HQ
       </div>
-     <button
+     {/* <button
   type="button"
   className="mt-2 lg:mt-0 flex items-center gap-2 border border-gray-300 text-gray-500 text-sm px-4 py-2 rounded-md hover:shadow-sm bg-white"
   onClick={() => window.open('/EZGB', '_blank')}
 >
   <ImPowerCord className="w-4 h-4 text-gray-500" />
   Connect Utility Provider
-</button>
+</button> */}
       </div>
       
 

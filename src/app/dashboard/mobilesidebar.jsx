@@ -21,7 +21,7 @@ import {
   MdMenu,
   MdClose,
 } from "react-icons/md";
-import { TbNotes } from "react-icons/tb";
+import { TbNotes,TbPlugConnected } from "react-icons/tb";
 import { LiaHomeSolid } from "react-icons/lia";
 import Link from "next/link";
 
@@ -274,8 +274,18 @@ const MobileSidenav = () => {
       role: true,
       lockicon: <MdLockOutline />,
       lockiconshow: false,
-      spacing: true,
+      spacing: false,
     },
+     {
+          id: 10,
+          title: "Connect My Data",
+          icon: <TbPlugConnected />,
+          link: "/dashboard/ConnectData",
+          role: true,
+          lockicon: <MdLockOutline />,
+          lockiconshow: false,
+          spacing: true,
+        },
     // {
     //   id: 10,
     //   title: "Resource Library",
@@ -287,7 +297,7 @@ const MobileSidenav = () => {
     // },
 
     isNewRole && {
-      id: 10,
+      id: 11,
       title: "Audit logs",
       icon: <TbNotes />,
       link: "/dashboard/Auditlogs",
@@ -296,7 +306,7 @@ const MobileSidenav = () => {
       lockiconshow: false,
     },
     {
-      id: 11,
+      id: 12,
       title: "Settings",
       icon: <CiSettings />,
       link: "/dashboard/Settings",
