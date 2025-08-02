@@ -1302,31 +1302,33 @@ const EmissionWidget = React.memo(
       switch (rowType) {
         case 'calculated':
           return (
-            <td className='py-2 text-center w-[1vw]'>
-              <div className='w-1.5 h-1.5 rounded-full bg-green-500 xl:mx-auto md:mx-auto 2xl:mx-auto lg:mx-auto 3xl:mx-auto 4k:mx-auto 2k:mx-auto mx-2'></div>
+            <td className='py-2 text-center w-12'>
+              <div className='w-1.5 h-1.5 rounded-full bg-green-500 mx-auto'></div>
             </td>
           );
         case 'assigned':
           return (
-            <td className='py-2 text-center w-[1vw]'>
+            <td className='py-2 text-center w-12'>
               <div className='w-1.5 h-1.5 rounded-full bg-gray-500 mx-auto'></div>
             </td>
           );
         case 'approved':
           return (
-            <td className='py-2 text-center w-[1vw]'>
+            <td className='py-2 text-center w-12'>
               <div className='w-1.5 h-1.5 rounded-full bg-[#FFA701] mx-auto'></div>
             </td>
           );
         default:
           return (
-            <td className='py-2 text-center w-[1vw]'>
-              <input
-                type='checkbox'
-                checked={isSelected}
-                onChange={handleRowSelection}
-                className='w-4 h-4 mt-2 border-gray-600 green-checkbox'
-              />
+            <td className='py-2 text-center w-12'>
+              <div className='flex justify-center items-center h-full'>
+                <input
+                  type='checkbox'
+                  checked={isSelected}
+                  onChange={handleRowSelection}
+                  className='w-4 h-4 border-gray-600 green-checkbox'
+                />
+              </div>
             </td>
           );
       }
@@ -1336,7 +1338,7 @@ const EmissionWidget = React.memo(
       <div
         className={`w-full ${
           !id.startsWith('root_0') &&
-          'xl:ml-1 md:ml-1 lg:ml-1 3xl:ml-1 4k:ml-1 2k:ml-1 ml-0'
+          ''
         }`}
       >
         {id.startsWith('root_0') && (
@@ -1366,7 +1368,7 @@ const EmissionWidget = React.memo(
           {id.startsWith('root_0') && (
             <thead className='bg-gray-50'>
               <tr>
-                <th className='h-[44px] w-12 border-b border-gray-300 px-2'>
+                <th className='h-[44px] w-12 border-b border-gray-300 px-0.5'>
                   <div className='flex justify-center items-center h-full'>
                     <input
                       type='checkbox'
@@ -1376,22 +1378,22 @@ const EmissionWidget = React.memo(
                     />
                   </div>
                 </th>
-                <th className='h-[44px] w-[20%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-2'>
+                <th className='h-[44px] w-[18%] border-b border-gray-300 text-[12px] text-left text-[#667085] pl-1 pr-0.5'>
                   <div className='flex items-center h-full'>Category</div>
                 </th>
-                <th className='h-[44px] w-[20%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-2'>
+                <th className='h-[44px] w-[18%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-0.5'>
                   <div className='flex items-center h-full'>Sub-Category</div>
                 </th>
-                <th className='h-[44px] w-[25%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-2'>
+                <th className='h-[44px] w-[18%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-0.5'>
                   <div className='flex items-center h-full'>Activity</div>
                 </th>
-                <th className='h-[44px] w-[20%] border-b border-gray-300 text-[12px] text-right text-[#667085] px-2'>
+                <th className='h-[44px] w-[31%] border-b border-gray-300 text-[12px] text-right text-[#667085] px-0.5'>
                   <div className='flex items-center justify-end h-full'>Quantity</div>
                 </th>
-                <th className='h-[44px] w-[10%] border-b border-gray-300 text-[12px] text-center text-[#667085] px-2'>
+                <th className='h-[44px] w-[10%] border-b border-gray-300 text-[12px] text-center text-[#667085] px-1'>
                   <div className='flex items-center justify-center h-full'>Assignee</div>
                 </th>
-                <th className='h-[44px] w-[5%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-2'>
+                <th className='h-[44px] w-[5%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-1'>
                   <div className='flex items-center h-full'>Actions</div>
                 </th>
               </tr>
@@ -1403,7 +1405,7 @@ const EmissionWidget = React.memo(
               {renderFirstColumn()}
 
               {/* Category Dropdown */}
-              <td className={`w-[20%] py-2 px-2 relative ${
+              <td className={`w-[18%] py-2 pl-1 pr-0.5 relative ${
                   scopeErrors['Category'] ? '' : ''
                 }`}>
                 <div className='flex items-center h-full'>
@@ -1440,7 +1442,7 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Sub-Category Dropdown */}
-              <td className='w-[20%] py-2 px-2 relative'>
+              <td className='w-[18%] py-2 px-0.5 relative'>
                 <div className='flex items-center h-full'>
                 <select
                   value={subcategory}
@@ -1473,7 +1475,7 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Activity Dropdown */}
-              <td className='w-[25%] py-2 px-2'>
+              <td className='w-[18%] py-2 px-0.5'>
                 <div className='relative'>
                   <input
                     ref={inputRef}
@@ -1581,12 +1583,92 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Quantity Input */}
-              <td className='w-[20%] py-2 px-2'>
+              <td className='w-[31%] py-2 px-0.5'>
                 <div className='flex items-center justify-end h-full'>
-                  <div className='grid grid-flow-col-dense'>
-                  {unit_type.includes('Over') ? (
-                    <>
-                      <div className='flex justify-end relative'>
+                  <div className='w-full flex justify-end'>
+                    {unit_type.includes('Over') ? (
+                      // Two quantity/unit pairs - side by side with more space
+                      <div className='flex justify-end items-center gap-1 w-full'>
+                        <div className='flex items-center gap-1'>
+                          <input
+                            ref={quantity1Ref}
+                            type='number'
+                            value={quantity}
+                            onChange={handleQuantityChange}
+                            onFocus={() => handleFocus('quantity1')}
+                            onBlur={handleBlur}
+                            step='1'
+                            min='0'
+                            placeholder={
+                              scopeErrors['Quantity']
+                                ? 'Value *'
+                                : 'Value'
+                            }
+                            className={getFieldClass(
+                              'Quantity',
+                              'text-[12px] focus:outline-none w-16 text-right px-1 focus:border-b focus:border-blue-300'
+                            )}
+                            disabled={['assigned', 'approved'].includes(
+                              value.rowType
+                            )}
+                          />
+                          <select
+                            value={unit}
+                            onChange={(e) => handleUnitChange(e.target.value)}
+                            className={`text-[12px] w-12 text-center rounded-md py-1 shadow ${
+                              unit
+                                ? 'bg-white text-blue-500 '
+                                : 'bg-blue-500 text-white hover:bg-blue-600'
+                            }`}
+                            disabled={['assigned', 'approved'].includes(rowType)}
+                          >
+                            <option value=''>{tempUnit || 'Unit'}</option>
+                            {units.map((unit, index) => (
+                              <option key={index} value={unit}>
+                                {unit}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className='flex items-center gap-1'>
+                          <input
+                            ref={quantity2Ref}
+                            type='number'
+                            value={quantity2}
+                            onChange={handleQuantity2Change}
+                            onFocus={() => handleFocus('quantity2')}
+                            onBlur={handleBlur}
+                            placeholder='Value'
+                            className={getFieldClass(
+                              'Quantity2',
+                              'text-[12px] focus:outline-none w-16 text-right px-1 focus:border-b focus:border-blue-300'
+                            )}
+                            step='1'
+                            min='0'
+                            disabled={['assigned', 'approved'].includes(rowType)}
+                          />
+                          <select
+                            value={unit2}
+                            onChange={(e) => handleUnit2Change(e.target.value)}
+                            className={`text-[12px] w-12 text-center rounded-md py-1 shadow ${
+                              unit2
+                                ? 'bg-white text-blue-500 '
+                                : 'bg-blue-500 text-white hover:bg-blue-600'
+                            }`}
+                            disabled={['assigned', 'approved'].includes(rowType)}
+                          >
+                            <option value=''>{tempUnit2 || 'Unit'}</option>
+                            {units2.map((unit, index) => (
+                              <option key={index} value={unit}>
+                                {unit}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    ) : (
+                      // Single quantity/unit pair - centered in extra space
+                      <div className='flex justify-end items-center gap-1'>
                         <input
                           ref={quantity1Ref}
                           type='number'
@@ -1596,35 +1678,19 @@ const EmissionWidget = React.memo(
                           onBlur={handleBlur}
                           step='1'
                           min='0'
-                          placeholder={
-                            scopeErrors['Quantity']
-                              ? 'Enter Value *'
-                              : 'Enter Value'
-                          }
+                          placeholder='Enter Value'
                           className={getFieldClass(
                             'Quantity',
-                            'text-[12px] focus:outline-none w-20 text-right pe-1 focus:border-b focus:border-blue-300'
+                            'text-[12px] focus:outline-none w-20 text-right px-1 focus:border-b focus:border-blue-300'
                           )}
                           disabled={['assigned', 'approved'].includes(
                             value.rowType
                           )}
-                          style={{
-                            '::placeholder': {
-                              color: scopeErrors['Quantity']
-                                ? '#EF4444'
-                                : 'inherit',
-                            },
-                          }}
                         />
-                        {scopeErrors['Quantity'] && (
-                          <div className='text-[12px] text-red-500 absolute left-0 -bottom-6'>
-                            {getErrorMessage('Quantity')}
-                          </div>
-                        )}
                         <select
                           value={unit}
                           onChange={(e) => handleUnitChange(e.target.value)}
-                          className={`text-[12px] w-[100px] text-center rounded-md py-1 shadow ${
+                          className={`text-[12px] w-14 text-center rounded-md py-1 shadow ${
                             unit
                               ? 'bg-white text-blue-500 '
                               : 'bg-blue-500 text-white hover:bg-blue-600'
@@ -1638,132 +1704,35 @@ const EmissionWidget = React.memo(
                             </option>
                           ))}
                         </select>
-                        {scopeErrors['Unit'] && (
-                          <div className='text-[12px] text-red-500 absolute right-1 -bottom-6'>
-                            {getErrorMessage('Unit')}
-                          </div>
-                        )}
                       </div>
-                      <div className='flex justify-end relative'>
-                        <input
-                          ref={quantity2Ref}
-                          type='number'
-                          value={quantity2}
-                          onChange={handleQuantity2Change}
-                          onFocus={() => handleFocus('quantity2')}
-                          onBlur={handleBlur}
-                          placeholder='Enter Value'
-                          className={getFieldClass(
-                            'Quantity2',
-                            'text-[12px] focus:outline-none w-20 text-right pe-1 focus:border-b focus:border-blue-300'
-                          )}
-                          step='1'
-                          min='0'
-                          disabled={['assigned', 'approved'].includes(rowType)}
-                          style={{
-                            '::placeholder': {
-                              color: scopeErrors['Quantity']
-                                ? '#EF4444'
-                                : 'inherit',
-                            },
-                          }}
-                        />
-                        {scopeErrors['Quantity2'] && (
-                          <div className='text-[12px] text-red-500 absolute left-0 -bottom-6'>
-                            {getErrorMessage('Quantity2')}
-                          </div>
-                        )}
-                        <select
-                          value={unit2}
-                          onChange={(e) => handleUnit2Change(e.target.value)}
-                          className={` text-[12px] w-[100px] text-center rounded-md py-1 shadow ${
-                            unit2
-                              ? 'bg-white text-blue-500 '
-                              : 'bg-blue-500 text-white hover:bg-blue-600'
-                          }`}
-                          disabled={['assigned', 'approved'].includes(rowType)}
-                        >
-                          <option value=''>{tempUnit2 || 'Unit'}</option>
-                          {units2.map((unit, index) => (
-                            <option key={index} value={unit}>
-                              {unit}
-                            </option>
-                          ))}
-                        </select>
-                        {scopeErrors['Unit2'] && (
-                          <div className='text-[12px] text-red-500 absolute -right-3 -bottom-6'>
-                            {getErrorMessage('Unit2')}
-                          </div>
-                        )}
-                      </div>
-                    </>
-                  ) : (
-                    <div className='flex justify-end relative'>
-                      <input
-                        ref={quantity1Ref}
-                        type='number'
-                        value={quantity}
-                        onChange={handleQuantityChange}
-                        onFocus={() => handleFocus('quantity1')}
-                        onBlur={handleBlur}
-                        step='1'
-                        min='0'
-                        placeholder='Enter Value'
-                        className={getFieldClass(
-                          'Quantity',
-                          'text-[12px] focus:outline-none w-20 text-right pe-1 focus:border-b focus:border-blue-300'
-                        )}
-                        disabled={['assigned', 'approved'].includes(
-                          value.rowType
-                        )}
-                        style={{
-                          '::placeholder': {
-                            color: scopeErrors['Quantity']
-                              ? '#EF4444'
-                              : 'inherit',
-                          },
-                        }}
-                      />
-                      {scopeErrors['Quantity'] && (
-                        <div className='text-[12px] text-red-500 absolute left-[3rem] -bottom-7'>
-                          {getErrorMessage('Quantity')}
-                        </div>
-                      )}
-                      <select
-                        value={unit}
-                        onChange={(e) => handleUnitChange(e.target.value)}
-                        className={` text-[12px] w-[100px] text-center rounded-md py-1 shadow ${
-                          unit
-                            ? 'bg-white text-blue-500 '
-                            : 'bg-blue-500 text-white hover:bg-blue-600'
-                        }`}
-                        disabled={['assigned', 'approved'].includes(rowType)}
-                        style={{
-                          border: {
-                            color: scopeErrors['Unit'] ? '#EF4444' : 'inherit',
-                          },
-                        }}
-                      >
-                        <option value=''>{tempUnit || 'Unit'}</option>
-                        {units.map((unit, index) => (
-                          <option key={index} value={unit}>
-                            {unit}
-                          </option>
-                        ))}
-                      </select>
-                      {scopeErrors['Unit'] && (
-                        <div className='text-[12px] text-red-500 absolute right-2 -bottom-7'>
-                          {getErrorMessage('Unit')}
-                        </div>
-                      )}
+                    )}
+                  </div>
+                  {/* Error messages positioned absolutely */}
+                  {scopeErrors['Quantity'] && (
+                    <div className='text-[12px] text-red-500 absolute left-2 -bottom-6'>
+                      {getErrorMessage('Quantity')}
                     </div>
                   )}
-                  </div>
+                  {scopeErrors['Quantity2'] && (
+                    <div className='text-[12px] text-red-500 absolute left-2 -bottom-12'>
+                      {getErrorMessage('Quantity2')}
+                    </div>
+                  )}
+                  {scopeErrors['Unit'] && (
+                    <div className='text-[12px] text-red-500 absolute right-2 -bottom-6'>
+                      {getErrorMessage('Unit')}
+                    </div>
+                  )}
+                  {scopeErrors['Unit2'] && (
+                    <div className='text-[12px] text-red-500 absolute right-2 -bottom-12'>
+                      {getErrorMessage('Unit2')}
+                    </div>
+                  )}
                 </div>
               </td>
 
               {/* Assignee Button */}
-              <td className='w-[10%] py-2 px-2'>
+              <td className='w-[10%] py-2 px-1'>
                 <div className='flex items-center justify-center h-full'>
                 <button
                   type='button'
@@ -1785,7 +1754,7 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Actions - Delete & Upload */}
-              <td className='w-[5%] py-2 px-2'>
+              <td className='w-[5%] py-2 px-1'>
                 <div className='flex items-center h-full'>
                 <div className='flex justify-start'>
                   <div className='pt-1'>
@@ -1984,7 +1953,7 @@ const EmissionWidget = React.memo(
                     )}
                   </div>
                   {value.rowType === 'calculated' && (
-                    <div className='pt-1 ms-2'>
+                    <div className='pt-1 ml-1'>
                       <label className='cursor-pointer'>
                         <MdOutlineRemoveRedEye
                           className='text-gray-500 hover:text-blue-500'
