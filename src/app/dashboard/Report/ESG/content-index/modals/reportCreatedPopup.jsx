@@ -35,7 +35,8 @@ const ReportCreatedPopup = ({
   statement,
   userName,
   userEmail,
-  reportType
+  reportType,
+  ispageNumberGenerated
 }) => {
   
   const [isNotifyModalOpen, setIsNotifyModalOpen] = useState(false);
@@ -287,7 +288,8 @@ const ReportCreatedPopup = ({
               <div className="mt-6 mb-2">
                 <div className="relative" ref={dropdownRef}>
                   <button
-                    className={`p-4 border w-full border-gray-200 text-[16px] text-[#343A40] flex justify-between ${
+                  disabled={!ispageNumberGenerated}
+                    className={`p-4 border w-full border-gray-200 text-[16px] text-[#343A40] ${!ispageNumberGenerated?'opacity-30 cursor-not-allowed':''} flex justify-between ${
                       isHovered ? "" : "mb-3"
                     } rounded-md hover:text-blue-500 hover:border-blue-500 group`}
                     onClick={() => setIsHovered(!isHovered)}

@@ -84,9 +84,9 @@ const Directeconomic = ({ apiData,setMobileopen }) => {
   ];
   const brsr = [
     {
-      tagName: "BRSR A-VI-24ii",
+      tagName: "BRSR-A-VI-24",
       id: "tooltip-$brsr1",
-      content: "BRSR-Section A-VI-24ii",
+      content: "BRSR-Section-A-VI-24",
     },
   ];
   return (

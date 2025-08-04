@@ -66,7 +66,7 @@ const RefDisclosureTable = ({ data }) => {
                     </td>
                   )}
                   <td className="px-4 py-3">{item.title}</td>
-                  <td className="px-4 py-3">{item.page_number}</td>
+                  <td className="px-4 py-3 text-center">{item.page_number}</td>
                 </tr>
               );
             })}

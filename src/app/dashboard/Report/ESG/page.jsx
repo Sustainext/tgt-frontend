@@ -86,6 +86,7 @@ const ESGReport = () => {
    const [missing_fields, setMissingFields] = useState([]);
    const [isDownloadReportModalOpen,setIsDownloadReportModalOpen]=useState(false)
     const [reportingPeriod,setReportingPeriod]=useState('')
+    const [ispageNumberGenerated,setIspageNumberGenerated]=useState(false)
 
 
    
@@ -583,6 +584,7 @@ const ESGReport = () => {
             setIsCreateReportModalOpen={setIsCreateReportModalOpen}
             setIsOmissionSubmitted={setIsOmissionSubmitted}
             reportType={reportType}
+            ispageNumberGenerated={ispageNumberGenerated}
           />
         );
       }
@@ -590,6 +592,19 @@ const ESGReport = () => {
 
     return renderSectionComponent();
   };
+
+  const handlePageGeneration= async()=>{
+    try{
+      const url = `${process.env.BACKEND_API_URL}/esg_report/extract_page_number/${reportid}/`;
+      const response = await axiosInstance.get(url);
+      if (response.status == 200) {
+        setIspageNumberGenerated(true)
+      }
+    }
+    catch(err){
+      console.log(err,"error in page generation api")
+    }
+  }
 
   return (
     <>
@@ -715,7 +730,9 @@ const ESGReport = () => {
                               </button>
                             ) : (
                               <button
-                                onClick={() => handleNextStep("last")}
+                                onClick={() => {
+                                  handlePageGeneration()
+                                  handleNextStep("last")}}
                                 className="flex w-[200px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                               >
                                 Save & Fill Content Index
@@ -785,7 +802,9 @@ const ESGReport = () => {
                       </button>
                     ) : !isInContentIndexPhase ? (
                       <button
-                        onClick={() => handleNextStep("last")}
+                        onClick={() => {
+                                  handlePageGeneration()
+                                  handleNextStep("last")}}
                         className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                       >
                         Save & Fill Content Index
@@ -827,6 +846,7 @@ const ESGReport = () => {
                 setIsCreateReportModalOpen={setIsCreateReportModalOpen}
                 setIsOmissionSubmitted={setIsOmissionSubmitted}
                 reportType={reportType}
+                ispageNumberGenerated={ispageNumberGenerated}
               />
                 </div>
               </div>
@@ -965,7 +985,9 @@ const ESGReport = () => {
                             </button>
                           ) : (
                             <button
-                              onClick={() => handleNextStep("last")}
+                               onClick={() => {
+                                  handlePageGeneration()
+                                  handleNextStep("last")}}
                               className="flex w-[200px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                             >
                               Save & Fill Content Index
@@ -1035,7 +1057,9 @@ const ESGReport = () => {
                     </button>
                   ) : !isInContentIndexPhase ? (
                     <button
-                      onClick={() => handleNextStep("last")}
+                       onClick={() => {
+                                  handlePageGeneration()
+                                  handleNextStep("last")}}
                       className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                     >
                       Save & Fill Content Index

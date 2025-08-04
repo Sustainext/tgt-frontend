@@ -10,89 +10,93 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import GeneralWorkersEmployees from "../../../shared/widgets/Table/generalWorkersEmployeesMultiline.js";
-// Simple Custom Table Widget
+// import AllInputWidget from "../../../../shared/widgets/BRSR/allInputWidget";
+import SelectWidget from '../../../../shared/widgets/Select/selectWidget6'
+import TextareaWidget3 from '../../../../shared/widgets/Textarea/TextareaWidget3'
 const widgets = {
-  TableWidget: GeneralWorkersEmployees,
+  TextareaWidget3:TextareaWidget3,
+  SelectWidget:SelectWidget
 };
 
-const view_path = "gri-general-stakeholder_engagement-2-29a-describe";
+const view_path = "gri-general-assurance-external-2-5-b";
 const client_id = 1;
 const user_id = 1;
+
+
+
+const uiSchema = {
+  items: {
+    "ui:order": ["Q1","Q2"],
+    Q1: {
+      "ui:title": "Whether Stakeholder Consultation Is Used to Support the Identification and Management of Environmental and Social Topics",
+      "ui:tooltip":
+        "Select whether the entity uses stakeholder feedback to help identify, prioritize,and manage key environmental and social issues",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "SelectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+     Q2: {
+        "ui:hading": "",
+        "ui:hadingtooltip": "",
+        "ui:hadingtooltipdisplay": "none",
+        "ui:title":
+          "Details of Instances as to How the Inputs Received From Stakeholders on These Topics Were Incorporated Into Policies and Activities of the Entity",
+        "ui:tooltip":
+          "Provide details of instances as to how stakeholder inputs influenced the entity’s policies and activities",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "TextareaWidget3",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
+      },
+    
+    "ui:options": {
+      orderable: false, // Prevent reordering of items
+      addable: false, // Prevent adding items from UI
+      removable: false, // Prevent removing items from UI
+      layout: "horizontal", // Set layout to horizontal
+    },
+  },
+};
 
 const schema = {
   type: "array",
   items: {
     type: "object",
     properties: {
-      Organisationengages: {
+      Q1: {
         type: "string",
-        title:
-          "What are the categories of stakeholders organisation engages with",
-        texttype: "text",
+        title: "Whether Stakeholder Consultation Is Used to Support the Identification and Management of Environmental and Social Topics",
+        enum: ["Yes", "No"],
       },
-      Stakeholdersidentified: {
-        type: "string",
-        title: "How the stakeholders are identified.",
-        texttype: "text",
-      },
-      Stakeholderengagement: {
-        type: "string",
-        title: "Describe the purpose of stakeholder engagement",
-        texttype: "text",
-      },
-      ScopOfEngagement:{
-       type: "string",
-        title: "Scope of Engagement",
-        texttype: "text",
-      },
-      MarginalizedGroup:{
-        type: "string",
-        title: "Whether Identified as Vulnerable & Marginalized Group",
-       enum:['Yes','No'],
+    },
+    dependencies: {
+      Q1: {
+        oneOf: [
+          {
+            properties: {
+              Q1: {
+                enum: ["Yes"],
+              },
+              Q2: {
+                type: "string",
+                title: "Details of Instances as to How the Inputs Received From Stakeholders on These Topics Were Incorporated Into Policies and Activities of the Entity",
+              },
+            },
+          }
+        ],
       },
     },
   },
 };
 
-const uiSchema = {
-  "ui:widget": "TableWidget",
-  "ui:options": {
-    titles: [
-      {
-        key: "Organisationengages",
-        title:
-          "What are the categories of stakeholders organisation engages with",
-        tooltip:
-          "Here the organization can explain how the organisation determines which categories of stakeholders to engage with and which categories not to engage with.",
-      },
-      {
-        key: "Stakeholdersidentified",
-        title: "How the stakeholders are identified.",
-        tooltip: "Explain the process of stakeholder indentification.",
-      },
-      {
-        key: "Stakeholderengagement",
-        title: "Describe the purpose of stakeholder engagement",
-        tooltip:
-          "The purpose of stakeholder engagement can be, for example, to identify actual and potential impacts or to determine prevention and mitigation responses to potential negative impacts.",
-      },
-      {
-        key: "ScopOfEngagement",
-        title: "Scope of Engagement",
-        tooltip:
-          "Describe the scope of stakeholder engagement including key topics",
-      },
-      {
-        key: "MarginalizedGroup",
-        title: "Whether Identified as Vulnerable & Marginalized Group",
-        tooltip:
-          "Indicate if the stakeholder group is considered vulnerable or marginalized",
-      },
-    ],
-  },
-};
-const Screen1 = ({
+
+
+const Screen3 = ({
   selectedOrg,
   selectedCorp,
   location,
@@ -100,14 +104,7 @@ const Screen1 = ({
   month,
   togglestatus,
 }) => {
-  const initialFormData = [
-    {
-      Organisationengages: "",
-      Stakeholdersidentified: "",
-      Stakeholderengagement: "",
-    },
-  ];
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -184,7 +181,7 @@ const Screen1 = ({
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData(initialFormData);
+    setFormData([{}]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -194,38 +191,38 @@ const Screen1 = ({
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData(initialFormData);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }
   };
 
-  // useEffect(() => {
-  //   if (selectedOrg && year && togglestatus) {
-  //     if (togglestatus === "Corporate" && selectedCorp) {
-  //       setTimeout(() => {
-  //         loadFormData();
-  //       }, 1000); // 1000ms = 1 second delay
-  //     } else if (togglestatus === "Corporate" && !selectedCorp) {
-  //       setFormData(initialFormData);
-  //       setRemoteSchema({});
-  //       setRemoteUiSchema({});
-  //     } else {
-  //       setTimeout(() => {
-  //         setFormData(initialFormData);
-  //         setRemoteSchema({});
-  //         setRemoteUiSchema({});
-  //         loadFormData();
-  //       }, 1000); // 1000ms = 1 second delay
-  //     }
+//   useEffect(() => {
+//     if (selectedOrg && year && togglestatus) {
+//       if (togglestatus === "Corporate" && selectedCorp) {
+//         setTimeout(() => {
+//           loadFormData();
+//         }, 1000); // 1000ms = 1 second delay
+//       } else if (togglestatus === "Corporate" && !selectedCorp) {
+//         setFormData([{}]);
+//         setRemoteSchema({});
+//         setRemoteUiSchema({});
+//       } else {
+//         setTimeout(() => {
+//           setFormData([{}]);
+//           setRemoteSchema({});
+//           setRemoteUiSchema({});
+//           loadFormData();
+//         }, 1000); // 1000ms = 1 second delay
+//       }
 
-  //     toastShown.current = false;
-  //   } else {
-  //     if (!toastShown.current) {
-  //       toastShown.current = true;
-  //     }
-  //   }
-  // }, [selectedOrg, year, selectedCorp, togglestatus]);
+//       toastShown.current = false;
+//     } else {
+//       if (!toastShown.current) {
+//         toastShown.current = true;
+//       }
+//     }
+//   }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -243,14 +240,15 @@ const Screen1 = ({
         }}
       >
         <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
-          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+         {
+            Object.keys(r_schema || {}).length == 0 && (
+                <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
             <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Describe the organisation's approach to engaging with
-              stakeholders, including:
+            Whether Stakeholder Consultation Is Used to Support the Identification and Management of Environmental and Social Topics
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-content="Stakeholders are individuals or groups that have interests that are affected or could be affected
-by the organization’s activities."
+                data-tooltip-content="Select whether the entity uses stakeholder feedback to help identify, prioritize,
+ and manage key environmental and social issues"
                 className="mt-1.5 ml-2 text-[15px] w-[10%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
               />
               <ReactTooltip
@@ -269,12 +267,15 @@ by the organization’s activities."
               ></ReactTooltip>
             </h2>
           </div>
+            )
+         }
+          
 
           <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
             <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 2-29a
+              <div className="w-[90px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-[#18736B] text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                 BRSR-C-P4-LI-2
                 </div>
               </div>
             </div>
@@ -327,4 +328,4 @@ by the organization’s activities."
   );
 };
 
-export default Screen1;
+export default Screen3;

@@ -463,7 +463,6 @@ useEffect(() => {
     setLocalValue(updatedValues);
   };
 
-  
 
   return (
     <>
@@ -475,7 +474,6 @@ useEffect(() => {
               const uiSchemaField = options.titles.find((title) => title.key === key);
               const layoutType = uiSchemaField?.layouttype || "input";
               const errorMsg = validationErrors?.[rowIndex]?.[key];
-
               return (
                 <div key={cellIndex} className="mb-4">
                   {/* Field Title */}
@@ -493,7 +491,7 @@ useEffect(() => {
                     place="top"
                     effect="solid"
                     style={{
-                      width: "auto",
+                      width: "300px",
                       height: "auto",
                       backgroundColor: "#000",
                       color: "white",

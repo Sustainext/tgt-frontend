@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
-const DisclosureTable = ({ data }) => {
+const DisclosureTable = ({ data,ispageNumberGenerated }) => {
   const columns = [
     { header: "GRI Standards and Other resources", subHeaders: [] },
     { header: "Disclosure", subHeaders: [] },
@@ -238,7 +238,7 @@ const DisclosureTable = ({ data }) => {
                         )}
                       </td>
 
-                      <td className="px-4 py-4">{row.page_number}</td>
+                      <td className="px-4 py-4 text-center">{ispageNumberGenerated?row.page_number:'Loading...'}</td>
                       <td className="px-4 py-4">
                         {row.omission?.[0]?.req_omitted}
                       </td>
@@ -252,7 +252,7 @@ const DisclosureTable = ({ data }) => {
                           ? row.omission?.[0]?.explanation
                           : "Add in next step"}
                       </td>
-                      <td className="px-4 py-4">{row.gri_sector_no}</td>
+                      <td className="px-4 py-4 text-center">{row.gri_sector_no}</td>
                     </tr>
                   ))}
 
@@ -322,7 +322,7 @@ const DisclosureTable = ({ data }) => {
                                 )}
                               </td>
 
-                              <td className="px-4 py-4">{row.page_number}</td>
+                              <td className="px-4 py-4 text-center">{ispageNumberGenerated?row.page_number:'Loading...'}</td>
                               <td className="px-4 py-4">
                                 {row.omission?.[0]?.req_omitted}
                               </td>
@@ -337,7 +337,7 @@ const DisclosureTable = ({ data }) => {
                                   ? row.omission?.[0]?.explanation
                                   : "Add in next step"}
                               </td>
-                              <td className="px-4 py-4">{row.gri_sector_no}</td>
+                              <td className="px-4 py-4 text-center">{row.gri_sector_no}</td>
                             </tr>
                           ))}
                         </React.Fragment>
