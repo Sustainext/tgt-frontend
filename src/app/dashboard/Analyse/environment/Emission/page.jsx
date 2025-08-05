@@ -1,24 +1,24 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import ScopeTable from "./ScopeTable";
-import SourceTable from "./SourceTable";
-import LocationTable from "./LocationTable";
-import IntensityTable from "./IntensityTable";
-import ReductionTable from "./ReductionTable";
-import DateRangePicker from "@/app/utils/DatePickerComponent";
-import axiosInstance from "../../../../utils/axiosMiddleware";
-import { Oval } from "react-loader-spinner";
-import { set } from "date-fns";
-import { TiTick } from "react-icons/ti";
-import { RxCross2 } from "react-icons/rx";
+'use client';
+import React, { useEffect, useState } from 'react';
+import ScopeTable from './ScopeTable';
+import SourceTable from './SourceTable';
+import LocationTable from './LocationTable';
+import IntensityTable from './IntensityTable';
+import ReductionTable from './ReductionTable';
+import DateRangePicker from '@/app/utils/DatePickerComponent';
+import axiosInstance from '../../../../utils/axiosMiddleware';
+import { Oval } from 'react-loader-spinner';
+import { set } from 'date-fns';
+import { TiTick } from 'react-icons/ti';
+import { RxCross2 } from 'react-icons/rx';
 
 const AnalyseEmission = () => {
   const [analyseData, setAnalyseData] = useState([]);
   const [organisations, setOrganisations] = useState([]);
-  const [selectedOrg, setSelectedOrg] = useState("");
-  const [selectedCorp, setSelectedCorp] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState("");
-  const [selectedsetLocation, setSelectedSetLocation] = useState("");
+  const [selectedOrg, setSelectedOrg] = useState('');
+  const [selectedCorp, setSelectedCorp] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('');
+  const [selectedsetLocation, setSelectedSetLocation] = useState('');
   const [scopeData, setScopeData] = useState([]);
   const [reductionData, setReductionData] = useState([]);
   const [intensityData, setIntensityData] = useState([]);
@@ -26,9 +26,9 @@ const AnalyseEmission = () => {
   const [sourceDataAll, setSourceDataAll] = useState([]);
   const [locationData, setLocationData] = useState([]);
   const [locationDataAll, setLocationDataAll] = useState([]);
-  const [selectedYear, setSelectedYear] = useState("2023");
+  const [selectedYear, setSelectedYear] = useState('2023');
   const [corporates, setCorporates] = useState([]);
-  const [reportType, setReportType] = useState("Organization");
+  const [reportType, setReportType] = useState('Organization');
   const [loopen, setLoOpen] = useState(false);
   const [dateRange, setDateRange] = useState({
     start: null,
@@ -37,21 +37,21 @@ const AnalyseEmission = () => {
 
   const [isDateRangeValid, setIsDateRangeValid] = useState(true);
   const [datasetparams, setDatasetparams] = useState({
-    organisation: "",
-    corporate: "",
-    location: "",
+    organisation: '',
+    corporate: '',
+    location: '',
     start: null,
     end: null,
   });
-  const [organisationName, setOrganisationName] = useState("");
-  const [corporateName, setCorporateName] = useState("");
-  const [locationName, setLocationName] = useState("");
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [organisationName, setOrganisationName] = useState('');
+  const [corporateName, setCorporateName] = useState('');
+  const [locationName, setLocationName] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const [errors, setErrors] = useState({
-    organization: "Please select Organisation",
-    corporate: "Please select Corporate",
-    location: "Please select Location",
+    organization: 'Please select Organisation',
+    corporate: 'Please select Corporate',
+    location: 'Please select Location',
   });
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -62,7 +62,7 @@ const AnalyseEmission = () => {
   const fetchData = async (params) => {
     if (!params.start || !params.end) {
       setIsDateRangeValid(false);
-      console.error("Invalid date range selected");
+      console.error('Invalid date range selected');
       return;
     } else {
       const startDate = new Date(params.start);
@@ -74,7 +74,7 @@ const AnalyseEmission = () => {
           start: null,
           end: null,
         });
-        console.error("End date cannot be before start date");
+        console.error('End date cannot be before start date');
         return;
       } else {
         setIsDateRangeValid(true);
@@ -112,21 +112,21 @@ const AnalyseEmission = () => {
         location: loc.location,
         ageContribution: `${loc.contribution}%`,
         totalemissions: String(loc.total),
-        units: "tCO₂e",
+        units: 'tCO₂e',
       }));
       const formattedScope = all_emission_by_scope.map((s, index) => ({
         sno: String(index + 1),
         scope: s.scope,
         ageContribution: `${s.contribution}%`,
         totalemissions: String(s.total),
-        units: "tCO₂e",
+        units: 'tCO₂e',
       }));
       const formattedSource = top_5_emisson_by_source.map((src, index) => ({
         sno: String(index + 1),
         source: src.source,
         ageContribution: `${src.contribution}%`,
         totalemissions: String(src.total),
-        units: "tCO₂e",
+        units: 'tCO₂e',
       }));
       const formattedLocationAll = all_emission_by_location.map(
         (loc, index) => ({
@@ -134,7 +134,7 @@ const AnalyseEmission = () => {
           location: loc.location,
           ageContribution: `${loc.contribution}%`,
           totalemissions: String(loc.total),
-          units: "tCO₂e",
+          units: 'tCO₂e',
         })
       );
       const formattedSourceAll = all_emission_by_source.map((loc, index) => ({
@@ -142,7 +142,7 @@ const AnalyseEmission = () => {
         source: loc.source,
         ageContribution: `${loc.contribution}%`,
         totalemissions: String(loc.total),
-        units: "tCO₂e",
+        units: 'tCO₂e',
       }));
 
       const formattedReduction = disclosure_analyze_305_5.map((s, index) => ({
@@ -153,27 +153,27 @@ const AnalyseEmission = () => {
         year: s.year,
         rationale: s.rationale,
         emissionReduction: s.ghg_emission_reduced,
-        scopeReduction: s.scopes?.length > 0 ? s.scopes.join(", ") : "",
-        gases: s.gases_included?.length > 0 ? s.gases_included.join(", ") : "",
+        scopeReduction: s.scopes?.length > 0 ? s.scopes.join(', ') : '',
+        gases: s.gases_included?.length > 0 ? s.gases_included.join(', ') : '',
         tools: s.assumption_or_calculation,
       }));
 
       const formattedIntensity = ghg_emission_intensity.map((s, index) => ({
-        "S.No": String(index + 1),
-        "Organisation Metric": s.organization_metric,
+        'S.No': String(index + 1),
+        'Organisation Metric': s.organization_metric,
         Quantity: s.quantity,
         Unit: s.unit,
-        "Type of GHGs":
-          s.type_of_ghg?.length > 0 ? s.type_of_ghg.join(", ") : "",
-        "GHG Emission Intensity": s.ghg_emission_intensity,
+        'Type of GHGs':
+          s.type_of_ghg?.length > 0 ? s.type_of_ghg.join(', ') : '',
+        'GHG Emission Intensity': s.ghg_emission_intensity,
         Unit: s.ghg_intensity_unit,
-        CO2: s.ch4 ? <TiTick className="text-green-400 w-5 h-5" /> : "",
-        N2O: s.n2o ? <TiTick className="text-green-400 w-5 h-5" /> : "",
-        CH4: s.co2 ? <TiTick className="text-green-400 w-5 h-5" /> : "",
-        HFCs: s.HFCs ? <TiTick className="text-green-400 w-5 h-5" /> : "",
-        PFCs: s.PFCs ? <TiTick className="text-green-400 w-5 h-5" /> : "",
-        SF6: s.SF6 ? <TiTick className="text-green-400 w-5 h-5" /> : "",
-        NF3: s.NF3 ? <TiTick className="text-green-400 w-5 h-5" /> : "",
+        CO2: s.ch4 ? <TiTick className='text-green-400 w-5 h-5' /> : '',
+        N2O: s.n2o ? <TiTick className='text-green-400 w-5 h-5' /> : '',
+        CH4: s.co2 ? <TiTick className='text-green-400 w-5 h-5' /> : '',
+        HFCs: s.HFCs ? <TiTick className='text-green-400 w-5 h-5' /> : '',
+        PFCs: s.PFCs ? <TiTick className='text-green-400 w-5 h-5' /> : '',
+        SF6: s.SF6 ? <TiTick className='text-green-400 w-5 h-5' /> : '',
+        NF3: s.NF3 ? <TiTick className='text-green-400 w-5 h-5' /> : '',
       }));
 
       setScopeData(formattedScope);
@@ -197,7 +197,7 @@ const AnalyseEmission = () => {
       setAnalyseData(resultArray);
       LoaderClose();
     } catch (error) {
-      console.error("There was a problem with the fetch operation:", error);
+      console.error('There was a problem with the fetch operation:', error);
       LoaderClose();
     }
   };
@@ -217,7 +217,7 @@ const AnalyseEmission = () => {
           organisation: response.data[0].id,
         }));
       } catch (e) {
-        console.error("Failed fetching organization:", e);
+        console.error('Failed fetching organization:', e);
       }
     };
 
@@ -233,7 +233,7 @@ const AnalyseEmission = () => {
           });
           setCorporates(response.data);
         } catch (e) {
-          console.error("Failed fetching corporates:", e);
+          console.error('Failed fetching corporates:', e);
         }
       }
     };
@@ -252,9 +252,9 @@ const AnalyseEmission = () => {
             }
           );
           setSelectedLocation(response.data || []);
-          console.log(response.data, "location test");
+          console.log(response.data, 'location test');
         } catch (e) {
-          console.error("Failed fetching locations:", e);
+          console.error('Failed fetching locations:', e);
           setSelectedLocation([]); // Set as an empty array on error
         }
       }
@@ -266,11 +266,11 @@ const AnalyseEmission = () => {
   const handleReportTypeChange = (type) => {
     setReportType(type);
 
-    if (type === "Organization") {
-      setSelectedCorp("");
-      setSelectedLocation("");
+    if (type === 'Organization') {
+      setSelectedCorp('');
+      setSelectedLocation('');
     }
-    if (type === "Corporate") {
+    if (type === 'Corporate') {
       setScopeData([]);
       setSourceData([]);
       setLocationData([]);
@@ -282,7 +282,7 @@ const AnalyseEmission = () => {
       });
       setIsDateRangeValid(false);
     }
-    if (type === "Location") {
+    if (type === 'Location') {
       setScopeData([]);
       setSourceData([]);
       setLocationData([]);
@@ -301,17 +301,17 @@ const AnalyseEmission = () => {
     if (!newOrg) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        organization: "Please select an organization",
+        organization: 'Please select an organization',
       }));
     } else {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        organization: "",
+        organization: '',
       }));
     }
     setSelectedOrg(newOrg);
-    setSelectedCorp("");
-    setSelectedSetLocation("");
+    setSelectedCorp('');
+    setSelectedSetLocation('');
     setScopeData([]);
     setSourceData([]);
     setReductionData([]);
@@ -320,8 +320,8 @@ const AnalyseEmission = () => {
     setDatasetparams((prevParams) => ({
       ...prevParams,
       organisation: newOrg,
-      corporate: "",
-      location: "",
+      corporate: '',
+      location: '',
     }));
   };
 
@@ -330,20 +330,20 @@ const AnalyseEmission = () => {
     if (!newCorp) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        corporate: "Please select a corporate",
+        corporate: 'Please select a corporate',
       }));
     } else {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        corporate: "",
+        corporate: '',
       }));
     }
     setSelectedCorp(newCorp);
-    setSelectedSetLocation("");
+    setSelectedSetLocation('');
     setDatasetparams((prevParams) => ({
       ...prevParams,
       corporate: newCorp,
-      location: "",
+      location: '',
     }));
   };
   const handleLocationChange = (e) => {
@@ -351,12 +351,12 @@ const AnalyseEmission = () => {
     if (!newLocation) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        location: "Please select a location",
+        location: 'Please select a location',
       }));
     } else {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        location: "",
+        location: '',
       }));
     }
     setSelectedSetLocation(newLocation);
@@ -377,19 +377,19 @@ const AnalyseEmission = () => {
 
   return (
     <>
-      <div className="mb-2 flex-col items-center xl:pt-4  gap-6">
-        <div className="mt-4 pb-3 xl:mx-5 lg:mx-5 md:mx-5 2xl:mx-5 4k:mx-5 2k:mx-5 mx-2  text-left">
-          <div className="mb-2 flex-col items-center pt-2  gap-6">
-            <div className="justify-start items-center gap-4 inline-flex">
+      <div className='mb-2 flex-col items-center xl:pt-4  gap-6'>
+        <div className='mt-4 pb-3 xl:mx-5 lg:mx-5 md:mx-5 2xl:mx-5 4k:mx-5 2k:mx-5 mx-2  text-left'>
+          <div className='mb-2 flex-col items-center pt-2  gap-6'>
+            <div className='justify-start items-center gap-4 inline-flex'>
               <div className="text-zinc-600 text-[12px]  font-semibold font-['Manrope']">
                 View By:
               </div>
-              <div className="rounded-lg shadow  justify-start items-start flex">
+              <div className='rounded-lg shadow  justify-start items-start flex'>
                 <div
                   className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                    reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
+                    reportType === 'Organization' ? 'bg-[#d2dfeb]' : 'bg-white'
                   }`}
-                  onClick={() => handleReportTypeChange("Organization")}
+                  onClick={() => handleReportTypeChange('Organization')}
                 >
                   <div className="text-slate-800 text-[12px]  font-medium font-['Manrope'] leading-tight">
                     Organization
@@ -397,9 +397,9 @@ const AnalyseEmission = () => {
                 </div>
                 <div
                   className={`w-[111px] px-4 py-2.5 border-y border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                    reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
+                    reportType === 'Corporate' ? 'bg-[#d2dfeb]' : 'bg-white'
                   }`}
-                  onClick={() => handleReportTypeChange("Corporate")}
+                  onClick={() => handleReportTypeChange('Corporate')}
                 >
                   <div className="text-slate-700 text-[12px]  font-medium font-['Manrope'] leading-tight">
                     Corporate
@@ -407,9 +407,9 @@ const AnalyseEmission = () => {
                 </div>
                 <div
                   className={`w-[111px] px-4 py-2.5 border-y border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                    reportType === "Location" ? "bg-[#d2dfeb]" : "bg-white"
+                    reportType === 'Location' ? 'bg-[#d2dfeb]' : 'bg-white'
                   }`}
-                  onClick={() => handleReportTypeChange("Location")}
+                  onClick={() => handleReportTypeChange('Location')}
                 >
                   <div className="text-slate-700 text-[12px]  font-medium font-['Manrope'] leading-tight">
                     Location
@@ -419,23 +419,23 @@ const AnalyseEmission = () => {
             </div>
             <div
               className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[100%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${
-                reportType !== "" ? "visible" : "hidden"
+                reportType !== '' ? 'visible' : 'hidden'
               }`}
             >
-              <div className="mr-2">
+              <div className='mr-2'>
                 <label
-                  htmlFor="cname"
-                  className="text-neutral-800 text-[12px] font-normal"
+                  htmlFor='cname'
+                  className='text-neutral-800 text-[12px] font-normal'
                 >
                   Select Organization*
                 </label>
-                <div className="mt-2">
+                <div className='mt-2'>
                   <select
-                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+                    className='block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-gray-300 placeholder:text-gray-400'
                     value={selectedOrg}
                     onChange={handleOrganizationChange}
                   >
-                    <option value="01">--Select Organization--- </option>
+                    <option value='01'>--Select Organization--- </option>
                     {organisations &&
                       organisations.map((org) => (
                         <option key={org.id} value={org.id}>
@@ -444,27 +444,27 @@ const AnalyseEmission = () => {
                       ))}
                   </select>
                   {errors.organization && (
-                    <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                    <p className='text-[#007EEF] text-[12px] pl-2 mt-2'>
                       {errors.organization}
                     </p>
                   )}
                 </div>
               </div>
-              {(reportType === "Corporate" || reportType === "Location") && (
-                <div className="mr-2">
+              {(reportType === 'Corporate' || reportType === 'Location') && (
+                <div className='mr-2'>
                   <label
-                    htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal ml-1"
+                    htmlFor='cname'
+                    className='text-neutral-800 text-[12px] font-normal ml-1'
                   >
                     Select Corporate
                   </label>
-                  <div className="mt-2">
+                  <div className='mt-2'>
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+                      className='block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-gray-300 placeholder:text-gray-400'
                       value={selectedCorp}
                       onChange={handleOrgChange}
                     >
-                      <option value="">--Select Corporate--- </option>
+                      <option value=''>--Select Corporate--- </option>
                       {corporates &&
                         corporates.map((corp) => (
                           <option key={corp.id} value={corp.id}>
@@ -473,28 +473,28 @@ const AnalyseEmission = () => {
                         ))}
                     </select>
                     {errors.corporate && (
-                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                      <p className='text-[#007EEF] text-[12px] pl-2 mt-2'>
                         {errors.corporate}
                       </p>
                     )}
                   </div>
                 </div>
               )}
-              {reportType === "Location" && (
-                <div className="mr-2">
+              {reportType === 'Location' && (
+                <div className='mr-2'>
                   <label
-                    htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal ml-1"
+                    htmlFor='cname'
+                    className='text-neutral-800 text-[12px] font-normal ml-1'
                   >
                     Select Location
                   </label>
-                  <div className="mt-2">
+                  <div className='mt-2'>
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+                      className='block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-gray-300 placeholder:text-gray-400'
                       value={selectedsetLocation}
                       onChange={handleLocationChange}
                     >
-                      <option value="">--Select Location--- </option>
+                      <option value=''>--Select Location--- </option>
                       {selectedLocation &&
                         selectedLocation.map((location) => (
                           <option key={location.id} value={location.id}>
@@ -503,28 +503,28 @@ const AnalyseEmission = () => {
                         ))}
                     </select>
                     {errors.location && (
-                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                      <p className='text-[#007EEF] text-[12px] pl-2 mt-2'>
                         {errors.location}
                       </p>
                     )}
                   </div>
                 </div>
               )}
-              <div className="mr-2">
+              <div className='mr-2'>
                 <label
-                  htmlFor="cname"
-                  className="text-neutral-800 text-[12px] font-normal"
+                  htmlFor='cname'
+                  className='text-neutral-800 text-[12px] font-normal'
                 >
                   Select Date
                 </label>
-                <div className="mt-2">
+                <div className='mt-2'>
                   <DateRangePicker
                     startDate={dateRange.start}
                     endDate={dateRange.end}
                     onDateChange={handleDateChange}
                   />
                   {!isDateRangeValid && (
-                    <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
+                    <p className='text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2'>
                       Please select a date range
                     </p>
                   )}
@@ -534,9 +534,9 @@ const AnalyseEmission = () => {
           </div>
         </div>
       </div>
-      <div className="mt-8 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10">
-        <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mb-4">
-          <h2 className="font-bold text-[15px]">Top Emissions by Scope</h2>
+      <div className='mt-8 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10'>
+        <div className='xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mb-4'>
+          <h2 className='font-bold text-[15px]'>Top Emissions by Scope</h2>
         </div>
         <ScopeTable
           data={scopeData}
@@ -547,9 +547,9 @@ const AnalyseEmission = () => {
           toDate={toDate}
         />
       </div>
-      <div className="mt-4 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10">
-        <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mb-4">
-          <h2 className="font-bold text-[15px]">Top Emissions by Source</h2>
+      <div className='mt-4 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10'>
+        <div className='xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mb-4'>
+          <h2 className='font-bold text-[15px]'>Top Emissions by Source</h2>
         </div>
         <SourceTable
           data={sourceData}
@@ -562,9 +562,9 @@ const AnalyseEmission = () => {
         />
       </div>
 
-      <div className="mt-8 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10">
-        <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mb-4">
-          <h2 className="font-bold text-[15px]">Top Emissions by Location</h2>
+      <div className='mt-8 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10'>
+        <div className='xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mb-4'>
+          <h2 className='font-bold text-[15px]'>Top Emissions by Location</h2>
         </div>
         <LocationTable
           data={locationData}
@@ -577,29 +577,29 @@ const AnalyseEmission = () => {
         />
       </div>
 
-      <div className="mt-4 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10 ">
-        <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-1  xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex justify-between items-center ">
-          <div className="mb-4">
-                <h2 className="font-bold text-[15px]">GHG Emission Intensity</h2>
+      <div className='mt-4 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10 '>
+        <div className='xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-1  xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex justify-between items-center '>
+          <div className='mb-4'>
+            <h2 className='font-bold text-[15px]'>GHG Emission Intensity</h2>
           </div>
-      
-          <div className="flex gap-2 mb-4">
-            <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+
+          <div className='flex gap-2 mb-4'>
+            <div className='w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex'>
               <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                 GRI 305-4a
               </div>
             </div>
-            <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+            <div className='w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex'>
               <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                 GRI 305-4b
               </div>
             </div>
-            <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+            <div className='w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex'>
               <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                 GRI 305-4c
               </div>
             </div>
-            <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+            <div className='w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex'>
               <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                 GRI 305-4d
               </div>
@@ -615,26 +615,26 @@ const AnalyseEmission = () => {
           toDate={toDate}
         />
       </div>
-      <div className="mt-4 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10">
-        <div className="xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-1 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex justify-between  items-center ">
-          <div className="mb-4">
-               <h2 className="font-bold text-[15px]">
-            GHG Emission Reduction Initiatives
-          </h2>
+      <div className='mt-4 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10'>
+        <div className='xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-1 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex justify-between  items-center '>
+          <div className='mb-4'>
+            <h2 className='font-bold text-[15px]'>
+              GHG Emission Reduction Initiatives
+            </h2>
           </div>
-       
-          <div className="flex gap-2 mb-4">
-            <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+
+          <div className='flex gap-2 mb-4'>
+            <div className='w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex'>
               <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                 GRI 305-5a
               </div>
             </div>
-            <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+            <div className='w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex'>
               <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                 GRI 305-5b
               </div>
             </div>
-            <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+            <div className='w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex'>
               <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                 GRI 305-5d
               </div>
@@ -651,12 +651,12 @@ const AnalyseEmission = () => {
         />
       </div>
       {loopen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[100]">
+        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[100]'>
           <Oval
             height={50}
             width={50}
-            color="#00BFFF"
-            secondaryColor="#f3f3f3"
+            color='#00BFFF'
+            secondaryColor='#f3f3f3'
             strokeWidth={2}
             strokeWidthSecondary={2}
           />

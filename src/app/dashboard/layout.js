@@ -1,5 +1,13 @@
 'use client';
+'use client';
 
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import DashboardHeader from './dashobardheader';
+import Sidenav from './sidebar';
+import { GlobalState } from '../../Context/page';
+import GlobalErrorHandler from '../shared/components/GlobalErrorHandler';
+import MobileSidenav from './mobilesidebar';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import DashboardHeader from './dashobardheader';
@@ -24,6 +32,8 @@ export default function DashboardLayout({ children }) {
     handleResize(); // Initial check
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
@@ -34,6 +44,8 @@ export default function DashboardLayout({ children }) {
       );
 
       if (!existingScript) {
+        const script = document.createElement('script');
+        script.src = 'https://static.elfsight.com/platform/platform.js';
         const script = document.createElement('script');
         script.src = 'https://static.elfsight.com/platform/platform.js';
         script.async = true;
@@ -72,12 +84,21 @@ export default function DashboardLayout({ children }) {
       {isMobile ? (
         // **Mobile Version**
         <div className='h-full flex flex-col'>
+        <div className='h-full flex flex-col'>
           {/* Fixed Mobile Header */}
+          <div className='fixed top-0 left-0 w-full z-50 h-16 bg-white shadow-sm'>
           <div className='fixed top-0 left-0 w-full z-50 h-16 bg-white shadow-sm'>
             <MobileSidenav />
           </div>
 
+
           {/* Fixed Elfsight Widget for Mobile */}
+          <div className='fixed top-16 left-0 w-full z-40 bg-white'>
+            <div className='elfsight-widget px-4 py-2'>
+              <div
+                className='elfsight-app-1163c096-07de-4281-9338-996a26b6eec8'
+                data-elfsight-app-lazy
+              ></div>
           <div className='fixed top-16 left-0 w-full z-40 bg-white'>
             <div className='elfsight-widget px-4 py-2'>
               <div
@@ -87,27 +108,27 @@ export default function DashboardLayout({ children }) {
             </div>
           </div>
 
+
           {/* Scrollable Main Content */}
+          <div className='flex-1 overflow-y-auto mt-32 px-4'>{children}</div>
           <div className='flex-1 overflow-y-auto mt-32 px-4'>{children}</div>
         </div>
       ) : (
         // **Desktop Version**
-        <div className='xl:flex lg:flex md:hidden 2xl:flex w-full h-full hidden'>
+        <div className='xl:flex lg:flex md:hidden 2xl:flex w-screen h-screen hidden overflow-hidden'>
           {/* Fixed Sidebar */}
-          <div className='sticky top-0 left-0 h-full z-40'>
-            <div className='h-full overflow-y-auto'>
+          <div className='flex-shrink-0 h-full z-40'>
+            <div className='h-full overflow-y-auto scrollable-content'>
               <Sidenav />
             </div>
           </div>
 
-          {/* Main Content Area */}
-          <div
-            className={`flex-1 h-full flex flex-col transition-all duration-300`}
-          >
+          {/* Main Content Area - Takes remaining width */}
+          <div className='flex-1 h-full flex flex-col min-w-0 overflow-hidden'>
             {/* Fixed Header and Elfsight Widget */}
-            <div className='flex-shrink-0'>
+            <div className='flex-shrink-0 w-full'>
               <DashboardHeader />
-              <div className='elfsight-widget mb-5 mx-2'>
+              <div className='elfsight-widget mb-5 px-4'>
                 <div
                   className='elfsight-app-1163c096-07de-4281-9338-996a26b6eec8'
                   data-elfsight-app-lazy
@@ -115,11 +136,16 @@ export default function DashboardLayout({ children }) {
               </div>
             </div>
 
-            {/* Scrollable Content */}
-            <div className='flex-1 overflow-hidden'>{children}</div>
+            {/* Scrollable Content - Constrained to available space */}
+            <div className='flex-1 overflow-y-auto overflow-x-hidden px-4 pb-6 min-w-0 scrollable-content'>
+              <div className='w-full max-w-full'>
+                {children}
+              </div>
+            </div>
           </div>
         </div>
       )}
     </section>
   );
 }
+

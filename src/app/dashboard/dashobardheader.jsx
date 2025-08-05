@@ -142,6 +142,7 @@ const DashboardHeader = () => {
           username: localUserDetails?.user_detail[0]?.username,
           email: email,
           initials: initials || usernameInitials,
+          initials: initials || usernameInitials,
         });
       }
     };
@@ -258,12 +259,8 @@ const DashboardHeader = () => {
 
   return (
     <>
-      <div className='flex bg-white xl:sticky lg:sticky 2xl:sticky md:sticky xl:top-0 lg:top-0 2xl:top-0 md:top-0  right-0 border-b border-sky-600 border-opacity-50 xl:pt-4 lg:pt-4 md:pt-4 2xl:pt-4 w-full xl:ml-2 lg:ml-2 md:ml-2 2xl:ml-2 xl:z-[100] lg:z-[100] md:z-[100] 2xl:z-[100]'>
-        <div
-          className={`flex justify-start items-center my-2 gap-1 px-2 xl:ml-0 lg:ml-0 2xl:ml-0 md:ml-0  ${
-            open ? 'w-[80%]' : 'w-[80%]'
-          }`}
-        >
+      <div className='flex bg-white xl:sticky lg:sticky 2xl:sticky md:sticky xl:top-0 lg:top-0 2xl:top-0 md:top-0 right-0 border-b border-sky-600 border-opacity-50 xl:pt-4 lg:pt-4 md:pt-4 2xl:pt-4 w-full xl:z-[50] lg:z-[50] md:z-[50] 2xl:z-[50] min-w-0'>
+        <div className='flex justify-start items-center my-2 gap-1 flex-1 min-w-0 px-6'>
           <Link href='/dashboard'>
             <span className='text-[#007EEF] hover:text-[#007EEF] font-semibold'>
               Home
@@ -291,10 +288,7 @@ const DashboardHeader = () => {
 
           <span className='text-[#222222] hover:text-[#222222]'>{text2}</span>
         </div>
-        <div
-          className='lg:block xl:block 2xl:block md:block hidden w-[18%]'
-          style={{ position: 'relative', zIndex: 10000 }}
-        >
+        <div className='lg:block xl:block 2xl:block md:block hidden flex-shrink-0 mr-6'>
           <div className='flex justify-end items-center  '>
             <div className='flex justify-between items-center'>
               <div className='text-[#007EEF] flex relative items-center whitespace-nowrap'>
