@@ -14,6 +14,7 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 import { Oval } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MaskedEmail, MaskedPhone } from '../../../../../shared/components/MaskedPIIField';
 
 const NotifyGRI = ({
   isNotifyModalOpen,
@@ -75,7 +76,7 @@ const NotifyGRI = ({
     </p>
     <p className="mt-0.5">Statement of Use: {statement}</p>
     <p className="mt-0.5">Contact Person: {userName}</p>
-    <p className="mt-0.5">Contact Details: {userEmail}</p>
+    <p className="mt-0.5">Contact Details: <MaskedEmail email={userEmail} /></p>
     <br /><br />
     <p>Best regards,</p>
     <p>Team Sustainext</p>

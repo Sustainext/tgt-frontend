@@ -15,7 +15,7 @@ const widgets = {
  AllInputWidget:AllInputWidget
 };
 
-const view_path = "brsr-general-org-details-cin-brsr-a-i-1";
+const view_path = "brsr-general-stakeholder-engagement-marginalized-stakeholder-groups-brsr-c-p4-li-3";
 const client_id = 1;
 const user_id = 1;
 
@@ -147,32 +147,32 @@ const Screen4 = ({
     }
   };
 
-//   useEffect(() => {
-//     if (selectedOrg && year && togglestatus) {
-//       if (togglestatus === "Corporate" && selectedCorp) {
-//         setTimeout(() => {
-//           loadFormData();
-//         }, 1000); // 1000ms = 1 second delay
-//       } else if (togglestatus === "Corporate" && !selectedCorp) {
-//         setFormData([{}]);
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});
-//       } else {
-//         setTimeout(() => {
-//           setFormData([{}]);
-//           setRemoteSchema({});
-//           setRemoteUiSchema({});
-//           loadFormData();
-//         }, 1000); // 1000ms = 1 second delay
-//       }
+  useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        setTimeout(() => {
+          loadFormData();
+        }, 1000); // 1000ms = 1 second delay
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        setTimeout(() => {
+          setFormData([{}]);
+          setRemoteSchema({});
+          setRemoteUiSchema({});
+          loadFormData();
+        }, 1000); // 1000ms = 1 second delay
+      }
 
-//       toastShown.current = false;
-//     } else {
-//       if (!toastShown.current) {
-//         toastShown.current = true;
-//       }
-//     }
-//   }, [selectedOrg, year, selectedCorp, togglestatus]);
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -190,10 +190,10 @@ const Screen4 = ({
         }}
       >
         <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
-         {
+        <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+             {
             Object.keys(r_schema || {}).length == 0 && (
-                <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+                <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
              Details of Instances of Engagement with, and Actions Taken to Address the Concerns of Vulnerable/Marginalized Stakeholder Groups
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
@@ -218,9 +218,11 @@ taken to address their concerns or needs"
                 }}
               ></ReactTooltip>
             </h2>
-          </div>
+                
             )
          }
+          </div>
+        
           
 
           <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
@@ -235,8 +237,8 @@ taken to address their concerns or needs"
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -254,7 +256,7 @@ taken to address their concerns or needs"
                 ? "cursor-not-allowed opacity-90"
                 : ""
             }`}
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
             disabled={
               (togglestatus === "Corporate" && !selectedCorp) ||
               (togglestatus !== "Corporate" && (!selectedOrg || !year))

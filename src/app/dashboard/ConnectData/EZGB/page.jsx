@@ -117,16 +117,16 @@ const EZGB = ({ setActiveTab }) => {
                             <div className="grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-4 2k:grid-cols-4 4k:grid-cols-4 gap-6 mb-6">
                                 <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
                                     <h2 className="text-[14px] font-neutral text-[#71717A] uppercase">
-                                        total utility providers
+                                        Total utility providers
                                     </h2>
-                                    <p className="text-[21px] font-bold text-[#18181B] mt-2">-</p>
+                                    <p className="text-[15px] font-normal text-[#18181B] mt-2">Comming soon</p>
                                 </div>
                                 <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
                                     <h2 className="text-[14px] font-neutral text-[#71717A] uppercase">
                                         Total Locations
                                     </h2>
                                     <div className="flex justify-between">
-                                        <p className="text-[21px] font-bold text-[#18181B] mt-2">-</p>
+                                        <p className="text-[15px] font-normal text-[#18181B] mt-2">Comming soon</p>
                                         {/* <p className="text-sm text-green-600 mt-4">-</p> */}
                                     </div>
                                 </div>
@@ -135,8 +135,8 @@ const EZGB = ({ setActiveTab }) => {
                                         Total Meters
                                     </h2>
                                     <div className="flex justify-between">
-                                        <p className="text-[21px] font-bold text-[#18181B] mt-2">
-                                            -
+                                        <p className="text-[15px] font-normal text-[#18181B] mt-2">
+                                            Comming soon
                                         </p>
                                         {/* <p className="text-sm text-green-600 mt-4">36%</p> */}
                                     </div>

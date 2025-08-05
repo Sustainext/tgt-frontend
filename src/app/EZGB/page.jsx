@@ -31,7 +31,7 @@ const EZGB = () => {
           ⚠️ Failed to load the utility connection script. Please try again later or contact support.
         </div>
       ) : (
-        <div id="cmdButton" customerCode="fsq9ur" email='udm-dev:himanshu.banswal@sustainext.ai'></div>
+        <div id="cmdButton" customerCode="fsq9ur" email='utsav.pipersaniya@sustainext.ai'></div>
       )}
     </div>
   );

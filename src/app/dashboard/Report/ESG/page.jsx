@@ -570,6 +570,7 @@ const ESGReport = () => {
             setIsCreateReportModalOpen={setIsCreateReportModalOpen}
             setIsOmissionSubmitted={setIsOmissionSubmitted}
             reportType={reportType}
+            ispageNumberGenerated={ispageNumberGenerated}
           />
         );
       } else {
@@ -599,6 +600,22 @@ const ESGReport = () => {
       const response = await axiosInstance.get(url);
       if (response.status == 200) {
         setIspageNumberGenerated(true)
+         toast.success(
+        <p style={{ margin: 0, fontSize: "13.5px", lineHeight: "1.4" }}>
+          Page numbers generated successfully. You can now download the updated Content Index and Report.
+        </p>,
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+
       }
     }
     catch(err){

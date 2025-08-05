@@ -238,7 +238,7 @@ const DisclosureTable = ({ data,ispageNumberGenerated }) => {
                         )}
                       </td>
 
-                      <td className="px-4 py-4 text-center">{ispageNumberGenerated?row.page_number:'Loading...'}</td>
+                      <td className={`px-4 py-4 ${ispageNumberGenerated?'text-center':'text-left'}`}>{ispageNumberGenerated?row.page_number:'Loading page numbers... Please wait.'}</td>
                       <td className="px-4 py-4">
                         {row.omission?.[0]?.req_omitted}
                       </td>
@@ -322,7 +322,7 @@ const DisclosureTable = ({ data,ispageNumberGenerated }) => {
                                 )}
                               </td>
 
-                              <td className="px-4 py-4 text-center">{ispageNumberGenerated?row.page_number:'Loading...'}</td>
+                               <td className={`px-4 py-4 ${ispageNumberGenerated?'text-center':'text-left'}`}>{ispageNumberGenerated?row.page_number:'Loading page numbers... Please wait.'}</td>
                               <td className="px-4 py-4">
                                 {row.omission?.[0]?.req_omitted}
                               </td>

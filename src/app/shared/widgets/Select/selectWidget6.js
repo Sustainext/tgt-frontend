@@ -68,7 +68,7 @@ const SelectWidget6 = ({
           ></ReactTooltip>
         </p>
           <select
-            className={`block w-1/2 mb-4 p-2 text-[#727272] text-[12px] bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 capitalize  ${hasError ? 'border-red-500' : 'border-gray-300'}`}
+            className={`block w-1/2 mb-4 p-2 mt-4 text-[#727272] text-[12px] bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 capitalize  ${hasError ? 'border-red-500' : 'border-gray-300'}`}
             value={value}
             onChange={handleChange}
           >

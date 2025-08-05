@@ -105,6 +105,8 @@ const Screen1 = ({
       Organisationengages: "",
       Stakeholdersidentified: "",
       Stakeholderengagement: "",
+      ScopOfEngagement:"",
+      MarginalizedGroup:""
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -200,32 +202,32 @@ const Screen1 = ({
     }
   };
 
-  // useEffect(() => {
-  //   if (selectedOrg && year && togglestatus) {
-  //     if (togglestatus === "Corporate" && selectedCorp) {
-  //       setTimeout(() => {
-  //         loadFormData();
-  //       }, 1000); // 1000ms = 1 second delay
-  //     } else if (togglestatus === "Corporate" && !selectedCorp) {
-  //       setFormData(initialFormData);
-  //       setRemoteSchema({});
-  //       setRemoteUiSchema({});
-  //     } else {
-  //       setTimeout(() => {
-  //         setFormData(initialFormData);
-  //         setRemoteSchema({});
-  //         setRemoteUiSchema({});
-  //         loadFormData();
-  //       }, 1000); // 1000ms = 1 second delay
-  //     }
+  useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        setTimeout(() => {
+          loadFormData();
+        }, 1000); // 1000ms = 1 second delay
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        setTimeout(() => {
+          setFormData(initialFormData);
+          setRemoteSchema({});
+          setRemoteUiSchema({});
+          loadFormData();
+        }, 1000); // 1000ms = 1 second delay
+      }
 
-  //     toastShown.current = false;
-  //   } else {
-  //     if (!toastShown.current) {
-  //       toastShown.current = true;
-  //     }
-  //   }
-  // }, [selectedOrg, year, selectedCorp, togglestatus]);
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -277,13 +279,18 @@ by the organization’s activities."
                   GRI 2-29a
                 </div>
               </div>
+              <div className="w-[90px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-[#18736B] text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  BRSR-C-P4-EI-2
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

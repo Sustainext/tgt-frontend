@@ -293,6 +293,8 @@ const ReportCreatedPopup = ({
                       isHovered ? "" : "mb-3"
                     } rounded-md hover:text-blue-500 hover:border-blue-500 group`}
                     onClick={() => setIsHovered(!isHovered)}
+                    data-tooltip-content="This may take a few moments. PDF and Excel downloads will be available soon; please do not refresh the page."
+                    data-tooltip-id="tooltip-id1"
                   >
                     <span className="w-4.5 h-4.5 text-[#667085] mt-1 group-hover:text-blue-500 flex gap-2">
                       <GoDownload className="mt-0.5" />
@@ -301,6 +303,22 @@ const ReportCreatedPopup = ({
 
                     <IoIosArrowDown className="mt-1" />
                   </button>
+                  {
+                      !ispageNumberGenerated && (
+                        <ReactTooltip
+                                                id={`tooltip-id1`}
+                                                place="top"
+                                                effect="solid"
+                                                style={{
+                                                  fontSize: "12px",
+                                                  background: "#0a0528",
+                                                  boxShadow: 3,
+                                                  borderRadius: "8px",
+                                                  zIndex: 1000,
+                                                }}
+                                              />
+                      )
+                    }
                   {isHovered && (
                     <div className="absolute z-50 bg-white border border-gray-200 rounded-md shadow-md  w-full">
                       <div
@@ -374,7 +392,7 @@ const ReportCreatedPopup = ({
                
               </div>
 
-              <div className="flex justify-end mt-5 mb-3">
+              <div className="flex justify-end relative mt-5 mb-3">
                 <button
                   className="w-auto h-full mr-3  py-2 px-3 bg-transparent text-[#4F4F4F] rounded-[8px] shadow cursor-pointer border border-gray-200 flex gap-2"
                   onClick={() => {
@@ -385,7 +403,10 @@ const ReportCreatedPopup = ({
                   Exit to Report Module
                 </button>
                 <button
-                  className="w-auto h-full py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow  flex gap-2"
+                  disabled={!ispageNumberGenerated}
+                  data-tooltip-content="This may take a few moments. The Download Report option will be available soon; please do not refresh the page"
+                  data-tooltip-id="tooltip-id2"
+                  className={`w-auto h-full py-2 px-3 ${!ispageNumberGenerated?'opacity-30 cursor-not-allowed':''} bg-[#007EEF] text-white rounded-[8px] shadow  flex gap-2`}
                   onClick={() => {
                     handleDownloadpdf(reportid, reportname, false);
                   }}
@@ -407,6 +428,22 @@ const ReportCreatedPopup = ({
                   Download Report
                   {/* <MdKeyboardArrowDown className="w-5 h-5 text-[#fff] mt-[3px]"/> */}
                 </button>
+                 {
+                      !ispageNumberGenerated && (
+                        <ReactTooltip
+                                                id={`tooltip-id2`}
+                                                place="top"
+                                                effect="solid"
+                                                style={{
+                                                  fontSize: "12px",
+                                                  background: "#0a0528",
+                                                  boxShadow: 3,
+                                                  borderRadius: "8px",
+                                                  zIndex: 1000,
+                                                }}
+                                              />
+                      )
+                    }
               </div>
             </div>
           </div>

@@ -298,6 +298,11 @@ const Screen2 = ({
                   GRI 2-29a
                 </div>
               </div>
+              <div className="w-[90px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-[#18736B] text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  BRSR-C-P4-EI-2
+                </div>
+              </div>
             </div>
           </div>
         </div>

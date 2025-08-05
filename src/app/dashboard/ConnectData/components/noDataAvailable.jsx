@@ -23,7 +23,7 @@ const NoDataAvailable =({})=>{
                
                   <div className="mb-4 mt-3">
                   <p className="text-[22px] text-[#2E0B34] font-semibold mb-3 text-center">
-                    No Connections made
+                   Comming Soon
                     </p>
                     <p className="text-[14px] text-[#2E0B34] mb-2 text-center">
                   Link your utility accounts through EZGB  to securely import your energy usage data.
