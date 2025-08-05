@@ -259,7 +259,7 @@ const DashboardHeader = () => {
   return (
     <>
       <div className='flex bg-white xl:sticky lg:sticky 2xl:sticky md:sticky xl:top-0 lg:top-0 2xl:top-0 md:top-0 right-0 border-b border-sky-600 border-opacity-50 xl:pt-4 lg:pt-4 md:pt-4 2xl:pt-4 w-full xl:z-[50] lg:z-[50] md:z-[50] 2xl:z-[50] min-w-0'>
-        <div className='flex justify-start items-center my-2 gap-1 flex-1 min-w-0 pl-6'>
+        <div className='flex justify-start items-center my-2 gap-1 flex-1 min-w-0 px-6'>
           <Link href='/dashboard'>
             <span className='text-[#007EEF] hover:text-[#007EEF] font-semibold'>
               Home
@@ -287,7 +287,7 @@ const DashboardHeader = () => {
 
           <span className='text-[#222222] hover:text-[#222222]'>{text2}</span>
         </div>
-        <div className='lg:block xl:block 2xl:block md:block hidden flex-shrink-0'>
+        <div className='lg:block xl:block 2xl:block md:block hidden flex-shrink-0 mr-6'>
           <div className='flex justify-end items-center  '>
             <div className='flex justify-between items-center'>
               <div className='text-[#007EEF] flex relative items-center whitespace-nowrap'>

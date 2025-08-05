@@ -1302,25 +1302,25 @@ const EmissionWidget = React.memo(
       switch (rowType) {
         case 'calculated':
           return (
-            <td className='py-2 text-center w-12'>
+            <td className='py-2 text-center w-8'>
               <div className='w-1.5 h-1.5 rounded-full bg-green-500 mx-auto'></div>
             </td>
           );
         case 'assigned':
           return (
-            <td className='py-2 text-center w-12'>
+            <td className='py-2 text-center w-8'>
               <div className='w-1.5 h-1.5 rounded-full bg-gray-500 mx-auto'></div>
             </td>
           );
         case 'approved':
           return (
-            <td className='py-2 text-center w-12'>
+            <td className='py-2 text-center w-8'>
               <div className='w-1.5 h-1.5 rounded-full bg-[#FFA701] mx-auto'></div>
             </td>
           );
         default:
           return (
-            <td className='py-2 text-center w-12'>
+            <td className='py-2 text-center w-8'>
               <div className='flex justify-center items-center h-full'>
                 <input
                   type='checkbox'
@@ -1335,12 +1335,7 @@ const EmissionWidget = React.memo(
     };
 
     return (
-      <div
-        className={`w-full ${
-          !id.startsWith('root_0') &&
-          ''
-        }`}
-      >
+      <div className={`w-full ${!id.startsWith('root_0') && ''}`}>
         {id.startsWith('root_0') && (
           <div className='mb-2'>
             <button
@@ -1368,7 +1363,7 @@ const EmissionWidget = React.memo(
           {id.startsWith('root_0') && (
             <thead className='bg-gray-50'>
               <tr>
-                <th className='h-[44px] w-12 border-b border-gray-300 px-0.5'>
+                <th className='h-[44px] w-8 border-b border-gray-300 px-0.5'>
                   <div className='flex justify-center items-center h-full'>
                     <input
                       type='checkbox'
@@ -1388,10 +1383,14 @@ const EmissionWidget = React.memo(
                   <div className='flex items-center h-full'>Activity</div>
                 </th>
                 <th className='h-[44px] w-[31%] border-b border-gray-300 text-[12px] text-right text-[#667085] px-0.5'>
-                  <div className='flex items-center justify-end h-full'>Quantity</div>
+                  <div className='flex items-center justify-end h-full'>
+                    Quantity
+                  </div>
                 </th>
                 <th className='h-[44px] w-[10%] border-b border-gray-300 text-[12px] text-center text-[#667085] px-1'>
-                  <div className='flex items-center justify-center h-full'>Assignee</div>
+                  <div className='flex items-center justify-center h-full'>
+                    Assignee
+                  </div>
                 </th>
                 <th className='h-[44px] w-[5%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-1'>
                   <div className='flex items-center h-full'>Actions</div>
@@ -1405,34 +1404,36 @@ const EmissionWidget = React.memo(
               {renderFirstColumn()}
 
               {/* Category Dropdown */}
-              <td className={`w-[18%] py-2 pl-1 pr-0.5 relative ${
+              <td
+                className={`w-[18%] py-2 pl-1 pr-1 relative ${
                   scopeErrors['Category'] ? '' : ''
-                }`}>
+                }`}
+              >
                 <div className='flex items-center h-full'>
-                <select
-                  value={category}
-                  onChange={(e) => handleCategoryChange(e.target.value)}
-                  className={getFieldClass(
-                    'Category',
-                    `text-[12px] focus:outline-none w-full py-1 ${
-                      category && rowType === 'default'
-                        ? 'border-b border-zinc-800'
-                        : ''
-                    }`
-                  )}
-                  disabled={['assigned', 'calculated', 'approved'].includes(
-                    rowType
-                  )}
-                >
-                  <option className={getPlaceholderClass('Category')}>
-                    Select Category
-                  </option>
-                  {baseCategories.map((categoryName, index) => (
-                    <option key={index} value={categoryName}>
-                      {categoryName}
+                  <select
+                    value={category}
+                    onChange={(e) => handleCategoryChange(e.target.value)}
+                    className={getFieldClass(
+                      'Category',
+                      `text-[12px] focus:outline-none w-full py-1 ${
+                        category && rowType === 'default'
+                          ? 'border-b border-zinc-800'
+                          : ''
+                      }`
+                    )}
+                    disabled={['assigned', 'calculated', 'approved'].includes(
+                      rowType
+                    )}
+                  >
+                    <option className={getPlaceholderClass('Category')}>
+                      Select Category
                     </option>
-                  ))}
-                </select>
+                    {baseCategories.map((categoryName, index) => (
+                      <option key={index} value={categoryName}>
+                        {categoryName}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 {scopeErrors['Category'] && (
                   <div className='text-[12px] text-red-500 absolute left-3 -bottom-[18px]'>
@@ -1444,28 +1445,30 @@ const EmissionWidget = React.memo(
               {/* Sub-Category Dropdown */}
               <td className='w-[18%] py-2 px-0.5 relative'>
                 <div className='flex items-center h-full'>
-                <select
-                  value={subcategory}
-                  onChange={(e) => handleSubcategoryChange(e.target.value)}
-                  className={getFieldClass(
-                    'Subcategory',
-                    `text-[12px] focus:outline-none w-full py-1 ${
-                      subcategory && rowType === 'default'
-                        ? 'border-b border-zinc-800'
-                        : ''
-                    }`
-                  )}
-                  disabled={['assigned', 'calculated', 'approved'].includes(
-                    rowType
-                  )}
-                >
-                  <option className='emissionscopc'>Select Sub-Category</option>
-                  {subcategories.map((sub, index) => (
-                    <option key={index} value={sub}>
-                      {sub}
+                  <select
+                    value={subcategory}
+                    onChange={(e) => handleSubcategoryChange(e.target.value)}
+                    className={getFieldClass(
+                      'Subcategory',
+                      `text-[12px] focus:outline-none w-full py-1 ${
+                        subcategory && rowType === 'default'
+                          ? 'border-b border-zinc-800'
+                          : ''
+                      }`
+                    )}
+                    disabled={['assigned', 'calculated', 'approved'].includes(
+                      rowType
+                    )}
+                  >
+                    <option className='emissionscopc'>
+                      Select Sub-Category
                     </option>
-                  ))}
-                </select>
+                    {subcategories.map((sub, index) => (
+                      <option key={index} value={sub}>
+                        {sub}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 {scopeErrors['Subcategory'] && (
                   <div className='text-[12px] text-red-500 absolute left-2 -bottom-[18px]'>
@@ -1600,9 +1603,7 @@ const EmissionWidget = React.memo(
                             step='1'
                             min='0'
                             placeholder={
-                              scopeErrors['Quantity']
-                                ? 'Value *'
-                                : 'Value'
+                              scopeErrors['Quantity'] ? 'Value *' : 'Value'
                             }
                             className={getFieldClass(
                               'Quantity',
@@ -1615,12 +1616,14 @@ const EmissionWidget = React.memo(
                           <select
                             value={unit}
                             onChange={(e) => handleUnitChange(e.target.value)}
-                            className={`text-[12px] w-12 text-center rounded-md py-1 shadow ${
+                            className={`text-[12px] w-8 pl-1 pr-0 text-center rounded-md py-1 shadow ${
                               unit
                                 ? 'bg-white text-blue-500 '
                                 : 'bg-blue-500 text-white hover:bg-blue-600'
                             }`}
-                            disabled={['assigned', 'approved'].includes(rowType)}
+                            disabled={['assigned', 'approved'].includes(
+                              rowType
+                            )}
                           >
                             <option value=''>{tempUnit || 'Unit'}</option>
                             {units.map((unit, index) => (
@@ -1645,17 +1648,21 @@ const EmissionWidget = React.memo(
                             )}
                             step='1'
                             min='0'
-                            disabled={['assigned', 'approved'].includes(rowType)}
+                            disabled={['assigned', 'approved'].includes(
+                              rowType
+                            )}
                           />
                           <select
                             value={unit2}
                             onChange={(e) => handleUnit2Change(e.target.value)}
-                            className={`text-[12px] w-12 text-center rounded-md py-1 shadow ${
+                            className={`text-[12px] w-8 pl-1 pr-0 text-center rounded-md py-1 shadow ${
                               unit2
                                 ? 'bg-white text-blue-500 '
                                 : 'bg-blue-500 text-white hover:bg-blue-600'
                             }`}
-                            disabled={['assigned', 'approved'].includes(rowType)}
+                            disabled={['assigned', 'approved'].includes(
+                              rowType
+                            )}
                           >
                             <option value=''>{tempUnit2 || 'Unit'}</option>
                             {units2.map((unit, index) => (
@@ -1690,7 +1697,7 @@ const EmissionWidget = React.memo(
                         <select
                           value={unit}
                           onChange={(e) => handleUnitChange(e.target.value)}
-                          className={`text-[12px] w-14 text-center rounded-md py-1 shadow ${
+                          className={`text-[12px] w-14 pl-1 pr-0 text-center rounded-md py-1 shadow ${
                             unit
                               ? 'bg-white text-blue-500 '
                               : 'bg-blue-500 text-white hover:bg-blue-600'
@@ -1734,235 +1741,235 @@ const EmissionWidget = React.memo(
               {/* Assignee Button */}
               <td className='w-[10%] py-2 px-1'>
                 <div className='flex items-center justify-center h-full'>
-                <button
-                  type='button'
-                  className={`${
-                    assignedUser
-                      ? 'bg-white text-blue-500 pl-1 truncate overflow-hidden shadow-md border border-gray-300 hover:shadow-lg'
-                      : 'bg-blue-500 text-white hover:bg-blue-600 '
-                  } text-[12px] w-full max-w-28 py-1 rounded-md shadow disabled:opacity-80`}
-                  onClick={handleAssignClick}
-                  disabled={
-                    rowType === 'calculated' ||
-                    rowType === 'approved' ||
-                    rowType === 'assigned'
-                  }
-                >
-                  {assignedUser ? `${assignedUser}` : 'Assign to'}
-                </button>
+                  <button
+                    type='button'
+                    className={`${
+                      assignedUser
+                        ? 'bg-white text-blue-500 pl-1 truncate overflow-hidden shadow-md border border-gray-300 hover:shadow-lg'
+                        : 'bg-blue-500 text-white hover:bg-blue-600 '
+                    } text-[12px] w-full max-w-28 py-1 rounded-md shadow disabled:opacity-80`}
+                    onClick={handleAssignClick}
+                    disabled={
+                      rowType === 'calculated' ||
+                      rowType === 'approved' ||
+                      rowType === 'assigned'
+                    }
+                  >
+                    {assignedUser ? `${assignedUser}` : 'Assign to'}
+                  </button>
                 </div>
               </td>
 
               {/* Actions - Delete & Upload */}
               <td className='w-[5%] py-2 px-1'>
                 <div className='flex items-center h-full'>
-                <div className='flex justify-start'>
-                  <div className='pt-1'>
-                    <label className=''>
-                      <LuTrash2
-                        className={`text-gray-500 ${
-                          rowType === 'approved'
-                            ? 'cursor-not-allowed'
-                            : 'hover:text-red-500 cursor-pointer'
-                        }`}
-                        onClick={handleClickonRemove}
-                      />
-                    </label>
-                  </div>
-                  <div className='pt-1'>
-                    <input
-                      type='file'
-                      id={id + scope}
-                      onChange={handleChange}
-                      style={{ display: 'none' }}
-                      disabled={
-                        rowType === 'assigned' ||
-                        rowType === 'approved' ||
-                        rowType === 'calculated'
-                      }
-                    />
-
-                    {fileName ? (
-                      <label className='cursor-pointer relative'>
-                        {fileType.includes(
-                          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                        ) ? (
-                          <RiFileExcel2Line
-                            className='text-green-500 ml-2'
-                            onClick={handlePreview}
-                            data-tooltip-id={fileName}
-                            data-tooltip-content={fileName}
-                          />
-                        ) : fileType.includes('application/pdf') ? (
-                          <BsFiletypePdf
-                            className='text-red-500 ml-2'
-                            onClick={handlePreview}
-                            data-tooltip-id={fileName}
-                            data-tooltip-content={fileName}
-                          />
-                        ) : fileType.includes('image') ? (
-                          <BsFileEarmarkImage
-                            className='text-blue-500 ml-2'
-                            onClick={handlePreview}
-                            data-tooltip-id={fileName}
-                            data-tooltip-content={fileName}
-                          />
-                        ) : (
-                          <RiFileExcel2Line
-                            className='text-blue-500 ml-2'
-                            onClick={handlePreview}
-                            data-tooltip-id={fileName}
-                            data-tooltip-content={fileName}
-                          />
-                        )}
-                        <ReactTooltip
-                          id={fileName}
-                          place='top'
-                          effect='solid'
-                          style={{
-                            backgroundColor: '#000',
-                            color: 'white',
-                            fontSize: '10px',
-                            boxShadow: 3,
-                            borderRadius: '8px',
-                          }}
+                  <div className='flex justify-start'>
+                    <div className='pt-1'>
+                      <label className=''>
+                        <LuTrash2
+                          className={`text-gray-500 ${
+                            rowType === 'approved'
+                              ? 'cursor-not-allowed'
+                              : 'hover:text-red-500 cursor-pointer'
+                          }`}
+                          onClick={handleClickonRemove}
                         />
                       </label>
-                    ) : (
-                      <label htmlFor={id + scope} className='cursor-pointer'>
-                        <TbUpload className='text-gray-500 hover:text-blue-500 ml-2' />
-                      </label>
-                    )}
+                    </div>
+                    <div className='pt-1'>
+                      <input
+                        type='file'
+                        id={id + scope}
+                        onChange={handleChange}
+                        style={{ display: 'none' }}
+                        disabled={
+                          rowType === 'assigned' ||
+                          rowType === 'approved' ||
+                          rowType === 'calculated'
+                        }
+                      />
 
-                    {/* Preview Modal */}
-                    {showModal && previewData && (
-                      <Portal>
-                        <div className='fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50'>
-                          <div className='bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]'>
-                            <div className='flex justify-between mt-4 mb-4'>
-                              <div>
-                                <h5 className='mb-4 ml-2 font-semibold truncate w-[200px] overflow-hidden whitespace-nowrap'>
-                                  {fileName}
-                                </h5>
-                              </div>
-                              <div className='flex'>
-                                <div
-                                  className='mb-4'
-                                  onClick={() => handleDelete(id, scope)}
-                                >
-                                  <button
-                                    type='button'
-                                    className='px-2 py-1 mr-2 w-[120px] mt-1 flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white disabled:opacity-70 disabled:cursor-not-allowed'
-                                    disabled={rowType === 'approved'}
-                                  >
-                                    <LuTrash2 className='me-2' /> Delete File
-                                  </button>
-                                </div>
+                      {fileName ? (
+                        <label className='cursor-pointer relative'>
+                          {fileType.includes(
+                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                          ) ? (
+                            <RiFileExcel2Line
+                              className='text-green-500 ml-2'
+                              onClick={handlePreview}
+                              data-tooltip-id={fileName}
+                              data-tooltip-content={fileName}
+                            />
+                          ) : fileType.includes('application/pdf') ? (
+                            <BsFiletypePdf
+                              className='text-red-500 ml-2'
+                              onClick={handlePreview}
+                              data-tooltip-id={fileName}
+                              data-tooltip-content={fileName}
+                            />
+                          ) : fileType.includes('image') ? (
+                            <BsFileEarmarkImage
+                              className='text-blue-500 ml-2'
+                              onClick={handlePreview}
+                              data-tooltip-id={fileName}
+                              data-tooltip-content={fileName}
+                            />
+                          ) : (
+                            <RiFileExcel2Line
+                              className='text-blue-500 ml-2'
+                              onClick={handlePreview}
+                              data-tooltip-id={fileName}
+                              data-tooltip-content={fileName}
+                            />
+                          )}
+                          <ReactTooltip
+                            id={fileName}
+                            place='top'
+                            effect='solid'
+                            style={{
+                              backgroundColor: '#000',
+                              color: 'white',
+                              fontSize: '10px',
+                              boxShadow: 3,
+                              borderRadius: '8px',
+                            }}
+                          />
+                        </label>
+                      ) : (
+                        <label htmlFor={id + scope} className='cursor-pointer'>
+                          <TbUpload className='text-gray-500 hover:text-blue-500 ml-2' />
+                        </label>
+                      )}
+
+                      {/* Preview Modal */}
+                      {showModal && previewData && (
+                        <Portal>
+                          <div className='fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50'>
+                            <div className='bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]'>
+                              <div className='flex justify-between mt-4 mb-4'>
                                 <div>
-                                  <button
-                                    className='px-4 py-2 text-xl rounded'
-                                    onClick={handleCloseModal}
-                                  >
-                                    <MdClose />
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                            <div className='block  xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex '>
-                              <div className='relative w-[90vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[60vh] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]'>
-                                {fileType.startsWith('image') ? (
-                                  <img
-                                    src={previewData}
-                                    alt='Preview'
-                                    className='max-w-full max-h-full object-contain'
-                                  />
-                                ) : fileType === 'application/pdf' ? (
-                                  <iframe
-                                    src={previewData}
-                                    title='PDF Preview'
-                                    className='w-full h-full'
-                                  />
-                                ) : (
-                                  <div className='flex flex-col items-center justify-center h-full'>
-                                    <p>
-                                      File preview not available.Please download
-                                      and verify
-                                    </p>
-                                    <a
-                                      href={previewData}
-                                      download={fileName}
-                                      className='mt-12 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600'
-                                    >
-                                      Download File
-                                    </a>
-                                  </div>
-                                )}
-                              </div>
-                              <div className='w-[211px] ml-6'>
-                                <div className='mb-4 mt-1'>
-                                  <h2 className='text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide'>
-                                    File information
-                                  </h2>
-                                </div>
-                                <div className='mb-4'>
-                                  <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
-                                    FILE NAME
-                                  </h2>
-                                  <h2 className='text-[14px] leading-relaxed tracking-wide'>
+                                  <h5 className='mb-4 ml-2 font-semibold truncate w-[200px] overflow-hidden whitespace-nowrap'>
                                     {fileName}
-                                  </h2>
+                                  </h5>
                                 </div>
-                                <div className='mb-4'>
-                                  <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
-                                    FILE SIZE
-                                  </h2>
-                                  <h2 className='text-[14px] leading-relaxed tracking-wide'>
-                                    {(fileSize / 1024).toFixed(2)} KB
-                                  </h2>
+                                <div className='flex'>
+                                  <div
+                                    className='mb-4'
+                                    onClick={() => handleDelete(id, scope)}
+                                  >
+                                    <button
+                                      type='button'
+                                      className='px-2 py-1 mr-2 w-[120px] mt-1 flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white disabled:opacity-70 disabled:cursor-not-allowed'
+                                      disabled={rowType === 'approved'}
+                                    >
+                                      <LuTrash2 className='me-2' /> Delete File
+                                    </button>
+                                  </div>
+                                  <div>
+                                    <button
+                                      className='px-4 py-2 text-xl rounded'
+                                      onClick={handleCloseModal}
+                                    >
+                                      <MdClose />
+                                    </button>
+                                  </div>
                                 </div>
-                                <div className='mb-4'>
-                                  <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
-                                    FILE TYPE
-                                  </h2>
-                                  <h2 className='text-[14px] leading-relaxed tracking-wide'>
-                                    {fileType}
-                                  </h2>
+                              </div>
+                              <div className='block  xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex '>
+                                <div className='relative w-[90vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[60vh] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]'>
+                                  {fileType.startsWith('image') ? (
+                                    <img
+                                      src={previewData}
+                                      alt='Preview'
+                                      className='max-w-full max-h-full object-contain'
+                                    />
+                                  ) : fileType === 'application/pdf' ? (
+                                    <iframe
+                                      src={previewData}
+                                      title='PDF Preview'
+                                      className='w-full h-full'
+                                    />
+                                  ) : (
+                                    <div className='flex flex-col items-center justify-center h-full'>
+                                      <p>
+                                        File preview not available.Please
+                                        download and verify
+                                      </p>
+                                      <a
+                                        href={previewData}
+                                        download={fileName}
+                                        className='mt-12 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600'
+                                      >
+                                        Download File
+                                      </a>
+                                    </div>
+                                  )}
                                 </div>
-                                <div className='mb-4'>
-                                  <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
-                                    UPLOAD DATE & TIME
-                                  </h2>
-                                  <h2 className='text-[14px] leading-relaxed tracking-wide'>
-                                    {uploadDateTime}
-                                  </h2>
-                                </div>
-                                <div className='mb-4'>
-                                  <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
-                                    UPLOADED BY
-                                  </h2>
-                                  <h2 className='text-[14px] leading-relaxed tracking-wide'>
-                                    {uploadedBy.replace(/^"|"$/g, '') ||
-                                      'Unknown'}
-                                  </h2>
+                                <div className='w-[211px] ml-6'>
+                                  <div className='mb-4 mt-1'>
+                                    <h2 className='text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide'>
+                                      File information
+                                    </h2>
+                                  </div>
+                                  <div className='mb-4'>
+                                    <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
+                                      FILE NAME
+                                    </h2>
+                                    <h2 className='text-[14px] leading-relaxed tracking-wide'>
+                                      {fileName}
+                                    </h2>
+                                  </div>
+                                  <div className='mb-4'>
+                                    <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
+                                      FILE SIZE
+                                    </h2>
+                                    <h2 className='text-[14px] leading-relaxed tracking-wide'>
+                                      {(fileSize / 1024).toFixed(2)} KB
+                                    </h2>
+                                  </div>
+                                  <div className='mb-4'>
+                                    <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
+                                      FILE TYPE
+                                    </h2>
+                                    <h2 className='text-[14px] leading-relaxed tracking-wide'>
+                                      {fileType}
+                                    </h2>
+                                  </div>
+                                  <div className='mb-4'>
+                                    <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
+                                      UPLOAD DATE & TIME
+                                    </h2>
+                                    <h2 className='text-[14px] leading-relaxed tracking-wide'>
+                                      {uploadDateTime}
+                                    </h2>
+                                  </div>
+                                  <div className='mb-4'>
+                                    <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
+                                      UPLOADED BY
+                                    </h2>
+                                    <h2 className='text-[14px] leading-relaxed tracking-wide'>
+                                      {uploadedBy.replace(/^"|"$/g, '') ||
+                                        'Unknown'}
+                                    </h2>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </Portal>
+                        </Portal>
+                      )}
+                    </div>
+                    {value.rowType === 'calculated' && (
+                      <div className='pt-1 ml-1'>
+                        <label className='cursor-pointer'>
+                          <MdOutlineRemoveRedEye
+                            className='text-gray-500 hover:text-blue-500'
+                            onClick={openInfoModal}
+                          />
+                        </label>
+                      </div>
                     )}
                   </div>
-                  {value.rowType === 'calculated' && (
-                    <div className='pt-1 ml-1'>
-                      <label className='cursor-pointer'>
-                        <MdOutlineRemoveRedEye
-                          className='text-gray-500 hover:text-blue-500'
-                          onClick={openInfoModal}
-                        />
-                      </label>
-                    </div>
-                  )}
-                </div>
                 </div>
               </td>
             </tr>
