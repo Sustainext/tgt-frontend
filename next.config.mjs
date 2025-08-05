@@ -25,7 +25,19 @@ const nextConfig = {
     // AUTH0_REDIRECT_URL: "http://localhost:3000/callback",
     FERNET_SECRET_KEY : 'erM9hVkymirZRLTmBT2JU05k3PUAc7Mrz-G2NhD2_ko='
   },
- 
+   async headers() {
+    return [
+      {
+        source: "/(.*)", // Apply to all routes
+        headers: [
+          {
+            key: "X-Frame-Options",
+            value: "DENY", // Or "SAMEORIGIN"
+          },
+        ],
+      },
+    ];
+  },
   images: {
     domains: [
       "udm-be-dev.sustainext.ai",

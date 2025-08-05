@@ -142,6 +142,7 @@ const DashboardHeader = () => {
           username: localUserDetails?.user_detail[0]?.username,
           email: email,
           initials: initials || usernameInitials,
+          initials: initials || usernameInitials,
         });
       }
     };
@@ -320,28 +321,28 @@ const DashboardHeader = () => {
                   ></ReactTooltip> */}
               </div>
 
-              <motion.div
+              <div
                 ref={bellIconRef}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
                 className='flex items-center mx-3 rounded-md hover:bg-gray-100 hover:shadow-sm p-1 cursor-pointer transition-all duration-200'
-                onClick={() => setNotificationsVisible(!notificationsVisible)}
+                onClick={() => {
+                  console.log('Notification clicked!');
+                  setNotificationsVisible(!notificationsVisible);
+                }}
               >
                 <div className='relative'>
                   <CiBellOn style={{ fontSize: '22px' }} />
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className='absolute -top-1 -right-1 bg-gradient-to-r from-sky-500 to-lime-500 text-white text-xs px-1 rounded-full'
-                  >
+                  <span className='absolute -top-1 -right-1 bg-gradient-to-r from-sky-500 to-lime-500 text-white text-xs px-1 rounded-full'>
                     2
-                  </motion.span>
+                  </span>
                 </div>
-              </motion.div>
+              </div>
 
               <div
                 className='relative cursor-pointer flex-shrink-0'
-                onClick={toggleDropdown}
+                onClick={() => {
+                  console.log('Profile clicked!');
+                  toggleDropdown();
+                }}
               >
                 <div className='flex justify-center items-center'>
                   {userProfileData?.profile_pic ? (
