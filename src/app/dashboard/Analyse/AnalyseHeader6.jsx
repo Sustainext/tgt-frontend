@@ -102,11 +102,10 @@ const AnalyseHeader6 = ({ location, setLocation, dateRange, setDateRange }) => {
               className='absolute inset-y-0 right-2 flex items-center pointer-events-none'
               style={{ top: '50%', transform: 'translateY(-50%)' }}
             >
-              {<MdKeyboardArrowDown
-                className="text-neutral-500"
-                style={{ fontSize: "16px" }}
+              <MdKeyboardArrowDown
+                className='text-neutral-500'
+                style={{ fontSize: '16px' }}
               />
-                
             </div>
             {errors.location && (
               <p className='text-[#007EEF] text-[12px] mt-1 ml-1'>
