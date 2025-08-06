@@ -118,11 +118,11 @@ const DashboardHeader = () => {
         const last_name = userDetails.user_detail[0].last_name;
         const username = userDetails?.user_detail[0]?.username || '';
         const initials = first_name.charAt(0) + last_name.charAt(0);
-    const usernameInitials = username.charAt(0);
+        const usernameInitials = username.charAt(0);
         setUserData({
           username: userDetails.user_detail[0].username,
           email: email,
-          initials:  initials || usernameInitials,
+          initials: initials || usernameInitials,
           last_name: capitalizeName(last_name),
           first_name: capitalizeName(first_name),
         });
@@ -137,11 +137,12 @@ const DashboardHeader = () => {
         const last_name = localUserDetails.user_detail[0].last_name;
         const username = localUserDetails?.user_detail[0]?.username || '';
         const initials = first_name.charAt(0) + last_name.charAt(0);
-         const usernameInitials = username.charAt(0);
+        const usernameInitials = username.charAt(0);
         setUserData({
           username: localUserDetails?.user_detail[0]?.username,
           email: email,
-          initials:  initials || usernameInitials,
+          initials: initials || usernameInitials,
+          initials: initials || usernameInitials,
         });
       }
     };
@@ -240,7 +241,7 @@ const DashboardHeader = () => {
 
     return () => observer.disconnect();
   }, []);
-  
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (drawerRef.current && !drawerRef.current.contains(event.target)) {
@@ -258,12 +259,8 @@ const DashboardHeader = () => {
 
   return (
     <>
-      <div className='flex bg-white xl:sticky lg:sticky 2xl:sticky md:sticky xl:top-0 lg:top-0 2xl:top-0 md:top-0  right-0 border-b border-sky-600 border-opacity-50 xl:pt-4 lg:pt-4 md:pt-4 2xl:pt-4 w-full xl:mx-2 lg:mx-2 md:mx-2 2xl:mx-2 xl:z-[100] lg:z-[100] md:z-[100] 2xl:z-[100]'>
-        <div
-          className={`flex justify-start items-center my-2 gap-1 px-2 xl:ml-0 lg:ml-0 2xl:ml-0 md:ml-0  ${
-            open ? 'w-[84%]' : 'w-[84%]'
-          }`}
-        >
+      <div className='flex bg-white xl:sticky lg:sticky 2xl:sticky md:sticky xl:top-0 lg:top-0 2xl:top-0 md:top-0 right-0 border-b border-sky-600 border-opacity-50 xl:pt-4 lg:pt-4 md:pt-4 2xl:pt-4 w-full xl:z-[50] lg:z-[50] md:z-[50] 2xl:z-[50] min-w-0'>
+        <div className='flex justify-start items-center my-2 gap-1 flex-1 min-w-0 px-6'>
           <Link href='/dashboard'>
             <span className='text-[#007EEF] hover:text-[#007EEF] font-semibold'>
               Home
@@ -291,7 +288,7 @@ const DashboardHeader = () => {
 
           <span className='text-[#222222] hover:text-[#222222]'>{text2}</span>
         </div>
-        <div className='lg:block xl:block 2xl:block md:block hidden w-[15%]'>
+        <div className='lg:block xl:block 2xl:block md:block hidden flex-shrink-0 mr-6'>
           <div className='flex justify-end items-center  '>
             <div className='flex justify-between items-center'>
               <div className='text-[#007EEF] flex relative items-center whitespace-nowrap'>
@@ -324,28 +321,28 @@ const DashboardHeader = () => {
                   ></ReactTooltip> */}
               </div>
 
-              <motion.div
+              <div
                 ref={bellIconRef}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
                 className='flex items-center mx-3 rounded-md hover:bg-gray-100 hover:shadow-sm p-1 cursor-pointer transition-all duration-200'
-                onClick={() => setNotificationsVisible(!notificationsVisible)}
+                onClick={() => {
+                  console.log('Notification clicked!');
+                  setNotificationsVisible(!notificationsVisible);
+                }}
               >
                 <div className='relative'>
                   <CiBellOn style={{ fontSize: '22px' }} />
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className='absolute -top-1 -right-1 bg-gradient-to-r from-sky-500 to-lime-500 text-white text-xs px-1 rounded-full'
-                  >
+                  <span className='absolute -top-1 -right-1 bg-gradient-to-r from-sky-500 to-lime-500 text-white text-xs px-1 rounded-full'>
                     2
-                  </motion.span>
+                  </span>
                 </div>
-              </motion.div>
+              </div>
 
               <div
                 className='relative cursor-pointer flex-shrink-0'
-                onClick={toggleDropdown}
+                onClick={() => {
+                  console.log('Profile clicked!');
+                  toggleDropdown();
+                }}
               >
                 <div className='flex justify-center items-center'>
                   {userProfileData?.profile_pic ? (
@@ -471,7 +468,10 @@ const DashboardHeader = () => {
                         {userProfileData?.phone && (
                           <div className='flex items-center text-gray-600 text-sm mt-3'>
                             <MdOutlineLocalPhone className='w-4 h-4 mr-1' />
-                            <MaskedPhone phone={userProfileData.phone} className='inline' />
+                            <MaskedPhone
+                              phone={userProfileData.phone}
+                              className='inline'
+                            />
                           </div>
                         )}
 

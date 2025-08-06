@@ -5,7 +5,10 @@ import { useAuth } from "../Context/auth";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
 import CryptoJS from "crypto-js";
-import Auth0LoginButton from './utils/Auth0LoginButton'
+import Auth0LoginButton from './utils/Auth0LoginButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBrowserInfo, selectBrowserClasses, selectIsDetected } from '../lib/redux/features/browserSlice';
+import { detectBrowser } from './utils/browserUtils';
 
 const PasswordInput = ({
   value,
@@ -94,9 +97,20 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const { login } = useAuth();
+  
+  const dispatch = useDispatch();
+  const browserClasses = useSelector(selectBrowserClasses);
+  const isBrowserDetected = useSelector(selectIsDetected);
 
   useEffect(() => {
     setIsMounted(true);
+    
+    // Detect browser and dispatch to Redux store
+    if (!isBrowserDetected) {
+      const browserInfo = detectBrowser();
+      dispatch(setBrowserInfo(browserInfo));
+    }
+    
     const rememberedUser = localStorage.getItem("rememberedUser");
     if (rememberedUser) {
       try {
@@ -109,7 +123,7 @@ export default function Home() {
         localStorage.removeItem("rememberedUser");
       }
     }
-  }, []);
+  }, [dispatch, isBrowserDetected]);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -152,14 +166,14 @@ export default function Home() {
       <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
       <main>
         <div
-          className="min-h-[125vh] bg-cover bg-center"
+          className={`${browserClasses.containerHeight} bg-cover bg-center`}
           style={{
             backgroundImage:
               "url('https://sustainextstorage1.blob.core.windows.net/sustainext-frontend-assets/Home/authbg.webp')",
           }}
         >
-          <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 h-screen">
-            <div className="mb-4">
+          <div className={`${browserClasses.gridHeight}`}>
+            <div className={`absolute top-0 left-0 z-10 mb-4 ${browserClasses.logoContainer}`}>
               <img
                 src="https://sustainextstorage1.blob.core.windows.net/sustainext-frontend-assets/Home/sustainext-new-white-logo.webp"
                 alt="Logo"
@@ -168,11 +182,13 @@ export default function Home() {
                 className="h-28 w-auto"
               />
             </div>
-            <div className="bg-white shadow-lg rounded-lg p-16 max-w-md w-full my-20 mx-auto min-h-fit max-h-max ">
+            <div className={`grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 ${browserClasses.gridHeight}`}>
+              <div className="mb-4"></div>
+              <div className={`bg-white shadow-lg rounded-lg ${browserClasses.formPadding} ${browserClasses.formMargin} ${browserClasses.formAlignment} max-w-md w-full mx-auto h-fit`}>
               <h2 className="text-left text-2xl font-extrabold text-gray-900">
                 Welcome back
               </h2>
-              <p className="text-sm mb-6">Login to sustainable solutions</p>
+              <p className="text-sm mb-4">Login to sustainable solutions</p>
               <form onSubmit={handleLogin}>
                 <div className="mb-4">
                   <label htmlFor="email" className="text-sm">
@@ -240,8 +256,11 @@ export default function Home() {
                   </button>
                 </div>
               </form>
-              <Auth0LoginButton/>
+              <div className="mt-4">
+                <Auth0LoginButton/>
+              </div>
             </div>
+          </div>
           </div>
         </div>
       </main>
