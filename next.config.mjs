@@ -29,9 +29,9 @@ const nextConfig = {
       "https://keycloak.sustainext.ai/realms/Sustainext/protocol/openid-connect",
     KEYCLOAK_ISSUER_BASE_URL:
       "https://keycloak.sustainext.ai/realms/Sustainext/protocol/openid-connect",
-    KEYCLOAK_CLIENT_ID: "Sustainext_Dev",
-    KEYCLOAK_CLIENT_SECRET: "XguRccaEmJrScOicrHroplnwm9cFLVkZ",
-    KEYCLOAK_BASE_URL: "https://sustainext-udm-dev.sustainext.ai",
+    KEYCLOAK_CLIENT_ID: "Sustainext_Test",
+    KEYCLOAK_CLIENT_SECRET: "GUZ9XkSU4kYfM29ZQg1bhtMTIl6ElJ9u",
+    KEYCLOAK_BASE_URL: "https://sustainext-udm.sustainext.ai",
     KEYCLOAK_LOGOUT_URl:"https://keycloak.sustainext.ai/realms/Sustainext/protocol/openid-connect/logout",
   },
   async headers() {
