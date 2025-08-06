@@ -4,19 +4,18 @@ import { decryptPII, isDataEncrypted } from "../utils/fernetDecryption";
 
 const EZGB = () => {
   const [scriptError, setScriptError] = useState(false);
-  const [userEmail,setUserEmail]=useState(localStorage.getItem('userEmail'))
-   useEffect(()=>{
-    if(userEmail){
-      const encrypted = isDataEncrypted(userEmail);
-      if(encrypted){
-        const decrypted = decryptPII(userEmail);
-        setUserEmail(decrypted)
+  const [userEmail,setUserEmail]=useState(null)
+   useEffect(() => {
+    let email = localStorage.getItem('userEmail');
+    if (email) {
+      if (isDataEncrypted(email)) {
+        email = decryptPII(email);
       }
-      
+      setUserEmail(email);
+    } else {
+      setUserEmail("");
     }
-    
-
-   },[userEmail])
+  }, []);
 
   useEffect(() => {
     if (!document.getElementById('cmdButtonScript')) {
