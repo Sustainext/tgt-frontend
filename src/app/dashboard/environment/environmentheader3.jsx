@@ -104,10 +104,10 @@ const EnvironmentHeader3 = ({
                 ))}
               </select>
               <div className='absolute inset-y-0 right-2 flex items-center pl-3 pointer-events-none'>
-                {/* <MdKeyboardArrowDown
+                <MdKeyboardArrowDown
                   className='text-neutral-500'
                   style={{ fontSize: '16px' }}
-                />{' '} */}
+                />{' '}
               </div>
             </div>
             <div>
@@ -134,10 +134,10 @@ const EnvironmentHeader3 = ({
                 ))}
               </select>
               <div className='absolute inset-y-0 right-2 flex items-center pl-3 pointer-events-none'>
-                {/* <MdKeyboardArrowDown
+                <MdKeyboardArrowDown
                   className='text-neutral-500'
                   style={{ fontSize: '16px' }}
-                />{' '} */}
+                />{' '}
               </div>
             </div>
             <div>
