@@ -278,7 +278,7 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-sm max-h-[90vh] scrollable-content overflow-y-auto transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all">
                 {/* Close button at top right */}
                 <button
                   type="button"
@@ -419,7 +419,7 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
                     </label>
                     <div className="relative">
                       <select
-                        className="w-full h-10 appearance-none rounded-md pl-3 pr-10 py-2 border border-gray-300 bg-white focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
+                        className="w-full h-10 appearance-none rounded-md pl-3 pr-10 py-2 border border-gray-300 bg-white focus:border-blue-500 focus:ring-blue-500 focus:outline-none text-sm"
                         value={selectedOrg}
                         onChange={(e) => setSelectedOrg(e.target.value)}
                         disabled={isLoading}
@@ -448,7 +448,7 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
                       </label>
                       <div className="relative">
                         <select
-                          className="w-full h-10 appearance-none rounded-md pl-3 pr-10 py-2 border border-gray-300 bg-white focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
+                          className="w-full h-10 appearance-none rounded-md pl-3 pr-10 py-2 border border-gray-300 bg-white focus:border-blue-500 focus:ring-blue-500 focus:outline-none text-sm"
                           value={selectedCorp}
                           onChange={(e) => setSelectedCorp(e.target.value)}
                           disabled={isFetchingCorporates || !selectedOrg}
@@ -489,7 +489,7 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
                         <select
                           className={`w-full h-10 appearance-none rounded-md pl-3 pr-10 py-2 border ${
                             baseYearError ? "border-red-500" : "border-gray-300"
-                          } bg-white focus:border-blue-500 focus:ring-blue-500 focus:outline-none`}
+                          } bg-white focus:border-blue-500 focus:ring-blue-500 focus:outline-none text-sm`}
                           value={baseYear}
                           onChange={(e) => {
                             setBaseYear(e.target.value);
@@ -527,7 +527,7 @@ const CreateScenarioModal = ({ isOpen, onClose, onCreateScenario }) => {
                             targetYearError
                               ? "border-red-500"
                               : "border-gray-300"
-                          } bg-white focus:border-blue-500 focus:ring-blue-500 focus:outline-none`}
+                          } bg-white focus:border-blue-500 focus:ring-blue-500 focus:outline-none text-sm`}
                           value={targetYear}
                           onChange={(e) => {
                             setTargetYear(e.target.value);
