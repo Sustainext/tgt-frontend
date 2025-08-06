@@ -154,13 +154,15 @@ export default function Callback() {
 
   // When user manually wants to logout and return to login (e.g. error screen)
   const handleBackToLogin = () => {
+ const ssoToken = typeof window !== 'undefined' ? localStorage.getItem("sso_token") : '';
+  
     const postLogoutRedirect = encodeURIComponent(
       `${process.env.KEYCLOAK_BASE_URL}`
     );
     const logoutUrl = `${
       process.env.KEYCLOAK_LOGOUT_URl
     }?post_logout_redirect_uri=${postLogoutRedirect}${
-      newtoken ? `&id_token_hint=${newtoken}` : ""
+      ssoToken ? `&id_token_hint=${ssoToken}` : ""
     }`;
 
   Cookies.remove("token");
