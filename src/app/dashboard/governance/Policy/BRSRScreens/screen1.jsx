@@ -276,6 +276,7 @@ const Screen1 = ({
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+  const [validationError,setValidationError] = useState(false)
  
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -422,6 +423,7 @@ const Screen1 = ({
           formContext={{
             tableName: "policyAndReasonTable",
             formData: formData,
+            setValidationError:setValidationError
           }}
         />
  
@@ -431,14 +433,15 @@ const Screen1 = ({
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
               (!selectedCorp && togglestatus === "Corporate") ||
               !selectedOrg ||
-              !year
+              !year || validationError
                 ? "cursor-not-allowed opacity-90"
                 : ""
             }`}
             onClick={handleSubmit}
             disabled={
               (togglestatus === "Corporate" && !selectedCorp) ||
-              (togglestatus !== "Corporate" && (!selectedOrg || !year))
+              (togglestatus !== "Corporate" && (!selectedOrg || !year)) ||
+              validationError
             }
           >
             Submit

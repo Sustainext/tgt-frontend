@@ -127,6 +127,7 @@ const BrsrPolicyTableWidget = ({ options, value, onChange,formContext }) => {
     debouncedUpdate(localValue);
   }, [localValue, debouncedUpdate]);
 
+
   // Render each section only once
   let lastSection = -1;
 
@@ -321,8 +322,17 @@ const BrsrPolicyTableWidget = ({ options, value, onChange,formContext }) => {
     type="url"
     value={cellValue}
     
-    onChange={(e) =>
+    onChange={(e) =>{
       handleFieldChange(realRowIdx, col.key, e.target.value)
+      const isValid = /^https?:\/\/[^\s]+$/i.test(e.target.value);
+      if(e.target.value){
+        formContext?.setValidationError(!isValid)
+      }
+      else{
+        formContext?.setValidationError(false)
+      }
+      
+    }
     }
     placeholder="Enter website link"
     className="text-[12px] border-0 border-b border-gray-200 bg-transparent py-1 px-1 mx-2 w-full focus:outline-none focus:border-[#60a5fa] disabled:bg-[#F5F5F5] disabled:text-gray-400"

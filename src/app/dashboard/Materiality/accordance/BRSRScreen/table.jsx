@@ -345,8 +345,8 @@ risk or an opportunity to your business, as per the following format:
           <div>
             <button
               type="button"
-              className={`mt-5 text-center py-1 text-sm w-[100px] bg-blue-500 text-white hover:bg-blue-600 rounded  focus:outline-none focus:shadow-outline`}
-              onClick={handleSubmit}
+              className={`mt-5 text-center py-1 text-sm w-[100px] opacity-30 cursor-not-allowed bg-blue-500 text-white hover:bg-blue-600 rounded  focus:outline-none focus:shadow-outline`}
+              // onClick={handleSubmit}
               
             >
               Submit

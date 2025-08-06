@@ -109,7 +109,7 @@ const AllTableWidget = ({
     rowIndex: null,
     key: null,
   });
-  console.log(formContext.valdationErrors,"see this")
+
   
   // Azure upload (as before)
   const uploadFileToAzure = async (file, newFileName) => {
