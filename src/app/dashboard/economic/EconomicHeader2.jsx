@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import { useDispatch, useSelector } from "react-redux";
+import { MdKeyboardArrowDown } from "react-icons/md";
 import {
   fetchMaterialityData,
   setCorpID,
@@ -270,19 +271,27 @@ const EconomicHeader2 = ({
                     Select Organization*
                   </label>
                   <div className="mt-2">
-                    <select
-                      className="block w-full rounded-md pr-3 border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                      value={selectedOrg}
-                      onChange={handleOrgChange}
-                    >
-                      <option value="01">Select Organization</option>
-                      {organisations &&
-                        organisations.map((org) => (
-                          <option key={org.id} value={org.id} name={org.name}>
-                            {org.name}
-                          </option>
-                        ))}
-                    </select>
+                    <div className="relative">
+                      <select
+                        className="block w-full pr-8 rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
+                        value={selectedOrg}
+                        onChange={handleOrgChange}
+                      >
+                        <option value="01">Select Organization</option>
+                        {organisations &&
+                          organisations.map((org) => (
+                            <option key={org.id} value={org.id} name={org.name}>
+                              {org.name}
+                            </option>
+                          ))}
+                      </select>
+                      <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                        <MdKeyboardArrowDown
+                          className="text-neutral-500"
+                          style={{ fontSize: '16px' }}
+                        />
+                      </div>
+                    </div>
                     {errors.organization && (
                       <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.organization}
@@ -299,19 +308,27 @@ const EconomicHeader2 = ({
                       Select Corporate
                     </label>
                     <div className="mt-2">
-                      <select
-                        className="block w-full rounded-md pr-3 border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                        value={selectedCorp}
-                        onChange={handleCorpChange}
-                      >
-                        <option value="">Select Corporate </option>
-                        {corporates &&
-                          corporates.map((corp) => (
-                            <option key={corp.id} value={corp.id} name={corp.name}>
-                              {corp.name}
-                            </option>
-                          ))}
-                      </select>
+                      <div className="relative">
+                        <select
+                          className="block w-full pr-8 rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
+                          value={selectedCorp}
+                          onChange={handleCorpChange}
+                        >
+                          <option value="">Select Corporate </option>
+                          {corporates &&
+                            corporates.map((corp) => (
+                              <option key={corp.id} value={corp.id} name={corp.name}>
+                                {corp.name}
+                              </option>
+                            ))}
+                        </select>
+                        <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                          <MdKeyboardArrowDown
+                            className="text-neutral-500"
+                            style={{ fontSize: '16px' }}
+                          />
+                        </div>
+                      </div>
                       {errors.corporate && (
                         <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                           {errors.corporate}
@@ -329,19 +346,27 @@ const EconomicHeader2 = ({
                     Select year
                   </label>
                   <div className="mt-2">
-                    <select
-                      name="year"
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                      value={formState.year}
-                      onChange={handleChange}
-                    >
-                      <option value="">Select year</option>
-                      {yearInfo.map((item) => (
-                        <option value={item.slice(0, 4)} key={item}>
-                          {item.slice(0, 4)}
-                        </option>
-                      ))}
-                    </select>
+                    <div className="relative">
+                      <select
+                        name="year"
+                        className="block w-full pr-8 rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
+                        value={formState.year}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select year</option>
+                        {yearInfo.map((item) => (
+                          <option value={item.slice(0, 4)} key={item}>
+                            {item.slice(0, 4)}
+                          </option>
+                        ))}
+                      </select>
+                      <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                        <MdKeyboardArrowDown
+                          className="text-neutral-500"
+                          style={{ fontSize: '16px' }}
+                        />
+                      </div>
+                    </div>
                     {errors.year && (
                       <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.year}
