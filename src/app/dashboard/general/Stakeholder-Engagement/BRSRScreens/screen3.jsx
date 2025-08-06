@@ -241,11 +241,9 @@ const Screen3 = ({
       >
         <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-             {
-            Object.keys(r_schema || {}).length == 0 && (
-               <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Whether Stakeholder Consultation Is Used to Support the Identification and Management of Environmental and Social Topics
-              <MdInfoOutline
+             <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+           Stakeholder Consultation on Environmental and Social Topics
+              {/* <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
                 data-tooltip-content="Select whether the entity uses stakeholder feedback to help identify, prioritize,
  and manage key environmental and social issues"
@@ -264,12 +262,8 @@ const Screen3 = ({
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip>
+              ></ReactTooltip> */}
             </h2>
-               
-            )
-         }
-          
           </div>
         
 
