@@ -170,7 +170,7 @@ const Header = ({ activeTab, setIsBoxOpen, setMobileopen }) => {
       <div className='flex flex-col lg:flex-row justify-between items-start lg:items-center border-b border-gray-200 pb-4 relative z-40 gap-4'>
         {/* Desktop Version */}
         <div className='hidden lg:block w-full'>
-          <div className='flex justify-between items-start'>
+          <div className='flex justify-between items-start gap-8'>
             {/* Left side - Title and activeTab */}
             <div className='flex-shrink-0 ms-4 mt-8'>
               <div className='h-[46px] flex-col justify-start items-start gap-0.5 inline-flex'>
@@ -203,7 +203,9 @@ const Header = ({ activeTab, setIsBoxOpen, setMobileopen }) => {
                       <button
                         key={item.tagid}
                         className={`text-[#007EEF] bg-slate-200 rounded-full text-[11px] ${
-                          item.tagid === '3, 2016' ? 'min-w-[100px]' : 'min-w-[72px]'
+                          item.tagid === '3, 2016'
+                            ? 'min-w-[100px]'
+                            : 'min-w-[72px]'
                         } h-[22px] px-2 text-center flex items-center justify-center flex-shrink-0`}
                         onClick={() => toggleDrawer(item.infoid)}
                       >
@@ -242,7 +244,9 @@ const Header = ({ activeTab, setIsBoxOpen, setMobileopen }) => {
           >
             <div className='flex justify-between items-start px-3 pt-0'>
               <div className='flex-1 min-w-0'>
-                <p className='text-[11px] text-black text-opacity-50 font-semibold'>Environment</p>
+                <p className='text-[11px] text-black text-opacity-50 font-semibold'>
+                  Environment
+                </p>
                 <div className='mt-1'>
                   <p className='gradient-text text-lg sm:text-xl md:text-[22px] font-bold leading-tight break-words'>
                     {activeTab}
@@ -271,7 +275,9 @@ const Header = ({ activeTab, setIsBoxOpen, setMobileopen }) => {
                     <button
                       key={item.tagid}
                       className={`text-[#007EEF] bg-slate-200 rounded-full text-[11px] ${
-                        item.tagid === '3, 2016' ? 'min-w-[100px]' : 'min-w-[72px]'
+                        item.tagid === '3, 2016'
+                          ? 'min-w-[100px]'
+                          : 'min-w-[72px]'
                       } h-[22px] px-2 text-center flex items-center justify-center flex-shrink-0`}
                       onClick={() => toggleDrawer(item.infoid)}
                     >
