@@ -78,9 +78,9 @@ const DeletePopup = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,deleteData
   return (
     <>
       {isModalOpen && (
-        <div className="modal-overlay z-50">
+        <div className="modal-overlay z-50 -bottom-10">
           <div className="modal-center">
-            <div className="modal-content-custom">
+            <div className="modal-content-custom overflow-y-auto scrollable-content">
               <div className="flex justify-between items-center drop-shadow-lg pt-6 w-full px-3">
                 <div className="flex">
                   <MdOutlineDeleteOutline className="w-7 h-7 mr-2 text-red-400" />
@@ -114,7 +114,7 @@ const DeletePopup = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,deleteData
                     <span className="text-black text-[14px] font-bold">
                         Organization:
                     </span>
-                    <span className="text-[#667085] text-[14px] ml-3">
+                    <span className="text-[#667085] text-[14px] ml-3 text-wrap w-[full]">
                         {deleteData.organization}
                     </span>
                 </div>
