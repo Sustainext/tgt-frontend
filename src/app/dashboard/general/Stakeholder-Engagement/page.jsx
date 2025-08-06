@@ -13,6 +13,7 @@ import BRSRScreen1 from './BRSRScreens/screen1'
 import BRSRScreen2 from './BRSRScreens/screen2'
 import BRSRScreen3 from './BRSRScreens/screen3'
 import BRSRScreen4 from './BRSRScreens/screen4'
+import Cookies from 'js-cookie';
 // import Screen3 from "./screen3";
 import GeneralTopBar from "../generalTopBar";
 const StakeholderEngagement = ({setMobileopen}) => {
@@ -25,6 +26,7 @@ const StakeholderEngagement = ({setMobileopen}) => {
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
   const [togglestatus, setToggleStatus] = useState("Organization");
+  let brsrFrameworkId = Cookies.get('selected_brsr_framework_id') || 0
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -304,7 +306,10 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         month={activeMonth}
         togglestatus={togglestatus}
       />
-      <BRSRScreen1
+      {
+        brsrFrameworkId ==4 && (
+          <div>
+            <BRSRScreen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
@@ -336,6 +341,10 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         month={activeMonth}
         togglestatus={togglestatus}
       />
+          </div>
+        )
+      }
+      
       {/* <Screen3
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
