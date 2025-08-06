@@ -25,6 +25,7 @@ const Entities = ({setMobileopen,brsrFrameworkId}) => {
   const screen1Ref = useRef(null);
   const screen2Ref = useRef(null);
   const screen3Ref = useRef(null);
+  const screen4Ref = useRef(null);
   const [loopen, setLoOpen] = useState(false);
   const [togglestatus, setToggleStatus] = useState("Organization");
   const toggleDrawerclose = () => {
@@ -58,6 +59,9 @@ const Entities = ({setMobileopen,brsrFrameworkId}) => {
       }
       if (screen3Ref.current) {
         promises.push(screen3Ref.current());
+      }
+       if (screen4Ref.current) {
+        promises.push(screen4Ref.current());
       }
 
       await Promise.all(promises); // Wait for all submissions to complete
@@ -309,7 +313,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         location={location}
         year={year}
         month={activeMonth}
-        ref={screen3Ref}
+        ref={screen4Ref}
         togglestatus={togglestatus}
       />
         )
