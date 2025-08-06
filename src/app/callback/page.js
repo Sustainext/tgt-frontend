@@ -8,11 +8,15 @@ import axios from "axios";
 import { BsArrowLeft } from "react-icons/bs";
 import Cookies from "js-cookie";
 
+/**
+ * Background Keycloak Logout (by hidden iframe)
+ */
 
 export default function Callback() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const searchParams = useSearchParams();
+  const [newtoken, setNewtoken] = useState();
   const router = useRouter();
   const validationComplete = useRef(false);
 
@@ -26,6 +30,8 @@ export default function Callback() {
           },
         }
       );
+      // Remove the logout/redirect from here!
+      // (Your logic pushed here was not needed. Only handle on error or explicit logout, not here.)
       return response.data;
     } catch (error) {
       console.error("Error fetching user_org:", error);
@@ -52,8 +58,6 @@ export default function Callback() {
         const userData = response.data;
         const accessToken = userData.key.access;
 
-        console.log("User Data:", response);
-
         // Store authentication data
         saveToLocalStorage("token", accessToken);
         saveToLocalStorage("refresh", userData.key.refresh);
@@ -74,8 +78,7 @@ export default function Callback() {
           secure: true,
           sameSite: "strict",
         });
-
-        // Always fetch user_org data with the new token
+   
         try {
           const userOrgData = await fetchUserOrg(accessToken);
           saveToLocalStorage("userData", userOrgData);
@@ -102,7 +105,6 @@ export default function Callback() {
           return;
         }
 
-        // Redirect to dashboard on success
         router.push("/dashboard");
       } catch (err) {
         console.error("Backend login error:", err);
@@ -132,12 +134,13 @@ export default function Callback() {
           `/api/auth/validate-callback?code=${code}`
         );
         const data = await response.json();
-        console.log("Authentication response:", data);
+        // console.log("Authentication response:", data);
 
         if (!data || !data.tokens.id_token) {
           throw new Error("Invalid authentication response");
         }
-
+        setNewtoken(data.tokens.id_token);
+        localStorage.setItem("sso_token", data.tokens.id_token);
         await processBackendLogin(data.tokens.id_token);
       } catch (err) {
         console.error("Authentication error:", err);
@@ -149,6 +152,29 @@ export default function Callback() {
     validateAndLogin();
   }, [searchParams, router]);
 
+  // When user manually wants to logout and return to login (e.g. error screen)
+  const handleBackToLogin = () => {
+    const postLogoutRedirect = encodeURIComponent(
+      `${process.env.KEYCLOAK_BASE_URL}`
+    );
+    const logoutUrl = `${
+      process.env.KEYCLOAK_LOGOUT_URl
+    }?post_logout_redirect_uri=${postLogoutRedirect}${
+      newtoken ? `&id_token_hint=${newtoken}` : ""
+    }`;
+
+  Cookies.remove("token");
+  Cookies.remove("permissions");
+  Cookies.remove("isAdmin");
+  Cookies.remove("selected_framework_id");
+  Cookies.remove("selected_brsr_framework_id");
+  Cookies.remove("selected_disclosures");
+  Cookies.remove("tcfd_sector");
+  Cookies.remove("tcfd_sector_type");
+  localStorage.clear();
+    // Redirect outside the app to Keycloak
+    window.location.href = logoutUrl;
+  };
   if (loading) {
     return (
       <div
@@ -188,7 +214,7 @@ export default function Callback() {
               <p className="mt-2 text-gray-600">{error}</p>
               <div className="flex justify-center">
                 <button
-                  onClick={() => (window.location.href = "/api/auth/login")}
+                  onClick={handleBackToLogin}
                   className="mt-4 px-4 py-2 text-gray-700 rounded hover:text-black flex items-center justify-between"
                 >
                   <BsArrowLeft className="mr-2" />
