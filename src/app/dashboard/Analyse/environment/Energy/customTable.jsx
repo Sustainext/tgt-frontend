@@ -83,7 +83,7 @@ function DynamicTable({ columns, data }) {
   };
 
   return (
-    <div className=' overflow-auto custom-scrollbar'>
+    <div className='overflow-x-auto custom-scrollbar w-full'>
     <table className="rounded-md border border-gray-300  w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
       <thead className="border rounded-lg">
         <tr className="border-t border-b gradient-background">{renderHeaders()}</tr>

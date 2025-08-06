@@ -43,7 +43,7 @@ export const selectBrowserClasses = (state) => {
     gridHeight: isChromiumBased ? 'h-screen' : 'min-h-screen',
     formPadding: isChromiumBased ? 'p-16' : 'p-8 md:p-16',
     logoContainer: isChromiumBased ? '' : 'p-8',
-    formMargin: isChromiumBased ? 'my-20' : 'my-20',
+    formMargin: isChromiumBased ? 'my-8' : 'my-8',
   };
 };
 

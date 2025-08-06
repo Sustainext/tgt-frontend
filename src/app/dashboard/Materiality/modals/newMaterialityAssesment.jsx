@@ -500,7 +500,7 @@ const handleDateChange = (newRange) => {
     <>
       {isModalOpen && (
         <div className="fixed inset-0 flex justify-center items-center bg-[#00000080] z-50">
-          <div className="relative bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-3xl">
+          <div className="relative bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-xl">
             <div className="flex justify-between items-center drop-shadow-lg w-full">
               <div className="flex">
                 <Image src={GRISVG} className="w-7 h-7 mr-2" alt="GRI Logo" />
@@ -848,7 +848,7 @@ const handleDateChange = (newRange) => {
               </div>
               <div className="flex justify-end items-center mt-5">
                 <button
-                  className="xl:w-2/6 h-full mr-2 py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
+                  className=" h-full mr-2 py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
                   onClick={handleSubmit}
                 >
                   Start Materiality Assessment

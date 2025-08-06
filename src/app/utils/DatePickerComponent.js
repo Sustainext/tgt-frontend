@@ -401,7 +401,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
 
           <div
             className={`hidden md:block absolute z-[150] mt-2 xl:p-4 p-2 bg-white border border-gray-300 rounded-md 
-          w-[112vw] md:w-[80vw] lg:w-[50vw] xl:w-[38vw] 
+          w-full md:w-[80vw] lg:w-[50vw] xl:w-[38vw] max-w-[600px] 
           ${
             position === "top"
               ? "bottom-full mb-2"

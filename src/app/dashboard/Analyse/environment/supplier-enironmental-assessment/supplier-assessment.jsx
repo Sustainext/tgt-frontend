@@ -106,8 +106,8 @@ const Supplierassessment = ({ selectedOrg, selectedCorp, year,togglestatus }) =>
     <div>
       <div>
       
-        <div className="flex justify-between">
-          <div className={`ps-4  w-full me-4`}>
+        <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between">
+          <div className="flex-1 ps-4 me-4 max-w-full overflow-hidden">
             <div className="mb-8">
               <div
                 id="ep1"

@@ -435,8 +435,8 @@ const AnalysePackagingMaterial = ({ isBoxOpen }) => {
             </div>
           </div>
         </div>
-        <div className="flex">
-          <div className={`ps-4 w-[100%] me-4`}>
+        <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block">
+          <div className="flex-1 ps-4 me-4 max-w-full overflow-hidden">
             <div className="mb-6">
               <div
                 id="materials4"
