@@ -10,19 +10,20 @@ export async function GET(request) {
     }
 
     try {
-        // Get token
-        const tokenRes = await fetch(`${process.env.AUTH0_ISSUER_BASE_URL}/oauth/token`, {
+        // Get token from Keycloak
+        const tokenRes = await fetch(`
+          ${process.env.KEYCLOAK_ISSUER_BASE_URL}/token`, {
             method: 'POST',
             headers: { 
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify({
+            body: new URLSearchParams({
                 grant_type: 'authorization_code',
-                client_id: process.env.AUTH0_CLIENT_ID,
-                client_secret: process.env.AUTH0_CLIENT_SECRET,
-                code,
-                redirect_uri: `${process.env.AUTH0_BASE_URL}/callback`
+                client_id: process.env.KEYCLOAK_CLIENT_ID,
+                client_secret: process.env.KEYCLOAK_CLIENT_SECRET,
+                code: code,
+                redirect_uri: `${process.env.KEYCLOAK_BASE_URL}/callback`
             })
         });
 
@@ -32,8 +33,9 @@ export async function GET(request) {
             return NextResponse.json({ error: 'Token validation failed' }, { status: 401 });
         }
 
-        // Get user info
-        const userInfoRes = await fetch(`${process.env.AUTH0_ISSUER_BASE_URL}/userinfo`, {
+        // Get user info from Keycloak
+        const userInfoRes = await fetch(`
+          ${process.env.KEYCLOAK_ISSUER_BASE_URL}/userinfo`, {
             headers: {
                 'Authorization': `Bearer ${tokens.access_token}`
             }
