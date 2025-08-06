@@ -263,7 +263,7 @@ const MyGoals = () => {
             className="flex justify-between border-b border-[#ebeced] py-2"
           >
             {/* Task Name Column */}
-            <div className="flex w-[10rem] xl:w-[26rem] md:w-[26rem] lg:w-[26rem] 4k:w-[26rem] 2xl:w-[26rem] cursor-pointer">
+            <div className="flex w-[10rem] xl:w-[13rem] md:w-[13rem] lg:w-[13rem] 4k:w-[26rem] 2xl:w-[26rem] cursor-pointer">
               <div className="w-72 truncate text-[#007eef] text-[13px] font-normal leading-none ml-3">
                 <p
                   className="py-1 cursor-pointer"
@@ -346,7 +346,7 @@ const MyGoals = () => {
 
         <div className="flex justify-between px-4 py-2 text-sm font-medium text-gray-500 border-b">
           {/* Task Name Column */}
-          <div className="w-[10rem] xl:w-[26rem] md:w-[26rem] lg:w-[26rem] 4k:w-[26rem] 2xl:w-[26rem] -ml-2">
+          <div className="w-[10rem] xl:w-[13rem] md:w-[13rem] lg:w-[13rem] 4k:w-[26rem] 2xl:w-[26rem] -ml-2">
             Tasks
           </div>
 

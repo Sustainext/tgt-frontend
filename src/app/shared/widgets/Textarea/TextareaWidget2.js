@@ -60,7 +60,7 @@ const TextareaWidget2 = (props) => {
               ></ReactTooltip>
             </div>
           </div>
-          <div style={{ display: uiSchema["ui:gridisplay"] }} className="ml-2 xl:ml-0 lg:ml-0 2xl:ml-0 4k:ml-0 2k:ml-0 md:w-0">
+          <div style={{ display: uiSchema["ui:gridisplay"] }} className="ml-2 xl:ml-0 lg:ml-0 2xl:ml-0 4k:ml-0 2k:ml-0 md:w-0 mr-[28px]">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
                 {uiSchema["ui:Gri"]}
