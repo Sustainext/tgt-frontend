@@ -1,92 +1,118 @@
 "use client";
-import React, { useState, useEffect, useRef,useImperativeHandle, forwardRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import AllTableWidget from "../../../../../shared/widgets/BRSR/allTableWidget";
-import TableWidget from '../../../../../shared/widgets/BRSR/tableWidgetBRSR'
+// import AllInputWidget from "../../../../shared/widgets/BRSR/allInputWidget";
+import SelectWidget from '../../../../shared/widgets/Select/selectWidget6'
+import TextareaWidget3 from '../../../../shared/widgets/Textarea/TextareaWidget3'
 const widgets = {
-  TableWidget: TableWidget,
+  TextareaWidget3:TextareaWidget3,
+  SelectWidget:SelectWidget
 };
 
-const view_path = "brsr-general-business-details-operations-brsr-a-iii-18";
+const view_path = "brsr-general-stakeholder-engagement-whether-stakeholder-consultation-brsr-c-p4-li-2";
 const client_id = 1;
 const user_id = 1;
+
+
+
+const uiSchema = {
+  items: {
+    "ui:order": ["Q1","Q2"],
+    Q1: {
+      "ui:title": "Whether Stakeholder Consultation Is Used to Support the Identification and Management of Environmental and Social Topics",
+      "ui:tooltip":
+        "Select whether the entity uses stakeholder feedback to help identify, prioritize,and manage key environmental and social issues",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "SelectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+     Q2: {
+        "ui:hading": "",
+        "ui:hadingtooltip": "",
+        "ui:hadingtooltipdisplay": "none",
+        "ui:title":
+          "Details of Instances as to How the Inputs Received From Stakeholders on These Topics Were Incorporated Into Policies and Activities of the Entity",
+        "ui:tooltip":
+          "Provide details of instances as to how stakeholder inputs influenced the entity’s policies and activities",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "TextareaWidget3",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
+      },
+    
+    "ui:options": {
+      orderable: false, // Prevent reordering of items
+      addable: false, // Prevent adding items from UI
+      removable: false, // Prevent removing items from UI
+      layout: "horizontal", // Set layout to horizontal
+    },
+  },
+};
 
 const schema = {
   type: "array",
   items: {
     type: "object",
     properties: {
-      location: { type: "string", title: "Location" },
-      numPlants: { type: "number", title: "Number Of Plants" },
-      numOffices: { type: "number", title: "Number Of Offices" },
-      total: { type: "number", title: "Total" },
-    }
-  }
-};
-
-const uiSchema = {
-  "ui:widget": "TableWidget",
-  "ui:options": {
-    titles: [
-      { key: "location", title: "Location", layout: "readonly",
-        tooltipdispaly:"none",
-        tooltip:""
-       },
-      { key: "numPlants", title: "Number Of Plants", layout: "inputDecimal",  
-        tooltipdispaly:"block",
-        tooltip:"Specify number of plants situated in India (National) and outside India (International)"},
-      { key: "numOffices", title: "Number Of Offices", layout: "inputDecimal", 
-        tooltipdispaly:"block",
-        tooltip:"Specify number of offices situated in India (National) and outside India (International)"},
-      { key: "total", title: "Total", layout: "readonly", tooltipdispaly:"none",
-        tooltip:"" }
-    ],
-    rowLabels: [
-      { title: "National",tooltipdispaly:"block",
-        tooltip:"Enter number of plants/offices situated in India"
-       },
-      { title: "International",tooltipdispaly:"block",
-         tooltip:"Enter number of plants/offices situated outside India"
-       }
-    ],
-    rowCalculations: [
-      { // First row
-        sum: {
-          target: "total",
-          fields: ["numPlants", "numOffices"]
-        }
+      Q1: {
+        type: "string",
+        title: "Whether Stakeholder Consultation Is Used to Support the Identification and Management of Environmental and Social Topics",
+        enum: ["Yes", "No"],
       },
-      { // Second row
-        sum: {
-          target: "total",
-          fields: ["numPlants", "numOffices"]
-        }
-      }
-    ]
-  }
+    },
+    dependencies: {
+      Q1: {
+        oneOf: [
+          {
+            properties: {
+              Q1: {
+                enum: ["Yes"],
+              },
+              Q2: {
+                type: "string",
+                title: "Details of Instances as to How the Inputs Received From Stakeholders on These Topics Were Incorporated Into Policies and Activities of the Entity",
+              },
+            },
+          }
+        ],
+      },
+    },
+  },
 };
 
-const Screen4 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, ref) => {
+
+
+const Screen3 = ({
+  selectedOrg,
+  selectedCorp,
+  location,
+  year,
+  month,
+  togglestatus,
+}) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const { open } = GlobalState();
 
   const LoaderOpen = () => {
     setLoOpen(true);
   };
-
   const LoaderClose = () => {
     setLoOpen(false);
   };
@@ -135,7 +161,6 @@ const Screen4 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
         LoaderClose();
       }
     } catch (error) {
-      console.log("test data",error);
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -148,6 +173,10 @@ const Screen4 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
       });
       LoaderClose();
     }
+    // console.log('Response:', response.data);
+    // } catch (error) {
+    // console.error('Error:', error);
+    // }
   };
 
   const loadFormData = async () => {
@@ -157,6 +186,7 @@ const Screen4 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
+
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
@@ -166,41 +196,43 @@ const Screen4 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
       LoaderClose();
     }
   };
-useEffect(() => {
-  if (selectedOrg && year && togglestatus) {
-    if (togglestatus === "Corporate") {
-      if (selectedCorp) {
-        loadFormData();           // <-- Only load if a corporate is picked
-      } else {
-        setFormData([{}]); 
+
+  useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        setTimeout(() => {
+          loadFormData();
+        }, 1000); // 1000ms = 1 second delay
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData([{}]);
         setRemoteSchema({});
-        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
+        setRemoteUiSchema({});
+      } else {
+        setTimeout(() => {
+          setFormData([{}]);
+          setRemoteSchema({});
+          setRemoteUiSchema({});
+          loadFormData();
+        }, 1000); // 1000ms = 1 second delay
       }
+
+      toastShown.current = false;
     } else {
-      loadFormData();             // Organization tab: always try to load
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-    toastShown.current = false;
-  } else {
-    if (!toastShown.current) {
-      toastShown.current = true;
-    }
-  }
-}, [selectedOrg, year, selectedCorp, togglestatus]);
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission
+    console.log("Form data:", formData);
     updateFormData();
-    console.log("test form data", formData);
   };
-  const handleAddNew = () => {
-    const newData = [...formData, {}];
-    setFormData(newData);
-    console.log("Form data newData:", newData);
-  };
-  useImperativeHandle(ref, () => updateFormData);
+
   return (
     <>
-    <div
+      <div
         className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
         style={{
           boxShadow:
@@ -208,75 +240,44 @@ useEffect(() => {
         }}
       >
         <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
-          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Operations
+         <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
+             <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+           Stakeholder Consultation on Environmental and Social Topics
+              {/* <MdInfoOutline
+                data-tooltip-id={`tooltip-$e86`}
+                data-tooltip-content="Select whether the entity uses stakeholder feedback to help identify, prioritize,
+ and manage key environmental and social issues"
+                className="mt-1.5 ml-2 text-[15px] w-[10%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
+              />
+              <ReactTooltip
+                id={`tooltip-$e86`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip> */}
             </h2>
           </div>
+        
 
           <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
             <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-               <div className="w-[90px] h-[26px] p-2 bg-[#0057a50d] bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+              <div className="w-[90px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-[#18736B] text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                 BRSR-A-III-18
+                 BRSR-C-P4-LI-2
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {(togglestatus === "Corporate" && selectedCorp) ||
-        (togglestatus !== "Corporate" && selectedOrg && year) ? (
-          <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
-          Number of Locations where Plants and/or Operations/Offices of the Entity are situated
-          <MdInfoOutline
-            data-tooltip-id={`tooltip-$e1`}
-            data-tooltip-content="This section documents data corresponding to the 
-number of locations where entity's plants 
-or/and offices are situated at 
-national and international levels"
-            className="mt-1 ml-2 text-[15px]"
-          />
-          <ReactTooltip
-            id={`tooltip-$e1`}
-            place="top"
-            effect="solid"
-            style={{
-              width: "290px",
-              backgroundColor: "#000",
-              color: "white",
-              fontSize: "12px",
-              boxShadow: 3,
-              borderRadius: "8px",
-              textAlign: "left",
-            }}
-          ></ReactTooltip>
-        </p>
-        ) : null}
-        {/* {selectedOrg && year && (
-          <p className="flex mx-2 text-sm text-gray-700 relative">
-            List all entities included in the sustainability report
-            <MdInfoOutline
-              data-tooltip-id={`tooltip-$e1`}
-              data-tooltip-content="Provide a list of all entities included in the sustainability report. "
-              className="mt-1.5 ml-2 text-[15px]"
-            />
-            <ReactTooltip
-              id={`tooltip-$e1`}
-              place="top"
-              effect="solid"
-              style={{
-                width: "290px",
-                backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-                textAlign: "left",
-              }}
-            ></ReactTooltip>
-          </p>
-        )} */}
-        <div className="mx-2 mb-2">
+        <div className="mx-2">
           <Form
             schema={r_schema}
             uiSchema={r_ui_schema}
@@ -286,6 +287,7 @@ national and international levels"
             widgets={widgets}
           />
         </div>
+
         <div className="mt-4">
           <button
             type="button"
@@ -296,7 +298,7 @@ national and international levels"
                 ? "cursor-not-allowed opacity-90"
                 : ""
             }`}
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
             disabled={
               (togglestatus === "Corporate" && !selectedCorp) ||
               (togglestatus !== "Corporate" && (!selectedOrg || !year))
@@ -320,6 +322,6 @@ national and international levels"
       )}
     </>
   );
-});
+};
 
-export default Screen4;
+export default Screen3;

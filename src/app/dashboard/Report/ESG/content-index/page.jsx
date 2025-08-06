@@ -23,7 +23,8 @@ const ContentIndex = ({
   isOmissionModalOpen,
   isCreateReportModalOpen,
   setIsCreateReportModalOpen,
-  reportType
+  reportType,
+  ispageNumberGenerated
 }) => {
   const dispatch=useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -278,7 +279,7 @@ const ContentIndex = ({
           )}
         </div>
         <div>
-          <DisclosureTable data={data ? data : []} />
+          <DisclosureTable data={data ? data : []} ispageNumberGenerated={ispageNumberGenerated} />
         </div>
       </div>
       {loopen && (
@@ -325,6 +326,7 @@ const ContentIndex = ({
         isCreateReportModalOpen={isCreateReportModalOpen}
         setIsCreateReportModalOpen={setIsCreateReportModalOpen}
         reportType={reportType}
+        ispageNumberGenerated={ispageNumberGenerated}
       />
     </>
   );

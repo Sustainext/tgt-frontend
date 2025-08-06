@@ -147,28 +147,28 @@ const uiSchema = {
       {
         key: "MaterialIssue",
         title: "Material Issue Identified",
-        tooltip: "Specify the environmental or social sustainability issue relevant to your business",
+        tooltip: "Please specify the  identified material issue",
         layouttype: "input",
         tooltipdispaly: "block",
       },
       {
         key: "RiskOrOpportunity",
         title: "Risk Or Opportunity",
-        tooltip: "Select whether the identified issue represents a risk or an opportunity for your business",
+        tooltip: "Indicate whether the identified material issue is a risk or an opportunity",
         layouttype: "select",
         tooltipdispaly: "block",
       },
       {
         key: "Rationale",
         title: "Rationale For Identifying The Risk/Opportunity",
-        tooltip: "Explain why this issue is material and how it impacts your business",
+        tooltip: "Explain rationale for indentifying the risk/opportunity",
         layouttype: "multilinetextbox",
         tooltipdispaly: "block",
       },
       {
         key: "MitigationApproach",
         title: "In Case Of Risk, Approach To Adapt Or Mitigate",
-        tooltip: "Describe your strategy to manage or reduce the identified risk",
+        tooltip: "If the identified material issue is a risk then specify the approach to adapt or mitigate",
         layouttype: "multilinetextbox",
         tooltipdispaly: "block",
         keytack: "RiskOrOpportunity",
@@ -178,7 +178,7 @@ const uiSchema = {
       {
         key: "FinancialImplications",
         title: "Financial Implications Of The Risk Or Opportunity",
-        tooltip: "Select whether the financial impact is expected to be positive, negative, or neutral",
+        tooltip: "Specify whether the identified risk or opportunity has positive or negative financial implications",
         layouttype: "select",
         tooltipdispaly: "block",
       },
@@ -345,8 +345,8 @@ risk or an opportunity to your business, as per the following format:
           <div>
             <button
               type="button"
-              className={`mt-5 text-center py-1 text-sm w-[100px] bg-blue-500 text-white hover:bg-blue-600 rounded  focus:outline-none focus:shadow-outline`}
-              onClick={handleSubmit}
+              className={`mt-5 text-center py-1 text-sm w-[100px] opacity-30 cursor-not-allowed bg-blue-500 text-white hover:bg-blue-600 rounded  focus:outline-none focus:shadow-outline`}
+              // onClick={handleSubmit}
               
             >
               Submit

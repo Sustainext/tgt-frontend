@@ -11,6 +11,8 @@ import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import { useSelector } from "react-redux";
 import EconomicTopBar from "../../economicTopBar";
+import Cookies from "js-cookie";
+import BRSRScreen1 from './BRSRScreens/screen1'
 
 const Directeconomic = ({ apiData,setMobileopen }) => {
   const {
@@ -23,6 +25,7 @@ const Directeconomic = ({ apiData,setMobileopen }) => {
     error,
   } = useSelector((state) => state.materialitySlice);
   const [year, setYear] = useState(materiality_year ? materiality_year : "");
+  let brsrFrameworkId = Cookies.get('selected_brsr_framework_id') || 0
   const [selectedOrg, setSelectedOrg] = useState(
     organization_id ? organization_id : ""
   );
@@ -81,9 +84,9 @@ const Directeconomic = ({ apiData,setMobileopen }) => {
   ];
   const brsr = [
     {
-      tagName: "BRSR A-VI-24ii",
+      tagName: "BRSR-A-VI-24",
       id: "tooltip-$brsr1",
-      content: "BRSR-Section A-VI-24ii",
+      content: "BRSR-Section-A-VI-24",
     },
   ];
   return (
@@ -202,6 +205,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         togglestatus={togglestatus}
       />
+      {
+        brsrFrameworkId ==4 && (
+          <BRSRScreen1
+           selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+        togglestatus={togglestatus}
+      />
+        )
+      }
     </>
   );
 };

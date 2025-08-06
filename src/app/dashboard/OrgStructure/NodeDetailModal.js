@@ -30,6 +30,7 @@ const NodeDetailModal = ({
         filteredDetails = {
           id: details.id,
           name: details.name,
+          email:details.email,
           type_corporate_entity: details.type_corporate_entity,
           owner: details.owner,
           phone: details.phone,
@@ -69,6 +70,7 @@ const NodeDetailModal = ({
         filteredDetails = {
           id: details.id,
           name: details.name,
+          email:details.email,
           corporatetype: details.corporatetype,
           owner: details.ownershipnature || details.ownership,
           legalform: details.legalform,

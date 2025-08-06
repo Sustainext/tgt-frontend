@@ -1,7 +1,10 @@
 "use client";
-import React, { useState, useEffect, useRef,useImperativeHandle, forwardRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
+// import inputWidget3 from "../../../../shared/widgets/Input/inputWidget3";
+// import AddmultiInput from "../../../../shared/widgets/Economic/addmultiInput";
+// import AddMultiInputNew from "../../../../shared/widgets/Economic/addMutliInputNew";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -10,13 +13,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import AllTableWidget from "../../../../../shared/widgets/BRSR/allTableWidget";
-import TableWidget from '../../../../../shared/widgets/BRSR/tableWidgetBRSR'
+// import CurrencyselectWidget from "../../../../shared/widgets/Select/currencyselectWidget";
+import AllInputWidget from "../../../../../shared/widgets/BRSR/allInputWidget";
 const widgets = {
-  TableWidget: TableWidget,
+ AllInputWidget:AllInputWidget
 };
 
-const view_path = "brsr-general-business-details-operations-brsr-a-iii-18";
+const view_path = "brsr-economic-turnover-brsr-a-vi-24";
 const client_id = 1;
 const user_id = 1;
 
@@ -25,63 +28,55 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      location: { type: "string", title: "Location" },
-      numPlants: { type: "number", title: "Number Of Plants" },
-      numOffices: { type: "number", title: "Number Of Offices" },
-      total: { type: "number", title: "Total" },
-    }
-  }
+    
+      Q1: { type: "string", title: "Turnover (INR)" },
+      Q2: { type: "string", title: "Turnover from Products/Services (INR)" },
+      Q3: { type: "string", title: "Net Worth (INR)" },
+    },
+  },
 };
 
 const uiSchema = {
-  "ui:widget": "TableWidget",
-  "ui:options": {
-    titles: [
-      { key: "location", title: "Location", layout: "readonly",
-        tooltipdispaly:"none",
-        tooltip:""
-       },
-      { key: "numPlants", title: "Number Of Plants", layout: "inputDecimal",  
-        tooltipdispaly:"block",
-        tooltip:"Specify number of plants situated in India (National) and outside India (International)"},
-      { key: "numOffices", title: "Number Of Offices", layout: "inputDecimal", 
-        tooltipdispaly:"block",
-        tooltip:"Specify number of offices situated in India (National) and outside India (International)"},
-      { key: "total", title: "Total", layout: "readonly", tooltipdispaly:"none",
-        tooltip:"" }
-    ],
-    rowLabels: [
-      { title: "National",tooltipdispaly:"block",
-        tooltip:"Enter number of plants/offices situated in India"
-       },
-      { title: "International",tooltipdispaly:"block",
-         tooltip:"Enter number of plants/offices situated outside India"
-       }
-    ],
-    rowCalculations: [
-      { // First row
-        sum: {
-          target: "total",
-          fields: ["numPlants", "numOffices"]
-        }
-      },
-      { // Second row
-        sum: {
-          target: "total",
-          fields: ["numPlants", "numOffices"]
-        }
-      }
-    ]
-  }
-};
+    "ui:widget": "AllInputWidget",
+    "ui:options": {
+      titles: [
+       
+         {
+          key: "Q1",
+          title: "Turnover (INR)",
+          tooltip:
+            "<p>Specify the total turnover of the entity in Indian Rupees</p>",
+          layouttype: "inputDecimal",
+          tooltipdispaly: "block",
+        },
+         {
+          key: "Q2",
+          title: "Turnover from Products/Services (INR) ",
+          tooltip:
+            "<p>Enter the portion of turnover generated specifically from products and services offered by the entity, in Indian Rupees</p>",
+          layouttype: "inputDecimal",
+          tooltipdispaly: "block",
+        },
+         {
+          key: "Q3",
+          title: "Net Worth (INR)",
+          tooltip:
+            "<p>Enter the net worth of the entity in Indian Rupees</p>",
+          layouttype: "inputDecimal",
+          tooltipdispaly: "block",
+        },
+      ],
+    },
+  };
 
-const Screen4 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, ref) => {
+const Screen1 = ({ selectedOrg, year, selectedCorp,togglestatus }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const { open } = GlobalState();
+  
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -92,9 +87,13 @@ const Screen4 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
   };
 
   const handleChange = (e) => {
-    setFormData(e.formData);
+    const updatedFormData = e.formData;
+    setFormData(updatedFormData);
+  
+   
   };
-
+ 
+ 
   const updateFormData = async () => {
     const data = {
       client_id: client_id,
@@ -135,7 +134,6 @@ const Screen4 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
         LoaderClose();
       }
     } catch (error) {
-      console.log("test data",error);
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -190,17 +188,13 @@ useEffect(() => {
   const handleSubmit = (e) => {
     e.preventDefault();
     updateFormData();
-    console.log("test form data", formData);
+   
   };
-  const handleAddNew = () => {
-    const newData = [...formData, {}];
-    setFormData(newData);
-    console.log("Form data newData:", newData);
-  };
-  useImperativeHandle(ref, () => updateFormData);
+ 
+
   return (
     <>
-    <div
+     <div
         className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md mt-8 xl:mt-0 lg:mt-0 md:mt-0 2xl:mt-0 4k:mt-0 2k:mt-0 "
         style={{
           boxShadow:
@@ -209,73 +203,47 @@ useEffect(() => {
       >
         <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
           <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Operations
-            </h2>
+          {Object.keys(r_schema || {}).length == 0 && <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            Turnover (INR)
+              {/* <MdInfoOutline
+                data-tooltip-id={`es25`}
+                data-tooltip-html="
+                <p>Provide a details of direct economic value generated and distributed (EVG&D) on an accruals basis, including the basic
+components for the organization’s global operations as per the given list. Where significant,
+report EVG&D separately at country, regional, or market levels, and the criteria used for defining significance.
+</p>
+<p>
+Note: Compile the EVG&D from data in the organization’s audited financial or profit and loss
+(P&L) statement, or its internally audited management accounts.</p> "
+                className="text-[18px] mt-1 w-[20%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
+              />
+              <ReactTooltip
+                id={`es25`}
+                place="bottom"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                  zIndex: "100",
+                }}
+              ></ReactTooltip> */}
+            </h2> } 
           </div>
-
           <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
             <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-               <div className="w-[90px] h-[26px] p-2 bg-[#0057a50d] bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-[#18736B] text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                 BRSR-A-III-18
+                  BRSR-A-IV-24
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {(togglestatus === "Corporate" && selectedCorp) ||
-        (togglestatus !== "Corporate" && selectedOrg && year) ? (
-          <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
-          Number of Locations where Plants and/or Operations/Offices of the Entity are situated
-          <MdInfoOutline
-            data-tooltip-id={`tooltip-$e1`}
-            data-tooltip-content="This section documents data corresponding to the 
-number of locations where entity's plants 
-or/and offices are situated at 
-national and international levels"
-            className="mt-1 ml-2 text-[15px]"
-          />
-          <ReactTooltip
-            id={`tooltip-$e1`}
-            place="top"
-            effect="solid"
-            style={{
-              width: "290px",
-              backgroundColor: "#000",
-              color: "white",
-              fontSize: "12px",
-              boxShadow: 3,
-              borderRadius: "8px",
-              textAlign: "left",
-            }}
-          ></ReactTooltip>
-        </p>
-        ) : null}
-        {/* {selectedOrg && year && (
-          <p className="flex mx-2 text-sm text-gray-700 relative">
-            List all entities included in the sustainability report
-            <MdInfoOutline
-              data-tooltip-id={`tooltip-$e1`}
-              data-tooltip-content="Provide a list of all entities included in the sustainability report. "
-              className="mt-1.5 ml-2 text-[15px]"
-            />
-            <ReactTooltip
-              id={`tooltip-$e1`}
-              place="top"
-              effect="solid"
-              style={{
-                width: "290px",
-                backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-                textAlign: "left",
-              }}
-            ></ReactTooltip>
-          </p>
-        )} */}
         <div className="mx-2 mb-2">
           <Form
             schema={r_schema}
@@ -320,6 +288,6 @@ national and international levels"
       )}
     </>
   );
-});
+};
 
-export default Screen4;
+export default Screen1;

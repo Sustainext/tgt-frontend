@@ -1,8 +1,22 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { decryptPII, isDataEncrypted } from "../utils/fernetDecryption";
 
 const EZGB = () => {
   const [scriptError, setScriptError] = useState(false);
+  const [userEmail,setUserEmail]=useState(localStorage.getItem('userEmail'))
+   useEffect(()=>{
+    if(userEmail){
+      const encrypted = isDataEncrypted(userEmail);
+      if(encrypted){
+        const decrypted = decryptPII(userEmail);
+        setUserEmail(decrypted)
+      }
+      
+    }
+    
+
+   },[userEmail])
 
   useEffect(() => {
     if (!document.getElementById('cmdButtonScript')) {
@@ -31,7 +45,7 @@ const EZGB = () => {
           ⚠️ Failed to load the utility connection script. Please try again later or contact support.
         </div>
       ) : (
-        <div id="cmdButton" customerCode="fsq9ur"></div>
+        <div id="cmdButton" customerCode="fsq9ur" email={userEmail?userEmail:'dummy@gmail.com'}></div>
       )}
     </div>
   );
