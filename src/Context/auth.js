@@ -260,14 +260,16 @@ const logout = async () => {
     setToken(null);
     setUserDetails(null);
 
-    // Redirect to Keycloak logout endpoint
-    const postLogoutRedirect = encodeURIComponent(process.env.KEYCLOAK_BASE_URL);
+   if (ssoToken && ssoToken.trim() !== '') {
+   const postLogoutRedirect = encodeURIComponent(process.env.KEYCLOAK_BASE_URL);
     const keycloakLogoutURL = `${process.env.KEYCLOAK_LOGOUT_URl}?post_logout_redirect_uri=${postLogoutRedirect}${
       ssoToken ? `&id_token_hint=${ssoToken}` : ""
     }`;
 
     // Final redirect (end session)
     window.location.href = keycloakLogoutURL;
+}
+  
 
   } catch (error) {
     console.error("Logout error:", error);
