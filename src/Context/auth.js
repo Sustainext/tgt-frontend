@@ -226,39 +226,55 @@ export function AuthProvider({ children }) {
       return null;
     }
   };
+const logout = async () => {
+  const backendUrl = process.env.BACKEND_API_URL;
+  const logoutUrl = `${backendUrl}/api/auth/logout/`;
 
-  const logout = async () => {
-    const backendUrl = process.env.BACKEND_API_URL;
-    const logoutUrl = `${backendUrl}/api/auth/logout/`;
+  try {
+    // Get the SSO token *BEFORE* clearing storage
+    const ssoToken = typeof window !== 'undefined' ? localStorage.getItem("sso_token") : '';
 
-    try {
-      const response = await axiosInstance.post(logoutUrl);
-      console.log(response)
+    // Optional: Log/logout event. You may want to POST to your logs API here!
+    // await logLogoutDetails(someArg, ssoToken); // <-- Implement if needed
 
-      if (response.status!==200) {
-        throw new Error("Failed to logout");
-      }
-
-      //remove the language selector script and div
-      const elfsightScript = document.querySelector(`script[src="https://static.elfsight.com/platform/platform.js"]`);
-      if (elfsightScript) elfsightScript.parentNode.removeChild(elfsightScript);
-      document.querySelectorAll('[class*="EmbedRoot__Root"]').forEach(node => node.remove());
-
-      setToken(null);
-      setUserDetails(null);
-      Cookies.remove("token");
-      Cookies.remove("permissions");
-      Cookies.remove("isAdmin");
-      Cookies.remove("selected_framework_id");
-      Cookies.remove("selected_brsr_framework_id");
-      Cookies.remove("selected_disclosures");
-      Cookies.remove("tcfd_sector");
-      Cookies.remove("tcfd_sector_type");
-      localStorage.clear();
-    } catch (error) {
-      console.error("Logout error:", error);
+    // Invalidate backend session
+    const response = await axiosInstance.post(logoutUrl);
+    if (response.status !== 200) {
+      throw new Error("Failed to logout");
     }
-  };
+
+    // Remove all cookies set by your application
+    Cookies.remove("token");
+    Cookies.remove("permissions");
+    Cookies.remove("refresh");
+    Cookies.remove("isAdmin");
+    Cookies.remove("selected_framework_id");
+    Cookies.remove("selected_brsr_framework_id");
+    Cookies.remove("selected_disclosures");
+    Cookies.remove("tcfd_sector");
+    Cookies.remove("tcfd_sector_type");
+
+    // Remove all localStorage items related to authentication
+    localStorage.clear();
+
+    setToken(null);
+    setUserDetails(null);
+
+   if (ssoToken && ssoToken.trim() !== '') {
+   const postLogoutRedirect = encodeURIComponent(process.env.KEYCLOAK_BASE_URL);
+    const keycloakLogoutURL = `${process.env.KEYCLOAK_LOGOUT_URl}?post_logout_redirect_uri=${postLogoutRedirect}${
+      ssoToken ? `&id_token_hint=${ssoToken}` : ""
+    }`;
+
+    // Final redirect (end session)
+    window.location.href = keycloakLogoutURL;
+}
+  
+
+  } catch (error) {
+    console.error("Logout error:", error);
+  }
+};
 
   return (
     <AuthContext.Provider value={{ token, userDetails, login, logout }}>

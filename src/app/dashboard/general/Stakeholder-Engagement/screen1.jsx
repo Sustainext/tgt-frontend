@@ -41,6 +41,16 @@ const schema = {
         title: "Describe the purpose of stakeholder engagement",
         texttype: "text",
       },
+      ScopOfEngagement:{
+       type: "string",
+        title: "Scope of Engagement",
+        texttype: "text",
+      },
+      MarginalizedGroup:{
+        type: "string",
+        title: "Whether Identified as Vulnerable & Marginalized Group",
+       enum:['Yes','No'],
+      },
     },
   },
 };
@@ -67,6 +77,18 @@ const uiSchema = {
         tooltip:
           "The purpose of stakeholder engagement can be, for example, to identify actual and potential impacts or to determine prevention and mitigation responses to potential negative impacts.",
       },
+      {
+        key: "ScopOfEngagement",
+        title: "Scope of Engagement",
+        tooltip:
+          "Describe the scope of stakeholder engagement including key topics",
+      },
+      {
+        key: "MarginalizedGroup",
+        title: "Whether Identified as Vulnerable & Marginalized Group",
+        tooltip:
+          "Indicate if the stakeholder group is considered vulnerable or marginalized",
+      },
     ],
   },
 };
@@ -83,6 +105,8 @@ const Screen1 = ({
       Organisationengages: "",
       Stakeholdersidentified: "",
       Stakeholderengagement: "",
+      ScopOfEngagement:"",
+      MarginalizedGroup:""
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -253,6 +277,11 @@ by the organization’s activities."
               <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 2-29a
+                </div>
+              </div>
+              <div className="w-[90px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-[#18736B] text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  BRSR-C-P4-EI-2
                 </div>
               </div>
             </div>

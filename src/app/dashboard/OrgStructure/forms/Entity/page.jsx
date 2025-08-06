@@ -5,11 +5,13 @@ import GeneralInfo from "../Organization/GeneralInfo";
 import { post, put,patch } from "../../../../utils/axiosMiddleware";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from "js-cookie";
 
 const Entity = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const queryData = searchParams.get("data");
+  let brsrFrameworkId = Cookies.get('selected_brsr_framework_id') || 0
 
   const [data, setData] = useState(null);
 
@@ -41,6 +43,7 @@ const Entity = () => {
       name: data.generalDetails.name || "Test Corp",
       corporatetype: data.generalDetails.type || "Not Specified",
       ownershipnature: data.generalDetails.ownership || "",
+      email:data.generalDetails.email || '',
       location_headquarters: data.generalDetails.location || null,
       phone: data.generalDetails.phone || 9999999999,
       mobile: data.generalDetails.mobile || '',
@@ -118,6 +121,7 @@ const Entity = () => {
         }
         heading={data ? "Edit Corporate Details" : "Corporate Entity Details"}
         editData={data}
+         brsrFrameworkId={brsrFrameworkId}
       />
     </form>
     </>

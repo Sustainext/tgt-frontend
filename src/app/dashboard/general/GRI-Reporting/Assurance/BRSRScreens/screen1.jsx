@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect,useImperativeHandle, useRef,forwardRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdInfoOutline } from "react-icons/md";
@@ -13,7 +13,7 @@ const widgets = {
  AllInputWidget:AllInputWidget
 };
 
-const view_path = "gri-general-org_details_2-1a-1b-1c-1d";
+const view_path = "brsr-general-org-details-assurance-provider-brsr-a-i-14";
 const client_id = 1;
 const user_id = 1;
 
@@ -43,7 +43,7 @@ const uiSchema = {
     },
   };
 
-const Screen1 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
+const Screen1 = forwardRef(({ selectedOrg, selectedCorp, year, togglestatus },ref) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -78,16 +78,16 @@ const Screen1 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
     try {
       const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
-        toast.success("Data added successfully", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        // toast.success("Data added successfully", {
+        //   position: "top-right",
+        //   autoClose: 3000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: "light",
+        // });
         LoaderClose();
         loadFormData();
       } else {
@@ -135,32 +135,33 @@ const Screen1 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
     }
   };
 
-// useEffect(() => {
-//   if (selectedOrg && year && togglestatus) {
-//     if (togglestatus === "Corporate") {
-//       if (selectedCorp) {
-//         loadFormData();           // <-- Only load if a corporate is picked
-//       } else {
-//         setFormData([{}]); 
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
-//       }
-//     } else {
-//       loadFormData();             // Organization tab: always try to load
-//     }
-//     toastShown.current = false;
-//   } else {
-//     if (!toastShown.current) {
-//       toastShown.current = true;
-//     }
-//   }
-// }, [selectedOrg, year, selectedCorp, togglestatus]);
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
+      }
+    } else {
+      loadFormData();             // Organization tab: always try to load
+    }
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data:", formData);
     updateFormData();
   };
+   useImperativeHandle(ref, () => updateFormData);
 
   return (
     <>
@@ -213,8 +214,8 @@ location of its headquarters, countries of operation etc. "
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -255,6 +256,6 @@ location of its headquarters, countries of operation etc. "
       )}
     </>
   );
-};
+});
 
 export default Screen1;

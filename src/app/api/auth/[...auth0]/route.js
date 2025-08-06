@@ -1,4 +1,4 @@
-// app/api/auth/[...auth0]/route.js
+// app/api/auth/[...keycloak]/route.js
 import { NextResponse } from 'next/server';
 
 export async function GET(request) {
@@ -10,22 +10,23 @@ export async function GET(request) {
         const fromLogout = searchParams.get('from_logout');
         
         if (!fromLogout) {
-            // First step: Redirect to logout with a special return URL
+            // Step 1: Redirect to logout first with post_logout_redirect_uri returning to this login step
+            // After logout, Keycloak will redirect back to /api/auth/login?from_logout=true
             return NextResponse.redirect(
-                `${process.env.AUTH0_ISSUER_BASE_URL}/v2/logout?` +
-                `client_id=${process.env.AUTH0_CLIENT_ID}&` +
-                `returnTo=${encodeURIComponent(`${process.env.AUTH0_BASE_URL}/api/auth/login?from_logout=true`)}`
+                `${process.env.KEYCLOAK_ISSUER_BASE_URL}/logout?` +
+                `client_id=${process.env.KEYCLOAK_CLIENT_ID}&` +
+                `post_logout_redirect_uri=${encodeURIComponent(`${process.env.KEYCLOAK_BASE_URL}/api/auth/login?from_logout=true`)}`
             );
         }
 
-        // Second step: Coming from logout, now do the actual login
-        const authUrl = `${process.env.AUTH0_ISSUER_BASE_URL}/authorize?` +
-            `client_id=${process.env.AUTH0_CLIENT_ID}&` +
-            `redirect_uri=${encodeURIComponent(`${process.env.AUTH0_BASE_URL}/callback`)}&` +
+        // Step 2: Coming from logout, redirect to Keycloak /auth endpoint for login
+        const authUrl = `${process.env.KEYCLOAK_ISSUER_BASE_URL}/auth?` +
+            `client_id=${process.env.KEYCLOAK_CLIENT_ID}&` +
+            `redirect_uri=${encodeURIComponent(`${process.env.KEYCLOAK_BASE_URL}/api/auth/callback`)}&` +
             `scope=openid profile email&` +
             `response_type=code&` +
-            `prompt=login&` +  // Forces re-authentication
-            `max_age=0`;       // Forces re-authentication by invalidating SSO session
+            `prompt=login&` +   // Forces re-authentication
+            `max_age=0`;        // Forces re-authentication by invalidating SSO session
 
         return NextResponse.redirect(authUrl);
     }
@@ -35,19 +36,22 @@ export async function GET(request) {
         const code = searchParams.get('code');
         
         try {
-            const tokenRes = await fetch(`${process.env.AUTH0_ISSUER_BASE_URL}/oauth/token`, {
+            // Exchange code for token at Keycloak token endpoint (note: `application/x-www-form-urlencoded`!)
+            const params = new URLSearchParams({
+                grant_type: 'authorization_code',
+                client_id: process.env.KEYCLOAK_CLIENT_ID,
+                client_secret: process.env.KEYCLOAK_CLIENT_SECRET,
+                code,
+                redirect_uri: `${process.env.KEYCLOAK_BASE_URL}/api/auth/callback`
+            });
+
+            const tokenRes = await fetch(`${process.env.KEYCLOAK_ISSUER_BASE_URL}/token`, {
                 method: 'POST',
                 headers: { 
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({
-                    grant_type: 'authorization_code',
-                    client_id: process.env.AUTH0_CLIENT_ID,
-                    client_secret: process.env.AUTH0_CLIENT_SECRET,
-                    code,
-                    redirect_uri: `${process.env.AUTH0_BASE_URL}/api/auth/callback`
-                })
+                body: params.toString()
             });
 
             if (!tokenRes.ok) {
@@ -59,6 +63,8 @@ export async function GET(request) {
                 return NextResponse.redirect(new URL('/', request.url));
             }
 
+            // Optionally: Set cookies, create session, etc. here
+
             return NextResponse.redirect(new URL('/', request.url));
 
         } catch (error) {
@@ -68,10 +74,11 @@ export async function GET(request) {
 
     // Logout
     if (pathname.endsWith('/logout')) {
+        // Redirect to Keycloak logout with post_logout_redirect_uri back to your app
         return NextResponse.redirect(
-            `${process.env.AUTH0_ISSUER_BASE_URL}/v2/logout?` +
-            `client_id=${process.env.AUTH0_CLIENT_ID}&` +
-            `returnTo=${encodeURIComponent(`${process.env.AUTH0_BASE_URL}/`)}`
+            `${process.env.KEYCLOAK_ISSUER_BASE_URL}/logout?` +
+            `client_id=${process.env.KEYCLOAK_CLIENT_ID}&` +
+            `post_logout_redirect_uri=${encodeURIComponent(`${process.env.KEYCLOAK_BASE_URL}/`)}`
         );
     }
 

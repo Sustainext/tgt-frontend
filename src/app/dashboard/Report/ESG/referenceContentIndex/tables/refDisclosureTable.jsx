@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-const RefDisclosureTable = ({ data }) => {
+const RefDisclosureTable = ({ data,ispageNumberGenerated }) => {
   const columns = [
     { header: "GRI Standards" },
     { header: "Disclosure" },
@@ -66,7 +66,7 @@ const RefDisclosureTable = ({ data }) => {
                     </td>
                   )}
                   <td className="px-4 py-3">{item.title}</td>
-                  <td className="px-4 py-3">{item.page_number}</td>
+                   <td className={`px-4 py-4 ${ispageNumberGenerated?'text-center':'text-left'}`}>{ispageNumberGenerated?item.page_number:'Generating page numbers... Please wait.'}</td>
                 </tr>
               );
             })}

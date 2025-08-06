@@ -16,6 +16,7 @@ import {
   selectEnabledSections,
   selectSections,
 } from "../../../../../lib/redux/features/reportBuilderSlice";
+import { MaskedEmail, MaskedPhone } from '../../../../shared/components/MaskedPIIField';
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
@@ -354,8 +355,8 @@ const allFieldsFilled = totalFields > 0 && numFilled === totalFields;
                         <p className="text-[#101828] text-[13px] font-semibold">
                           {createdBy}
                         </p>
-                        <p className="text-[#667085] text-[13px] overflow-hidden text-ellipsis whitespace-nowrap sm:w-full md:w-auto">
-                          {email}
+                        <p className="text-[#667085] text-[13px] break-all w-full">
+                          <MaskedEmail email={email}/>
                         </p>
                       </div>
                     </div>

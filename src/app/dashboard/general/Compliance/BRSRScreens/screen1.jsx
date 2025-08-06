@@ -15,7 +15,7 @@ const widgets = {
   AllTableWidget: AllTableWidget,
 };
 
-const view_path = "gri-general-entities-list_of_entities-2-2-a";
+const view_path = "brsr-general-compliance-transparency-and-disclosures-compliances-brsr-a-vii-25";
 const client_id = 1;
 const user_id = 1;
 
@@ -89,7 +89,7 @@ const schema = {
           title: "Web-link",
           tooltip:
             "Provide web-link for grievance redress policy (if available)",
-          layouttype: "input",
+          layouttype: "inputWebsite",
           tooltipdispaly: "block",
         },
         {
@@ -128,6 +128,43 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const { open } = GlobalState();
+  const [showWebError,setshowWebError] = useState(false)
+   const [formContext, setFormContext] = useState({
+     validationErrors: {}, // Initialize validation errors
+     showWebError: false // Track if any percentage exceeds 100%
+   });
+ 
+   // Update formContext when showWebError changes
+   useEffect(() => {
+     setFormContext(prev => ({
+       ...prev,
+       showWebError: showWebError
+     }));
+   }, [showWebError]);
+   const clearFieldError = (rowIndex, fieldName) => {
+     setFormContext(prev => {
+       // If no error exists for this field, do nothing
+       if (!prev.validationErrors[rowIndex]?.[fieldName]) {
+         return prev;
+       }
+       
+       // Create a deep copy of validationErrors
+       const newErrors = JSON.parse(JSON.stringify(prev.validationErrors));
+       
+       // Remove the specific error
+       delete newErrors[rowIndex][fieldName];
+       
+       // If no more errors for this row, remove the row entry
+       if (Object.keys(newErrors[rowIndex]).length === 0) {
+         delete newErrors[rowIndex];
+       }
+       
+       return {
+         ...prev,
+         validationErrors: newErrors
+       };
+     });
+   };
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -136,12 +173,57 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
   const LoaderClose = () => {
     setLoOpen(false);
   };
+//   const validateRows = (rows = []) => {
+//   const errors = {};
+//   rows.forEach((row, idx) => {
+//     errors[idx] = {}; // for each row
+//     Object.entries(r_schema?.items?.properties || schema.items.properties).forEach(([col, def]) => {
+//       // if empty or (for arrays) length 0
+//       if (
+//         row[col] === undefined ||
+//         row[col] === "" ||
+//         (Array.isArray(row[col]) && row[col].length === 0)
+//       ) {
+//         errors[idx][col] = "Required";
+//       }
+//       // Add extra logic per type if you want (ex: number validation for Percent)
+//     });
+//   });
+//   // Remove empty error rows (optional)
+//   Object.keys(errors).forEach(idx => {
+//     if (Object.keys(errors[idx]).length === 0) delete errors[idx];
+//   });
+//   return errors;
+// };
 
   const handleChange = (e) => {
     setFormData(e.formData);
   };
 
   const updateFormData = async () => {
+   const validationErrors = {};
+  let hasInvalidWebsite = false;
+  
+  const urlRegex = /^(https?:\/\/)?[\w.-]+\.[a-z]{2,}(\/\S*)?$/i;
+
+  formData.forEach((row, index) => {
+    if (row.Weblink && !urlRegex.test(row.Weblink)) {
+      validationErrors[index] = {
+        ...validationErrors[index],
+        Weblink: "Please enter a valid URL"
+      };
+      hasInvalidWebsite = true;
+    }
+  });
+
+  // If validation fails, show errors and abort
+  if (hasInvalidWebsite) {
+    setFormContext(prev => ({
+      ...prev,
+      validationErrors
+    }));
+    return;
+  }
     const data = {
       client_id: client_id,
       user_id: user_id,
@@ -154,44 +236,44 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
-      // if (response.status === 200) {
-      //   toast.success("Data added successfully", {
-      //     position: "top-right",
-      //     autoClose: 3000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "light",
-      //   });
-      //   LoaderClose();
-      //   loadFormData();
-      // } else {
-      //   toast.error("Oops, something went wrong", {
-      //     position: "top-right",
-      //     autoClose: 1000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "colored",
-      //   });
-      //   LoaderClose();
-      // }
+      if (response.status === 200) {
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        loadFormData();
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
     } catch (error) {
       console.log("test data",error);
-      // toast.error("Oops, something went wrong", {
-      //   position: "top-right",
-      //   autoClose: 1000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "colored",
-      // });
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       LoaderClose();
     }
   };
@@ -212,38 +294,52 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
       LoaderClose();
     }
   };
-// useEffect(() => {
-//   if (selectedOrg && year && togglestatus) {
-//     if (togglestatus === "Corporate") {
-//       if (selectedCorp) {
-//         loadFormData();           // <-- Only load if a corporate is picked
-//       } else {
-//         setFormData([{}]); 
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
-//       }
-//     } else {
-//       loadFormData();             // Organization tab: always try to load
-//     }
-//     toastShown.current = false;
-//   } else {
-//     if (!toastShown.current) {
-//       toastShown.current = true;
-//     }
-//   }
-// }, [selectedOrg, year, selectedCorp, togglestatus]);
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
+      }
+    } else {
+      loadFormData();             // Organization tab: always try to load
+    }
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     updateFormData();
     console.log("test form data", formData);
   };
+//   const handleSubmit = (e) => {
+//   e.preventDefault();
+
+//   // get current schema (remote or default as appropriate)
+//   const errors = validateRows(formData);
+//   setValidationErrors(errors);
+
+//   const hasErrors = Object.values(errors).some(row => Object.values(row).some(Boolean));
+//   if (!hasErrors) {
+//     updateFormData();
+//   } else {
+//     toast.error("Please fill all fields before submitting.");
+//   }
+// };
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
     console.log("Form data newData:", newData);
   };
-  useImperativeHandle(ref, () => updateFormData);
+  // useImperativeHandle(ref, () => updateFormData);
   return (
     <>
     <div
@@ -270,32 +366,8 @@ const Screen1 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
             </div>
           </div>
         </div>
-         <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
-          Complaints/Grievances on any of the Principles under the National Guidelines on Responsible Business Conduct:
-          <MdInfoOutline
-            data-tooltip-id={`tooltip-$e1`}
-            data-tooltip-content="This section documents data on complaints 
-related to Principles 1–9 of the NGRBC, 
-including information on number of complaints 
-filed and grievance redressal mechanism"
-            className="mt-1 ml-2 text-[15px]"
-          />
-          <ReactTooltip
-            id={`tooltip-$e1`}
-            place="top"
-            effect="solid"
-            style={{
-              width: "290px",
-              backgroundColor: "#000",
-              color: "white",
-              fontSize: "12px",
-              boxShadow: 3,
-              borderRadius: "8px",
-              textAlign: "left",
-            }}
-          ></ReactTooltip>
-        </p>
-        {/* {(togglestatus === "Corporate" && selectedCorp) ||
+      
+        {(togglestatus === "Corporate" && selectedCorp) ||
         (togglestatus !== "Corporate" && selectedOrg && year) ? (
           <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
           Complaints/Grievances on any of the Principles under the National Guidelines on Responsible Business Conduct:
@@ -322,7 +394,7 @@ filed and grievance redressal mechanism"
             }}
           ></ReactTooltip>
         </p>
-        ) : null} */}
+        ) : null}
         {/* {selectedOrg && year && (
           <p className="flex mx-2 text-sm text-gray-700 relative">
             List all entities included in the sustainability report
@@ -349,12 +421,16 @@ filed and grievance redressal mechanism"
         )} */}
         <div className="mx-2 mb-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+             formContext={{
+        ...formContext,
+        clearFieldError // Add the error-clearing function
+      }}
           />
         </div>
         <div className="mt-4">
