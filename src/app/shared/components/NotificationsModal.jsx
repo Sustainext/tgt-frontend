@@ -411,9 +411,9 @@ const NotificationsModal = ({ isOpen, onClose, triggerRef }) => {
         style={{
           top: position.top,
           right: position.right,
-          width: '400px',
+          width: '350px',
           height: 'auto',
-          maxHeight: '700px',
+          maxHeight: '415px',
           transformOrigin: 'top right',
         }}
       >

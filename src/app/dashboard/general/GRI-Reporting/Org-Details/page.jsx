@@ -52,19 +52,19 @@ const OrgDetails = ({setMobileopen,brsrFrameworkId}) => {
 
   const brsr = [
     {
-      tagName: "BRSR A-I-2",
+      tagName: "BRSR-A-I-1",
       id: "tooltip-$brsr1",
-      content: "BRSR-Section A-I-2",
+      content: "BRSR-Section-A-I-1",
     },
     {
-      tagName: "BRSR A-I-4",
+      tagName: "BRSR A-I-3",
       id: "tooltip-$brsr2",
-      content: "BRSR-Section A-I-4",
+      content: "BRSR-Section-A-I-3",
     },
     {
-      tagName: "BRSR A-I-5",
+      tagName: "BRSR A-I-10",
       id: "tooltip-$brsr",
-      content: "BRSR-Section A-I-5",
+      content: "BRSR-Section-A-I-10",
     },
   ];
 

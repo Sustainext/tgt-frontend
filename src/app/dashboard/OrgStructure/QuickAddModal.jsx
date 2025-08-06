@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { showToast } from "@/app/utils/toastUtils";
 import axiosInstance from "../../utils/axiosMiddleware";
 import SearchableCityDropdown from "./forms/SearchableCityDropdown";
+import Cookies from "js-cookie";
 const INITIAL_FORM_STATE = {
   name: "",
   country: "",
@@ -29,6 +30,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
   const [selectedCountry, setSelectedCountry] = useState(``);
   const [selectedState, setSelectedState] = useState(``);
   const [selectedCity, setSelectedCity] = useState("");
+  let brsrFrameworkId = Cookies.get('selected_brsr_framework_id') || 0
   const handleCancel = () => {
     setFormData(INITIAL_FORM_STATE);
     setFormErrors({});
@@ -164,7 +166,6 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
       const [countryId, countryCode] = value.split(":");
       setCountriesids(countryId);
       setSelectedCountry(value);
-      console.log(value,"chekc selecte value");
       setFormData((prev) => ({
         ...prev,
         country: countryCode,
@@ -217,6 +218,16 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
     if (!formData.sector && (type === "corporate" || type === "organization")) {
       errors.sector = "Sector is required";
     }
+
+    if(brsrFrameworkId ==4 && !formData.email){
+      errors.email = "E-mail is required";
+    }
+    if(formData.email){
+      if(!(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email))){
+          errors.email = "Please enter a valid email address";
+      }
+    }
+
 
     if (type === "corporate") {
       if (!formData.subIndustry) {
@@ -316,6 +327,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
           fax: "",
           employeecount: 0,
           revenue: 0,
+          email:formData.email || "",
           sector: formData.sector || "General",
           subindustry: formData.subIndustry || "General",
           address: formData.address || "Not Provided",
@@ -376,6 +388,7 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
           name: formData.name || "Test Corp",
           corporatetype: "Not Specified",
           ownershipnature: "",
+          email:formData.email || "",
           location_headquarters: "Not Specified",
           phone: 9999999999,
           mobile: "",
@@ -666,6 +679,27 @@ const QuickAddModal = ({ isOpen, onClose, type, parentName }) => {
             <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>
           )}
         </div>
+
+       {type !=='location' && (
+         <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            {type.charAt(0).toUpperCase() + type.slice(1)} E-mail {brsrFrameworkId ==4 && <span>*</span>}
+          </label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            className={`w-full border ${
+              formErrors.email ? "border-red-500" : "border-gray-300"
+            } rounded-md p-2 text-sm`}
+            placeholder="E-mail"
+          />
+          {formErrors.email && (
+            <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>
+          )}
+        </div>
+       )}
 
         {renderLocationFields()}
 

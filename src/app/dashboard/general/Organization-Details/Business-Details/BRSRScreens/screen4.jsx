@@ -16,7 +16,7 @@ const widgets = {
   TableWidget: TableWidget,
 };
 
-const view_path = "gri-general-entities-list_of_entities-2-2-a";
+const view_path = "brsr-general-business-details-operations-brsr-a-iii-18";
 const client_id = 1;
 const user_id = 1;
 
@@ -108,44 +108,44 @@ const Screen4 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
-      // if (response.status === 200) {
-      //   toast.success("Data added successfully", {
-      //     position: "top-right",
-      //     autoClose: 3000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "light",
-      //   });
-      //   LoaderClose();
-      //   loadFormData();
-      // } else {
-      //   toast.error("Oops, something went wrong", {
-      //     position: "top-right",
-      //     autoClose: 1000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "colored",
-      //   });
-      //   LoaderClose();
-      // }
+      if (response.status === 200) {
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        loadFormData();
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
     } catch (error) {
       console.log("test data",error);
-      // toast.error("Oops, something went wrong", {
-      //   position: "top-right",
-      //   autoClose: 1000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "colored",
-      // });
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       LoaderClose();
     }
   };
@@ -166,26 +166,26 @@ const Screen4 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
       LoaderClose();
     }
   };
-// useEffect(() => {
-//   if (selectedOrg && year && togglestatus) {
-//     if (togglestatus === "Corporate") {
-//       if (selectedCorp) {
-//         loadFormData();           // <-- Only load if a corporate is picked
-//       } else {
-//         setFormData([{}]); 
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
-//       }
-//     } else {
-//       loadFormData();             // Organization tab: always try to load
-//     }
-//     toastShown.current = false;
-//   } else {
-//     if (!toastShown.current) {
-//       toastShown.current = true;
-//     }
-//   }
-// }, [selectedOrg, year, selectedCorp, togglestatus]);
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
+      }
+    } else {
+      loadFormData();             // Organization tab: always try to load
+    }
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -224,32 +224,7 @@ const Screen4 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
             </div>
           </div>
         </div>
-        <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
-          Number of Locations where Plants and/or Operations/Offices of the Entity are situated
-          <MdInfoOutline
-            data-tooltip-id={`tooltip-$e1`}
-            data-tooltip-content="This section documents data corresponding to the 
-number of locations where entity's plants 
-or/and offices are situated at 
-national and international levels"
-            className="mt-1 ml-2 text-[15px]"
-          />
-          <ReactTooltip
-            id={`tooltip-$e1`}
-            place="top"
-            effect="solid"
-            style={{
-              width: "290px",
-              backgroundColor: "#000",
-              color: "white",
-              fontSize: "12px",
-              boxShadow: 3,
-              borderRadius: "8px",
-              textAlign: "left",
-            }}
-          ></ReactTooltip>
-        </p>
-        {/* {(togglestatus === "Corporate" && selectedCorp) ||
+        {(togglestatus === "Corporate" && selectedCorp) ||
         (togglestatus !== "Corporate" && selectedOrg && year) ? (
           <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
           Number of Locations where Plants and/or Operations/Offices of the Entity are situated
@@ -276,7 +251,7 @@ national and international levels"
             }}
           ></ReactTooltip>
         </p>
-        ) : null} */}
+        ) : null}
         {/* {selectedOrg && year && (
           <p className="flex mx-2 text-sm text-gray-700 relative">
             List all entities included in the sustainability report
@@ -303,8 +278,8 @@ national and international levels"
         )} */}
         <div className="mx-2 mb-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

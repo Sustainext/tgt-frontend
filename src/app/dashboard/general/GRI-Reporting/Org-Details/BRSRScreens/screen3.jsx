@@ -13,7 +13,7 @@ const widgets = {
  AllInputWidget:AllInputWidget
 };
 
-const view_path = "gri-general-org_details_2-1a-1b-1c-1d";
+const view_path = "brsr-general-org-details-stock-exchange-brsr-a-i-10";
 const client_id = 1;
 const user_id = 1;
 
@@ -26,8 +26,7 @@ const schema = {
         enum:[
             "National Stock Exchange",
             "Bombay Stock Exchange",
-            "Metropolitan Stock Exchange of India",
-            "Others (please specify)"
+            "Metropolitan Stock Exchange of India"
         ]
        },
     },
@@ -55,7 +54,18 @@ const Screen3 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
-  const toastShown = useRef(false);
+ const [validationErrors, setValidationErrors] = useState([]);
+     const toastShown = useRef(false);
+   
+     const validateRows = (data) => {
+     const errors = {};
+     data.forEach((row, idx) => {
+       if (!errors[idx]) errors[idx] = {};
+       if (!row.Q1) errors[idx].Q1 = "This field is required";
+     });
+     return errors;
+   };
+
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -142,31 +152,52 @@ const Screen3 = ({ selectedOrg, selectedCorp, year, togglestatus }) => {
     }
   };
 
-// useEffect(() => {
-//   if (selectedOrg && year && togglestatus) {
-//     if (togglestatus === "Corporate") {
-//       if (selectedCorp) {
-//         loadFormData();           // <-- Only load if a corporate is picked
-//       } else {
-//         setFormData([{}]); 
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
-//       }
-//     } else {
-//       loadFormData();             // Organization tab: always try to load
-//     }
-//     toastShown.current = false;
-//   } else {
-//     if (!toastShown.current) {
-//       toastShown.current = true;
-//     }
-//   }
-// }, [selectedOrg, year, selectedCorp, togglestatus]);
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
+      }
+    } else {
+      loadFormData();             // Organization tab: always try to load
+    }
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
-  const handleSubmit = (e) => {
+useEffect(() => {
+  // Clear validation errors when org/corp/year changes
+  setValidationErrors({});
+}, [selectedOrg, selectedCorp, year]);
+
+//   const handleSubmit = (e) => {
+//   e.preventDefault();
+//   const errors = validateRows(formData);
+//   setValidationErrors(errors);
+
+//   // Check if any error message exists
+//   const hasErrors = Object.values(errors).some(
+//     (row) => row && Object.values(row).some((v) => !!v)
+//   );
+
+//   if (!hasErrors) {
+//     updateFormData();
+//   } else {
+//     console.log("validation error");
+//   }
+// };
+const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
     updateFormData();
+    console.log("test form data", formData);
   };
 
   return (
@@ -220,12 +251,15 @@ location of its headquarters, countries of operation etc. "
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{validationErrors,
+               setValidationErrors: setValidationErrors
+            }}
           />
         </div>
         <div className="mt-4">

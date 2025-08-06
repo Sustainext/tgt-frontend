@@ -16,6 +16,8 @@ import {
   setMaterialityYear,
   setIsYearChanged
 } from "../../../lib/redux/features/materialitySlice";
+import { MdKeyboardArrowDown } from 'react-icons/md';
+
 
 const EnvironmentHeade2 = ({
   activeMonth,
@@ -262,7 +264,7 @@ const EnvironmentHeade2 = ({
                   reportType !== "" ? "visible" : "hidden"
                 }`}
               >
-                <div className="mr-2">
+                <div className="mr-2 relative">
                   <label
                     htmlFor="cname"
                     className="text-neutral-800 text-[12px] font-normal ml-1"
@@ -283,6 +285,12 @@ const EnvironmentHeade2 = ({
                           </option>
                         ))}
                     </select>
+                    <div className='absolute inset-y-0 top-8 right-2 flex items-center pl-3 pointer-events-none'>
+                                    <MdKeyboardArrowDown
+                                      className='text-neutral-500'
+                                      style={{ fontSize: '16px' }}
+                                    />{' '}
+                                  </div>
                     {errors.organization && (
                       <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.organization}
@@ -298,7 +306,7 @@ const EnvironmentHeade2 = ({
                     >
                       Select Corporate
                     </label>
-                    <div className="mt-2">
+                    <div className="mt-2 relative">
                       <select
                         className="block w-full pr-3 rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                         value={selectedCorp}
@@ -312,6 +320,12 @@ const EnvironmentHeade2 = ({
                             </option>
                           ))}
                       </select>
+                      <div className='absolute inset-y-0 top-8 right-2 flex items-center pl-3 pointer-events-none'>
+                                      <MdKeyboardArrowDown
+                                        className='text-neutral-500'
+                                        style={{ fontSize: '16px' }}
+                                      />{' '}
+                                    </div>
                       {errors.corporate && (
                         <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                           {errors.corporate}
@@ -321,7 +335,7 @@ const EnvironmentHeade2 = ({
                   </div>
                 )}
 
-                <div className="mr-2">
+                <div className="mr-2 relative">
                   <label
                     htmlFor="cname"
                     className="text-neutral-800 text-[12px] font-normal ml-1"
@@ -342,6 +356,12 @@ const EnvironmentHeade2 = ({
                         </option>
                       ))}
                     </select>
+                    <div className='absolute inset-y-0 top-8 right-2 flex items-center pl-3 pointer-events-none'>
+                                    <MdKeyboardArrowDown
+                                      className='text-neutral-500'
+                                      style={{ fontSize: '16px' }}
+                                    />{' '}
+                                  </div>
                     {errors.year && (
                       <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.year}

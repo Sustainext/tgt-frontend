@@ -14,9 +14,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from '@/app/utils/axiosMiddleware'
+import inputWidget from "../../../../shared/widgets/Input/inputWidget6";
 
 const widgets = {
-  inputWidget: inputWidget2,
+  inputWidget: inputWidget,
   RadioWidget2: RadioWidget2,
   TextareaWidget3:TextareaWidget3,
   Textboxwithfileupload:Textboxwithfileupload,
@@ -69,18 +70,23 @@ const schema = {
                 type: "string",
                 title: "If yes, please provide a link or reference to the external assurance reports or assurance statements",
               },
+               Q8: {
+        type: "string",
+        title: "What is the name of assurance provider?",
+      },
 
             },
           },
         ],
       },
+      
     },
   },
 };
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1", "Q2","Q3","Q4","Q5","Q6","Q7"],
+    "ui:order": ["Q1","Q8", "Q2","Q3","Q4","Q5","Q6","Q7"],
     Q1: {
       "ui:title": "Has the organization's sustainability report been externally assured?",
       "ui:tooltip":
@@ -183,6 +189,21 @@ const uiSchema = {
           label: false,
         },
       },
+      Q8: {
+        "ui:hading": "",
+        "ui:hadingtooltip": "",
+        "ui:hadingtooltipdisplay": "none",
+        "ui:title":
+          "What is the name of assurance provider?",
+        "ui:tooltip":
+          "Specify the name of external assurance provider",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "inputWidget",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
+      },
     "ui:options": {
       orderable: false, // Prevent reordering of items
       addable: false, // Prevent adding items from UI
@@ -192,13 +213,14 @@ const uiSchema = {
   },
 };
 
-const Screen3 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, ref) => {
+const Screen3 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus,brsrFrameworkId }, ref) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const { open } = GlobalState();
+   const [validationErrors, setValidationErrors] = useState([]);
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -206,6 +228,16 @@ const Screen3 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
 
   const LoaderClose = () => {
     setLoOpen(false);
+  };
+
+   const validateRows = (data) => {
+    const errors = {};
+    data.forEach((row) => {
+      if (!row.Q8 && brsrFrameworkId ==4) {
+        errors.Q1 = "This field is required";
+      }
+    });
+    return errors;
   };
 
   const handleChange = (e) => {
@@ -348,17 +380,23 @@ external assurance of the sustainability report. " className="mt-1.5 ml-2 text-[
                   GRI 2-5-b
                 </div>
               </div>
+               <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-[#18736B] text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  BRSR-A-I-14
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div className="mx-2">
           <Form
             schema={r_schema}
-            uiSchema={uiSchema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{validationErrors}}
           />
         </div>
         {/* <div className="mb-6">

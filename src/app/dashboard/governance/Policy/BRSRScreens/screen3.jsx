@@ -16,14 +16,14 @@ const widgets = {
   TableWidget: BrsrPolicyTableWidget,
 };
 
-const view_path = "gri-governance-policy_commitments-2-23-a-business_conduct";
+const view_path = "brsr-governance-independent-assessment-by-external-agency-brsr-b";
 const client_id = 1;
 const user_id = 1;
 
 const schema = {
   type: "object",
   properties: {
-    independentAssessment: {
+    independentAssessmentTable: {
       type: "array",
       items: {
         type: "object",
@@ -39,34 +39,88 @@ const schema = {
           P9: { type: "string" },
         },
       },
+      minItems: 13,
+      maxItems: 13,
     },
   },
 };
-
-
-
-
+ 
+// uiSchema.js
 const uiSchema = {
-  independentAssessment: {
+  independentAssessmentTable: {
     "ui:widget": "TableWidget",
     "ui:options": {
-      titles: Array.from({ length: 9 }, (_, i) => ({
-        key: `P${i + 1}`,
-        title: `P${i + 1}`,
-        layout: "inputDropdown",
-      })),
+      sectionTitles: [
+        "Independent Assessment/ Evaluation of the Policies by an External Agency",
+      ],
+ 
+      titles: [
+        {
+          key: "P1",
+          title: "P1",
+          layout: "inputDropdown",
+         },
+        {
+          key: "P2",
+          title: "P2",
+          layout: "inputDropdown",
+          },
+        {
+          key: "P3",
+          title: "P3",
+          layout: "input",
+          },
+        {
+          key: "P4",
+          title: "P4",
+          layout: "inputDropdown",
+         },
+        {
+          key: "P5",
+          title: "P5",
+          layout: "inputDropdown",
+         },
+        {
+          key: "P6",
+          title: "P6",
+          layout: "input",
+         },
+        {
+          key: "P7",
+          title: "P7",
+          layout: "input",
+          },
+        {
+          key: "P8",
+          title: "P8",
+          layout: "input",
+          },
+        {
+          key: "P9",
+          title: "P9",
+          layout: "input",
+          },
+      ],
+ 
+      // 8+5=13 rows (index 0-7: policy, 8-12: reason)
       rowLabels: [
         {
           key: "row1",
-          title:
-            "Has the entity carried out independent assessment/evaluation of the working of its policies by an external agency?",
+          title: "Has the entity carried out independent assessment/evaluation of the working of its policies by an external agency?",
+          tooltip: "",
+          tooltipshow: "none",
           layout: "inputDropdown",
           options: ["Yes", "No"],
+          section: 0,
         },
         {
           key: "row2",
           title: "If yes, provide name of the agency.",
+          tooltip: "",
+          tooltipshow: "none",
+          tooltipshow: "none",
           layout: "input",
+          section: 0,
         },
       ],
     },
@@ -86,19 +140,9 @@ const Screen3 = ({
   togglestatus,
 }) => {
  const initialFormData = {
-  independentAssessment: [
-    {
-      P1: "Select",
-      P2: "Select",
-      P3: "Select",
-      P4: "Select",
-      P5: "Select",
-      P6: "Select",
-      P7: "Select",
-      P8: "Select",
-      P9: "Select",
-    },
-    {
+  independentAssessmentTable: Array(2)
+    .fill()
+    .map(() => ({
       P1: "",
       P2: "",
       P3: "",
@@ -108,8 +152,7 @@ const Screen3 = ({
       P7: "",
       P8: "",
       P9: "",
-    },
-  ],
+    })),
 };
 
 
@@ -136,7 +179,7 @@ const Screen3 = ({
       client_id: client_id,
       user_id: user_id,
       path: view_path,
-      form_data: formData,
+      form_data: Array.isArray(formData) ? formData : [formData],
       corporate: selectedCorp,
       organisation: selectedOrg,
       year,
@@ -199,7 +242,7 @@ const Screen3 = ({
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
-      setFormData(response.data.form_data[0].data);
+      setFormData(response.data.form_data[0].data[0]);
 
       console.log(formData, "afterapi");
     } catch (error) {
@@ -209,25 +252,25 @@ const Screen3 = ({
     }
   };
 
-//   useEffect(() => {
-//     if (selectedOrg && year && togglestatus) {
-//       if (togglestatus === "Corporate" && selectedCorp) {
-//         loadFormData();
-//       } else if (togglestatus === "Corporate" && !selectedCorp) {
-//         setFormData(initialFormData);
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});
-//       } else {
-//         loadFormData();
-//       }
+  useEffect(() => {
+    if (selectedOrg && year && togglestatus) {
+      if (togglestatus === "Corporate" && selectedCorp) {
+        loadFormData();
+      } else if (togglestatus === "Corporate" && !selectedCorp) {
+        setFormData(initialFormData);
+        setRemoteSchema({});
+        setRemoteUiSchema({});
+      } else {
+        loadFormData();
+      }
 
-//       toastShown.current = false;
-//     } else {
-//       if (!toastShown.current) {
-//         toastShown.current = true;
-//       }
-//     }
-//   }, [selectedOrg, year, selectedCorp, togglestatus]);
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -244,56 +287,28 @@ const Screen3 = ({
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
-          <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-             Independent Assessment/ Evaluation of the Policies by an External Agency
-              {/* <MdInfoOutline
-                data-tooltip-id={`tooltip-$e80`}
-                data-tooltip-content="Provide a description of organisation's policy commitments for responsible business conduct."
-                className="mt-1.5 ml-2 text-[15px] w-[10%] xl:w-[5%] md:w-[5%] lg:w-[5%] 2xl:w-[5%] 3xl:w-[5%] 4k:w-[5%] 2k:w-[5%]"
-              />
-              <ReactTooltip
-                id={`tooltip-$e80`}
-                place="top"
-                effect="solid"
-                style={{
-                  width: "290px",
-                  backgroundColor: "#000",
-                  color: "white",
-                  fontSize: "12px",
-                  boxShadow: 3,
-                  borderRadius: "8px",
-                  textAlign: "left",
-                }}
-              ></ReactTooltip> */}
-            </h2>
-          </div>
-          <div className="w-[100%] xl:w-[20%]  lg:w-[20%]  md:w-[20%]  2xl:w-[20%]  4k:w-[20%]  2k:w-[20%] h-[26px] mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0  ">
-            <div className="flex xl:float-end lg:float-end md:float-end 2xl:float-end 4k:float-end 2k:float-end float-start gap-2 mb-4 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
-              <div className="">
-                <div className="text-[#18736B] bg-slate-200 justify-center items-center gap-2 inline-flex w-[70px] h-[26px] p-2  rounded-lg  text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  BRSR-B
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="mx-2">
-          <Form
-            schema={schema}
-            uiSchema={uiSchema}
-            formData={formData}
-            onChange={handleChange}
-            validator={validator}
-            widgets={widgets}
-            formContext={{
-              view: "0",
-               formData: formData.independentAssessment
-            }}
-          />
-        </div>
-        
+         {Object.keys(r_schema || {}).length == 0 && (
+  <h2 className="flex justify-between mx-2 text-[15px] text-neutral-950 font-[500] mt-5 mb-4">
+   Independent Assessment/ Evaluation of the Policies by an External Agency
+    <div className="float-end">
+      <div className="text-[#18736B] bg-slate-200 justify-center items-center gap-2 inline-flex w-[70px] h-[26px] p-2  rounded-lg  text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+        BRSR-B
+      </div>
+    </div>
+  </h2>
+)}
+        <Form
+          schema={r_schema}
+          uiSchema={r_ui_schema}
+          formData={formData}
+          onChange={handleChange}
+          validator={validator}
+          widgets={widgets}
+          formContext={{
+            tableName: "independentAssessmentTable",
+            formData: formData,
+          }}
+        />
 
         <div className="mt-4">
           <button

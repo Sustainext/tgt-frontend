@@ -253,8 +253,8 @@ useEffect(() => {
   return (
     <>
       <div className="w-full">
-        <div className="block xl:flex lg:flex md:block 2xl:flex 4k:flex">
-          <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block">
+        <div className="block xl:flex lg:flex md:block 2xl:flex 4k:flex min-w-0">
+          <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block flex-shrink-0">
             <Aside
               activeTab={activeTab}
               handleTabClick={handleTabClick}
@@ -274,13 +274,7 @@ useEffect(() => {
               </div>
             </div>
           ) : (
-            <div
-              className={`${
-                open
-                  ? "sm:w-[87vw]  md:w-[120vw] lg:w-[86vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
-                  : " sm:w-[87vw] md:w-[120vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
-              }`}
-            >
+            <div className="w-full max-w-full min-w-0 flex-1 overflow-hidden">
               {/* Emissions start */}
               {activeTab === "Management of Material topic emission" && (
                 <Materialtopic

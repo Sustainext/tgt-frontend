@@ -495,8 +495,8 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
             </div>
           </div>
         </div>
-        <div className="flex">
-          <div className={`ps-4 w-[100%] me-4`}>
+        <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block">
+          <div className="flex-1 ps-4 me-4 max-w-full overflow-hidden">
             {airPollutantinKg && airPollutantinKg.length>0 && (
                <div className="mb-6">
                <p className="text-black text-[15px] font-bold ">

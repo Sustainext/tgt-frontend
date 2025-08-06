@@ -5,8 +5,8 @@ function DynamicTable({ columns, data }) {
   const totalColumns = columns.reduce((acc, column) => acc + (column.colSpan || 1), 0) + 3; // +3 for the age group headers
 
   return (
-    <div className="container mx-auto overflow-x-auto custom-scrollbar">
-      <table className="min-w-[828px] border-collapse  md:table w-full rounded-lg overflow-hidden">
+    <div className='overflow-x-auto custom-scrollbar w-full'>
+      <table className="rounded-md border border-gray-300 w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
         <thead className=" md:table-header-group border">
           <tr className="gradient-background  md:table-row">
             {columns.map((column, index) => (

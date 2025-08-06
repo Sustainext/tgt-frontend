@@ -11,12 +11,12 @@ import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import AllTableWidget from "../../../../../shared/widgets/BRSR/allTableWidget";
-import TableWidget from '../../../../../shared/widgets/BRSR/tableWidgetBRSR'
+import TableWidget from '../../../../../shared/widgets/BRSR/tableWidgetRowColSum'
 const widgets = {
   TableWidget: TableWidget,
 };
 
-const view_path = "gri-general-entities-list_of_entities-2-2-a";
+const view_path = "brsr-general-workforce-employees-differently-abled-employees-brsr-a-iv-20-b";
 const client_id = 1;
 const user_id = 1;
 
@@ -44,13 +44,15 @@ const uiSchema = {
         title: "Differently Abled Employee Category",
         layout: "readonly",
         tooltipdispaly: "none",
-        tooltip: ""
+        tooltip: "",
+        key1:"col1"
       },
       {
         key: "totalDifferentlyAbledEmployees",
         title: "Total Differently Abled Employees",
         layout: "inputNumber",
         tooltipdispaly: "block",
+        key1:"col2",
         tooltip: "Specify the total number of permanent and other than permanent differently abled employee working for the entity"
       },
       {
@@ -58,6 +60,7 @@ const uiSchema = {
         title: "Number Of Differently Abled Male Employees",
         layout: "inputNumber",
         tooltipdispaly: "block",
+        key1:"col3",
         tooltip: "Specify the total number of permanent and other than permanent differently abled male employees working for the entity"
       },
       {
@@ -65,13 +68,15 @@ const uiSchema = {
         title: "Percentage Of Differently Abled Male Employees",
         layout: "readonly",
         tooltipdispaly: "none",
-        tooltip: ""
+        tooltip: "",
+        key1:"col4"
       },
       {
         key: "differentlyAbledFemaleEmployees",
         title: "Number Of Differently Abled Female Employees",
         layout: "inputNumber",
         tooltipdispaly: "block",
+        key1:"col5",
         tooltip: "Specify the total number of permanent and other than permanent differently abled female employees working for the entity"
       },
       {
@@ -79,7 +84,8 @@ const uiSchema = {
         title: "Percentage Of Differently Abled Female Employees",
         layout: "readonly",
         tooltipdispaly: "none",
-        tooltip: ""
+        tooltip: "",
+        key1:"col6"
       }
     ],
     rowLabels: [
@@ -100,58 +106,6 @@ const uiSchema = {
         layout:'readonly'
       }
     ],
-    // rowCalculations: [
-    //   {
-    //     sum: { target: "totalDifferentlyAbledEmployees", fields: ["differentlyAbledMaleEmployees", "differentlyAbledFemaleEmployees"] },
-    //     percentages: [
-    //       {
-    //         target: "percentageDifferentlyAbledMaleEmployees",
-    //         numeratorField: "differentlyAbledMaleEmployees",
-    //         denominatorField: "totalDifferentlyAbledEmployees"
-    //       },
-    //       {
-    //         target: "percentageDifferentlyAbledFemaleEmployees",
-    //         numeratorField: "differentlyAbledFemaleEmployees",
-    //         denominatorField: "totalDifferentlyAbledEmployees"
-    //       }
-    //     ]
-    //   },
-    //   {
-    //     sum: { target: "totalDifferentlyAbledEmployees", fields: ["differentlyAbledMaleEmployees", "differentlyAbledFemaleEmployees"] },
-    //     percentages: [
-    //       {
-    //         target: "percentageDifferentlyAbledMaleEmployees",
-    //         numeratorField: "differentlyAbledMaleEmployees",
-    //         denominatorField: "totalDifferentlyAbledEmployees"
-    //       },
-    //       {
-    //         target: "percentageDifferentlyAbledFemaleEmployees",
-    //         numeratorField: "differentlyAbledFemaleEmployees",
-    //         denominatorField: "totalDifferentlyAbledEmployees"
-    //       }
-    //     ]
-    //   }
-    // ],
-    // totalsRow: {
-    //   rowIndex: 2,
-    //   sumFields: [
-    //     { target: "differentlyAbledMaleEmployees", fields: ["differentlyAbledMaleEmployees"] },
-    //     { target: "differentlyAbledFemaleEmployees", fields: ["differentlyAbledFemaleEmployees"] },
-    //     { target: "totalDifferentlyAbledEmployees", fields: ["totalDifferentlyAbledEmployees"] }
-    //   ],
-    //   percentages: [
-    //     {
-    //       target: "percentageDifferentlyAbledMaleEmployees",
-    //       numeratorField: "differentlyAbledMaleEmployees",
-    //       denominatorField: "totalDifferentlyAbledEmployees"
-    //     },
-    //     {
-    //       target: "percentageDifferentlyAbledFemaleEmployees",
-    //       numeratorField: "differentlyAbledFemaleEmployees",
-    //       denominatorField: "totalDifferentlyAbledEmployees"
-    //     }
-    //   ]
-    // }
   }
 };
 
@@ -188,44 +142,44 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
-      // if (response.status === 200) {
-      //   toast.success("Data added successfully", {
-      //     position: "top-right",
-      //     autoClose: 3000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "light",
-      //   });
-      //   LoaderClose();
-      //   loadFormData();
-      // } else {
-      //   toast.error("Oops, something went wrong", {
-      //     position: "top-right",
-      //     autoClose: 1000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "colored",
-      //   });
-      //   LoaderClose();
-      // }
+      if (response.status === 200) {
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        loadFormData();
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
     } catch (error) {
       console.log("test data",error);
-      // toast.error("Oops, something went wrong", {
-      //   position: "top-right",
-      //   autoClose: 1000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "colored",
-      // });
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       LoaderClose();
     }
   };
@@ -246,26 +200,26 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
       LoaderClose();
     }
   };
-// useEffect(() => {
-//   if (selectedOrg && year && togglestatus) {
-//     if (togglestatus === "Corporate") {
-//       if (selectedCorp) {
-//         loadFormData();           // <-- Only load if a corporate is picked
-//       } else {
-//         setFormData([{}]); 
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
-//       }
-//     } else {
-//       loadFormData();             // Organization tab: always try to load
-//     }
-//     toastShown.current = false;
-//   } else {
-//     if (!toastShown.current) {
-//       toastShown.current = true;
-//     }
-//   }
-// }, [selectedOrg, year, selectedCorp, togglestatus]);
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
+      }
+    } else {
+      loadFormData();             // Organization tab: always try to load
+    }
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -304,36 +258,13 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
             </div>
           </div>
         </div>
-         <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
-          DIFFERENTLY ABLED EMPLOYEES (at the end of Financial Year)
-          <MdInfoOutline
-            data-tooltip-id={`tooltip-$e1`}
-            className="mt-0.5 ml-3"
-            data-tooltip-content="This section documents data corresponding 
-to the total number of differently 
-abled employees by gender "
-          />
-          <ReactTooltip
-            id={`tooltip-$e1`}
-            place="top"
-            effect="solid"
-            style={{
-              width: "290px",
-              backgroundColor: "#000",
-              color: "white",
-              fontSize: "12px",
-              boxShadow: 3,
-              borderRadius: "8px",
-              textAlign: "left",
-            }}
-          ></ReactTooltip>
-        </p>
-        {/* {(togglestatus === "Corporate" && selectedCorp) ||
+         {(togglestatus === "Corporate" && selectedCorp) ||
         (togglestatus !== "Corporate" && selectedOrg && year) ? (
           <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
           DIFFERENTLY ABLED EMPLOYEES (at the end of Financial Year)
           <MdInfoOutline
             data-tooltip-id={`tooltip-$e1`}
+            className="mt-1 ml-2"
             data-tooltip-content="This section documents data corresponding 
 to the total number of differently 
 abled employees by gender "
@@ -353,7 +284,7 @@ abled employees by gender "
             }}
           ></ReactTooltip>
         </p>
-        ) : null} */}
+        ) : null}
         {/* {selectedOrg && year && (
           <p className="flex mx-2 text-sm text-gray-700 relative">
             List all entities included in the sustainability report
@@ -380,8 +311,8 @@ abled employees by gender "
         )} */}
         <div className="mx-2 mb-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

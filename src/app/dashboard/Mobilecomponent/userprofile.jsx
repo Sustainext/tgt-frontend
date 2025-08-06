@@ -140,10 +140,12 @@ const Userprofile = () => {
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
+    
 
   const handleLogout = async () => {
     try {
       await logout();
+
       router.push('/');
     } catch (error) {
       console.error('Logout failed:', error);

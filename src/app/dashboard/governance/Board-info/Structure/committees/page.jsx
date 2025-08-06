@@ -10,20 +10,38 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import SelectWidget from "../../../../../shared/widgets/Select/selectWidget6";
 const widgets = {
   inputWidget: GovernanceWidget,
+  SelectWidget:SelectWidget
 };
 
 const view_path = "gri-governance-structure-2-9-b-committees";
 const client_id = 1;
 const user_id = 1;
 
+
 const schema = {
   type: "array",
   items: {
     type: "object",
     properties: {
-      Q1: {
+      Q2: {
+        type: "string",
+        title:
+          "Does the entity have a specified Committee of the Board/ Director responsible for decision making on sustainability related issues?",
+        enum: ["Yes", "No"],
+      },
+    },
+      dependencies: {
+      Q2: {
+        oneOf: [
+          {
+            properties: {
+              Q2: {
+                enum: ["Yes"],
+              },
+              Q1: {
         type: "array",
         title:
           "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment and people",
@@ -34,13 +52,30 @@ const schema = {
           },
         },
       },
+
+            },
+          },
+        ],
+      },
+      
     },
   },
 };
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1"],
+    "ui:order": ["Q2","Q1"],
+     Q2: {
+      "ui:title": "Does the entity have a specified Committee of the Board/ Director responsible for decision making on sustainability related issues?",
+      "ui:tooltip":
+        "Indicate whether the entity has assigned a Committee of the Board/Director responsible for decision-making on sustainability-related issues",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "SelectWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
     Q1: {
       "ui:title":
         "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment and people",
@@ -246,6 +281,11 @@ useEffect(() => {
               <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">
                    GRI 2-9-b
+                </div>
+              </div>
+               <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg flex justify-center items-center">
+                <div className="text-[#18736B] text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight text-center">
+                   BRSR-B
                 </div>
               </div>
 

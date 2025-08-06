@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef,useImperativeHandle, forwardRef } fr
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
+import {FaExclamationTriangle} from 'react-icons/fa'
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -15,7 +16,7 @@ const widgets = {
   AllTableWidget: AllTableWidget,
 };
 
-const view_path = "gri-general-entities-list_of_entities-2-2-a";
+const view_path = "brsr-general-business-details-details-of-business-activities-brsr-a-ii-16";
 const client_id = 1;
 const user_id = 1;
 
@@ -49,7 +50,7 @@ const schema = {
           key: "MainActivity",
           title: "Description of Main Activity",
           tooltip:
-            "<p>Ensure business activity details match those disclosed in Form MGT-7 as filed with MCA</p>",
+            "<p>Ensure business activity details match those disclosed in Form MGT-7 as filed with Ministry of Corporate Affairs</p>",
           layouttype: "input",
           tooltipdispaly: "block",
         },
@@ -81,6 +82,44 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const { open } = GlobalState();
+  const [showWarning,setShowWarning] = useState(false)
+  const [showPercentage,setShowPercentage] = useState(false)
+  const [formContext, setFormContext] = useState({
+    validationErrors: {}, // Initialize validation errors
+    showPercentage: false // Track if any percentage exceeds 100%
+  });
+
+  // Update formContext when showPercentage changes
+  useEffect(() => {
+    setFormContext(prev => ({
+      ...prev,
+      showPercentage: showPercentage
+    }));
+  }, [showPercentage]);
+  const clearFieldError = (rowIndex, fieldName) => {
+    setFormContext(prev => {
+      // If no error exists for this field, do nothing
+      if (!prev.validationErrors[rowIndex]?.[fieldName]) {
+        return prev;
+      }
+      
+      // Create a deep copy of validationErrors
+      const newErrors = JSON.parse(JSON.stringify(prev.validationErrors));
+      
+      // Remove the specific error
+      delete newErrors[rowIndex][fieldName];
+      
+      // If no more errors for this row, remove the row entry
+      if (Object.keys(newErrors[rowIndex]).length === 0) {
+        delete newErrors[rowIndex];
+      }
+      
+      return {
+        ...prev,
+        validationErrors: newErrors
+      };
+    });
+  };
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -95,6 +134,37 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
   };
 
   const updateFormData = async () => {
+   let total = 0;
+    let hasInvalidRow = false;
+    const validationErrors = {};
+    
+    setShowWarning(false);
+    setShowPercentage(false);
+
+    for (let i = 0; i < formData.length; i++) {
+      const row = formData[i];
+      const value = parseFloat(row.PercentageTurnOver);
+      validationErrors[i] = {};
+
+      if (!isNaN(value)) {
+        if (value > 100) {
+          validationErrors[i].PercentageTurnOver = "Ensure the % of Turnover of the Entity does not exceed 100%";
+          setShowPercentage(true);
+          hasInvalidRow = true;
+        }
+        total += value;
+      }
+    }
+
+    if (total < 90) {
+      setShowWarning(true);
+      return;
+    }
+
+    if (hasInvalidRow) {
+      setFormContext(prev => ({ ...prev, validationErrors }));
+      return;
+    }
     const data = {
       client_id: client_id,
       user_id: user_id,
@@ -107,44 +177,44 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
-      // if (response.status === 200) {
-      //   toast.success("Data added successfully", {
-      //     position: "top-right",
-      //     autoClose: 3000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "light",
-      //   });
-      //   LoaderClose();
-      //   loadFormData();
-      // } else {
-      //   toast.error("Oops, something went wrong", {
-      //     position: "top-right",
-      //     autoClose: 1000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "colored",
-      //   });
-      //   LoaderClose();
-      // }
+      if (response.status === 200) {
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        loadFormData();
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
     } catch (error) {
       console.log("test data",error);
-      // toast.error("Oops, something went wrong", {
-      //   position: "top-right",
-      //   autoClose: 1000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "colored",
-      // });
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       LoaderClose();
     }
   };
@@ -165,26 +235,26 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
       LoaderClose();
     }
   };
-// useEffect(() => {
-//   if (selectedOrg && year && togglestatus) {
-//     if (togglestatus === "Corporate") {
-//       if (selectedCorp) {
-//         loadFormData();           // <-- Only load if a corporate is picked
-//       } else {
-//         setFormData([{}]); 
-//         setRemoteSchema({});
-//         setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
-//       }
-//     } else {
-//       loadFormData();             // Organization tab: always try to load
-//     }
-//     toastShown.current = false;
-//   } else {
-//     if (!toastShown.current) {
-//       toastShown.current = true;
-//     }
-//   }
-// }, [selectedOrg, year, selectedCorp, togglestatus]);
+useEffect(() => {
+  if (selectedOrg && year && togglestatus) {
+    if (togglestatus === "Corporate") {
+      if (selectedCorp) {
+        loadFormData();           // <-- Only load if a corporate is picked
+      } else {
+        setFormData([{}]); 
+        setRemoteSchema({});
+        setRemoteUiSchema({});       // <-- Clear the form if no corporate is picked
+      }
+    } else {
+      loadFormData();             // Organization tab: always try to load
+    }
+    toastShown.current = false;
+  } else {
+    if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }
+}, [selectedOrg, year, selectedCorp, togglestatus]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -196,7 +266,7 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
     setFormData(newData);
     console.log("Form data newData:", newData);
   };
-  useImperativeHandle(ref, () => updateFormData);
+  // useImperativeHandle(ref, () => updateFormData);
   return (
     <>
     <div
@@ -209,7 +279,7 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
         <div className="xl:mb-4 md:mb-4 2xl:mb-4 lg:mb-4 4k:mb-4 2k:mb-4 mb-6 block xl:flex lg:flex md:flex 2xl:flex 4k:flex 2k:flex">
           <div className="w-[100%] xl:w-[80%] lg:w-[80%] md:w-[80%] 2xl:w-[80%] 4k:w-[80%] 2k:w-[80%] relative mb-2 xl:mb-0 lg:mb-0 md:mb-0 2xl:mb-0 4k:mb-0 2k:mb-0">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-             Details of Business Activities (Accounting for 90% of the Turnover)
+             Business Activities
             </h2>
           </div>
 
@@ -223,32 +293,10 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
             </div>
           </div>
         </div>
-         <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
-          Details of Business Activities
-          <MdInfoOutline
-            data-tooltip-id={`tooltip-$e1`}
-            data-tooltip-content="This section documents data corresponding to the details of business activities of the entity"
-            className="mt-1 ml-2 text-[15px]"
-          />
-          <ReactTooltip
-            id={`tooltip-$e1`}
-            place="top"
-            effect="solid"
-            style={{
-              width: "290px",
-              backgroundColor: "#000",
-              color: "white",
-              fontSize: "12px",
-              boxShadow: 3,
-              borderRadius: "8px",
-              textAlign: "left",
-            }}
-          ></ReactTooltip>
-        </p>
-        {/* {(togglestatus === "Corporate" && selectedCorp) ||
+        {(togglestatus === "Corporate" && selectedCorp) ||
         (togglestatus !== "Corporate" && selectedOrg && year) ? (
           <p className="flex mb-4 mx-2 text-sm text-gray-700 relative">
-          Details of Business Activities
+        Details of Business Activities (Accounting for 90% of the Turnover)
           <MdInfoOutline
             data-tooltip-id={`tooltip-$e1`}
             data-tooltip-content="This section documents data corresponding to the details of business activities of the entity"
@@ -269,7 +317,7 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
             }}
           ></ReactTooltip>
         </p>
-        ) : null} */}
+        ) : null}
         {/* {selectedOrg && year && (
           <p className="flex mx-2 text-sm text-gray-700 relative">
             List all entities included in the sustainability report
@@ -294,14 +342,30 @@ const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp,togglestatus }, re
             ></ReactTooltip>
           </p>
         )} */}
+        {showWarning && (
+           <div className="bg-orange-50 border-l-2 flex items-start gap-4 border-orange-500 p-4 mb-4 text-sm rounded max-w-[800px]">
+                       <div className="flex-shrink-0">
+                                    <FaExclamationTriangle className="text-[#F98845] w-4 h-4 mt-1" />
+                                  </div>
+                   <div>
+                       {/* <strong className="text-[#0D024D] text-[14px]">Data Missing in Water and Effluents Section</strong><br /> */}
+                    <p className="mb-2">As per disclosure requirements, ensure the listed items together account for at least 90% of the entity’s total turnover</p>
+                    {/* <strong className="text-[#0D024D] text-[14px]">Proceed to:</strong> */}
+                   </div>
+                  </div>
+        )}
         <div className="mx-2 mb-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            formContext={{
+        ...formContext,
+        clearFieldError // Add the error-clearing function
+      }}
           />
         </div>
         <div className="mt-4">
