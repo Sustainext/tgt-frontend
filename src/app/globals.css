@@ -2,13 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@media (max-width: 1919px) {
-  body {
-    zoom: 0.8;
-    overflow-x: hidden;
-  }
-}
-
 @keyframes pulse {
   0% {
     opacity: 1;
@@ -144,7 +137,7 @@ div[class*='Popout__PopoutContent'] {
 /* 4K screens (3840px width and above) */
 @media (min-width: 3840px) {
   body {
-    zoom: 2;
+    zoom: 1;
     overflow-x: hidden;
   }
 }
@@ -152,14 +145,30 @@ div[class*='Popout__PopoutContent'] {
 /* 3K screens (3200px width and above) */
 @media (min-width: 3200px) and (max-width: 3839px) {
   body {
-    zoom: 1.3;
+    zoom: 1;
   }
 }
 
 /* 2K screens (2560px width and above) */
 @media (min-width: 2560px) and (max-width: 3199px) {
   body {
-    zoom: 1.2;
+    zoom: 1;
+    overflow-x: hidden;
+  }
+}
+
+/* mobile screens (max 480px width) */
+@media (min-width: 480px) and (max-width: 768px) {
+  body {
+    zoom: 0.8;
+    overflow-x: hidden;
+  }
+}
+
+/* mobile screens (max 480px width) */
+@media (max-width: 480px) {
+  body {
+    zoom: 0.8;
     overflow-x: hidden;
   }
 }
@@ -175,83 +184,11 @@ div[class*='Popout__PopoutContent'] {
 /* Default Zoom for smaller screens */
 /* @media (max-width: 1919px) {
   body {
-    zoom: 0.8;
+    zoom: 1;
     overflow-x: hidden;
   }
 } */
 
-/* Safari-specific zoom using transform */
-@supports (-webkit-appearance: none) and (not (-moz-appearance: none)) {
-  /* 4K screens */
-  @media (min-width: 3840px) {
-    body {
-      zoom: 1;
-      -webkit-transform: scale(2);
-      -webkit-transform-origin: 0 0;
-      transform: scale(2);
-      transform-origin: 0 0;
-      width: 50vw;
-      height: 50vh;
-    }
-  }
-
-  /* 3K screens */
-  @media (min-width: 3200px) and (max-width: 3839px) {
-    body {
-      zoom: 1;
-      -webkit-transform: scale(1.3);
-      -webkit-transform-origin: 0 0;
-      transform: scale(1.3);
-      transform-origin: 0 0;
-      width: 76.9vw;
-      height: 76.9vh;
-    }
-  }
-
-  /* 2K screens */
-  @media (min-width: 2560px) and (max-width: 3199px) {
-    body {
-      zoom: 1;
-      -webkit-transform: scale(1.2);
-      -webkit-transform-origin: 0 0;
-      transform: scale(1.2);
-      transform-origin: 0 0;
-      width: 83.3vw;
-      height: 83.3vh;
-    }
-  }
-
-  /* Full HD */
-  @media (min-width: 1920px) and (max-width: 2559px) {
-    body {
-      zoom: 1;
-      -webkit-transform: scale(1);
-      -webkit-transform-origin: 0 0;
-      transform: scale(1);
-      transform-origin: 0 0;
-    }
-  }
-
-  /* Default for smaller screens */
-  @media (max-width: 1919px) {
-    body {
-      zoom: 1;
-      -webkit-transform: scale(0.8);
-      -webkit-transform-origin: 0 0;
-      transform: scale(0.8);
-      transform-origin: 0 0;
-      width: 125vw;
-      height: 125vh;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  body {
-    zoom: 0.8;
-    overflow-x: hidden;
-  }
-}
 body {
   box-sizing: border-box;
 }
@@ -275,11 +212,13 @@ body {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    /* background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e"); */
     background-repeat: no-repeat;
     background-position: calc(100% - 12px) 50%;
     background-size: 16px;
-    padding-right: 40px !important;
+    /* padding-right: 40px !important; */
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
   }
 
   select.block {
@@ -288,11 +227,11 @@ body {
     background-color: white !important;
   }
 
-  select:focus {
+  /* select:focus {
     outline: 2px solid #4f46e5 !important;
     outline-offset: 2px !important;
     border-color: #4f46e5 !important;
-  }
+  } */
 }
 
 @media (max-width: 768px) {
@@ -542,7 +481,7 @@ input[type='number']::-webkit-outer-spin-button {
   width: 420px !important;
 }
 .react-datepicker-popper {
-  z-index: 100 !important;
+  z-index: 150 !important;
 }
 
 .react-datepicker {

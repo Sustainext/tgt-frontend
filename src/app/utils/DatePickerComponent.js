@@ -351,7 +351,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
       </div>
       {showDatePicker && (
         <>
-          <div className="md:hidden fixed inset-0 bg-black bg-opacity-40 z-[100] flex justify-center items-center">
+          <div className="md:hidden fixed inset-0 bg-black bg-opacity-40 z-[150] flex justify-center items-center">
             <div className="bg-white rounded-md w-[90vw] max-h-[90vh] overflow-y-auto p-4">
               <div className="w-full mb-8">
                 <MdClose
@@ -400,7 +400,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
           </div>
 
           <div
-            className={`hidden md:block absolute z-[100] mt-2 xl:p-4 p-2 bg-white border border-gray-300 rounded-md 
+            className={`hidden md:block absolute z-[150] mt-2 xl:p-4 p-2 bg-white border border-gray-300 rounded-md 
           w-[112vw] md:w-[80vw] lg:w-[50vw] xl:w-[38vw] 
           ${
             position === "top"

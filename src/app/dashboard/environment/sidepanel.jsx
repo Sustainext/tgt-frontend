@@ -362,7 +362,7 @@ const Aside = ({ activeTab, handleTabClick, apiData, setMobileopen }) => {
 
   return (
     <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-md  h-full">
-      <div className="flex items-start py-4  rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[43%] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] 4k:w-[200px] 2k:w-[240px] scrollable-content">
+      <div className="flex items-start py-4 rounded-lg text-[0.875rem] overflow-x-hidden w-full max-w-[240px] scrollable-content">
         <div className="flex flex-col w-full font-medium">
           <button className="flex justify-between items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
             <span className="text-[16px] font-extrabold">Environment</span>

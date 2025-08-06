@@ -92,22 +92,20 @@ export default function DashboardLayout({ children }) {
         </div>
       ) : (
         // **Desktop Version**
-        <div className='xl:flex lg:flex md:hidden 2xl:flex w-full h-full hidden'>
+        <div className='xl:flex lg:flex md:hidden 2xl:flex w-screen h-screen hidden overflow-hidden'>
           {/* Fixed Sidebar */}
-          <div className='sticky top-0 left-0 h-full z-40'>
-            <div className='h-full overflow-y-auto'>
+          <div className='flex-shrink-0 h-full z-40'>
+            <div className='h-full overflow-y-auto scrollable-content'>
               <Sidenav />
             </div>
           </div>
 
-          {/* Main Content Area */}
-          <div
-            className={`flex-1 h-full flex flex-col transition-all duration-300`}
-          >
+          {/* Main Content Area - Takes remaining width */}
+          <div className='flex-1 h-full flex flex-col min-w-0 overflow-hidden'>
             {/* Fixed Header and Elfsight Widget */}
-            <div className='flex-shrink-0'>
+            <div className='flex-shrink-0 w-full'>
               <DashboardHeader />
-              <div className='elfsight-widget mb-5 mx-2'>
+              <div className='elfsight-widget mb-5 px-4'>
                 <div
                   className='elfsight-app-1163c096-07de-4281-9338-996a26b6eec8'
                   data-elfsight-app-lazy
@@ -115,8 +113,10 @@ export default function DashboardLayout({ children }) {
               </div>
             </div>
 
-            {/* Scrollable Content */}
-            <div className='flex-1 overflow-hidden'>{children}</div>
+            {/* Scrollable Content - Constrained to available space */}
+            <div className='flex-1 overflow-y-auto overflow-x-hidden px-4 pb-6 min-w-0 scrollable-content'>
+              <div className='w-full max-w-full'>{children}</div>
+            </div>
           </div>
         </div>
       )}
