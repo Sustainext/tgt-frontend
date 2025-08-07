@@ -10,11 +10,10 @@ const PowerBIEmbed = dynamic(
   { ssr: false }
 );
 
-const GovernanceTrack = ({ contentSize, dashboardData }) => {
+const GovernanceTrack = ({ dashboardData }) => {
   const [activeTab, setActiveTab] = useState("powerbiGovernance");
   const [powerBIToken, setPowerBIToken] = useState(null);
   const [models, setModels] = useState(null);
-  const { width, height } = contentSize || { width: 800, height: 600 };
   const [userID, setUserID] = useState(null);
 
   // Load user ID from local storage
@@ -23,7 +22,7 @@ const GovernanceTrack = ({ contentSize, dashboardData }) => {
     if (userID) {
       setUserID(userID);
     }
-  })
+  }, [])
 
   const filter = {
     $schema: "http://powerbi.com/product/schema#basic",
@@ -122,19 +121,12 @@ const GovernanceTrack = ({ contentSize, dashboardData }) => {
     return () => clearInterval(intervalId);
   }, []);
 
-  const embedContainerStyle = {
-    width: `${width}px`,
-    height: `${height - 50}px`,
-  };
 
   if (!models || !PowerBIEmbed || !dashboardData) return <p>Loading...</p>;
   if (dashboardData.length === 0) return <p>Data not available</p>;
 
   return (
-    <div
-      className="flex flex-col justify-start items-center"
-      style={{ width, height }}
-    >
+    <div className="flex flex-col justify-start items-center w-full h-full max-w-full min-h-screen p-4 overflow-hidden">
       <div className="w-full mb-4 border-b border-gray-200">
         <ul className="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500">
           {tabs.map((tab) => (
@@ -155,7 +147,7 @@ const GovernanceTrack = ({ contentSize, dashboardData }) => {
       </div>
       <div className="w-full flex-grow flex justify-center items-center">
         {activeTab.startsWith("powerbi") && powerBIToken ? (
-          <div style={embedContainerStyle}>
+          <div className="w-full min-h-[600px] h-[calc(100vh-150px)] max-w-full overflow-hidden">
             <PowerBIEmbed
               embedConfig={getPowerBIConfig(activeTab)}
               eventHandlers={
@@ -191,8 +183,7 @@ const GovernanceTrack = ({ contentSize, dashboardData }) => {
         ) : getIframeUrl(activeTab) ? (
           <iframe
             frameBorder="0"
-            width={width}
-            height={height - 50}
+            className="w-full min-h-[600px] h-[calc(100vh-150px)] max-w-full"
             src={getIframeUrl(activeTab)}
           ></iframe>
         ) : (
