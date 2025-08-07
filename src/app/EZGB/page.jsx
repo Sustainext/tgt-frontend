@@ -1,21 +1,27 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { decryptPII, isDataEncrypted } from "../utils/fernetDecryption";
+import { useRouter } from 'next/navigation';
 
 const EZGB = () => {
   const [scriptError, setScriptError] = useState(false);
   const [userEmail,setUserEmail]=useState(null)
+   const router=useRouter()
+  const getAuthToken = () => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("token")?.replace(/"/g, "");
+  }
+  return "";
+};
    useEffect(() => {
     let email = localStorage.getItem('userEmail');
-    if (email) {
-      if (isDataEncrypted(email)) {
-        email = decryptPII(email);
-      }
+    let token = getAuthToken()
+    if (email && token) {
       setUserEmail(email);
     } else {
-      setUserEmail("");
+      router.push('/')
     }
-  }, []);
+  }, [userEmail,router]);
 
   useEffect(() => {
     if (!document.getElementById('cmdButtonScript')) {

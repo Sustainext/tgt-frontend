@@ -6,6 +6,18 @@ import Image from "next/image";
 
 function ErrorPage() {
   const router = useRouter();
+   const getAuthToken = () => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("token")?.replace(/"/g, "");
+  }
+  return "";
+};
+useEffect(() => {
+    let token = getAuthToken()
+    if (!token) {
+     router.push('/')
+    } 
+  }, [router]);
 
   const handleClose = () => {
     window.close();
