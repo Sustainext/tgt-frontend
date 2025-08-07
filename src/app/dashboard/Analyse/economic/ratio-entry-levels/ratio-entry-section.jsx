@@ -80,14 +80,14 @@ const Ratioentrysection = ({ selectedOrg, selectedCorp, year,togglestatus }) => 
       <div>
         <div className="mb-2 flex-col items-center pt-4 gap-6"></div>
         <div className="flex justify-between">
-          <div className={`ps-4  w-full me-4`}>
+          <div className="w-full max-w-full overflow-hidden px-4">
             <div className="mb-6">
               <div
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-                <div className="flex justify-between items-center mb-2">
-                  <p>
+                <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block justify-between items-center mb-2">
+                  <p className="mb-2">
                     Ratio of the entry-level wage to the minimum wage by gender
                     at significant locations of operation
                   </p>

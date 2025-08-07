@@ -9,8 +9,8 @@ const Table2 = ({ data, columns }) => {
   console.log("Data passed to Table2:", data);
 
   return (
-    <div className="overflow-x-auto custom-scrollbar">
-        <table className="min-w-[828px] w-full rounded-lg border border-gray-300 "style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+    <div className='overflow-x-auto custom-scrollbar w-full'>
+        <table className="rounded-md border border-gray-300 w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
         <thead>
           <tr className="gradient-background">
             {columns.map((column, index) => (

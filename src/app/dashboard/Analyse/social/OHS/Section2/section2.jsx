@@ -303,7 +303,7 @@ const Screen2 = ({
     <div>
       <div className="mb-2 flex-col items-center pt-4  gap-6"></div>
       <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block">
-        <div className={`ps-4 w-[100%] me-4`}>
+        <div className="flex-1 ps-4 me-4 max-w-full overflow-hidden">
           <div className="mb-6">
             <p className="text-black text-[15px] font-bold  ">
               Formal joint management-worker health and safety committees

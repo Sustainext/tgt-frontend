@@ -327,7 +327,7 @@ const Header = ({ activeTab, setIsBoxOpen,setMobileopen }) => {
             </div>
 
             {/* Right side - Tags */}
-            <div className='flex flex-col gap-2 mt-8 mr-4 min-w-0 flex-1 max-w-lg'>
+            <div className='flex flex-col gap-2 mt-8 mr-4 min-w-0 flex-1 max-w-lg border-l border-gray-200 pl-4'>
               {/* GRI Tags */}
               <div className='flex flex-wrap gap-2'>
                 {gri

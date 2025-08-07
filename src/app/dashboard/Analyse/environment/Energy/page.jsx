@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { MdKeyboardArrowDown } from "react-icons/md";
 import TableSidebar from "./TableSidebar";
 import DynamicTable from "./customTable";
 import DateRangePicker from "@/app/utils/DatePickerComponent";
@@ -542,7 +543,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 </div>
               </div>
             <div
-              className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[100%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
+              className={`grid grid-cols-1 md:grid-cols-4 w-full max-w-full mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
                 }`}
             >
               <div className="mr-2">
@@ -552,9 +553,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 >
                   Select Organization*
                 </label>
-                <div className="mt-2">
+                <div className="mt-2 relative">
                   <select
-                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                    className="block w-full rounded-md border-0 py-1.5 pl-4 pr-8 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
                     value={selectedOrg}
                     onChange={handleOrganizationChange}
                   >
@@ -566,6 +567,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                         </option>
                       ))}
                   </select>
+                  <div className='absolute right-2 top-2 pointer-events-none'>
+                    <MdKeyboardArrowDown className='text-neutral-500' style={{ fontSize: '16px' }} />
+                  </div>
                   {errors.organization && (
                     <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
                       {errors.organization}
@@ -581,9 +585,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                   >
                     Select Corporate
                   </label>
-                  <div className="mt-2">
+                  <div className="mt-2 relative">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 pr-8 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
                       value={selectedCorp}
                       onChange={handleOrgChange}
                     >
@@ -595,6 +599,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                           </option>
                         ))}
                     </select>
+                    <div className='absolute right-2 top-2 pointer-events-none'>
+                      <MdKeyboardArrowDown className='text-neutral-500' style={{ fontSize: '16px' }} />
+                    </div>
                     {errors.corporate && (
                       <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
                         {errors.corporate}
@@ -611,9 +618,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                   >
                     Select Location
                   </label>
-                  <div className="mt-2">
+                  <div className="mt-2 relative">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 pr-8 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
                       value={selectedsetLocation}
                       onChange={handleLocationChange}
                     >
@@ -625,6 +632,9 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                           </option>
                         ))}
                     </select>
+                    <div className='absolute right-2 top-2 pointer-events-none'>
+                      <MdKeyboardArrowDown className='text-neutral-500' style={{ fontSize: '16px' }} />
+                    </div>
                     {errors.location && (
                       <p className="text-[#007EEF] text-[12px] pl-2 mt-2">{errors.location}</p>
                     )}
@@ -657,7 +667,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
 
       </div>
       <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block">
-        <div className="flex-1 ps-4 me-4 max-w-full overflow-hidden">
+        <div className="flex-1 pr-4 max-w-full overflow-hidden">
           <div className="mb-6">
             <div
               id="fuelFromRenewable"
