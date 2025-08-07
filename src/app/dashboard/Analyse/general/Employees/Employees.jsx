@@ -85,7 +85,7 @@ const Employeessection = ({selectedOrg,selectedCorp,year,togglestatus}) => {
     <div>
     
       <div className="flex justify-between">
-        <div className={`ps-4  w-full me-4`}>
+        <div className={`w-full max-w-full overflow-hidden px-4`}>
           <div className="mb-6">
             <div
               id="ep1"

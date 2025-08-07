@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Aside from "./Aside";
 import EnvironmentTrack from "./Environment/page";
 import SocialTrack from "./Social/page";
@@ -18,57 +18,21 @@ import { useDispatch } from "react-redux";
 
 const Index = () => {
   const [activeModule, setActiveModule] = useState("Environment");
-  const [contentSize, setContentSize] = useState({ width: 0, height: 0 });
-  const [containerWidth, setContainerWidth] = useState("100%");
   const [dashboardData, setDashboardData] = useState(null);
 
   const open = GlobalState();
   const dispatch = useDispatch();
+  
   const handleTabClick = (module) => {
     setActiveModule(module);
   };
+  
   useEffect(() => {
     dispatch(setHeadertext1("Track"));
     dispatch(setHeaderdisplay(null));
     dispatch(setHeadertext2(activeModule));
     dispatch(setMiddlename(null));
   }, [activeModule, dispatch]);
-  useLayoutEffect(() => {
-    const updateSizes = () => {
-      const mainSidebarWidth = open ? 230 : 80;
-      const totalSidebarWidth = mainSidebarWidth;
-  
-      const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
-  
-      let contentWidth, contentHeight;
-  
-      if (screenWidth <= 768) {
-        // Mobile devices
-        contentWidth = 429; // slight padding
-        contentHeight = screenHeight - 100; // adjust as per header/footer
-      } else {
-        // Desktop/tablet
-        contentWidth = screenWidth - totalSidebarWidth;
-        contentHeight = screenHeight;
-      }
-  
-      setContentSize({
-        width: Math.max(contentWidth, 250), // Minimum width
-        height: Math.max(contentHeight, 400), // Minimum height
-      });
-  
-      if (screenWidth > 1600) {
-        setContainerWidth("1600px");
-      } else {
-        setContainerWidth("100%");
-      }
-    };
-  
-    updateSizes();
-    window.addEventListener("resize", updateSizes);
-    return () => window.removeEventListener("resize", updateSizes);
-  }, [open]);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -82,61 +46,29 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="xl:flex md:flex justify-center overflow-x-auto xl:overflow-y-hidden">
-      <div
-        className="xl:flex md:flex justify-start"
-        style={{ width: containerWidth, minWidth: "100%" }}
-      >
-        <div className="xl:w-[220px] xl:min-h-[105vh] py-[11px] flex-shrink-0">
-          <Aside activeTab={activeModule} handleTabClick={handleTabClick} />
-        </div>
+    <div className="flex flex-col lg:flex-row w-full max-w-full overflow-hidden">
+      <div className="flex-shrink-0 lg:w-[220px] py-[11px]">
+        <Aside activeTab={activeModule} handleTabClick={handleTabClick} />
+      </div>
 
-        <div className="xl:flex-grow xl:flex xl:justify-center xl:items-center">
-          {activeModule === "Environment" && (
-            <EnvironmentTrack
-              contentSize={contentSize}
-              dashboardData={dashboardData}
-            />
-          )}
-          {activeModule === "Social" && (
-            <SocialTrack
-              contentSize={contentSize}
-              dashboardData={dashboardData}
-            />
-          )}
-          {activeModule === "Governance" && (
-            <GovernanceTrack
-              contentSize={contentSize}
-              dashboardData={dashboardData}
-            />
-          )}
-          {activeModule === "General" && (
-            <GeneralTrack
-              contentSize={contentSize}
-              dashboardData={dashboardData}
-            />
-          )}
-          {activeModule === "Economic" && (
-            <EconomicTrack
-              contentSize={contentSize}
-              dashboardData={dashboardData}
-            />
-          )}
-        </div>
+      <div className="flex-1 flex justify-center items-start w-full max-w-full overflow-hidden">
+        {activeModule === "Environment" && (
+          <EnvironmentTrack dashboardData={dashboardData} />
+        )}
+        {activeModule === "Social" && (
+          <SocialTrack dashboardData={dashboardData} />
+        )}
+        {activeModule === "Governance" && (
+          <GovernanceTrack dashboardData={dashboardData} />
+        )}
+        {activeModule === "General" && (
+          <GeneralTrack dashboardData={dashboardData} />
+        )}
+        {activeModule === "Economic" && (
+          <EconomicTrack dashboardData={dashboardData} />
+        )}
       </div>
     </div>
-
-     // track section under maintainance design
-  //   <div className="flex flex-col items-center justify-center min-h-screen px-4 py-8 bg-white">
-  //   <img
-  //     src="https://sustainextstorage1.blob.core.windows.net/static/ico%201.png" // <-- replace with correct path
-  //     alt="maintenance icon"
-  //     className="w-[40%] sm:w-[40%] md:w-[25%] lg:w-[20%] object-contain mb-6"
-  //   />
-  //   <h2 className="text-center text-2xl md:text-xl font-bold text-gray-700">
-  //   This section is currently under maintenance and will be back soon
-  //   </h2>
-  // </div>
   );
 };
 

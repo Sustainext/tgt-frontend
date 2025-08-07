@@ -899,7 +899,7 @@ const FilterModal = ({
                       onClick={() =>
                         setIsBaseYearFilterOpen(!isBaseYearFilterOpen)
                       }
-                      className="hover:bg-gray-100 p-1 rounded"
+                      className="hover:bg-gray-100 py-1 px-auto rounded"
                     >
                       <MdFilterList
                         className={`w-4 h-4 ${
@@ -944,7 +944,7 @@ const FilterModal = ({
                       onClick={() =>
                         setIsTargetYearFilterOpen(!isTargetYearFilterOpen)
                       }
-                      className="hover:bg-gray-100 p-1 rounded"
+                      className="hover:bg-gray-100 py-1 px-auto rounded"
                     >
                       <MdFilterList
                         className={`w-4 h-4 ${
@@ -973,7 +973,7 @@ const FilterModal = ({
                     <span>Organization</span>
                     <button
                       onClick={() => setIsOrgFilterOpen(!isOrgFilterOpen)}
-                      className="hover:bg-gray-100 p-1 rounded"
+                      className="hover:bg-gray-100 py-1 px-auto rounded"
                     >
                       <MdFilterList
                         className={`w-4 h-4 ${
@@ -1004,7 +1004,7 @@ const FilterModal = ({
                       onClick={() =>
                         setIsCorporateFilterOpen(!isCorporateFilterOpen)
                       }
-                      className="hover:bg-gray-100 p-1 rounded"
+                      className="hover:bg-gray-100 py-1 px-auto rounded"
                     >
                       <MdFilterList
                         className={`w-4 h-4 ${

@@ -101,7 +101,7 @@ export default function DashboardLayout({ children }) {
             {/* Fixed Header and Elfsight Widget */}
             <div className='flex-shrink-0 w-full'>
               <DashboardHeader />
-              <div className='elfsight-widget mb-5 px-4'>
+              <div className='elfsight-widget'>
                 <div
                   className='elfsight-app-1163c096-07de-4281-9338-996a26b6eec8'
                   data-elfsight-app-lazy

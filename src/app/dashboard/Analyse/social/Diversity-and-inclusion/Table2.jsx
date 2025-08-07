@@ -10,9 +10,9 @@ const Table2 = ({ data }) => {
   ];
 console.log(data,"markete table");
   return (
-    <div className="overflow-x-auto custom-scrollbar">
+    <div className='overflow-x-auto custom-scrollbar w-full'>
        <table
-         className="min-w-[828px] w-full rounded-lg border border-gray-300 "
+         className="rounded-md border border-gray-300 w-full"
          style={{ borderCollapse: "separate", borderSpacing: 0 }}
        >
         <thead className=" md:table-header-group border">
