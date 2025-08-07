@@ -6,25 +6,25 @@ import Image from "next/image";
 
 function ErrorPage() {
   const router = useRouter();
-//    const [isChecking, setIsChecking] = useState(true);
-  
-//  useEffect(() => {
-//     // This code will only run client-side, after hydration
-//     const token = typeof window !== "undefined" ? localStorage.getItem("token")?.replace(/"/g, "") : "";
-//     if (!token) {
-//       router.replace('/');
-//     } else {
-//       setIsChecking(false);
-//     }
-//   }, [router]);
-//    if (isChecking) return <p>Loading...</p>;
 
   const handleClose = () => {
     window.close();
   };
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
 
   const handleRetry = () => {
-    router.push("/EZGB");
+     let token = getAuthToken()
+    if(token){
+      router.push("/EZGB");
+    }
+    else{
+       router.push('/')
+    }
   };
 
   return (
