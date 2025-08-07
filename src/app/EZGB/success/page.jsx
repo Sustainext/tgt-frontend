@@ -10,9 +10,21 @@ function SuccessPage() {
   const handleClose = () => {
     window.close();
   };
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
 
   const handleAuthorizeAnother = () => {
-    router.push("/EZGB"); // Or wherever you want them to authorize again
+    let token = getAuthToken()
+    if(token){
+      router.push("/EZGB");
+    }
+    else{
+       router.push('/')
+    }
   };
 
   return (
