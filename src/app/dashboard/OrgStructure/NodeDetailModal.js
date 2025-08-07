@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from "react";
-import { FaChevronRight } from "react-icons/fa";
-import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
-import DeleteConfirmationModal from "./DeleteConfirmationModal";
-import axiosInstance from "@/app/utils/axiosMiddleware";
-import { useRouter } from "next/navigation";
-import { showToast } from "@/app/utils/toastUtils";
+import { useState, useEffect, useRef } from 'react';
+import { FaChevronRight } from 'react-icons/fa';
+import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
+import DeleteConfirmationModal from './DeleteConfirmationModal';
+import axiosInstance from '@/app/utils/axiosMiddleware';
+import { useRouter } from 'next/navigation';
+import { showToast } from '@/app/utils/toastUtils';
 
 const NodeDetailModal = ({
   isOpen,
@@ -25,12 +25,12 @@ const NodeDetailModal = ({
     let filteredDetails = {};
 
     if (details) {
-      if (nodeType === "organization") {
+      if (nodeType === 'organization') {
         // Organization format based on your original Structure code
         filteredDetails = {
           id: details.id,
           name: details.name,
-          email:details.email,
+          email: details.email,
           type_corporate_entity: details.type_corporate_entity,
           owner: details.owner,
           phone: details.phone,
@@ -65,12 +65,12 @@ const NodeDetailModal = ({
           target: details.target,
           framework: details.framework,
         };
-      } else if (nodeType === "corporate") {
+      } else if (nodeType === 'corporate') {
         // Corporate format based on your original Structure code
         filteredDetails = {
           id: details.id,
           name: details.name,
-          email:details.email,
+          email: details.email,
           corporatetype: details.corporatetype,
           owner: details.ownershipnature || details.ownership,
           legalform: details.legalform,
@@ -99,7 +99,7 @@ const NodeDetailModal = ({
           framework: details.framework,
           organization: details.organization, // Keep the parent organization reference
         };
-      } else if (nodeType === "location") {
+      } else if (nodeType === 'location') {
         // Filter only location relevant fields
         filteredDetails = {
           id: details.id,
@@ -122,7 +122,7 @@ const NodeDetailModal = ({
             country: details.corporate_data.country,
             state: details.corporate_data.state,
             city: details.corporate_data.city,
-            address: details.corporate_data.address
+            address: details.corporate_data.address,
           },
           revenue: details.revenue,
           street: details.streetaddress,
@@ -143,7 +143,7 @@ const NodeDetailModal = ({
     }
 
     const dataToPass = {
-      type: nodeType === "corporate" ? "Corporate Entity" : nodeType,
+      type: nodeType === 'corporate' ? 'Corporate Entity' : nodeType,
       item: nodeData,
       filteredData: [filteredDetails],
     };
@@ -151,13 +151,13 @@ const NodeDetailModal = ({
     const encodedData = encodeURIComponent(JSON.stringify(dataToPass));
 
     // Navigate based on entity type
-    if (nodeType === "organization") {
+    if (nodeType === 'organization') {
       router.push(
         `/dashboard/OrgStructure/forms/Organization?data=${encodedData}`
       );
-    } else if (nodeType === "corporate") {
+    } else if (nodeType === 'corporate') {
       router.push(`/dashboard/OrgStructure/forms/Entity?data=${encodedData}`);
-    } else if (nodeType === "location") {
+    } else if (nodeType === 'location') {
       router.push(`/dashboard/OrgStructure/forms/Location?data=${encodedData}`);
     }
 
@@ -173,21 +173,21 @@ const NodeDetailModal = ({
   // Handle the actual deletion
   const handleEntityDelete = async () => {
     try {
-      let endpoint = "";
-      let entityTypeDisplay = "";
-      console.log("node type delete triggered!", nodeType);
+      let endpoint = '';
+      let entityTypeDisplay = '';
+      console.log('node type delete triggered!', nodeType);
       switch (nodeType) {
-        case "organization":
+        case 'organization':
           endpoint = `/organization_activity/${details.id}/`;
-          entityTypeDisplay = "Organization";
+          entityTypeDisplay = 'Organization';
           break;
-        case "corporate":
+        case 'corporate':
           endpoint = `/corporate/${details.id}/`;
-          entityTypeDisplay = "Corporate entity";
+          entityTypeDisplay = 'Corporate entity';
           break;
-        case "location":
+        case 'location':
           endpoint = `/location/${details.id}/`;
-          entityTypeDisplay = "Location";
+          entityTypeDisplay = 'Location';
           break;
         default:
           throw new Error(`Invalid entity type: ${nodeType}`);
@@ -201,9 +201,9 @@ const NodeDetailModal = ({
         window.location.reload();
       }, 1000);
     } catch (error) {
-      showToast("Failed to delete entity", "error");
+      showToast('Failed to delete entity', 'error');
       console.error(
-        "Error deleting entity:",
+        'Error deleting entity:',
         error.response?.data || error.message
       );
     }
@@ -214,7 +214,7 @@ const NodeDetailModal = ({
       let foundDetails = null;
 
       switch (nodeType) {
-        case "location": {
+        case 'location': {
           // Find organization containing this location
           const org = rawData.find((o) =>
             o.corporatenetityorg?.some((c) =>
@@ -230,7 +230,7 @@ const NodeDetailModal = ({
 
           foundDetails = {
             ...loc,
-            type: "location",
+            type: 'location',
             organization: org?.name,
             corporate: corp?.name,
             organization_data: org,
@@ -240,13 +240,13 @@ const NodeDetailModal = ({
               country: corp?.country,
               state: corp?.state,
               city: corp?.city,
-              address: corp?.address
+              address: corp?.address,
             },
             breadcrumb: [org?.name, corp?.name, loc?.name],
           };
           break;
         }
-        case "corporate": {
+        case 'corporate': {
           const org = rawData.find((o) =>
             o.corporatenetityorg?.some((c) => c.id === nodeData.id)
           );
@@ -256,7 +256,7 @@ const NodeDetailModal = ({
 
           foundDetails = {
             ...entity,
-            type: "corporate",
+            type: 'corporate',
             organization: org?.name,
             organization_data: org,
             breadcrumb: [org?.name, entity?.name],
@@ -268,11 +268,11 @@ const NodeDetailModal = ({
           };
           break;
         }
-        case "organization": {
+        case 'organization': {
           const org = rawData.find((o) => o.id === nodeData.id);
           foundDetails = {
             ...org,
-            type: "organization",
+            type: 'organization',
             breadcrumb: [org?.name],
             // Include organization specific fields
             ownership_and_legal_form: org?.ownership_and_legal_form,
@@ -284,7 +284,7 @@ const NodeDetailModal = ({
         }
       }
 
-      console.log("Found Details:", foundDetails); // Debug log
+      console.log('Found Details:', foundDetails); // Debug log
       setDetails(foundDetails);
     }
   }, [isOpen, nodeData, nodeType, rawData]);
@@ -293,61 +293,61 @@ const NodeDetailModal = ({
 
   return (
     <>
-      <div className="fixed xl:right-0 right-2 top-[5rem] z-50 xl:flex xl:justify-end border border-gray-300 rounded-xl h-[110vh]">
+      <div className='fixed xl:right-0 right-2 top-[3.5rem] z-50 xl:flex xl:justify-end border border-gray-300 rounded-xl h-[90vh] max-w-md'>
         <div
           ref={modalRef}
-          className=" bg-white shadow-xl h-full overflow-y-auto xl:w-[29vw] w-[120vw] "
+          className=' bg-white shadow-xl h-full overflow-y-auto'
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b">
-            <div className="flex items-center space-x-2">
-              <span className="text-gray-600">
-                <HiOutlineBuildingOffice2 className="w-5 h-5" />
+          <div className='flex items-center justify-between p-4 border-b'>
+            <div className='flex items-center space-x-2'>
+              <span className='text-gray-600'>
+                <HiOutlineBuildingOffice2 className='w-5 h-5' />
               </span>
-              <span className="font-medium text-lg">{details.name}</span>
+              <span className='font-medium text-lg'>{details.name}</span>
             </div>
-            <div className="flex items-center space-x-3">
+            <div className='flex items-center space-x-3'>
               {isAdmin && (
                 <>
                   {/* Edit Button */}
                   <button
-                    className="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm text-gray-600 
-              hover:text-[#007eef] hover:border-[#007eef]"
-                    type="button"
+                    className='inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm text-gray-600 
+              hover:text-[#007eef] hover:border-[#007eef]'
+                    type='button'
                     onClick={handleEdit}
                   >
                     <svg
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      className="w-4 h-4 mr-1.5"
+                      fill='none'
+                      stroke='currentColor'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='2'
+                      viewBox='0 0 24 24'
+                      className='w-4 h-4 mr-1.5'
                     >
-                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                      <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'></path>
+                      <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'></path>
                     </svg>
                     Edit
                   </button>
 
                   {/* Delete Button */}
                   <button
-                    className="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm text-gray-600 hover:text-red-500 hover:border-red-500"
+                    className='inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm text-gray-600 hover:text-red-500 hover:border-red-500'
                     onClick={() => handleDeleteClick(details, details.type)}
                   >
                     <svg
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      className="w-4 h-4 mr-1.5"
+                      fill='none'
+                      stroke='currentColor'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='2'
+                      viewBox='0 0 24 24'
+                      className='w-4 h-4 mr-1.5'
                     >
-                      <path d="M3 6h18"></path>
-                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
-                      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                      <path d='M3 6h18'></path>
+                      <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6'></path>
+                      <path d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'></path>
                     </svg>
                     Delete
                   </button>
@@ -357,19 +357,19 @@ const NodeDetailModal = ({
               {/* Close Button */}
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center"
+                className='p-2 hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center'
               >
                 <svg
-                  className="w-4 h-4 text-gray-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                  className='w-4 h-4 text-gray-500'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
                 >
                   <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='2'
+                    d='M6 18L18 6M6 6l12 12'
                   />
                 </svg>
               </button>
@@ -377,11 +377,11 @@ const NodeDetailModal = ({
           </div>
 
           {/* Breadcrumb */}
-          <div className="px-6 py-3 text-sm text-gray-600">
+          <div className='px-6 py-3 text-sm text-gray-600'>
             {details.breadcrumb?.filter(Boolean).map((part, index) => (
               <span key={index}>
                 {index > 0 && (
-                  <FaChevronRight className="inline mx-2 text-gray-400" />
+                  <FaChevronRight className='inline mx-2 text-gray-400' />
                 )}
                 {part}
               </span>
@@ -389,48 +389,48 @@ const NodeDetailModal = ({
           </div>
 
           {/* Content */}
-          <div className="px-6 py-2 space-y-6">
+          <div className='px-6 py-2 space-y-6'>
             {/* General Information */}
             <div>
-              <h3 className="text-sm font-medium text-gray-900 mb-4">
+              <h3 className='text-sm font-medium text-gray-900 mb-4'>
                 General Information
               </h3>
-              <div className="grid grid-cols-2 gap-2">
-                {nodeType === "location" && (
+              <div className='grid grid-cols-2 gap-2'>
+                {nodeType === 'location' && (
                   <div>
-                    <label className="text-sm text-gray-600">
+                    <label className='text-sm text-gray-600'>
                       Location Type
                     </label>
-                    <p className="text-sm text-gray-900">
-                      {details.typelocation || "Default"}
+                    <p className='text-sm text-gray-900'>
+                      {details.typelocation || 'Default'}
                     </p>
                   </div>
                 )}
                 <div>
-                  <label className="text-sm text-gray-600">Sector</label>
-                  <p className="text-sm text-gray-900">
-                    {details.sector || "Default"}
+                  <label className='text-sm text-gray-600'>Sector</label>
+                  <p className='text-sm text-gray-900'>
+                    {details.sector || 'Default'}
                   </p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-600">Sub Industry</label>
-                  <p className="text-sm text-gray-900">
-                    {details.sub_industry || details.subindustry || "Default"}
+                  <label className='text-sm text-gray-600'>Sub Industry</label>
+                  <p className='text-sm text-gray-900'>
+                    {details.sub_industry || details.subindustry || 'Default'}
                   </p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-600">
+                  <label className='text-sm text-gray-600'>
                     Employee Count
                   </label>
-                  <p className="text-sm text-gray-900">
+                  <p className='text-sm text-gray-900'>
                     {details.employeecount || details.no_of_employees || 0}
                   </p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-600">Revenue</label>
-                  <p className="text-sm text-gray-900">
+                  <label className='text-sm text-gray-600'>Revenue</label>
+                  <p className='text-sm text-gray-900'>
                     {details.revenue
-                      ? `${details.currency || ""} ${details.revenue}`
+                      ? `${details.currency || ''} ${details.revenue}`
                       : 0}
                   </p>
                 </div>
@@ -439,43 +439,43 @@ const NodeDetailModal = ({
             <hr />
             {/* Address Information */}
             <div>
-              <h3 className="text-sm font-medium text-gray-900 mb-4">
+              <h3 className='text-sm font-medium text-gray-900 mb-4'>
                 Address Information
               </h3>
-              <div className="space-y-2">
+              <div className='space-y-2'>
                 <div>
-                  <label className="text-sm text-gray-600">Address</label>
-                  <p className="text-sm text-gray-900">
-                    {details.streetaddress || details.address || "-"}
+                  <label className='text-sm text-gray-600'>Address</label>
+                  <p className='text-sm text-gray-900'>
+                    {details.streetaddress || details.address || '-'}
                   </p>
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className='grid grid-cols-2 gap-2'>
                   <div>
-                    <label className="text-sm text-gray-600">City</label>
-                    <p className="text-sm text-gray-900">
-                      {details.city || "-"}
+                    <label className='text-sm text-gray-600'>City</label>
+                    <p className='text-sm text-gray-900'>
+                      {details.city || '-'}
                     </p>
                   </div>
                   <div>
-                    <label className="text-sm text-gray-600">State</label>
-                    <p className="text-sm text-gray-900">
-                      {details.state || "-"}
+                    <label className='text-sm text-gray-600'>State</label>
+                    <p className='text-sm text-gray-900'>
+                      {details.state || '-'}
                     </p>
                   </div>
                   <div>
-                    <label className="text-sm text-gray-600">Country</label>
-                    <p className="text-sm text-gray-900">
+                    <label className='text-sm text-gray-600'>Country</label>
+                    <p className='text-sm text-gray-900'>
                       {details.country ||
                         details.Country ||
                         details.countryoperation ||
-                        "-"}
+                        '-'}
                     </p>
                   </div>
-                  {nodeType === "location" && (
+                  {nodeType === 'location' && (
                     <div>
-                      <label className="text-sm text-gray-600">Zip Code</label>
-                      <p className="text-sm text-gray-900">
-                        {details.zipCode || details.zipcode || "-"}
+                      <label className='text-sm text-gray-600'>Zip Code</label>
+                      <p className='text-sm text-gray-900'>
+                        {details.zipCode || details.zipcode || '-'}
                       </p>
                     </div>
                   )}
@@ -486,20 +486,20 @@ const NodeDetailModal = ({
 
             {/* Reporting Information */}
             <div>
-              <h3 className="text-sm font-medium text-gray-900 mb-4">
+              <h3 className='text-sm font-medium text-gray-900 mb-4'>
                 Reporting Information
               </h3>
-              <div className="grid grid-cols-2 gap-2">
+              <div className='grid grid-cols-2 gap-2'>
                 <div>
-                  <label className="text-sm text-gray-600">From Date</label>
-                  <p className="text-sm text-gray-900">
-                    {details.from_date || "-"}
+                  <label className='text-sm text-gray-600'>From Date</label>
+                  <p className='text-sm text-gray-900'>
+                    {details.from_date || '-'}
                   </p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-600">To Date</label>
-                  <p className="text-sm text-gray-900">
-                    {details.to_date || "-"}
+                  <label className='text-sm text-gray-600'>To Date</label>
+                  <p className='text-sm text-gray-900'>
+                    {details.to_date || '-'}
                   </p>
                 </div>
                 {/* <div className="col-span-2">
@@ -516,30 +516,30 @@ const NodeDetailModal = ({
 
             {/* Contact Information */}
             <div>
-              <h3 className="text-sm font-medium text-gray-900 mb-4">
+              <h3 className='text-sm font-medium text-gray-900 mb-4'>
                 Contact Information
               </h3>
-              <div className="grid grid-cols-2 gap-2">
+              <div className='grid grid-cols-2 gap-2'>
                 <div>
-                  <label className="text-sm text-gray-600">Phone</label>
-                  <p className="text-sm text-gray-900">
-                    {details.phone || "-"}
+                  <label className='text-sm text-gray-600'>Phone</label>
+                  <p className='text-sm text-gray-900'>
+                    {details.phone || '-'}
                   </p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-600">Mobile</label>
-                  <p className="text-sm text-gray-900">
-                    {details.mobile || "-"}
+                  <label className='text-sm text-gray-600'>Mobile</label>
+                  <p className='text-sm text-gray-900'>
+                    {details.mobile || '-'}
                   </p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-600">Fax</label>
-                  <p className="text-sm text-gray-900">{details.fax || "-"}</p>
+                  <label className='text-sm text-gray-600'>Fax</label>
+                  <p className='text-sm text-gray-900'>{details.fax || '-'}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-600">Website</label>
-                  <p className="text-sm text-gray-900">
-                    {details.website || "-"}
+                  <label className='text-sm text-gray-600'>Website</label>
+                  <p className='text-sm text-gray-900'>
+                    {details.website || '-'}
                   </p>
                 </div>
               </div>
