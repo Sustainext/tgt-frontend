@@ -160,7 +160,7 @@ export default function ProfileSettings({
   const initials = `${firstName[0] || ''}${lastName[0] || ''}`.toUpperCase();
 
   return (
-    <div className='p-6 h-full'>
+    <div className='p-6'>
       <div className='md:hidden flex justify-between'>
         <button onClick={backToMenu} className='mr-2 mb-5 text-2xl font-bold'>
           <IoArrowBackSharp className='w-7 h-7 mt-4 text-gray-500' />
