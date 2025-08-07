@@ -68,9 +68,9 @@ const environment = () => {
   }, [activeTab, dispatch]);
 
   return (
-    <div className='relative xl:flex lg:flex 2xl:flex 4k:flex  justify-start'>
+    <div className='flex flex-col lg:flex-row w-full max-w-full overflow-hidden'>
       <div className='hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block'>
-        <div className='relative left-10 w-[199px] min-h-[90vh] py-[11px] flex-col items-end inline-flex '>
+        <div className='flex-shrink-0 w-[220px] py-[11px]'>
           <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
         </div>
       </div>
@@ -85,7 +85,7 @@ const environment = () => {
           </div>
         </div>
       ) : (
-        <div className='w-full xl:ms-8 md:ms-0 lg:ms-8 2xl:ms-8 4k:ms-8 2k:ms-8'>
+        <div className='flex-1 flex flex-col w-full max-w-full overflow-hidden ml-3'>
           <div className='hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block sticky xl:top-0 lg:top-0 2xl:top-0 4k:top-0 bg-white '>
             <Header
               activeTab={activeTab}

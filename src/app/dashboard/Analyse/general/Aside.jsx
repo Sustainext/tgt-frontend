@@ -6,9 +6,9 @@ const Aside = ({ activeTab, handleTabClick, setMobileopen }) => {
   };
   return (
     <div
-      className={`m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-lg sticky top-[5rem]`}
+      className={`m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-lg fixed z-50`}
     >
-      <div className="flex items-start py-4 xl:min-w-[200px] md:min-w-[100px] lg:min-w-[200px] min-w-[200px] min-h-[100vh] rounded-lg text-[0.875rem] xl:w-[199px] md:w-[289px]">
+      <div className="flex items-start py-4 h-[calc(100vh-150px)] overflow-y-auto custom-scrollbar rounded-lg text-[0.875rem]">
         <div className="flex flex-col w-full font-medium">
           <div className="flex  items-start gap-2 mb-8 w-full">
             <div className="w-full">
@@ -32,7 +32,7 @@ const Aside = ({ activeTab, handleTabClick, setMobileopen }) => {
             onClick={() => handleTabClick("Tab1")}
           >
             {/* <IoBusinessOutline className="w-5 h-5 mr-5" /> */}
-            <span className="mr-7 text-left">Employees</span>
+            <span className="text-left break-words whitespace-normal leading-tight">Employees</span>
           </button>
           <div>
             <button
@@ -44,7 +44,7 @@ const Aside = ({ activeTab, handleTabClick, setMobileopen }) => {
               onClick={() => handleTabClick("Tab2")}
             >
               {/* <IoBulbOutline className="w-5 h-5 mr-5" /> */}
-              <span className="mr-12 text-left">
+              <span className="text-left break-words whitespace-normal leading-tight">
                 Strategy, policies and practices
               </span>
               <div className="inset-y-0 -right-2 flex items-center pointer-events-none"></div>

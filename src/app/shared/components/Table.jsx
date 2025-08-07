@@ -20,7 +20,7 @@ const Table = ({
   };
 
   return (
-       <div className="overflow-x-auto custom-scrollbar xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4">
+       <div className="overflow-x-auto custom-scrollbar w-full max-w-full xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4">
       <table
         className="w-full  rounded-lg border border-gray-300 "
         style={{ borderCollapse: "separate", borderSpacing: 0 }}
@@ -32,8 +32,8 @@ const Table = ({
                 key={column.accessor}
                 className={`px-2 py-3  text-[#727272]  md:table-cell border-b border-gray-300   text-[12px] ${
                   type == "Reduction"
-                    ? ""
-                    : "xl:w-1/5 lg:w-1/5 md:w-1/5 2xl:w-1/5 4k:w-1/5 2k:w-1/5"
+                    ? "text-left whitespace-nowrap"
+                    : "w-auto min-w-0"
                 } ${
                   index === 0 || type == "Reduction"
                     ? "text-left pl-4"

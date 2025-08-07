@@ -418,7 +418,7 @@ const AnalyseEmission = () => {
               </div>
             </div>
             <div
-              className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[100%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${
+              className={`grid grid-cols-1 md:grid-cols-4 w-full max-w-full mb-2 pt-4 ${
                 reportType !== '' ? 'visible' : 'hidden'
               }`}
             >
@@ -534,7 +534,7 @@ const AnalyseEmission = () => {
           </div>
         </div>
       </div>
-      <div className='mt-8 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10'>
+      <div className='mt-8 pr-4 max-w-full overflow-hidden'>
         <div className='xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mb-4'>
           <h2 className='font-bold text-[15px]'>Top Emissions by Scope</h2>
         </div>
@@ -547,7 +547,7 @@ const AnalyseEmission = () => {
           toDate={toDate}
         />
       </div>
-      <div className='mt-4 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10'>
+      <div className='mt-4 pr-4 max-w-full overflow-hidden'>
         <div className='xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mb-4'>
           <h2 className='font-bold text-[15px]'>Top Emissions by Source</h2>
         </div>
@@ -562,7 +562,7 @@ const AnalyseEmission = () => {
         />
       </div>
 
-      <div className='mt-8 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10'>
+      <div className='mt-8 pr-4 max-w-full overflow-hidden'>
         <div className='xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mb-4'>
           <h2 className='font-bold text-[15px]'>Top Emissions by Location</h2>
         </div>
@@ -577,7 +577,7 @@ const AnalyseEmission = () => {
         />
       </div>
 
-      <div className='mt-4 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10 '>
+      <div className='mt-4 pr-4 max-w-full overflow-hidden'>
         <div className='xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-1  xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex justify-between items-center '>
           <div className='mb-4'>
             <h2 className='font-bold text-[15px]'>GHG Emission Intensity</h2>
@@ -615,7 +615,7 @@ const AnalyseEmission = () => {
           toDate={toDate}
         />
       </div>
-      <div className='mt-4 xl:mr-10 lg:mr-10 md:mr-10 2xl:mr-10 4k:mr-10 2k:mr-10'>
+      <div className='mt-4 pr-4 max-w-full overflow-hidden'>
         <div className='xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4 mx-1 xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex justify-between  items-center '>
           <div className='mb-4'>
             <h2 className='font-bold text-[15px]'>
