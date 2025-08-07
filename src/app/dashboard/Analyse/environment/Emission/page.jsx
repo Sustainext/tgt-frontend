@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { MdKeyboardArrowDown } from 'react-icons/md';
 import ScopeTable from './ScopeTable';
 import SourceTable from './SourceTable';
 import LocationTable from './LocationTable';
@@ -429,9 +430,9 @@ const AnalyseEmission = () => {
                 >
                   Select Organization*
                 </label>
-                <div className='mt-2'>
+                <div className='mt-2 relative'>
                   <select
-                    className='block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-gray-300 placeholder:text-gray-400'
+                    className='block w-full rounded-md border-0 py-1.5 pl-4 pr-8 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 appearance-none'
                     value={selectedOrg}
                     onChange={handleOrganizationChange}
                   >
@@ -443,6 +444,9 @@ const AnalyseEmission = () => {
                         </option>
                       ))}
                   </select>
+                  <div className='absolute right-3 top-2.5 pointer-events-none z-10'>
+                    <MdKeyboardArrowDown className='text-neutral-500' style={{ fontSize: '16px' }} />
+                  </div>
                   {errors.organization && (
                     <p className='text-[#007EEF] text-[12px] pl-2 mt-2'>
                       {errors.organization}
@@ -458,9 +462,9 @@ const AnalyseEmission = () => {
                   >
                     Select Corporate
                   </label>
-                  <div className='mt-2'>
+                  <div className='mt-2 relative'>
                     <select
-                      className='block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-gray-300 placeholder:text-gray-400'
+                      className='block w-full rounded-md border-0 py-1.5 pl-4 pr-8 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 appearance-none'
                       value={selectedCorp}
                       onChange={handleOrgChange}
                     >
@@ -472,6 +476,9 @@ const AnalyseEmission = () => {
                           </option>
                         ))}
                     </select>
+                    <div className='absolute right-3 top-2.5 pointer-events-none z-10'>
+                      <MdKeyboardArrowDown className='text-neutral-500' style={{ fontSize: '16px' }} />
+                    </div>
                     {errors.corporate && (
                       <p className='text-[#007EEF] text-[12px] pl-2 mt-2'>
                         {errors.corporate}
@@ -488,9 +495,9 @@ const AnalyseEmission = () => {
                   >
                     Select Location
                   </label>
-                  <div className='mt-2'>
+                  <div className='mt-2 relative'>
                     <select
-                      className='block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-gray-300 placeholder:text-gray-400'
+                      className='block w-full rounded-md border-0 py-1.5 pl-4 pr-8 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 appearance-none'
                       value={selectedsetLocation}
                       onChange={handleLocationChange}
                     >
@@ -502,6 +509,9 @@ const AnalyseEmission = () => {
                           </option>
                         ))}
                     </select>
+                    <div className='absolute right-3 top-2.5 pointer-events-none z-10'>
+                      <MdKeyboardArrowDown className='text-neutral-500' style={{ fontSize: '16px' }} />
+                    </div>
                     {errors.location && (
                       <p className='text-[#007EEF] text-[12px] pl-2 mt-2'>
                         {errors.location}

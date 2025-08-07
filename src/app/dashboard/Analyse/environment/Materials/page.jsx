@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo } from "../../../../shared/data/yearInfo";
 import { AiOutlineCalendar } from "react-icons/ai";
 import TableSidebar from "./TableSidebar";
@@ -383,9 +384,9 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
                   >
                     Select Organization*
                   </label>
-                  <div className="mt-2">
+                  <div className="mt-2 relative">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 pr-8 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
                       value={selectedOrg}
                       onChange={handleOrganizationChange}
                     >
@@ -397,6 +398,9 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
                           </option>
                         ))}
                     </select>
+                    <div className='absolute right-2 top-2 pointer-events-none'>
+                      <MdKeyboardArrowDown className='text-neutral-500' style={{ fontSize: '16px' }} />
+                    </div>
                     {errors.organization && (
                     <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
                       {errors.organization}
@@ -412,9 +416,9 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
                     >
                       Select Corporate
                     </label>
-                    <div className="mt-2">
+                    <div className="mt-2 relative">
                       <select
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                        className="block w-full rounded-md border-0 py-1.5 pl-4 pr-8 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
                         value={selectedCorp}
                         onChange={handleOrgChange}
                       >
@@ -426,6 +430,9 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
                             </option>
                           ))}
                       </select>
+                      <div className='absolute right-2 top-2 pointer-events-none'>
+                        <MdKeyboardArrowDown className='text-neutral-500' style={{ fontSize: '16px' }} />
+                      </div>
                       {errors.corporate && (
                       <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
                         {errors.corporate}
@@ -442,9 +449,9 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
                     >
                       Select Location
                     </label>
-                    <div className="mt-2">
+                    <div className="mt-2 relative">
                       <select
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                        className="block w-full rounded-md border-0 py-1.5 pl-4 pr-8 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
                         value={selectedsetLocation}
                         onChange={handleLocationChange}
                       >
@@ -456,6 +463,9 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
                             </option>
                           ))}
                       </select>
+                      <div className='absolute right-2 top-2 pointer-events-none'>
+                        <MdKeyboardArrowDown className='text-neutral-500' style={{ fontSize: '16px' }} />
+                      </div>
                       {errors.location && (
                       <p className="text-[#007EEF] text-[12px] pl-2 mt-2">{errors.location}</p>
                     )}
