@@ -93,9 +93,9 @@ const ConfirmActivitiesModal = ({
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'
             >
-              <Dialog.Panel className='w-full max-w-4xl transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all'>
-                {/* Header */}
-                <div className='flex justify-between items-start mb-6'>
+              <Dialog.Panel className='w-full max-w-4xl max-h-[90vh] transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all flex flex-col'>
+                {/* Header - Fixed */}
+                <div className='flex justify-between items-start p-6 pb-4 flex-shrink-0 border-b border-gray-200'>
                   <div>
                     <Dialog.Title className='text-xl font-semibold text-gray-900'>
                       Confirm Selected Activities
@@ -115,28 +115,29 @@ const ConfirmActivitiesModal = ({
                   </button>
                 </div>
 
-                {/* Selected Activities Summary */}
-                <div className='bg-white rounded-lg border border-gray-200 mb-6 max-h-[500px]'>
-                  <div className='p-4 border-b border-gray-200'>
-                    <h3 className='font-medium'>
-                      Selected Activities: {selectedActivities.length}
-                    </h3>
-                  </div>
-
-                  <div className='overflow-hidden border-b border-gray-200 bg-white shadow sm:rounded-lg'>
-                    {/* Table Headers */}
-                    <div className='grid grid-cols-7 gap-4 px-6 py-3 border-b border-gray-200 bg-gray-50 text-sm font-medium text-gray-500'>
-                      <div className='col-span-1'>Scope</div>
-                      <div className='col-span-1'>Category</div>
-                      <div className='col-span-1'>Sub Category</div>
-                      <div className='col-span-3'>Activity</div>
-                      <div className='text-center col-span-1'>
-                        Activity Region
-                      </div>
+                {/* Content - Scrollable */}
+                <div className='flex-1 overflow-y-auto p-6 pt-4'>
+                  {/* Selected Activities Summary */}
+                  <div className='bg-white rounded-lg border border-gray-200 mb-4'>
+                    <div className='p-4 border-b border-gray-200'>
+                      <h3 className='font-medium'>
+                        Selected Activities: {selectedActivities.length}
+                      </h3>
                     </div>
 
-                    {/* Table Body */}
-                    <div className='max-h-[400px] overflow-y-auto'>
+                    <div className='overflow-hidden border-b border-gray-200 bg-white shadow sm:rounded-lg'>
+                      {/* Table Headers */}
+                      <div className='grid grid-cols-7 gap-4 px-6 py-3 border-b border-gray-200 bg-gray-50 text-sm font-medium text-gray-500 sticky top-0'>
+                        <div className='col-span-1'>Scope</div>
+                        <div className='col-span-1'>Category</div>
+                        <div className='col-span-1'>Sub Category</div>
+                        <div className='col-span-3'>Activity</div>
+                        <div className='text-center col-span-1'>
+                          Activity Region
+                        </div>
+                      </div>
+
+                      {/* Table Body */}
                       <div className='divide-y divide-gray-200 text-gray-600'>
                         {selectedActivities.map((activity, index) => (
                           <div
@@ -161,17 +162,17 @@ const ConfirmActivitiesModal = ({
                       </div>
                     </div>
                   </div>
+
+                  {/* Show error message if API call fails */}
+                  {error && (
+                    <div className='mb-4 p-3 bg-red-50 text-red-700 rounded-md'>
+                      {error}
+                    </div>
+                  )}
                 </div>
 
-                {/* Show error message if API call fails */}
-                {error && (
-                  <div className='mb-4 p-3 bg-red-50 text-red-700 rounded-md'>
-                    {error}
-                  </div>
-                )}
-
-                {/* Action Buttons */}
-                <div className='flex justify-end gap-4 mt-8'>
+                {/* Action Buttons - Fixed at bottom */}
+                <div className='flex justify-end gap-4 p-6 pt-4 flex-shrink-0 border-t border-gray-200 bg-gray-50'>
                   <button
                     type='button'
                     className='inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50'

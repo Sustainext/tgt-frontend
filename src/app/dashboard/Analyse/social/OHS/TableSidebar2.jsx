@@ -5,66 +5,20 @@ const TableSidebar2 = () => {
   const [activeId, setActiveId] = useState("ep1");
 
   const adjustScrollPosition = (anchor) => {
-    console.log('Attempting to scroll to:', anchor);
-    
-    // Wait a small amount of time to ensure DOM is ready
-    setTimeout(() => {
-      const element = document.getElementById(anchor.replace('#', ''));
-      console.log('Element found:', element);
+    const element = document.querySelector(anchor);
+    if (element) {
+      const headerOffset = 200;
+      element.scrollIntoView({ 
+        behavior: "smooth", 
+        block: "start",
+        inline: "nearest"
+      });
       
-      if (element) {
-        const headerOffset = 200;
-        const elementRect = element.getBoundingClientRect();
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const targetPosition = elementRect.top + scrollTop - headerOffset;
-        
-        console.log('Element rect:', elementRect);
-        console.log('Current scroll:', scrollTop);
-        console.log('Target position:', targetPosition);
-
-        // Try multiple scroll methods for better compatibility
-        try {
-          window.scrollTo({
-            top: targetPosition,
-            behavior: "smooth"
-          });
-        } catch (e) {
-          // Fallback for older browsers
-          window.scrollTo(0, targetPosition);
-        }
-        
-        // Additional fallback using document element
-        if (document.documentElement.scrollTop === scrollTop) {
-          document.documentElement.scrollTop = targetPosition;
-        }
-        
-        // Final fallback using body
-        if (document.body.scrollTop === scrollTop) {
-          document.body.scrollTop = targetPosition;
-        }
-      } else {
-        console.log('Element not found for anchor:', anchor);
-        
-        // Try alternative selector
-        const fallbackElement = document.querySelector(`[id="${anchor.replace('#', '')}"]`);
-        console.log('Fallback element:', fallbackElement);
-        if (fallbackElement) {
-          const headerOffset = 200;
-          const elementRect = fallbackElement.getBoundingClientRect();
-          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-          const targetPosition = elementRect.top + scrollTop - headerOffset;
-          
-          try {
-            window.scrollTo({
-              top: targetPosition,
-              behavior: "smooth"
-            });
-          } catch (e) {
-            window.scrollTo(0, targetPosition);
-          }
-        }
-      }
-    }, 50);
+      // Additional offset adjustment
+      setTimeout(() => {
+        window.scrollBy(0, -headerOffset);
+      }, 100);
+    }
   };
 
   useEffect(() => {
