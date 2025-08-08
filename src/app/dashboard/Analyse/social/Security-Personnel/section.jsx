@@ -52,7 +52,7 @@ const Section = ({ location, dateRange, isBoxOpen }) => {
     <div>
       <div className="mb-2 flex-col items-center gap-6"></div>
       <div className="flex">
-        <div className={`ps-4 w-[100%] me-4`}>
+        <div className="flex-1 ps-4 me-4 max-w-full overflow-hidden">
         <div className="mb-6">
             <p className="text-black text-[15px] font-bold  ">
             Security personnel trained in human rights policies or procedures

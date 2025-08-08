@@ -5,14 +5,20 @@ const TableSidebar = () => {
   const [activeId, setActiveId] = useState("");
 
   const adjustScrollPosition = (anchor) => {
-    const headerOffset = 250;
-    const elementPosition = document.querySelector(anchor).getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: "smooth",
-    });
+    const element = document.querySelector(anchor);
+    if (element) {
+      const headerOffset = 200;
+      element.scrollIntoView({ 
+        behavior: "smooth", 
+        block: "start",
+        inline: "nearest"
+      });
+      
+      // Additional offset adjustment
+      setTimeout(() => {
+        window.scrollBy(0, -headerOffset);
+      }, 100);
+    }
   };
 
   useEffect(() => {

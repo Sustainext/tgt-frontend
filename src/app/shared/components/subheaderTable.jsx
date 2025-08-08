@@ -14,7 +14,7 @@ const SubHeaderTable = ({
   toDate,
 }) => {
   return (
-    <div className="overflow-x-auto custom-scrollbar xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4">
+    <div className="overflow-x-auto custom-scrollbar w-full max-w-full xl:mx-4 lg:mx-4 md:mx-4 2xl:mx-4 4k:mx-4 2k:mx-4">
       <table
         className="w-full  rounded-lg border border-gray-300 "
         style={{ borderCollapse: "separate", borderSpacing: 0 }}
@@ -30,7 +30,7 @@ const SubHeaderTable = ({
                     col.header == "Gases included in the calculation"
                       ? "border-l"
                       : ""
-                  }  px-2 py-2  text-[12px] text-[#727272] text-center border-b border-gray-300   `}
+                  }  px-2 py-2  text-[12px] text-[#727272] text-center border-b border-gray-300 whitespace-nowrap min-w-0`}
                 >
                   {col.header}
                 </th>
@@ -45,7 +45,7 @@ const SubHeaderTable = ({
                       key={subIndex}
                       className={`text-[12px] ${
                         subHeader == "CO2" ? "border-l" : ""
-                      }  px-2 py-3  text-[12px] text-[#727272] border-b border-gray-300`}
+                      }  px-2 py-3  text-[12px] text-[#727272] border-b border-gray-300 whitespace-nowrap min-w-0`}
                     >
                       {subHeader}
                     </th>

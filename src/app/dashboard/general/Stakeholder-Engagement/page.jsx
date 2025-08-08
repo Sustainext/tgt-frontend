@@ -9,6 +9,11 @@ import { Socialdata } from "../../social/data/socialgriinfo";
 import GeneralHeader2 from "../GeneralHeader2";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
+import BRSRScreen1 from './BRSRScreens/screen1'
+import BRSRScreen2 from './BRSRScreens/screen2'
+import BRSRScreen3 from './BRSRScreens/screen3'
+import BRSRScreen4 from './BRSRScreens/screen4'
+import Cookies from 'js-cookie';
 // import Screen3 from "./screen3";
 import GeneralTopBar from "../generalTopBar";
 const StakeholderEngagement = ({setMobileopen}) => {
@@ -21,6 +26,7 @@ const StakeholderEngagement = ({setMobileopen}) => {
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
   const [togglestatus, setToggleStatus] = useState("Organization");
+  let brsrFrameworkId = Cookies.get('selected_brsr_framework_id') || 0
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -51,19 +57,29 @@ const StakeholderEngagement = ({setMobileopen}) => {
 
   const brsr = [
     {
-      tagName: "BRSR C-P4-E1",
+      tagName: "BRSR-C-P4-EI-1",
       id: "tooltip-$brsr1",
       content: "BRSR-Section C-Principle 4-Essential Indicators-1",
     },
     {
-      tagName: "BRSR C-P4-E2",
+      tagName: "BRSR-C-P4-EI-2",
       id: "tooltip-$brsr2",
       content: "BRSR-Section C-Principle 4-Essential Indicators-2",
     },
     {
-      tagName: "BRSR C-P4-L3",
+      tagName: "BRSR-C-P4-LI-1",
       id: "tooltip-$brsr3",
-      content: "BRSR-Section C-Principle 4-Leadership  Indicators-3",
+      content: "BRSR-Section C-Principle 4-Leadership Indicators-1",
+    },
+    {
+      tagName: "BRSR-C-P4-LI-2",
+      id: "tooltip-$brsr4",
+      content: "BRSR-Section C-Principle 4-Leadership Indicators-2",
+    },
+    {
+      tagName: "BRSR-C-P4-LI-3",
+      id: "tooltip-$brsr5",
+      content: "BRSR-Section C-Principle 4-Leadership Indicators-3",
     },
     // {
     //   tagName: "BRSR A-III-19a",
@@ -290,6 +306,45 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         month={activeMonth}
         togglestatus={togglestatus}
       />
+      {
+        brsrFrameworkId ==4 && (
+          <div>
+            <BRSRScreen1
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+        togglestatus={togglestatus}
+      />
+      <BRSRScreen2
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+        togglestatus={togglestatus}
+      />
+       <BRSRScreen3
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+        togglestatus={togglestatus}
+      />
+       <BRSRScreen4
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+        togglestatus={togglestatus}
+      />
+          </div>
+        )
+      }
+      
       {/* <Screen3
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}

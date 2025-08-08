@@ -14,7 +14,24 @@ const DateRangePicker = ({ startDate, endDate, onDateChange, dateFilterType }) =
     start: startDate ? new Date(startDate) : null,
     end: endDate ? new Date(endDate) : null,
   });
-
+useEffect(() => {
+  // Sync visible calendars with selected range
+  if (range.start) {
+    setStartMonth(new Date(range.start));
+    if (
+      range.end &&
+      (range.end.getMonth() !== range.start.getMonth() ||
+        range.end.getFullYear() !== range.start.getFullYear())
+    ) {
+      setEndMonth(new Date(range.end));
+    } else {
+      setEndMonth(addMonths(new Date(range.start), 1));
+    }
+  } else {
+    setStartMonth(new Date());
+    setEndMonth(addMonths(new Date(), 1));
+  }
+}, [range.start, range.end]);
   const datePickerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -97,21 +114,59 @@ const DateRangePicker = ({ startDate, endDate, onDateChange, dateFilterType }) =
     return strippedDate;
   };
 
-  const handleDateClick = (day) => {
-    const strippedDate = stripTime(day);
+  // const handleDateClick = (day) => {
+  //   const strippedDate = stripTime(day);
 
-    if (!range.start || (range.start && range.end)) {
-      setRange({ start: strippedDate, end: null });
-    } else {
-      setRange((prevRange) => {
-        const newRange = { ...prevRange, end: strippedDate };
+  //   if (!range.start || (range.start && range.end)) {
+  //     setRange({ start: strippedDate, end: null });
+  //   } else {
+  //     setRange((prevRange) => {
+  //       const newRange = { ...prevRange, end: strippedDate };
+  //       onDateChange({
+  //         type: filterType,
+  //         start: formatDate(stripTime(prevRange.start)),
+  //         end: formatDate(strippedDate),
+  //       });
+  //       return newRange;
+  //     });
+  //   }
+  // };
+  const handleDateClick = (day, whichCalendar = undefined) => {
+    const strippedDate = stripTime(day);
+  
+    // If both picked and user is clicking in the END calendar, and after start, just update end
+    if (range.start && range.end && whichCalendar === "end" && strippedDate > range.start) {
+      setRange({ start: range.start, end: strippedDate });
+      if (onDateChange) {
         onDateChange({
-          type: filterType,
-          start: formatDate(stripTime(prevRange.start)),
+           type: filterType,
+          start: formatDate(stripTime(range.start)),
           end: formatDate(strippedDate),
         });
-        return newRange;
-      });
+        // setShowDatePicker(false);
+      }
+      return;
+    }
+  
+    // If no start or both picked, start new selection
+    if (!range.start || (range.start && range.end)) {
+      setRange({ start: strippedDate, end: null });
+    } else if (range.start && !range.end) {
+      if (strippedDate < range.start) {
+        setRange({ start: strippedDate, end: null });
+      } else if (strippedDate.getTime() === range.start.getTime()) {
+        setRange({ start: strippedDate, end: null });
+      } else {
+        setRange({ start: range.start, end: strippedDate });
+        if (onDateChange) {
+          onDateChange({
+             type: filterType,
+          start: formatDate(stripTime(range.start)),
+          end: formatDate(strippedDate),
+          });
+        }
+      }
+      // setShowDatePicker(false);
     }
   };
 
@@ -156,7 +211,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange, dateFilterType }) =
     );
   };
 
-  const renderCells = (month) => {
+  const renderCells = (month,whichCalendar) => {
     const year = month.getFullYear();
     const monthNum = month.getMonth();
     const firstDay = new Date(year, monthNum, 1);
@@ -177,7 +232,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange, dateFilterType }) =
         days.push(
           <div
             key={day.getTime()}
-            onClick={() => handleDateClick(cloneDay)}
+            onClick={() => handleDateClick(cloneDay,whichCalendar)}
             className={`p-2 text-sm text-center rounded-md cursor-pointer ${
               !isSameMonth(day, month)
                 ? "text-gray-400"
@@ -262,12 +317,12 @@ const DateRangePicker = ({ startDate, endDate, onDateChange, dateFilterType }) =
             <div>
               {renderHeader(startMonth, setStartMonth)}
               {renderDays()}
-              {renderCells(startMonth)}
+              {renderCells(startMonth,"start")}
             </div>
             <div className="border-l border-gray-300 pl-4">
               {renderHeader(endMonth, setEndMonth)}
               {renderDays()}
-              {renderCells(endMonth)}
+              {renderCells(endMonth,"end")}
             </div>
           </div>
 
@@ -293,7 +348,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange, dateFilterType }) =
                 className="px-4 py-2 bg-gray-200 text-sm text-gray-800 rounded-md hover:bg-gray-300"
                 onClick={() => setRange({ start: null, end: null })}
               >
-                Cancel
+                Reset
               </button>
               <button
                 className="px-4 py-2 bg-blue-500 text-sm text-white rounded-md hover:bg-blue-600"
@@ -347,12 +402,12 @@ const DateRangePicker = ({ startDate, endDate, onDateChange, dateFilterType }) =
                 <div>
                   {renderHeader(startMonth, setStartMonth)}
                   {renderDays()}
-                  {renderCells(startMonth)}
+                  {renderCells(startMonth,"start")}
                 </div>
                 <div className="border-t border-gray-300 pt-4">
                   {renderHeader(endMonth, setEndMonth)}
                   {renderDays()}
-                  {renderCells(endMonth)}
+                  {renderCells(endMonth,"end")}
                 </div>
               </div>
 
@@ -378,7 +433,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange, dateFilterType }) =
                     className="flex-1 px-4 py-2 bg-gray-200 text-sm text-gray-800 rounded-md hover:bg-gray-300"
                     onClick={() => setRange({ start: null, end: null })}
                   >
-                    Cancel
+                    Reset
                   </button>
                   <button
                     className="flex-1 px-4 py-2 bg-blue-500 text-sm text-white rounded-md hover:bg-blue-600"

@@ -6,9 +6,11 @@ import SelectMaterialityTopic from "./selectMaterialityTopic/page";
 import MaterialAssessmentProcess from "./materialAssessmentProcess/page";
 import ManagementApproach from "./managementApproach/page";
 import axiosInstance from "../../../utils/axiosMiddleware";
+import MaterialResponsible from './BRSRScreen/page'
 import { Oval } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from 'js-cookie'
 
 const Accordance = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,6 +18,7 @@ const Accordance = () => {
   const [cardData, setCarddata] = useState({});
   const [esgSeleted, setEsgSelected] = useState({});
   const [mobileopen, setMobileopen] = useState(false);
+  let brsrFrameworkId = Cookies.get('selected_brsr_framework_id') || 0
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     setMobileopen(false);
@@ -76,12 +79,13 @@ const Accordance = () => {
       <div className="flex w-full">
         <div className="block xl:flex lg:flex md:flex 2xl:flex 4k:flex w-full">
           <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block">
-            <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
+            <Aside activeTab={activeTab} handleTabClick={handleTabClick} brsrFrameworkId={brsrFrameworkId} />
           </div>
           {mobileopen ? (
             <div className="block xl:hidden lg:hidden md:hidden 2xl:hidden 4k:hidden">
               <div>
                 <Aside
+                brsrFrameworkId={brsrFrameworkId}
                   activeTab={activeTab}
                   handleTabClick={handleTabClick}
                   setMobileopen={setMobileopen}
@@ -107,6 +111,14 @@ const Accordance = () => {
               {activeTab === "managementApproach" && (
                 <ManagementApproach setMobileopen={setMobileopen} />
               )}
+              {brsrFrameworkId == 4 && (
+                <div>
+                  {activeTab === 'materialResponsibe' && (
+                <MaterialResponsible setMobileopen={setMobileopen} />
+              )}
+                </div>
+              )}
+              
             </div>
           )}
         </div>

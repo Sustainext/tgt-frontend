@@ -358,7 +358,7 @@ const Screen1 = forwardRef(
           />
         </div>
 
-        <div className={`${open ? "mb-10" : "mb-4"}`}>
+        <div className={`${open ? "mb-[3rem]" : "mb-4"}`}>
           <button
             className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 float-end"
             onClick={handleSubmit}

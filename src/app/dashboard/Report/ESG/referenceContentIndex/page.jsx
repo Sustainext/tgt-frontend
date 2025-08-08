@@ -23,7 +23,8 @@ const ReferenceContentIndex = ({
   isOmissionModalOpen,
   isCreateReportModalOpen,
   setIsCreateReportModalOpen,
-  reportType
+  reportType,
+  ispageNumberGenerated
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch=useDispatch()
@@ -98,7 +99,7 @@ const ReferenceContentIndex = ({
     if (reportid) {
       loadFormData();
     }
-  }, [reportid, isOmissionSubmitted]);
+  }, [reportid, isOmissionSubmitted,ispageNumberGenerated]);
 
   const updateOmissionData = (updatedData) => {
     setData((prevData) =>
@@ -189,7 +190,7 @@ const ReferenceContentIndex = ({
         {
           data && data?.length>0?(
             <div>
-          <DisclosureTable data={data ? data : []} />
+          <DisclosureTable data={data ? data : []} ispageNumberGenerated={ispageNumberGenerated} />
         </div>
           ):(
               <div></div>
@@ -241,6 +242,7 @@ const ReferenceContentIndex = ({
         isCreateReportModalOpen={isCreateReportModalOpen}
         setIsCreateReportModalOpen={setIsCreateReportModalOpen}
         reportType={reportType}
+         ispageNumberGenerated={ispageNumberGenerated}
       />
     </>
   );

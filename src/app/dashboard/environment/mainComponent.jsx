@@ -30,6 +30,16 @@ import Standards from "./Emissions/standards/page";
 import EmissionIntensity from "./Emissions/emission-Intensity/page";
 import Emissionreductioninitiativesnew from "./Emissions/emission-reduction-initiatives/page";
 import BioDiversityPolicies from "./BioDiversity/BioDiversityPolicies/page";
+import OperationalSites from "./BioDiversity/OperationalSites/page";
+import Significantimpacts from "./BioDiversity/Significantimpacts/page";
+import Habitatprotected from "./BioDiversity/Habitatprotected/page";
+import IUCNnational from "./BioDiversity/IUCNnational/page"
+import IdentificationOfBioDiversityImpact from './BioDiversity/IdentificationOfBioDiversityImpact/page'
+import LocationWithSignificantImpact from './BioDiversity/LocationWithSignificantImpact/page'
+import EcosystemServices from  './BioDiversity/EcosystemServices/page'
+import ChangesInEcosystemUse from './BioDiversity/ChangesInEcosystemUse/page'
+import StandardMethodologies from './BioDiversity/StandardMethodologies/page'
+import ProductServicesImpact from './BioDiversity/ProductServicesImpact/page'
 import { GlobalState } from "@/Context/page";
 import {
   setHeadertext1,
@@ -179,6 +189,7 @@ const materialnewTabs = [
       "Management of biodiversity impacts",
       "Synergies, Trade-offs & Stakeholder Engagement",
       "Access and benefit-sharing",
+      "Operational Sites",
     ];
   useEffect(() => {
  
@@ -242,8 +253,8 @@ useEffect(() => {
   return (
     <>
       <div className="w-full">
-        <div className="block xl:flex lg:flex md:block 2xl:flex 4k:flex">
-          <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block">
+        <div className="block xl:flex lg:flex md:block 2xl:flex 4k:flex min-w-0">
+          <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block flex-shrink-0">
             <Aside
               activeTab={activeTab}
               handleTabClick={handleTabClick}
@@ -263,13 +274,7 @@ useEffect(() => {
               </div>
             </div>
           ) : (
-            <div
-              className={`${
-                open
-                  ? "sm:w-[87vw]  md:w-[120vw] lg:w-[86vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
-                  : " sm:w-[87vw] md:w-[120vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
-              }`}
-            >
+            <div className="w-full max-w-full min-w-0 flex-1 overflow-hidden">
               {/* Emissions start */}
               {activeTab === "Management of Material topic emission" && (
                 <Materialtopic
@@ -569,7 +574,48 @@ useEffect(() => {
               )}
               {activeTab === "Emissions ODS" && (
                 <EmissionsODS apiData={data} setMobileopen={setMobileopen} />
+              )}  
+               {activeTab === "Operational Sites" && (
+                <OperationalSites apiData={data} setMobileopen={setMobileopen} />
               )}
+               {activeTab === "Significant impacts" && (
+                <Significantimpacts apiData={data} setMobileopen={setMobileopen} />
+              )} 
+              {activeTab === "Habitat Protected" && (
+                <Habitatprotected apiData={data} setMobileopen={setMobileopen} />
+              )}  
+                  {activeTab === "IUCN" && (
+                <IUCNnational apiData={data} setMobileopen={setMobileopen} />
+              )}  
+              {activeTab==='Identification of biodiversity impacts' && (
+                <IdentificationOfBioDiversityImpact apiData={data} setMobileopen={setMobileopen}/>
+              )}
+              {
+                activeTab==='Location with Significant impacts on Biodiversity' && (
+                  <LocationWithSignificantImpact apiData={data} setMobileopen={setMobileopen}  handleTabClick={handleTabClick}/>
+                )
+              }
+              {
+                activeTab==='Ecosystem services and beneficiaries' && (
+                  <EcosystemServices apiData={data} setMobileopen={setMobileopen}/>
+                )
+              }
+              {
+                activeTab==='Changes in Ecosystem Use and Biodiversity Condition' && (
+                  <ChangesInEcosystemUse apiData={data} setMobileopen={setMobileopen}/>
+                )
+              }
+              {
+                activeTab ==='Standards, methodologies, and assumptions' && (
+                  <StandardMethodologies apiData={data} setMobileopen={setMobileopen}/>
+                )
+              }
+              {
+                activeTab ==='Products/Services with impact on Biodiversity' && (
+                  <ProductServicesImpact apiData={data} setMobileopen={setMobileopen}/>
+                )
+              }
+              
             </div>
           )}
         </div>

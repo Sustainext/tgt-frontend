@@ -86,6 +86,7 @@ const ESGReport = () => {
    const [missing_fields, setMissingFields] = useState([]);
    const [isDownloadReportModalOpen,setIsDownloadReportModalOpen]=useState(false)
     const [reportingPeriod,setReportingPeriod]=useState('')
+    const [ispageNumberGenerated,setIspageNumberGenerated]=useState(false)
 
 
    
@@ -568,6 +569,8 @@ const ESGReport = () => {
             isCreateReportModalOpen={isCreateReportModalOpen}
             setIsCreateReportModalOpen={setIsCreateReportModalOpen}
             setIsOmissionSubmitted={setIsOmissionSubmitted}
+            reportType={reportType}
+            ispageNumberGenerated={ispageNumberGenerated}
           />
         );
       } else {
@@ -581,6 +584,8 @@ const ESGReport = () => {
             isCreateReportModalOpen={isCreateReportModalOpen}
             setIsCreateReportModalOpen={setIsCreateReportModalOpen}
             setIsOmissionSubmitted={setIsOmissionSubmitted}
+            reportType={reportType}
+            ispageNumberGenerated={ispageNumberGenerated}
           />
         );
       }
@@ -588,6 +593,35 @@ const ESGReport = () => {
 
     return renderSectionComponent();
   };
+
+  const handlePageGeneration= async()=>{
+    try{
+      const url = `${process.env.BACKEND_API_URL}/esg_report/extract_page_number/${reportid}/`;
+      const response = await axiosInstance.get(url);
+      if (response.status == 200) {
+        setIspageNumberGenerated(true)
+         toast.success(
+        <p style={{ margin: 0, fontSize: "13.5px", lineHeight: "1.4" }}>
+          Page numbers generated successfully. You can now download the updated Content Index and Report.
+        </p>,
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+
+      }
+    }
+    catch(err){
+      console.log(err,"error in page generation api")
+    }
+  }
 
   return (
     <>
@@ -616,7 +650,7 @@ const ESGReport = () => {
                                 handleNextStep("back");
                               }
                             }}
-                            className="text-[12px] text-[#667085] flex gap-2 ml-3"
+                            className="text-[12px] text-[#667085] hover:text-[#007EEF] flex gap-2 ml-3"
                           >
                             <FaArrowLeftLong className="w-3 h-3 mt-1" />
                             Back to Reports
@@ -713,7 +747,9 @@ const ESGReport = () => {
                               </button>
                             ) : (
                               <button
-                                onClick={() => handleNextStep("last")}
+                                onClick={() => {
+                                  handlePageGeneration()
+                                  handleNextStep("last")}}
                                 className="flex w-[200px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                               >
                                 Save & Fill Content Index
@@ -783,7 +819,9 @@ const ESGReport = () => {
                       </button>
                     ) : !isInContentIndexPhase ? (
                       <button
-                        onClick={() => handleNextStep("last")}
+                        onClick={() => {
+                                  handlePageGeneration()
+                                  handleNextStep("last")}}
                         className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                       >
                         Save & Fill Content Index
@@ -824,6 +862,8 @@ const ESGReport = () => {
                 isCreateReportModalOpen={isCreateReportModalOpen}
                 setIsCreateReportModalOpen={setIsCreateReportModalOpen}
                 setIsOmissionSubmitted={setIsOmissionSubmitted}
+                reportType={reportType}
+                ispageNumberGenerated={ispageNumberGenerated}
               />
                 </div>
               </div>
@@ -865,7 +905,7 @@ const ESGReport = () => {
                               handleNextStep("back");
                             }
                           }}
-                          className="text-[12px] text-[#667085] flex gap-2 ml-3"
+                          className="text-[12px] text-[#667085] hover:text-[#007EEF] flex gap-2 ml-3"
                         >
                           <FaArrowLeftLong className="w-3 h-3 mt-1" />
                           Back to Reports
@@ -962,7 +1002,9 @@ const ESGReport = () => {
                             </button>
                           ) : (
                             <button
-                              onClick={() => handleNextStep("last")}
+                               onClick={() => {
+                                  handlePageGeneration()
+                                  handleNextStep("last")}}
                               className="flex w-[200px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                             >
                               Save & Fill Content Index
@@ -1032,7 +1074,9 @@ const ESGReport = () => {
                     </button>
                   ) : !isInContentIndexPhase ? (
                     <button
-                      onClick={() => handleNextStep("last")}
+                       onClick={() => {
+                                  handlePageGeneration()
+                                  handleNextStep("last")}}
                       className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                     >
                       Save & Fill Content Index

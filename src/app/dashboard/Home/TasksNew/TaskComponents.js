@@ -21,7 +21,7 @@ const TaskHeader = ({ onAddTask }) => (
 
 const TaskTabs = ({ activeTab, onTabChange, tabs }) => (
   <div className="border-b border-gray-200 mb-6">
-   <nav className="flex xl:space-x-8 space-x-4 px-2 min-w-max">
+    <nav className="flex xl:space-x-8 space-x-4 px-2 min-w-max">
       {tabs.map((tab) => (
         <button
           key={tab.id}
@@ -40,8 +40,7 @@ const TaskTabs = ({ activeTab, onTabChange, tabs }) => (
 );
 
 const TaskTable = ({ children, headers }) => (
-  // h-[calc(78vh-280px)]
-  <div className="bg-white rounded-lg flex flex-col ">
+  <div className="bg-white rounded-lg flex flex-col">
     <div className="grid grid-cols-12 gap-3 py-3 text-sm text-gray-500 px-4 border-y border-gray-200">
       {headers.map((header, index) => (
         <div key={index} className={header.className}>
@@ -49,8 +48,7 @@ const TaskTable = ({ children, headers }) => (
         </div>
       ))}
     </div>
-    {/* h-[288px] */}
-    <div className="p-1  table-scrollbar overflow-y-auto">
+    <div className="p-1 table-scrollbar overflow-y-auto">
       {children}
     </div>
   </div>
@@ -128,7 +126,7 @@ const TaskStatusBadge = ({ status }) => {
   );
 };
 
-const TaskRow = ({ task, onTaskClick }) => {
+const TaskRow = ({ task, onTaskClick, headers }) => {
   const textRef = React.useRef(null);
   const [isTextTruncated, setIsTextTruncated] = React.useState(false);
 
@@ -141,18 +139,95 @@ const TaskRow = ({ task, onTaskClick }) => {
     };
 
     checkTruncation();
-    // Add resize listener to handle window size changes
     window.addEventListener('resize', checkTruncation);
     return () => window.removeEventListener('resize', checkTruncation);
-  }, [task.task_name]); // Re-run when task name changes
+  }, [task.task_name]);
 
+  // Function to render content based on header configuration
+  const renderCellContent = (header, index) => {
+    switch (header.type || index) {
+      case 'task_name':
+      case 0:
+        return (
+          <div className="text-[#007eef] text-[13px] font-normal leading-none relative">
+            <p
+              ref={textRef}
+              className="py-1 cursor-pointer truncate"
+              data-tooltip-id={isTextTruncated ? `task-tooltip-${task.id}` : undefined}
+              data-tooltip-content={isTextTruncated ? task.task_name : undefined}
+              onClick={() => onTaskClick(task)}
+            >
+              {task.task_name}
+            </p>
+            {isTextTruncated && (
+              <Tooltip
+                id={`task-tooltip-${task.id}`}
+                place="top"
+                effect="solid"
+                className="xl:z-[9999] z-[10] !opacity-100 drop-shadow-lg border border-gray-300"
+                style={{
+                  backgroundColor: "white",
+                  color: "#667084",
+                  padding: "4px 8px",
+                  borderRadius: "4px",
+                  fontSize: "14px",
+                  maxWidth: "300px",
+                  wordBreak: "break-word",
+                  position: "absolute"
+                }}
+                offset={0}
+                delayShow={200}
+                float={false}
+              />
+            )}
+          </div>
+        );
+      
+      case 'status':
+      case 1:
+        return (
+          <div className="text-left">
+            {(task.roles === 1 || task.roles === 2 || task.roles === 3 || task.roles === 4) && 
+              <TaskStatusBadge status={task.task_status} />
+            }
+          </div>
+        );
+      
+      case 'deadline':
+      case 2:
+        return (
+          <div className="text-neutral-500 text-[13px] font-normal flex items-center">
+            <Moment format="DD/MM/YYYY">{task.deadline}</Moment>
+          </div>
+        );
+      
+      default:
+        return null;
+    }
+  };
+
+  // If headers are provided, use them to determine layout
+  if (headers && headers.length > 0) {
+    return (
+      <div className="grid grid-cols-12 gap-3 py-2 px-4 border-b border-[#ebeced] items-center">
+        {headers.map((header, index) => (
+          <div key={index} className={header.className}>
+            {renderCellContent(header, index)}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // Fallback layout if headers are not provided
   return (
-    <div className="flex justify-between border-b border-[#ebeced] py-2 gap-2">
-      <div className="flex xl:w-[21rem] w-[11rem] cursor-pointer">
-        <div className="xl:w-[17rem] w-[11rem] text-[#007eef] text-[13px] font-normal leading-none ml-3 relative">
+    <div className="grid grid-cols-12 gap-3 py-2 px-4 border-b border-[#ebeced] items-center">
+      {/* Task Name - spans 6 columns */}
+      <div className="col-span-6">
+        <div className="text-[#007eef] text-[13px] font-normal leading-none relative">
           <p
             ref={textRef}
-            className="py-1 cursor-pointer truncate w-[98px] xl:w-auto"
+            className="py-1 cursor-pointer truncate"
             data-tooltip-id={isTextTruncated ? `task-tooltip-${task.id}` : undefined}
             data-tooltip-content={isTextTruncated ? task.task_name : undefined}
             onClick={() => onTaskClick(task)}
@@ -183,19 +258,19 @@ const TaskRow = ({ task, onTaskClick }) => {
         </div>
       </div>
 
-      {/* Status Column */}
-      <div className="flex-grow">
+      {/* Status - spans 4 columns */}
+      <div className="col-span-4">
         <div className="text-left">
-          {(task.roles === 1 ||
-            task.roles === 2 ||
-            task.roles === 3 ||
-            task.roles === 4) && <TaskStatusBadge status={task.task_status} />}
+          {(task.roles === 1 || task.roles === 2 || task.roles === 3 || task.roles === 4) && 
+            <TaskStatusBadge status={task.task_status} />
+          }
         </div>
       </div>
 
-      <div className="flex items-center mr-4">
-        <div className="w-[68px] text-neutral-500 text-[13px] h-full font-normal flex items-center mt-1 xl:leading-[15px]">
-          <Moment format="DD/MM/YYYY" className="">{task.deadline}</Moment>
+      {/* Deadline - spans 2 columns */}
+      <div className="col-span-2">
+        <div className="text-neutral-500 text-[13px] font-normal flex items-center">
+          <Moment format="DD/MM/YYYY">{task.deadline}</Moment>
         </div>
       </div>
     </div>

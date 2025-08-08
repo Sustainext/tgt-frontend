@@ -195,7 +195,7 @@ Links to policy commitments
 {/* <p className="text-[15px] text-[#344054] mb-2 font-semibold">
 Reason why policy is not publicly available
 </p> */}
-<p className="text-sm mb-4">{data["2_23_c"]?data["2_23_c"]['policy commitments are not publicly available'] || "No data available":"No data available"}</p>
+<p className="text-sm mb-4">{data["2_23_c"]?data["2_23_c"]['policy_commitments_are_not_publicly_available'] || "No data available":"No data available"}</p>
 {/* <div className="flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about company’s sustainability policies</p>
           <button

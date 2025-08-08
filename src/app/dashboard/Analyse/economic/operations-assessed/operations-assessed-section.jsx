@@ -73,7 +73,7 @@ const Operationsassessedsection = ({ selectedOrg, selectedCorp, year,togglestatu
       <div>
         <div className="mb-2 flex-col items-center pt-4 gap-6"></div>
         <div className="flex justify-between">
-          <div className={`ps-4  w-full me-4`}>
+          <div className={`w-full max-w-full overflow-hidden px-4`}>
             <div className="mb-6">
               <div
                 id="ep1"

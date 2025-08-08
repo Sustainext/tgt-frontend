@@ -19,6 +19,12 @@ const Section17 = ({ section11_5_2Ref,reportType,
                   {sectionNumber} {sectionTitle}
                 </h3>
 
+                {
+                    data?
+                    data["205_1b"]?data['205_1b']?.length>0?
+                    <p className="text-sm mb-4">{data['205_1b'][0]?.Q1?data["205_1b"][0].Q1:''}</p>:'':'':''
+                }
+
                 <div className="rounded-md shadow-md mb-4">
                     <EconomicTable3 operationsAssessed={operationsAssessed} />
                 </div>
