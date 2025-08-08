@@ -189,9 +189,9 @@ const AnalyseHeader7 = ({
  
   return (
     <>
-      <div>
-      <div className="flex-col items-center ">
-      <div className="mt-4 pb-3 xl:mx-5 lg:mx-5 md:mx-5 2xl:mx-5 4k:mx-5 2k:mx-5 mx-2 text-left">
+      <div className="w-full max-w-full overflow-hidden">
+      <div className="flex-col items-center w-full">
+      <div className="mt-4 pb-3 px-2 md:px-4 xl:px-5 text-left w-full max-w-full">
             <div className="mb-2 flex-col items-center">
               <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
@@ -231,11 +231,11 @@ const AnalyseHeader7 = ({
                 </div>
               </div>
               <div
-                 className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[100%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${
+                 className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full max-w-full mb-2 pt-4 ${
                   reportType !== "" ? "visible" : "hidden"
                 }`}
               >
-                <div className="mr-2">
+                <div className="">
                   <label
                     htmlFor="organization"
                     className="text-neutral-800 text-[12px] font-normal ml-1"
@@ -272,7 +272,7 @@ const AnalyseHeader7 = ({
                   </div>
                 </div>
                 {(reportType === "Corporate" || reportType === "Location") && (
-                  <div className="mr-2">
+                  <div className="">
                     <label
                       htmlFor="corporate"
                       className="text-neutral-800 text-[12px] font-normal ml-1"
@@ -310,7 +310,7 @@ const AnalyseHeader7 = ({
                   </div>
                 )}
                 {( reportType === "Location") && (
-                  <div className="mr-2">
+                  <div className="">
                     <label
                       htmlFor="location"
                       className="text-neutral-800 text-[12px] font-normal ml-1"
@@ -347,7 +347,7 @@ const AnalyseHeader7 = ({
                     </div>
                   </div>
                 )}
-                <div className="mr-2">
+                <div className="">
                   <label
                     htmlFor="date"
                     className="text-neutral-800 text-[12px] font-normal ml-1"
