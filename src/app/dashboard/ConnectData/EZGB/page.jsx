@@ -119,14 +119,14 @@ const EZGB = ({ setActiveTab }) => {
                                     <h2 className="text-[14px] font-neutral text-[#71717A] uppercase">
                                         Total utility providers
                                     </h2>
-                                    <p className="text-[15px] font-normal text-[#18181B] mt-2">Comming soon</p>
+                                    <p className="text-[15px] font-normal text-[#18181B] mt-2">Coming Soon</p>
                                 </div>
                                 <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
                                     <h2 className="text-[14px] font-neutral text-[#71717A] uppercase">
                                         Total Locations
                                     </h2>
                                     <div className="flex justify-between">
-                                        <p className="text-[15px] font-normal text-[#18181B] mt-2">Comming soon</p>
+                                        <p className="text-[15px] font-normal text-[#18181B] mt-2">Coming Soon</p>
                                         {/* <p className="text-sm text-green-600 mt-4">-</p> */}
                                     </div>
                                 </div>
@@ -136,7 +136,7 @@ const EZGB = ({ setActiveTab }) => {
                                     </h2>
                                     <div className="flex justify-between">
                                         <p className="text-[15px] font-normal text-[#18181B] mt-2">
-                                            Comming soon
+                                           Coming Soon
                                         </p>
                                         {/* <p className="text-sm text-green-600 mt-4">36%</p> */}
                                     </div>
