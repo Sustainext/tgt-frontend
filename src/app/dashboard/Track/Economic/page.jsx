@@ -124,8 +124,8 @@ const EconomicTrack = ({ dashboardData }) => {
 
   return (
     <div className='flex flex-col justify-start items-center w-full h-full max-w-full min-h-screen p-4 overflow-hidden'>
-      <div className='w-full mb-4 border-b border-gray-200'>
-        <ul className='flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500'>
+      <div className='w-full border-b border-gray-200'>
+        <ul className='flex flex-wrap text-sm font-medium text-center text-gray-500'>
           {tabs.map((tab) => (
             <li className='mr-2' key={tab.id}>
               <button
@@ -142,9 +142,9 @@ const EconomicTrack = ({ dashboardData }) => {
           ))}
         </ul>
       </div>
-      <div className='w-full flex-grow flex justify-center items-center'>
+      <div className='w-full flex justify-center'>
         {activeTab.startsWith('powerbi') && powerBIToken ? (
-          <div className='w-full  h-[65vh] max-w-full overflow-hidden'>
+          <div className='w-full  h-[70vh] max-w-full overflow-hidden'>
             <PowerBIEmbed
               embedConfig={getPowerBIConfig(activeTab)}
               eventHandlers={

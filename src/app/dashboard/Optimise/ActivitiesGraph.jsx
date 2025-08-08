@@ -21,6 +21,22 @@ const scrollableContentStyle = `
 .scrollable-content::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
 }
+.activity-select {
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  max-width: 100% !important;
+}
+.activity-select option {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.activity-select:focus {
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+}
 `;
 
 const ActivitiesGraph = ({
@@ -527,6 +543,16 @@ const ActivitiesGraph = ({
     return activity ? activity.name : "";
   };
 
+  // Get truncated display value for selected activity
+  const getTruncatedDisplayValue = (activityId, maxLength = 30) => {
+    if (!activityId) return "";
+    const activity = activityOptions.find((a) => a.id === activityId);
+    if (!activity) return "";
+    
+    const fullText = `${activity.name}${activity.source ? ` - (${activity.source})` : ''}${activity.unit_type ? ` - ${activity.unit_type}` : ''}${activity.region ? ` - ${activity.region}` : ''}${activity.year ? ` - ${activity.year}` : ''}${activity.source_lca_activity ? ` - ${activity.source_lca_activity}` : ''}`;
+    return fullText.length > maxLength ? fullText.substring(0, maxLength - 3) + '...' : fullText;
+  };
+
   const fetchActivities = async () => {
     // Only fetch activities if toggle is enabled and we don't have options yet
     if (includeActivityChanges) {
@@ -832,9 +858,9 @@ const ActivitiesGraph = ({
                   <select
                     value={commonActivity}
                     onChange={(e) => applyCommonActivity(e.target.value)}
-                    className={`w-full py-2 pl-3 pr-10 text-gray-700 bg-white border-b border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none ${
+                    className={`activity-select w-full py-2 pl-3 pr-10 text-gray-700 bg-white border-b border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none ${
                       isLoadingActivities ? "opacity-70" : ""
-                    }`}
+                    } ${commonActivity ? 'text-transparent' : ''}`}
                     disabled={isLoadingActivities}
                   >
                     <option value="">
@@ -843,18 +869,31 @@ const ActivitiesGraph = ({
                         : "Select activity..."}
                     </option>
                     {!isLoadingActivities &&
-                      activityOptions.map((option) => (
-                        <option key={option.id} value={option.id}>
-                          {option.name}
-                          {option.source && ` - (${option.source})`}
-                          {option.unit_type && ` - ${option.unit_type}`}
-                          {option.region && ` - ${option.region}`}
-                          {option.year && ` - ${option.year}`}
-                          {option.source_lca_activity &&
-                            ` - ${option.source_lca_activity}`}
-                        </option>
-                      ))}
+                      activityOptions.map((option) => {
+                        const fullText = `${option.name}${option.source ? ` - (${option.source})` : ''}${option.unit_type ? ` - ${option.unit_type}` : ''}${option.region ? ` - ${option.region}` : ''}${option.year ? ` - ${option.year}` : ''}${option.source_lca_activity ? ` - ${option.source_lca_activity}` : ''}`;
+                        const truncatedText = fullText.length > 60 ? fullText.substring(0, 57) + '...' : fullText;
+                        return (
+                          <option key={option.id} value={option.id} title={fullText}>
+                            {truncatedText}
+                          </option>
+                        );
+                      })}
                   </select>
+
+                  {/* Visual overlay for truncated selected text in common dropdown */}
+                  {commonActivity && !isLoadingActivities && (
+                    <div 
+                      className="absolute top-0 left-0 w-full py-2 pl-3 pr-10 text-gray-700 pointer-events-none bg-transparent rounded-md overflow-hidden whitespace-nowrap"
+                      style={{ 
+                        textOverflow: 'ellipsis',
+                        lineHeight: '1.25rem'
+                      }}
+                      title={activityOptions.find(opt => opt.id === commonActivity)?.name || ''}
+                    >
+                      {getTruncatedDisplayValue(commonActivity, 50)}
+                    </div>
+                  )}
+
                   <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
                     {isLoadingActivities ? (
                       <div className="animate-spin h-4 w-4 border-2 border-blue-500 rounded-full border-t-transparent"></div>
@@ -914,9 +953,9 @@ const ActivitiesGraph = ({
                             onChange={(e) =>
                               handleActivityChange(year, e.target.value)
                             }
-                            className={`w-full py-2 pl-3 pr-10 text-sm border-b border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white appearance-none text-neutral-500 ${
+                            className={`activity-select w-full py-2 pl-3 ${selectedActivityId ? 'pr-16' : 'pr-10'} text-sm border-b border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white appearance-none text-neutral-500 ${
                               isLoadingActivities ? "opacity-70" : ""
-                            }`}
+                            } ${selectedActivityId ? 'text-transparent' : ''}`}
                             disabled={isLoadingActivities}
                           >
                             <option value="">
@@ -925,21 +964,30 @@ const ActivitiesGraph = ({
                                 : "Select activity..."}
                             </option>
                             {!isLoadingActivities &&
-                              activityOptions.map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.name}
-                                  {option.source &&
-                                    ` - (${option.source || "N/A"})`}
-                                  {option.unit_type &&
-                                    ` - ${option.unit_type || "N/A"}`}
-                                  {option.region &&
-                                    ` - ${option.region || "N/A"}`}
-                                  {option.year && ` - ${option.year || "N/A"}`}
-                                  {option.source_lca_activity &&
-                                    ` - ${option.source_lca_activity || "N/A"}`}
-                                </option>
-                              ))}
+                              activityOptions.map((option) => {
+                                const fullText = `${option.name}${option.source ? ` - (${option.source})` : ''}${option.unit_type ? ` - ${option.unit_type}` : ''}${option.region ? ` - ${option.region}` : ''}${option.year ? ` - ${option.year}` : ''}${option.source_lca_activity ? ` - ${option.source_lca_activity}` : ''}`;
+                                const truncatedText = fullText.length > 40 ? fullText.substring(0, 37) + '...' : fullText;
+                                return (
+                                  <option key={option.id} value={option.id} title={fullText}>
+                                    {truncatedText}
+                                  </option>
+                                );
+                              })}
                           </select>
+
+                          {/* Visual overlay for truncated selected text */}
+                          {selectedActivityId && !isLoadingActivities && (
+                            <div 
+                              className="absolute top-0 left-0 w-full py-2 pl-3 pr-16 text-sm text-neutral-500 pointer-events-none bg-transparent rounded-md overflow-hidden whitespace-nowrap"
+                              style={{ 
+                                textOverflow: 'ellipsis',
+                                lineHeight: '1.25rem'
+                              }}
+                              title={activityOptions.find(opt => opt.id === selectedActivityId)?.name || ''}
+                            >
+                              {getTruncatedDisplayValue(selectedActivityId, 25)}
+                            </div>
+                          )}
 
                           {/* Tooltip that appears on hover */}
                           {selectedActivity && !isLoadingActivities && (
@@ -990,10 +1038,11 @@ const ActivitiesGraph = ({
                           {selectedActivityId && !isLoadingActivities && (
                             <button
                               onClick={() => handleClearActivity(year)}
-                              className="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                              className="absolute right-8 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 z-10"
                               disabled={isLoadingActivities}
+                              title="Clear activity"
                             >
-                              <FiTrash2 className="w-4 h-4 hover:text-red-600" />
+                              <FiTrash2 className="w-3 h-3 hover:text-red-600" />
                             </button>
                           )}
                         </div>
