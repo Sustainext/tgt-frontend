@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: tgt-frontend-container
+    
+    build:
+      # The build context is now the './tgt-frontend' directory.
+      # Docker will send this folder's contents to the Docker daemon for the build.
+      context: .
+      
+      # The name of the Dockerfile, located at the root of the context path.
+      # Since it's named 'Dockerfile', this line is technically optional,
+      # but it's good practice to be explicit.
+      dockerfile: Dockerfile
+      
+    ports:
+      - "3000:3000"
+      
+    restart: unless-stopped
