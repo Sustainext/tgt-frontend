@@ -41,6 +41,7 @@ import { fetchAutopilotSuggestions } from '@/app/utils/climatiqAutopilotApi';
 import CalculationInfoModal from '@/app/shared/components/CalculationInfoModal';
 import Portal from '../../shared/components/Portal';
 import ReactDOM from 'react-dom';
+import { MaskedEmail } from '../components/MaskedPIIField';
 
 /**
  * Simple positioning - just below the input element
@@ -934,6 +935,7 @@ const EmissionWidget = React.memo(
     const [uploadedBy, setUploadedBy] = useState(value.file?.uploadedBy ?? '');
     const [loggedInUserEmail, setLoggedInUserEmail] = useState('');
     const [selectSize, setSelectSize] = useState(9); // default to desktop size
+    const [isUploading, setIsUploading] = useState(false);
 
     useEffect(() => {
       const handleResize = () => {
@@ -958,57 +960,119 @@ const EmissionWidget = React.memo(
     });
 
     const uploadFileToAzure = async (file, newFileName) => {
-      const arrayBuffer = await file.arrayBuffer();
-      const blob = new Blob([arrayBuffer]);
-
+      // Validate environment variables
       const accountName = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT;
       const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER;
       const sasToken = process.env.NEXT_PUBLIC_AZURE_SAS_TOKEN;
 
-      const blobServiceClient = new BlobServiceClient(
-        `https://${accountName}.blob.core.windows.net?${sasToken}`
-      );
-
-      const containerClient =
-        blobServiceClient.getContainerClient(containerName);
-      const blobName = newFileName || file.name;
-      const blobClient = containerClient.getBlockBlobClient(blobName);
+      if (!accountName || !containerName || !sasToken) {
+        throw new Error('Azure storage configuration is missing. Please check environment variables.');
+      }
 
       try {
+        const arrayBuffer = await file.arrayBuffer();
+        const blob = new Blob([arrayBuffer]);
+
+        const blobServiceClient = new BlobServiceClient(
+          `https://${accountName}.blob.core.windows.net?${sasToken}`
+        );
+
+        const containerClient = blobServiceClient.getContainerClient(containerName);
+        
+        // Generate unique filename to avoid conflicts
+        const timestamp = Date.now();
+        const fileExtension = newFileName.split('.').pop();
+        const baseName = newFileName.replace(/\.[^/.]+$/, '');
+        const blobName = `${baseName}_${timestamp}.${fileExtension}`;
+        
+        const blobClient = containerClient.getBlockBlobClient(blobName);
+
         const uploadOptions = {
           blobHTTPHeaders: {
             blobContentType: file.type,
           },
+          metadata: {
+            originalName: newFileName,
+            uploadedAt: new Date().toISOString(),
+            fileSize: file.size.toString(),
+          },
         };
 
+        console.log('Starting upload to Azure:', { blobName, fileSize: file.size });
+        
         await blobClient.uploadData(blob, uploadOptions);
+        
         const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
+        console.log('Upload completed successfully:', url);
+        
         return url;
       } catch (error) {
-        LoginlogDetails('Failed', 'Deleted');
-        console.error('Error uploading file:', error.message);
-        return null;
+        console.error('Error uploading file to Azure:', error);
+        
+        // Provide more specific error messages
+        if (error.statusCode === 403) {
+          throw new Error('Permission denied. Please check your Azure storage permissions.');
+        } else if (error.statusCode === 404) {
+          throw new Error('Azure storage container not found.');
+        } else if (error.code === 'NetworkError' || error.message.includes('network')) {
+          throw new Error('Network error. Please check your internet connection and try again.');
+        } else if (error.message.includes('SAS')) {
+          throw new Error('Invalid Azure storage access token. Please contact administrator.');
+        } else {
+          throw new Error(`Upload failed: ${error.message || 'Unknown error occurred'}`);
+        }
       }
     };
 
     const handleChange = async (event) => {
       const selectedFile = event.target.files[0];
 
-      if (selectedFile) {
-        const newFileName = selectedFile.name;
-        const fileType = selectedFile.type;
-        const fileSize = selectedFile.size;
-        const uploadDateTime = new Date().toLocaleString();
+      if (!selectedFile) {
+        return;
+      }
 
-        console.log('Selected file details:', {
-          newFileName,
-          fileType,
-          fileSize,
-          uploadDateTime,
-        });
+      // File validation
+      const maxFileSize = 5 * 1024 * 1024; // 5MB
+      const allowedTypes = [
+        'application/pdf',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/vnd.ms-excel',
+        'image/jpeg',
+        'image/jpg',
+        'image/png',
+        'image/gif'
+      ];
 
-        setFileName(newFileName); // Set the file name
+      if (selectedFile.size > maxFileSize) {
+        toast.error('File size must be less than 5MB');
+        event.target.value = ''; // Clear the input
+        return;
+      }
 
+      if (!allowedTypes.includes(selectedFile.type)) {
+        toast.error('Please upload only PDF, Excel, or image files');
+        event.target.value = ''; // Clear the input
+        return;
+      }
+
+      const newFileName = selectedFile.name;
+      const fileType = selectedFile.type;
+      const fileSize = selectedFile.size;
+      const uploadDateTime = new Date().toLocaleString();
+
+      console.log('Selected file details:', {
+        newFileName,
+        fileType,
+        fileSize,
+        uploadDateTime,
+      });
+
+      // Set file name and show loading state
+      setFileName(newFileName);
+      setIsUploading(true);
+      toast.info('Uploading file...');
+
+      try {
         const uploadUrl = await uploadFileToAzure(selectedFile, newFileName);
 
         if (uploadUrl) {
@@ -1032,6 +1096,11 @@ const EmissionWidget = React.memo(
             },
           });
           setFileType(fileType);
+          setFileSize(fileSize);
+          setUploadDateTime(uploadDateTime);
+          setUploadedBy(loggedInUserEmail);
+
+          toast.success('File uploaded successfully!');
 
           setTimeout(() => {
             LoginlogDetails(
@@ -1047,8 +1116,27 @@ const EmissionWidget = React.memo(
 
           console.log('File uploaded successfully:', uploadUrl);
         } else {
-          console.error('File upload failed');
+          throw new Error('Upload failed - no URL returned');
         }
+      } catch (error) {
+        console.error('File upload error:', error);
+        toast.error(`File upload failed: ${error.message}`);
+        setFileName(''); // Reset file name on failure
+        event.target.value = ''; // Clear the input
+        
+        setTimeout(() => {
+          LoginlogDetails(
+            'Failed', 
+            'Upload Failed',
+            value.Category,
+            value.Subcategory,
+            value.Activity,
+            newFileName,
+            fileType
+          );
+        }, 500);
+      } finally {
+        setIsUploading(false); // Always reset loading state
       }
     };
 
@@ -1349,17 +1437,18 @@ const EmissionWidget = React.memo(
           </div>
         )}
 
-        <table
-          className={`w-full table-fixed ${
-            scopeErrors['Category'] ||
-            scopeErrors['Subcategory'] ||
-            scopeErrors['Activity'] ||
-            scopeErrors['Quantity'] ||
-            scopeErrors['Unit']
-              ? 'mb-2'
-              : ''
-          }`}
-        >
+        <div className='overflow-x-auto scrollable-content'>
+          <table
+            className={`w-full table-fixed min-w-[800px] ${
+              scopeErrors['Category'] ||
+              scopeErrors['Subcategory'] ||
+              scopeErrors['Activity'] ||
+              scopeErrors['Quantity'] ||
+              scopeErrors['Unit']
+                ? 'mb-2'
+                : ''
+            }`}
+          >
           {id.startsWith('root_0') && (
             <thead className='bg-gray-50'>
               <tr>
@@ -1789,7 +1878,11 @@ const EmissionWidget = React.memo(
                         }
                       />
 
-                      {fileName ? (
+                      {isUploading ? (
+                        <div className='ml-2 flex items-center'>
+                          <div className='animate-spin rounded-full h-4 w-4 border-2 border-blue-500 border-t-transparent'></div>
+                        </div>
+                      ) : fileName ? (
                         <label className='cursor-pointer relative'>
                           {fileType.includes(
                             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -1836,7 +1929,7 @@ const EmissionWidget = React.memo(
                           />
                         </label>
                       ) : (
-                        <label htmlFor={id + scope} className='cursor-pointer'>
+                        <label htmlFor={id + scope} className={`cursor-pointer ${isUploading ? 'pointer-events-none opacity-50' : ''}`}>
                           <TbUpload className='text-gray-500 hover:text-blue-500 ml-2' />
                         </label>
                       )}
@@ -1844,8 +1937,8 @@ const EmissionWidget = React.memo(
                       {/* Preview Modal */}
                       {showModal && previewData && (
                         <Portal>
-                          <div className='fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50'>
-                            <div className='bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]'>
+                          <div className='fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50 p-4'>
+                            <div className='bg-white p-1 rounded-lg w-[96%] max-h-[80vh] overflow-y-auto scrollable-content mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]'>
                               <div className='flex justify-between mt-4 mb-4'>
                                 <div>
                                   <h5 className='mb-4 ml-2 font-semibold truncate w-[200px] overflow-hidden whitespace-nowrap'>
@@ -1905,7 +1998,7 @@ const EmissionWidget = React.memo(
                                     </div>
                                   )}
                                 </div>
-                                <div className='w-[211px] ml-6'>
+                                <div className='w-[211px] ml-6 flex-shrink-0 overflow-hidden'>
                                   <div className='mb-4 mt-1'>
                                     <h2 className='text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide'>
                                       File information
@@ -1915,7 +2008,7 @@ const EmissionWidget = React.memo(
                                     <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
                                       FILE NAME
                                     </h2>
-                                    <h2 className='text-[14px] leading-relaxed tracking-wide'>
+                                    <h2 className='text-[14px] leading-relaxed tracking-wide break-words overflow-hidden'>
                                       {fileName}
                                     </h2>
                                   </div>
@@ -1931,7 +2024,7 @@ const EmissionWidget = React.memo(
                                     <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
                                       FILE TYPE
                                     </h2>
-                                    <h2 className='text-[14px] leading-relaxed tracking-wide'>
+                                    <h2 className='text-[14px] leading-relaxed tracking-wide break-words'>
                                       {fileType}
                                     </h2>
                                   </div>
@@ -1939,7 +2032,7 @@ const EmissionWidget = React.memo(
                                     <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
                                       UPLOAD DATE & TIME
                                     </h2>
-                                    <h2 className='text-[14px] leading-relaxed tracking-wide'>
+                                    <h2 className='text-[14px] leading-relaxed tracking-wide break-words'>
                                       {uploadDateTime}
                                     </h2>
                                   </div>
@@ -1947,10 +2040,17 @@ const EmissionWidget = React.memo(
                                     <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
                                       UPLOADED BY
                                     </h2>
-                                    <h2 className='text-[14px] leading-relaxed tracking-wide'>
-                                      {uploadedBy.replace(/^"|"$/g, '') ||
-                                        'Unknown'}
-                                    </h2>
+                                    <div className='text-[14px] leading-relaxed tracking-wide break-words overflow-hidden max-w-full'>
+                                      {uploadedBy && uploadedBy.replace(/^"|"$/g, '') ? (
+                                        <MaskedEmail 
+                                          email={uploadedBy.replace(/^"|"$/g, '')} 
+                                          showToggle={true}
+                                          className="max-w-full break-all"
+                                        />
+                                      ) : (
+                                        'Unknown'
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -1975,6 +2075,7 @@ const EmissionWidget = React.memo(
             </tr>
           </tbody>
         </table>
+        </div>
 
         {isAssignModalOpen && (
           <Portal>
