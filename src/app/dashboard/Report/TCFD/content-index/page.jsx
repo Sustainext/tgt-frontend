@@ -29,6 +29,38 @@ const TCFDContentIndex = forwardRef(({ onSubmitSuccess }, ref) => {
     submitForm,
   }));
 
+  // Function to format page numbers array into a readable string
+  const formatPageNumbers = (pageNumbers) => {
+    if (!pageNumbers || !Array.isArray(pageNumbers) || pageNumbers.length === 0) {
+      return "Pg. No. --";
+    }
+    
+    // Sort the page numbers
+    const sortedPages = [...pageNumbers].sort((a, b) => a - b);
+    
+    // Format based on number of pages
+    if (sortedPages.length === 1) {
+      return `Pg. ${sortedPages[0]}`;
+    } else if (sortedPages.length === 2) {
+      return `Pg. ${sortedPages[0]}, ${sortedPages[1]}`;
+    } else {
+      // Check if consecutive
+      let isConsecutive = true;
+      for (let i = 1; i < sortedPages.length; i++) {
+        if (sortedPages[i] !== sortedPages[i-1] + 1) {
+          isConsecutive = false;
+          break;
+        }
+      }
+      
+      if (isConsecutive) {
+        return `Pg. ${sortedPages[0]}-${sortedPages[sortedPages.length - 1]}`;
+      } else {
+        return `Pg. ${sortedPages.join(', ')}`;
+      }
+    }
+  };
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -162,13 +194,17 @@ const TCFDContentIndex = forwardRef(({ onSubmitSuccess }, ref) => {
               const letter = letterMatch ? letterMatch[1] : "";
               const text = letterMatch ? fullDescription.replace(letterMatch[0], "") : fullDescription;
               
+              // Format page numbers from the API response
+              const formattedPageRef = formatPageNumbers(disclosure.page_numbers);
+              
               category.disclosures.push({
                 letter: letter,
                 text: text,
-                pageRef: disclosure.pageRef || "Pg. No. --",
+                pageRef: formattedPageRef, // Use formatted page numbers instead of static text
                 screenTag: disclosure.screen_tag,
                 id: disclosure.id,
-                selected: disclosure.selected
+                selected: disclosure.selected,
+                pageNumbers: disclosure.page_numbers // Keep original array for reference
               });
             });
           }
@@ -365,11 +401,6 @@ const TCFDContentIndex = forwardRef(({ onSubmitSuccess }, ref) => {
                           <td className="border border-gray-300 p-3 text-center align-top">
                             <div className="text-sm text-gray-600">
                               {disclosure.pageRef}
-                              {disclosure.selected && (
-                                <div className="mt-1">
-                                  <span className="inline-block w-2 h-2 bg-green-500 rounded-full" title="Selected"></span>
-                                </div>
-                              )}
                             </div>
                           </td>
                         </tr>

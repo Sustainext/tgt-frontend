@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import DateRangePicker from "../../utils/DatePickerComponent";
 import axiosInstance from "../../utils/axiosMiddleware";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const AnalyseHeader7 = ({
   selectedOrg,
@@ -188,9 +189,9 @@ const AnalyseHeader7 = ({
  
   return (
     <>
-      <div>
-      <div className="flex-col items-center ">
-      <div className="mt-4 pb-3 xl:mx-5 lg:mx-5 md:mx-5 2xl:mx-5 4k:mx-5 2k:mx-5 mx-2 text-left">
+      <div className="w-full max-w-full overflow-hidden">
+      <div className="flex-col items-center w-full">
+      <div className="mt-4 pb-3 px-2 md:px-4 xl:px-5 text-left w-full max-w-full">
             <div className="mb-2 flex-col items-center">
               <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
@@ -230,11 +231,11 @@ const AnalyseHeader7 = ({
                 </div>
               </div>
               <div
-                 className={`grid grid-cols-1 md:grid-cols-4 xl:w-[80%] lg:w-[80%] 2xl:w-[80%] md:w-[100%] 4k:w-[80%] 2k:w-[80%] w-[100%] mb-2 pt-4 ${
+                 className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full max-w-full mb-2 pt-4 ${
                   reportType !== "" ? "visible" : "hidden"
                 }`}
               >
-                <div className="mr-2">
+                <div className="">
                   <label
                     htmlFor="organization"
                     className="text-neutral-800 text-[12px] font-normal ml-1"
@@ -242,19 +243,27 @@ const AnalyseHeader7 = ({
                     Select Organization*
                   </label>
                   <div className="mt-2">
-                    <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                      value={selectedOrg}
-                      onChange={handleOrgChange}
-                    >
-                      <option value="">Select Organization</option>
-                      {organisations &&
-                        organisations.map((org) => (
-                          <option key={org.id} value={org.id}>
-                            {org.name}
-                          </option>
-                        ))}
-                    </select>
+                    <div className="relative">
+                      <select
+                        className="block w-full pr-8 rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
+                        value={selectedOrg}
+                        onChange={handleOrgChange}
+                      >
+                        <option value="">Select Organization</option>
+                        {organisations &&
+                          organisations.map((org) => (
+                            <option key={org.id} value={org.id}>
+                              {org.name}
+                            </option>
+                          ))}
+                      </select>
+                      <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                        <MdKeyboardArrowDown
+                          className="text-neutral-500"
+                          style={{ fontSize: '16px' }}
+                        />
+                      </div>
+                    </div>
                     {errors.organization && (
                       <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
                         {errors.organization}
@@ -263,7 +272,7 @@ const AnalyseHeader7 = ({
                   </div>
                 </div>
                 {(reportType === "Corporate" || reportType === "Location") && (
-                  <div className="mr-2">
+                  <div className="">
                     <label
                       htmlFor="corporate"
                       className="text-neutral-800 text-[12px] font-normal ml-1"
@@ -271,19 +280,27 @@ const AnalyseHeader7 = ({
                       Select Corporate
                     </label>
                     <div className="mt-2">
-                      <select
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                        value={selectedCorp}
-                        onChange={handleCorpChange}
-                      >
-                        <option value="">Select Corporate</option>
-                        {corporates &&
-                          corporates.map((corp) => (
-                            <option key={corp.id} value={corp.id}>
-                              {corp.name}
-                            </option>
-                          ))}
-                      </select>
+                      <div className="relative">
+                        <select
+                          className="block w-full pr-8 rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
+                          value={selectedCorp}
+                          onChange={handleCorpChange}
+                        >
+                          <option value="">Select Corporate</option>
+                          {corporates &&
+                            corporates.map((corp) => (
+                              <option key={corp.id} value={corp.id}>
+                                {corp.name}
+                              </option>
+                            ))}
+                        </select>
+                        <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                          <MdKeyboardArrowDown
+                            className="text-neutral-500"
+                            style={{ fontSize: '16px' }}
+                          />
+                        </div>
+                      </div>
                       {errors.corporate && (
                         <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
                           {errors.corporate}
@@ -293,7 +310,7 @@ const AnalyseHeader7 = ({
                   </div>
                 )}
                 {( reportType === "Location") && (
-                  <div className="mr-2">
+                  <div className="">
                     <label
                       htmlFor="location"
                       className="text-neutral-800 text-[12px] font-normal ml-1"
@@ -301,19 +318,27 @@ const AnalyseHeader7 = ({
                       Select Location
                     </label>
                     <div className="mt-2">
-                      <select
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                        value={selectedLocation}
-                        onChange={handleLocationChange}
-                      >
-                        <option value="">--Select Location--</option>
-                        {locations &&
-                          locations.map((location) => (
-                            <option key={location.id} value={location.id}>
-                              {location.name}
-                            </option>
-                          ))}
-                      </select>
+                      <div className="relative">
+                        <select
+                          className="block w-full pr-8 rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
+                          value={selectedLocation}
+                          onChange={handleLocationChange}
+                        >
+                          <option value="">--Select Location--</option>
+                          {locations &&
+                            locations.map((location) => (
+                              <option key={location.id} value={location.id}>
+                                {location.name}
+                              </option>
+                            ))}
+                        </select>
+                        <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                          <MdKeyboardArrowDown
+                            className="text-neutral-500"
+                            style={{ fontSize: '16px' }}
+                          />
+                        </div>
+                      </div>
                       {errors.location && (
                         <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
                           {errors.location}
@@ -322,7 +347,7 @@ const AnalyseHeader7 = ({
                     </div>
                   </div>
                 )}
-                <div className="mr-2">
+                <div className="">
                   <label
                     htmlFor="date"
                     className="text-neutral-800 text-[12px] font-normal ml-1"

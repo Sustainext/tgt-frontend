@@ -96,8 +96,8 @@ const Header = ({ activeTab, setIsBoxOpen, setMobileopen }) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col border-l gap-2 absolute right-[1rem] top-8">
-            <div className="flex">
+          <div className="flex flex-col border-l border-gray-200 pl-4 gap-2 absolute right-4 top-8">
+            <div className="flex justify-end">
               {gri
                 .filter((g) => g.category === activeTab)
                 .map((g) =>
@@ -114,7 +114,7 @@ const Header = ({ activeTab, setIsBoxOpen, setMobileopen }) => {
                   ))
                 )}
             </div>
-            <div className="flex">
+            <div className="flex justify-end">
               {sdg
                 .filter((s) => s.category === activeTab)
                 .map((s) =>

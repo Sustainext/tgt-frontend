@@ -1,25 +1,26 @@
 //emission widget
 
-"use client";
+'use client';
 import React, {
   useState,
   useEffect,
+  useLayoutEffect,
   useRef,
   useCallback,
   useMemo,
-} from "react";
-import { scope1Info, scope2Info, scope3Info } from "../data/scopeInfo";
-import { unitTypes } from "../data/units";
-import { LuTrash2 } from "react-icons/lu";
-import { TbUpload } from "react-icons/tb";
-import debounce from "lodash/debounce";
-import { toast } from "react-toastify";
-import { BlobServiceClient } from "@azure/storage-blob";
-import { MdClose, MdOutlineRemoveRedEye } from "react-icons/md";
-import { RiFileExcel2Line } from "react-icons/ri";
-import { BsFiletypePdf, BsFileEarmarkImage } from "react-icons/bs";
-import { Tooltip as ReactTooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css";
+} from 'react';
+import { scope1Info, scope2Info, scope3Info } from '../data/scopeInfo';
+import { unitTypes } from '../data/units';
+import { LuTrash2 } from 'react-icons/lu';
+import { TbUpload } from 'react-icons/tb';
+import debounce from 'lodash/debounce';
+import { toast } from 'react-toastify';
+import { BlobServiceClient } from '@azure/storage-blob';
+import { MdClose, MdOutlineRemoveRedEye } from 'react-icons/md';
+import { RiFileExcel2Line } from 'react-icons/ri';
+import { BsFiletypePdf, BsFileEarmarkImage } from 'react-icons/bs';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 import {
   setSelectedRows,
   updateSelectedRow,
@@ -29,15 +30,143 @@ import {
   setActivitiesForRow,
   addActiveRequest,
   removeActiveRequest,
-} from "@/lib/redux/features/emissionSlice";
-import { useDispatch, useSelector } from "react-redux";
-import AssignEmissionModal from "./assignEmissionModal";
-import MultipleAssignEmissionModal from "./MultipleAssignEmissionModal";
-import { getMonthName } from "@/app/utils/dateUtils";
+} from '@/lib/redux/features/emissionSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import AssignEmissionModal from './assignEmissionModal';
+import MultipleAssignEmissionModal from './MultipleAssignEmissionModal';
+import { getMonthName } from '@/app/utils/dateUtils';
 // import { fetchClimatiqActivities } from "../../utils/climatiqApi.js";
-import { getActivities } from "../../utils/activitiesService";
-import { fetchAutopilotSuggestions } from "@/app/utils/climatiqAutopilotApi";
-import CalculationInfoModal from "@/app/shared/components/CalculationInfoModal";
+import { getActivities } from '../../utils/activitiesService';
+import { fetchAutopilotSuggestions } from '@/app/utils/climatiqAutopilotApi';
+import CalculationInfoModal from '@/app/shared/components/CalculationInfoModal';
+import Portal from '../../shared/components/Portal';
+import ReactDOM from 'react-dom';
+import { MaskedEmail } from '../components/MaskedPIIField';
+
+/**
+ * Simple positioning - just below the input element
+ */
+const ActivityDropdownPortal = ({
+  anchorRef,
+  isOpen,
+  onClose,
+  children,
+  minWidth = 210,
+  maxWidth = 810,
+  dropdownClassName = '',
+  scope = '',
+}) => {
+  const [coords, setCoords] = useState(null);
+  const dropdownRef = useRef(null);
+
+  useLayoutEffect(() => {
+    if (isOpen && anchorRef && anchorRef.current) {
+      // This will run *before* the browser paints (synchronously)
+      const updateCoords = () => {
+        const rect = anchorRef.current.getBoundingClientRect();
+
+        let top;
+
+        top = rect.bottom + window.scrollY;
+
+        setCoords({
+          top,
+          left: rect.left + window.scrollX,
+          width: Math.max(minWidth, rect.width, maxWidth),
+        });
+
+        console.log({
+          top,
+          left: rect.left + window.scrollX,
+          width: Math.max(minWidth, rect.width, maxWidth),
+          scrollY: window.scrollY,
+        });
+      };
+
+      updateCoords();
+
+      // Scroll/resize listeners for live repositioning
+      window.addEventListener('resize', updateCoords);
+      window.addEventListener('scroll', updateCoords, true); // capture (true) for all scrolls
+
+      // Optionally add mutation observer or - if container could change size - a ResizeObserver too
+
+      return () => {
+        window.removeEventListener('resize', updateCoords);
+        window.removeEventListener('scroll', updateCoords, true);
+      };
+    }
+  }, [isOpen, anchorRef, anchorRef?.current, minWidth, maxWidth, scope]);
+
+  useLayoutEffect(() => {
+    if (!(isOpen && anchorRef && anchorRef.current)) return;
+    const updateCoords = () => {
+      const rect = anchorRef.current.getBoundingClientRect();
+      let top;
+      top = rect.bottom + window.scrollY;
+
+      setCoords({
+        top,
+        left: rect.left + window.scrollX,
+        width: Math.max(minWidth, rect.width, maxWidth),
+      });
+    };
+    updateCoords();
+
+    // Add scroll/resize listeners (as before)
+    window.addEventListener('resize', updateCoords);
+    window.addEventListener('scroll', updateCoords, true);
+
+    // ---- [NEW] Mutation observer to capture DOM/layout changes ----
+    const observer = new MutationObserver(updateCoords);
+    // You may wish to observe document.body, or a known parent above your table
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      window.removeEventListener('resize', updateCoords);
+      window.removeEventListener('scroll', updateCoords, true);
+      observer.disconnect();
+    };
+  }, [isOpen, anchorRef, minWidth, maxWidth, scope]);
+
+  // Click outside closes dropdown
+  useEffect(() => {
+    if (!isOpen) return;
+    function handler(e) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target) &&
+        anchorRef.current &&
+        !anchorRef.current.contains(e.target)
+      ) {
+        onClose();
+      }
+    }
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [isOpen, onClose, anchorRef]);
+
+  if (!isOpen || !coords) return null;
+
+  const el = (
+    <div
+      ref={dropdownRef}
+      className={`z-[99999] bg-white border border-gray-300 rounded shadow-lg ${dropdownClassName} max-h-[350px] overflow-auto`}
+      style={{
+        position: 'absolute',
+        top: coords.top,
+        left: coords.left,
+        width: coords.width,
+        minWidth: minWidth,
+        maxWidth: maxWidth,
+      }}
+    >
+      {children}
+    </div>
+  );
+
+  return ReactDOM.createPortal(el, document.body);
+};
 
 const EmissionWidget = React.memo(
   ({
@@ -53,29 +182,28 @@ const EmissionWidget = React.memo(
     id,
     formRef,
   }) => {
-
     const dispatch = useDispatch();
-    const rowId = scope + "_" + index;
-    const [rowType, setRowType] = useState(value.rowType || "default");
-    const [category, setCategory] = useState(value.Category || "");
-    const [subcategory, setSubcategory] = useState(value.Subcategory || "");
-    const [activity, setActivity] = useState(value.Activity || "");
-    const [quantity, setQuantity] = useState(value.Quantity || "");
-    const [unit, setUnit] = useState(value.Unit || "");
-    const [quantity2, setQuantity2] = useState(value.Quantity2 || "");
-    const [unit2, setUnit2] = useState(value.Unit2 || "");
-    const [activity_id, setActivityId] = useState(value.activity_id || "");
-    const [act_id, setActId] = useState(value.act_id || "");
-    const [unit_type, setUnitType] = useState(value.unit_type || "");
+    const rowId = scope + '_' + index;
+    const [rowType, setRowType] = useState(value.rowType || 'default');
+    const [category, setCategory] = useState(value.Category || '');
+    const [subcategory, setSubcategory] = useState(value.Subcategory || '');
+    const [activity, setActivity] = useState(value.Activity || '');
+    const [quantity, setQuantity] = useState(value.Quantity || '');
+    const [unit, setUnit] = useState(value.Unit || '');
+    const [quantity2, setQuantity2] = useState(value.Quantity2 || '');
+    const [unit2, setUnit2] = useState(value.Unit2 || '');
+    const [activity_id, setActivityId] = useState(value.activity_id || '');
+    const [act_id, setActId] = useState(value.act_id || '');
+    const [unit_type, setUnitType] = useState(value.unit_type || '');
     const [subcategories, setSubcategories] = useState([]);
     const [activities, setActivities] = useState([]);
     const [units, setUnits] = useState([]);
     const [units2, setUnits2] = useState([]);
     const [baseCategories, setBaseCategories] = useState([]);
-    const [activitySearch, setActivitySearch] = useState("");
+    const [activitySearch, setActivitySearch] = useState('');
     const [isDropdownActive, setIsDropdownActive] = useState(false);
-    const [quantityError, setQuantityError] = useState("");
-    const [quantity2Error, setQuantity2Error] = useState("");
+    const [quantityError, setQuantityError] = useState('');
+    const [quantity2Error, setQuantity2Error] = useState('');
     const [isFetchingActivities, setIsFetchingActivities] = useState(false);
     const isFetching = useRef(false);
     const dropdownRef = useRef(null);
@@ -89,34 +217,36 @@ const EmissionWidget = React.memo(
     const [isMobile, setIsMobile] = useState(false);
     const [isActivityModalOpen, setIsActivityModalOpen] = useState(false);
 
+    const [tempUnit, setTempUnit] = useState(value.Unit);
+    const [tempUnit2, setTempUnit2] = useState(value.Unit2);
+
     useEffect(() => {
       const handleResize = () => {
         setIsMobile(window.innerWidth < 768); // Adjust as needed
       };
 
       handleResize(); // on mount
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
     }, []);
     const useremail =
-      typeof window !== "undefined" ? localStorage.getItem("userEmail") : "";
+      typeof window !== 'undefined' ? localStorage.getItem('userEmail') : '';
     const roles =
-      typeof window !== "undefined"
-        ? JSON.parse(localStorage.getItem("textcustomrole")) || ""
-        : "";
+      typeof window !== 'undefined'
+        ? JSON.parse(localStorage.getItem('textcustomrole')) || ''
+        : '';
 
     const locationname = useSelector((state) => state.emissions.locationName);
     const monthName = useSelector((state) => state.emissions.monthName);
 
-
     //file log code//
     const getIPAddress = async () => {
       try {
-        const response = await fetch("https://api.ipify.org?format=json");
+        const response = await fetch('https://api.ipify.org?format=json');
         const data = await response.json();
         return data.ip;
       } catch (error) {
-        console.error("Error fetching IP address:", error);
+        console.error('Error fetching IP address:', error);
         return null;
       }
     };
@@ -138,25 +268,25 @@ const EmissionWidget = React.memo(
 
         const data = {
           event_type: text1,
-          event_details: "File",
+          event_details: 'File',
           action_type: actionType,
           status: status,
           user_email: useremail,
           user_role: roles,
           ip_address: ipAddress,
           logs: `${text1} > ${middlename} > ${text2} > ${locationname} > ${year} > ${monthName} > ${scope} > ${
-            category || "Category not selected"
-          } > ${subcategory || "Subcategory not selected"} > ${
-            activity || "Activity not selected"
+            category || 'Category not selected'
+          } > ${subcategory || 'Subcategory not selected'} > ${
+            activity || 'Activity not selected'
           } > ${fileName} > ${fileType}`,
         };
 
         // const response = await axiosInstance.post(userDetailsUrl, data);
-        console.log("log data", data);
+        console.log('log data', data);
 
         // return response.data;
       } catch (error) {
-        console.error("Error logging login details:", error);
+        console.error('Error logging login details:', error);
 
         return null;
       }
@@ -172,10 +302,10 @@ const EmissionWidget = React.memo(
 
     // Function to get field class based on validation state
     const getFieldClass = useCallback(
-      (fieldName, baseClass = "") => {
+      (fieldName, baseClass = '') => {
         const hasError = scopeErrors[fieldName];
         return `${baseClass} ${
-          hasError ? "border-b border-red-500" : ""
+          hasError ? 'border-b border-red-500' : ''
         }`.trim();
       },
       [scopeErrors]
@@ -192,7 +322,7 @@ const EmissionWidget = React.memo(
     const getPlaceholderClass = useCallback(
       (fieldName) => {
         const hasError = scopeErrors[fieldName];
-        return hasError ? "text-red-500" : "";
+        return hasError ? 'text-red-500' : '';
       },
       [scopeErrors]
     );
@@ -200,9 +330,9 @@ const EmissionWidget = React.memo(
     // Effect to handle focus based on Redux state
     useEffect(() => {
       if (focusedField.rowId === rowId && focusedField.field) {
-        if (focusedField.field === "quantity1" && quantity1Ref.current) {
+        if (focusedField.field === 'quantity1' && quantity1Ref.current) {
           quantity1Ref.current.focus();
-        } else if (focusedField.field === "quantity2" && quantity2Ref.current) {
+        } else if (focusedField.field === 'quantity2' && quantity2Ref.current) {
           quantity2Ref.current.focus();
         }
       }
@@ -234,7 +364,7 @@ const EmissionWidget = React.memo(
     const [isMultipleAssignModalOpen, setIsMultipleAssignModalOpen] =
       useState(false);
     const users = useSelector((state) => state.emissions.users.data);
-    const [assignedUser, setAssignedUser] = useState(value.assigned_to || "");
+    const [assignedUser, setAssignedUser] = useState(value.assigned_to || '');
     const { location, month } = useSelector((state) => state.emissions);
     //row selection
     const selectedRows = useSelector(
@@ -280,7 +410,7 @@ const EmissionWidget = React.memo(
     const handleAssignClick = () => {
       // Disable form validation before opening modal
       if (category && subcategory) setIsAssignModalOpen(true);
-      else toast.error("Please select category and subcategory");
+      else toast.error('Please select category and subcategory');
     };
 
     const handleCloseAssignModal = () => {
@@ -298,7 +428,7 @@ const EmissionWidget = React.memo(
       );
 
       if (invalidRows.length > 0) {
-        toast.error("All rows must have Category and Sub-Category selected");
+        toast.error('All rows must have Category and Sub-Category selected');
         return;
       }
 
@@ -312,18 +442,18 @@ const EmissionWidget = React.memo(
 
     const requiresNumericValidation = (unit) =>
       [
-        "Number of items",
-        "Number of flights",
-        "passengers",
-        "Number of vehicles",
-        "number of Nights",
+        'Number of items',
+        'Number of flights',
+        'passengers',
+        'Number of vehicles',
+        'number of Nights',
       ].includes(unit);
 
     const validateQuantity = (value, unit) => {
       if (requiresNumericValidation(unit) && !/^\d+$/.test(value)) {
-        return "This field must be a positive integer.";
+        return 'This field must be a positive integer.';
       }
-      return "";
+      return '';
     };
     const scopeMappings = {
       scope1: scope1Info,
@@ -335,7 +465,7 @@ const EmissionWidget = React.memo(
 
     const fetchBaseCategories = async () => {
       if (!scopeData) {
-        console.error("Invalid scope provided");
+        console.error('Invalid scope provided');
         return;
       }
       const categories = scopeData.flatMap((info) =>
@@ -378,7 +508,7 @@ const EmissionWidget = React.memo(
 
     const fetchActivities = useCallback(async () => {
       // Return early if no subcategory or we're already fetching
-      if (!subcategory || isFetchingRef.current || rowType === "calculated") {
+      if (!subcategory || isFetchingRef.current || rowType === 'calculated') {
         return;
       }
 
@@ -400,7 +530,7 @@ const EmissionWidget = React.memo(
         activitiesRef.current = result;
         setActivitiesLoaded(true);
       } catch (error) {
-        console.error("Error fetching activities:", error);
+        console.error('Error fetching activities:', error);
       } finally {
         setIsLoadingActivities(false);
         isFetchingRef.current = false;
@@ -483,86 +613,88 @@ const EmissionWidget = React.memo(
         const updatedValue = {
           ...value,
           Category: newCategory,
-          Subcategory: "",
-          Activity: "",
-          Quantity: "",
-          Unit: "",
+          Subcategory: '',
+          Activity: '',
+          // Remove these lines to preserve quantity and units:
+          // Quantity: "",
+          // Unit: "",
         };
         setCategory(newCategory);
         onChange(updatedValue);
         updateSelectedRowIfNeeded(updatedValue);
 
-        // Reset local state
-        setSubcategory("");
-        setActivity("");
-        setQuantity("");
-        setUnit("");
+        // Reset local state for category/subcategory/activity only
+        setSubcategory('');
+        setActivity('');
+        // Remove these lines to preserve quantity and units:
+        // setQuantity("");
+        // setUnit("");
       },
       [onChange, value, updateSelectedRowIfNeeded]
     );
 
+    // Fix for handleSubcategoryChange - Remove quantity and unit resets
     const handleSubcategoryChange = useCallback(
       (newSubcategory) => {
         const updatedValue = {
           ...value,
           Subcategory: newSubcategory,
-          Activity: "",
-          Quantity: "",
-          Unit: "",
+          Activity: '',
+          // Remove these lines to preserve quantity and units:
+          // Quantity: "",
+          // Unit: "",
         };
         onChange(updatedValue);
         updateSelectedRowIfNeeded(updatedValue);
 
-        setActivity("");
-        setQuantity("");
-        setUnit("");
+        setActivity('');
+        // Remove these lines to preserve quantity and units:
+        // setQuantity("");
+        // setUnit("");
       },
       [onChange, value, updateSelectedRowIfNeeded]
     );
 
+    // Fix for handleActivityChange - Remove quantity and unit resets
     const handleActivityChange = useCallback(
       (newActivity) => {
-        console.log("handleActivityChange called with:", newActivity);
+        console.log('handleActivityChange called with:', newActivity);
 
         // Find the selected activity object from our activities array
         const foundActivity = activities.find(
           (act) =>
-            // `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
-          `${act.name} - (${
-                            act.source
-                          }) - ${act.unit_type} - ${act.region} - ${
-                            act.year
-                          }${
-                            act.source_lca_activity !== "unknown"
-                              ? ` - ${act.source_lca_activity}`
-                              : ""
-                          }` === newActivity
+            `${act.name} - (${act.source}) - ${act.unit_type} - ${
+              act.region
+            } - ${act.year}${
+              act.source_lca_activity !== 'unknown'
+                ? ` - ${act.source_lca_activity}`
+                : ''
+            }` === newActivity
         );
 
-        console.log("Found activity:", foundActivity);
+        console.log('Found activity:', foundActivity);
 
         // First update local state to immediately show the selected activity
         setActivity(newActivity);
-        setActId(foundActivity ? foundActivity.id : "");
+        setActId(foundActivity ? foundActivity.id : '');
 
         // Then update the form data with all the relevant details
         const updatedValue = {
           ...value,
           Activity: newActivity,
-          activity_id: foundActivity ? foundActivity.activity_id : "",
-          act_id: foundActivity ? foundActivity.id : "",
-          unit_type: foundActivity ? foundActivity.unit_type : "",
-          factor: foundActivity ? foundActivity.factor : "",
+          activity_id: foundActivity ? foundActivity.activity_id : '',
+          act_id: foundActivity ? foundActivity.id : '',
+          unit_type: foundActivity ? foundActivity.unit_type : '',
+          factor: foundActivity ? foundActivity.factor : '',
           data_version: foundActivity
             ? foundActivity.data_version
-            : "{{DATA_VERSION}}",
-          Quantity: "",
-          Quantity2: "",
-          Unit: "",
-          Unit2: "",
+            : '{{DATA_VERSION}}',
+          // Remove these lines to preserve quantities and units:
+          // Quantity: "",
+          // Quantity2: "",
+          // Unit: "",
+          // Unit2: "",
         };
-
-        // setUnitType(foundActivity ? foundActivity.unit_type : "")
 
         // Update form state
         onChange(updatedValue);
@@ -570,18 +702,19 @@ const EmissionWidget = React.memo(
         // Update selected row if needed
         updateSelectedRowIfNeeded(updatedValue);
 
-        // Reset quantity and unit states
-        setQuantity("");
-        setQuantity2("");
-        setUnit("");
-        setUnit2("");
+        // Remove these lines to preserve quantity and unit states:
+        // setQuantity("");
+        // setQuantity2("");
+        // setUnit("");
+        // setUnit2("");
       },
       [activities, onChange, value, updateSelectedRowIfNeeded]
     );
-    // mobile version
+
+    // Mobile version fix - Remove quantity and unit resets
     const handleActivityChangemobile = useCallback(
       (newActivity) => {
-        console.log("handleActivityChange called with:", newActivity);
+        console.log('handleActivityChange called with:', newActivity);
 
         // Find the selected activity object from our activities array
         const foundActivity = activities.find(
@@ -589,7 +722,7 @@ const EmissionWidget = React.memo(
             `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
         );
 
-        console.log("Found activity:", foundActivity);
+        console.log('Found activity:', foundActivity);
 
         // First update local state to immediately show the selected activity
         setActivity(newActivity);
@@ -598,16 +731,17 @@ const EmissionWidget = React.memo(
         const updatedValue = {
           ...value,
           Activity: newActivity,
-          activity_id: foundActivity ? foundActivity.activity_id : "",
-          unit_type: foundActivity ? foundActivity.unit_type : "",
-          factor: foundActivity ? foundActivity.factor : "",
+          activity_id: foundActivity ? foundActivity.activity_id : '',
+          unit_type: foundActivity ? foundActivity.unit_type : '',
+          factor: foundActivity ? foundActivity.factor : '',
           data_version: foundActivity
             ? foundActivity.data_version
-            : "{{DATA_VERSION}}",
-          Quantity: "",
-          Quantity2: "",
-          Unit: "",
-          Unit2: "",
+            : '{{DATA_VERSION}}',
+          // Remove these lines to preserve quantities and units:
+          // Quantity: "",
+          // Quantity2: "",
+          // Unit: "",
+          // Unit2: "",
         };
 
         // Update form state
@@ -616,21 +750,22 @@ const EmissionWidget = React.memo(
         // Update selected row if needed
         updateSelectedRowIfNeeded(updatedValue);
 
-        // Reset quantity and unit states
-        setQuantity("");
-        setQuantity2("");
-        setUnit("");
-        setUnit2("");
+        // Remove these lines to preserve quantity and unit states:
+        // setQuantity("");
+        // setQuantity2("");
+        // setUnit("");
+        // setUnit2("");
       },
       [activities, onChange, value, updateSelectedRowIfNeeded]
     );
+
     // bug causing
     useEffect(() => {
       if (
         activities.length > 0 &&
         value.Activity &&
         !value.factor &&
-        rowType !== "assigned"
+        rowType !== 'assigned'
       ) {
         const foundActivity = activities.find(
           (act) =>
@@ -641,7 +776,7 @@ const EmissionWidget = React.memo(
         if (foundActivity) {
           const updatedValue = {
             ...value,
-            factor: foundActivity.factor || foundActivity.co2_factor || "0",
+            factor: foundActivity.factor || foundActivity.co2_factor || '0',
           };
           onChange(updatedValue);
         }
@@ -744,7 +879,7 @@ const EmissionWidget = React.memo(
           const error = validateQuantity(newQuantity, unit);
           setQuantityError(error);
           debouncedHandleQuantityChange(newQuantity);
-          toast.error("This field cannot have decimal value");
+          toast.error('This field cannot have decimal value');
         }
       }
     }, [unit, quantity]);
@@ -757,7 +892,7 @@ const EmissionWidget = React.memo(
           debouncedHandleQuantityChange(newQuantity);
           const error = validateQuantity(newQuantity2, unit2);
           setQuantity2Error(error);
-          toast.error("This field cannot have decimal value");
+          toast.error('This field cannot have decimal value');
         }
       }
     }, [unit2, quantity2]);
@@ -765,7 +900,7 @@ const EmissionWidget = React.memo(
     const toggleDropdown = useCallback(() => {
       setIsDropdownActive(!isDropdownActive);
       if (isDropdownActive) {
-        setActivitySearch("");
+        setActivitySearch('');
       }
     }, [isDropdownActive]);
 
@@ -778,28 +913,29 @@ const EmissionWidget = React.memo(
           !inputRef.current.contains(event.target)
         ) {
           setIsDropdownActive(false);
-          setActivitySearch("");
+          setActivitySearch('');
         }
       };
 
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
       return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener('mousedown', handleClickOutside);
       };
     }, []);
 
     //file uplod code///
-    const [fileName, setFileName] = useState(value.file?.name ?? "");
+    const [fileName, setFileName] = useState(value.file?.name ?? '');
     const [showModal, setShowModal] = useState(false);
-    const [previewData, setPreviewData] = useState(value.file?.url ?? "");
-    const [fileType, setFileType] = useState(value.file?.type ?? "");
+    const [previewData, setPreviewData] = useState(value.file?.url ?? '');
+    const [fileType, setFileType] = useState(value.file?.type ?? '');
     const [fileSize, setFileSize] = useState(value.file?.size ?? 0);
     const [uploadDateTime, setUploadDateTime] = useState(
-      value.file?.uploadDateTime ?? ""
+      value.file?.uploadDateTime ?? ''
     );
-    const [uploadedBy, setUploadedBy] = useState(value.file?.uploadedBy ?? "");
-    const [loggedInUserEmail, setLoggedInUserEmail] = useState("");
+    const [uploadedBy, setUploadedBy] = useState(value.file?.uploadedBy ?? '');
+    const [loggedInUserEmail, setLoggedInUserEmail] = useState('');
     const [selectSize, setSelectSize] = useState(9); // default to desktop size
+    const [isUploading, setIsUploading] = useState(false);
 
     useEffect(() => {
       const handleResize = () => {
@@ -812,69 +948,131 @@ const EmissionWidget = React.memo(
       };
 
       handleResize(); // set initial value
-      window.addEventListener("resize", handleResize);
+      window.addEventListener('resize', handleResize);
 
-      return () => window.removeEventListener("resize", handleResize);
+      return () => window.removeEventListener('resize', handleResize);
     }, []);
     useEffect(() => {
-      const storedEmail = localStorage.getItem("userEmail");
+      const storedEmail = localStorage.getItem('userEmail');
       if (storedEmail) {
         setLoggedInUserEmail(storedEmail);
       }
     });
 
     const uploadFileToAzure = async (file, newFileName) => {
-      const arrayBuffer = await file.arrayBuffer();
-      const blob = new Blob([arrayBuffer]);
-
+      // Validate environment variables
       const accountName = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT;
       const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER;
       const sasToken = process.env.NEXT_PUBLIC_AZURE_SAS_TOKEN;
 
-      const blobServiceClient = new BlobServiceClient(
-        `https://${accountName}.blob.core.windows.net?${sasToken}`
-      );
-
-      const containerClient =
-        blobServiceClient.getContainerClient(containerName);
-      const blobName = newFileName || file.name;
-      const blobClient = containerClient.getBlockBlobClient(blobName);
+      if (!accountName || !containerName || !sasToken) {
+        throw new Error('Azure storage configuration is missing. Please check environment variables.');
+      }
 
       try {
+        const arrayBuffer = await file.arrayBuffer();
+        const blob = new Blob([arrayBuffer]);
+
+        const blobServiceClient = new BlobServiceClient(
+          `https://${accountName}.blob.core.windows.net?${sasToken}`
+        );
+
+        const containerClient = blobServiceClient.getContainerClient(containerName);
+        
+        // Generate unique filename to avoid conflicts
+        const timestamp = Date.now();
+        const fileExtension = newFileName.split('.').pop();
+        const baseName = newFileName.replace(/\.[^/.]+$/, '');
+        const blobName = `${baseName}_${timestamp}.${fileExtension}`;
+        
+        const blobClient = containerClient.getBlockBlobClient(blobName);
+
         const uploadOptions = {
           blobHTTPHeaders: {
             blobContentType: file.type,
           },
+          metadata: {
+            originalName: newFileName,
+            uploadedAt: new Date().toISOString(),
+            fileSize: file.size.toString(),
+          },
         };
 
+        console.log('Starting upload to Azure:', { blobName, fileSize: file.size });
+        
         await blobClient.uploadData(blob, uploadOptions);
+        
         const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
+        console.log('Upload completed successfully:', url);
+        
         return url;
       } catch (error) {
-        LoginlogDetails("Failed", "Deleted");
-        console.error("Error uploading file:", error.message);
-        return null;
+        console.error('Error uploading file to Azure:', error);
+        
+        // Provide more specific error messages
+        if (error.statusCode === 403) {
+          throw new Error('Permission denied. Please check your Azure storage permissions.');
+        } else if (error.statusCode === 404) {
+          throw new Error('Azure storage container not found.');
+        } else if (error.code === 'NetworkError' || error.message.includes('network')) {
+          throw new Error('Network error. Please check your internet connection and try again.');
+        } else if (error.message.includes('SAS')) {
+          throw new Error('Invalid Azure storage access token. Please contact administrator.');
+        } else {
+          throw new Error(`Upload failed: ${error.message || 'Unknown error occurred'}`);
+        }
       }
     };
 
     const handleChange = async (event) => {
       const selectedFile = event.target.files[0];
 
-      if (selectedFile) {
-        const newFileName = selectedFile.name;
-        const fileType = selectedFile.type;
-        const fileSize = selectedFile.size;
-        const uploadDateTime = new Date().toLocaleString();
+      if (!selectedFile) {
+        return;
+      }
 
-        console.log("Selected file details:", {
-          newFileName,
-          fileType,
-          fileSize,
-          uploadDateTime,
-        });
+      // File validation
+      const maxFileSize = 5 * 1024 * 1024; // 5MB
+      const allowedTypes = [
+        'application/pdf',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/vnd.ms-excel',
+        'image/jpeg',
+        'image/jpg',
+        'image/png',
+        'image/gif'
+      ];
 
-        setFileName(newFileName); // Set the file name
+      if (selectedFile.size > maxFileSize) {
+        toast.error('File size must be less than 5MB');
+        event.target.value = ''; // Clear the input
+        return;
+      }
 
+      if (!allowedTypes.includes(selectedFile.type)) {
+        toast.error('Please upload only PDF, Excel, or image files');
+        event.target.value = ''; // Clear the input
+        return;
+      }
+
+      const newFileName = selectedFile.name;
+      const fileType = selectedFile.type;
+      const fileSize = selectedFile.size;
+      const uploadDateTime = new Date().toLocaleString();
+
+      console.log('Selected file details:', {
+        newFileName,
+        fileType,
+        fileSize,
+        uploadDateTime,
+      });
+
+      // Set file name and show loading state
+      setFileName(newFileName);
+      setIsUploading(true);
+      toast.info('Uploading file...');
+
+      try {
         const uploadUrl = await uploadFileToAzure(selectedFile, newFileName);
 
         if (uploadUrl) {
@@ -898,11 +1096,16 @@ const EmissionWidget = React.memo(
             },
           });
           setFileType(fileType);
+          setFileSize(fileSize);
+          setUploadDateTime(uploadDateTime);
+          setUploadedBy(loggedInUserEmail);
+
+          toast.success('File uploaded successfully!');
 
           setTimeout(() => {
             LoginlogDetails(
-              "Success",
-              "Uploaded",
+              'Success',
+              'Uploaded',
               value.Category,
               value.Subcategory,
               value.Activity,
@@ -911,10 +1114,29 @@ const EmissionWidget = React.memo(
             );
           }, 500);
 
-          console.log("File uploaded successfully:", uploadUrl);
+          console.log('File uploaded successfully:', uploadUrl);
         } else {
-          console.error("File upload failed");
+          throw new Error('Upload failed - no URL returned');
         }
+      } catch (error) {
+        console.error('File upload error:', error);
+        toast.error(`File upload failed: ${error.message}`);
+        setFileName(''); // Reset file name on failure
+        event.target.value = ''; // Clear the input
+        
+        setTimeout(() => {
+          LoginlogDetails(
+            'Failed', 
+            'Upload Failed',
+            value.Category,
+            value.Subcategory,
+            value.Activity,
+            newFileName,
+            fileType
+          );
+        }, 500);
+      } finally {
+        setIsUploading(false); // Always reset loading state
       }
     };
 
@@ -929,28 +1151,28 @@ const EmissionWidget = React.memo(
     const handleDelete = () => {
       try {
         const resetValue = {
-          type: "file",
-          value: "",
-          name: "",
-          url: "",
-          type: "",
-          size: "",
-          uploadDateTime: "",
+          type: 'file',
+          value: '',
+          name: '',
+          url: '',
+          type: '',
+          size: '',
+          uploadDateTime: '',
         };
 
-        setFileName("");
+        setFileName('');
         setPreviewData(null);
         onChange(resetValue);
         setShowModal(false);
 
         setTimeout(() => {
-          LoginlogDetails("Success", "Deleted");
+          LoginlogDetails('Success', 'Deleted');
         }, 500);
       } catch (error) {
-        console.error("Error deleting file:", error.message);
+        console.error('Error deleting file:', error.message);
         // Call LoginlogDetails with a "Failed" status for deletion
         setTimeout(() => {
-          LoginlogDetails("Failed", "Deleted");
+          LoginlogDetails('Failed', 'Deleted');
         }, 500);
       }
     };
@@ -977,9 +1199,34 @@ const EmissionWidget = React.memo(
       );
     };
 
+    // Add this useEffect after the existing one that sets units and units2
+    useEffect(() => {
+      // Check if tempUnit is still valid in the new units array
+      if (tempUnit && units.length > 0 && !units.includes(tempUnit)) {
+        setTempUnit(null);
+        setUnit(''); // Also reset the actual unit value
+        // Update the form data
+        onChange({
+          ...value,
+          Unit: '',
+        });
+      }
+
+      // Check if tempUnit2 is still valid in the new units2 array
+      if (tempUnit2 && units2.length > 0 && !units2.includes(tempUnit2)) {
+        setTempUnit2(null);
+        setUnit2(''); // Also reset the actual unit2 value
+        // Update the form data
+        onChange({
+          ...value,
+          Unit2: '',
+        });
+      }
+    }, [units, units2, tempUnit, tempUnit2]);
+
     const handleSelectAll = (event) => {
       const isChecked = event.target.checked;
-      console.log("Select all isChecked:", isChecked, scope);
+      console.log('Select all isChecked:', isChecked, scope);
 
       dispatch(toggleSelectAll({ scope, isChecked }));
     };
@@ -987,11 +1234,11 @@ const EmissionWidget = React.memo(
     useEffect(() => {
       if (
         value.assigned_to &&
-        value.assigned_to !== "" &&
-        rowType === "default" &&
-        !["calculated", "approved"].includes(rowType) // Add this check
+        value.assigned_to !== '' &&
+        rowType === 'default' &&
+        !['calculated', 'approved'].includes(rowType) // Add this check
       ) {
-        setRowType("assigned");
+        setRowType('assigned');
       }
     }, [value.assigned_to]);
 
@@ -1006,12 +1253,12 @@ const EmissionWidget = React.memo(
 
     // Updated getActivityPlaceholder function to work with existing fetchActivities
     const getActivityPlaceholder = useCallback(() => {
-      if (rowType === "calculated") {
+      if (rowType === 'calculated') {
         return activity;
-      } else if (rowType !== "calculated" && activity) {
+      } else if (rowType !== 'calculated' && activity) {
         return activity;
       } else if (isLoadingActivities || isFetchingRef.current) {
-        return "Fetching activities...";
+        return 'Fetching activities...';
       } else if (
         activitiesRef.current.length === 0 &&
         subcategory &&
@@ -1021,11 +1268,11 @@ const EmissionWidget = React.memo(
         // 1. We have no activities
         // 2. A subcategory is selected
         // 3. We've already attempted to load activities (activitiesLoaded is true)
-        return "No relevant activities found";
+        return 'No relevant activities found';
       } else if (activitiesRef.current.length > 0 && !activity) {
-        return "Select Activity";
+        return 'Select Activity';
       } else {
-        return "Select Activity";
+        return 'Select Activity';
       }
     }, [isLoadingActivities]);
 
@@ -1141,50 +1388,47 @@ const EmissionWidget = React.memo(
 
     const renderFirstColumn = () => {
       switch (rowType) {
-        case "calculated":
+        case 'calculated':
           return (
-            <td className="py-2 text-center w-[1vw]">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500 xl:mx-auto md:mx-auto 2xl:mx-auto lg:mx-auto 3xl:mx-auto 4k:mx-auto 2k:mx-auto mx-2"></div>
+            <td className='py-2 text-center w-8'>
+              <div className='w-1.5 h-1.5 rounded-full bg-green-500 mx-auto'></div>
             </td>
           );
-        case "assigned":
+        case 'assigned':
           return (
-            <td className="py-2 text-center w-[1vw]">
-              <div className="w-1.5 h-1.5 rounded-full bg-gray-500 mx-auto"></div>
+            <td className='py-2 text-center w-8'>
+              <div className='w-1.5 h-1.5 rounded-full bg-gray-500 mx-auto'></div>
             </td>
           );
-        case "approved":
+        case 'approved':
           return (
-            <td className="py-2 text-center w-[1vw]">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#FFA701] mx-auto"></div>
+            <td className='py-2 text-center w-8'>
+              <div className='w-1.5 h-1.5 rounded-full bg-[#FFA701] mx-auto'></div>
             </td>
           );
         default:
           return (
-            <td className="py-2 text-center w-[1vw]">
-              <input
-                type="checkbox"
-                checked={isSelected}
-                onChange={handleRowSelection}
-                className="w-4 h-4 mt-2 border-gray-600 green-checkbox"
-              />
+            <td className='py-2 text-center w-8'>
+              <div className='flex justify-center items-center h-full'>
+                <input
+                  type='checkbox'
+                  checked={isSelected}
+                  onChange={handleRowSelection}
+                  className='w-4 h-4 border-gray-600 green-checkbox'
+                />
+              </div>
             </td>
           );
       }
     };
 
     return (
-      <div
-        className={`w-full ${
-          !id.startsWith("root_0") &&
-          "xl:ml-1 md:ml-1 lg:ml-1 3xl:ml-1 4k:ml-1 2k:ml-1 ml-0"
-        }`}
-      >
-        {id.startsWith("root_0") && (
-          <div className="mb-2">
+      <div className={`w-full ${!id.startsWith('root_0') && ''}`}>
+        {id.startsWith('root_0') && (
+          <div className='mb-2'>
             <button
-              type="button"
-              className=" border text-[12px] py-1.5 px-3 rounded-md text-[#007eef] font-semibold leading-tight border-[#007eef] disabled:text-slate-300 disabled:border-slate-300 cursor-pointer"
+              type='button'
+              className=' border text-[12px] py-1.5 px-3 rounded-md text-[#007eef] font-semibold leading-tight border-[#007eef] disabled:text-slate-300 disabled:border-slate-300 cursor-pointer'
               disabled={!selectedRows?.length}
               onClick={handleMultipleAssignClick}
             >
@@ -1193,791 +1437,715 @@ const EmissionWidget = React.memo(
           </div>
         )}
 
-        <table
-          className={`min-w-full w-full ${
-            scopeErrors["Category"] ||
-            scopeErrors["Subcategory"] ||
-            scopeErrors["Activity"] ||
-            scopeErrors["Quantity"] ||
-            scopeErrors["Unit"]
-              ? "mb-2"
-              : ""
-          }`}
-        >
-          {id.startsWith("root_0") && (
-            <thead className="bg-gray-50">
+        <div className='overflow-x-auto scrollable-content'>
+          <table
+            className={`w-full table-fixed min-w-[800px] ${
+              scopeErrors['Category'] ||
+              scopeErrors['Subcategory'] ||
+              scopeErrors['Activity'] ||
+              scopeErrors['Quantity'] ||
+              scopeErrors['Unit']
+                ? 'mb-2'
+                : ''
+            }`}
+          >
+          {id.startsWith('root_0') && (
+            <thead className='bg-gray-50'>
               <tr>
-                <th className="h-[44px] border-b border-gray-300">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 mt-2 green-checkbox-minus"
-                    checked={selectAll}
-                    onChange={handleSelectAll}
-                  />
+                <th className='h-[44px] w-8 border-b border-gray-300 px-0.5'>
+                  <div className='flex justify-center items-center h-full'>
+                    <input
+                      type='checkbox'
+                      className='w-4 h-4 green-checkbox-minus'
+                      checked={selectAll}
+                      onChange={handleSelectAll}
+                    />
+                  </div>
                 </th>
-                <th className=" h-[44px] pl-2 border-b border-gray-300 text-[12px] text-left text-[#667085]">
-                  Category
+                <th className='h-[44px] w-[18%] border-b border-gray-300 text-[12px] text-left text-[#667085] pl-1 pr-0.5'>
+                  <div className='flex items-center h-full'>Category</div>
                 </th>
-                <th className=" h-[44px]  border-b border-gray-300 text-[12px] text-left text-[#667085]">
-                  Sub-Category
+                <th className='h-[44px] w-[18%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-0.5'>
+                  <div className='flex items-center h-full'>Sub-Category</div>
                 </th>
-                <th className=" h-[44px]  border-b border-gray-300 text-[12px] text-left text-[#667085]">
-                  Activity
+                <th className='h-[44px] w-[18%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-0.5'>
+                  <div className='flex items-center h-full'>Activity</div>
                 </th>
-                <th className="h-[44px]  border-b border-gray-300 text-[12px] text-right text-[#667085]">
-                  Quantity
+                <th className='h-[44px] w-[31%] border-b border-gray-300 text-[12px] text-right text-[#667085] px-0.5'>
+                  <div className='flex items-center justify-end h-full'>
+                    Quantity
+                  </div>
                 </th>
-                <th className=" h-[44px]  border-b border-gray-300 text-[12px] text-center text-[#667085]">
-                  Assignee
+                <th className='h-[44px] w-[10%] border-b border-gray-300 text-[12px] text-center text-[#667085] px-1'>
+                  <div className='flex items-center justify-center h-full'>
+                    Assignee
+                  </div>
                 </th>
-                <th className=" h-[44px]  border-b border-gray-300 text-[12px] text-left text-[#667085]">
-                  Actions
+                <th className='h-[44px] w-[5%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-1'>
+                  <div className='flex items-center h-full'>Actions</div>
                 </th>
               </tr>
             </thead>
           )}
-          <tbody className="bg-white">
+          <tbody className='bg-white'>
             <tr className={`border-b border-gray-200`}>
               {/* Checkbox */}
               {renderFirstColumn()}
 
               {/* Category Dropdown */}
               <td
-                className={`py-2 px-1 pl-2 w-[25vw] xl:w-[15vw] lg:w-[15vw] 2xl:w-[15vw] 4k:w-[15vw] 2k:w-[15vw] md:w-[15vw] relative ${
-                  scopeErrors["Category"] ? "" : ""
+                className={`w-[18%] py-2 pl-1 pr-1 relative ${
+                  scopeErrors['Category'] ? '' : ''
                 }`}
               >
-                <select
-                  value={category}
-                  onChange={(e) => handleCategoryChange(e.target.value)}
-                  className={getFieldClass(
-                    "Category",
-                    `text-[12px] focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full  py-1 ${
-                      category && rowType === "default"
-                        ? "border-b border-zinc-800"
-                        : ""
-                    }`
-                  )}
-                  disabled={["assigned", "calculated", "approved"].includes(
-                    rowType
-                  )}
-                >
-                  <option className={getPlaceholderClass("Category")}>
-                    Select Category
-                  </option>
-                  {baseCategories.map((categoryName, index) => (
-                    <option key={index} value={categoryName}>
-                      {categoryName}
+                <div className='flex items-center h-full'>
+                  <select
+                    value={category}
+                    onChange={(e) => handleCategoryChange(e.target.value)}
+                    className={getFieldClass(
+                      'Category',
+                      `text-[12px] focus:outline-none w-full py-1 ${
+                        category && rowType === 'default'
+                          ? 'border-b border-zinc-800'
+                          : ''
+                      }`
+                    )}
+                    disabled={['assigned', 'calculated', 'approved'].includes(
+                      rowType
+                    )}
+                  >
+                    <option className={getPlaceholderClass('Category')}>
+                      Select Category
                     </option>
-                  ))}
-                </select>
-                {scopeErrors["Category"] && (
-                  <div className="text-[12px] text-red-500 absolute left-3 -bottom-[18px]">
-                    {getErrorMessage("Category")}
+                    {baseCategories.map((categoryName, index) => (
+                      <option key={index} value={categoryName}>
+                        {categoryName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {scopeErrors['Category'] && (
+                  <div className='text-[12px] text-red-500 absolute left-3 -bottom-[18px]'>
+                    {getErrorMessage('Category')}
                   </div>
                 )}
               </td>
 
               {/* Sub-Category Dropdown */}
-              <td className="py-2 px-1 w-[25vw] xl:w-[15vw] lg:w-[15vw] 2xl:w-[15vw] 4k:w-[15vw] 2k:w-[15vw] md:w-[15vw] relative">
-                <select
-                  value={subcategory}
-                  onChange={(e) => handleSubcategoryChange(e.target.value)}
-                  className={getFieldClass(
-                    "Subcategory",
-                    `text-[12px] focus:outline-none w-[57vw] xl:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full md:w-full py-1 ${
-                      subcategory && rowType === "default"
-                        ? "border-b border-zinc-800"
-                        : ""
-                    }`
-                  )}
-                  disabled={["assigned", "calculated", "approved"].includes(
-                    rowType
-                  )}
-                >
-                  <option className="emissionscopc">Select Sub-Category</option>
-                  {subcategories.map((sub, index) => (
-                    <option key={index} value={sub}>
-                      {sub}
+              <td className='w-[18%] py-2 px-0.5 relative'>
+                <div className='flex items-center h-full'>
+                  <select
+                    value={subcategory}
+                    onChange={(e) => handleSubcategoryChange(e.target.value)}
+                    className={getFieldClass(
+                      'Subcategory',
+                      `text-[12px] focus:outline-none w-full py-1 ${
+                        subcategory && rowType === 'default'
+                          ? 'border-b border-zinc-800'
+                          : ''
+                      }`
+                    )}
+                    disabled={['assigned', 'calculated', 'approved'].includes(
+                      rowType
+                    )}
+                  >
+                    <option className='emissionscopc'>
+                      Select Sub-Category
                     </option>
-                  ))}
-                </select>
-                {scopeErrors["Subcategory"] && (
-                  <div className="text-[12px] text-red-500 absolute left-2 -bottom-[18px]">
-                    {getErrorMessage("Subcategory")}
+                    {subcategories.map((sub, index) => (
+                      <option key={index} value={sub}>
+                        {sub}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {scopeErrors['Subcategory'] && (
+                  <div className='text-[12px] text-red-500 absolute left-2 -bottom-[18px]'>
+                    {getErrorMessage('Subcategory')}
                   </div>
                 )}
               </td>
 
               {/* Activity Dropdown */}
-              <td className="py-2  w-[55vw] xl:w-[15vw] lg:w-[15vw] 2xl:w-[15vw] 4k:w-[15vw] 2k:w-[15vw] md:w-[15vw]">
-                <div
-                  className={`relative ${
-                    activity &&
-                    activity !== "No relevant activities found" &&
-                    rowType === "default"
-                      ? "border-b border-zinc-800"
-                      : ""
-                  }`}
-                >
+              <td className='w-[18%] py-2 px-0.5'>
+                <div className='relative'>
                   <input
                     ref={inputRef}
-                    type="text"
-                    title={value.Activity?value.Activity:''}
+                    type='text'
+                    title={value.Activity ? value.Activity : ''}
                     placeholder={getActivityPlaceholder()}
                     value={activitySearch}
                     onChange={handleSearchChange}
-                    onFocus={() => {
-                      if (isMobile) {
-                        setIsActivityModalOpen(true);
-                      } else {
-                        toggleDropdown();
-                      }
-                    }}
+                    onFocus={() => setIsDropdownActive(true)}
                     className={getFieldClass(
-                      "Activity",
-                      "text-[12px] focus:outline-none xl:w-full md:w-full lg:w-full 2xl:w-full 4k:w-full 2k:w-full 3xl:w-full w-[55vw] py-1"
+                      'Activity',
+                      'text-[12px] focus:outline-none w-full py-1'
                     )}
-                    disabled={["assigned", "calculated", "approved"].includes(
+                    disabled={['assigned', 'calculated', 'approved'].includes(
                       value.rowType
                     )}
                   />
-                  {scopeErrors["Activity"] && (
-                    <div className="text-[12px] text-red-500  xl:absolute md:absolute lg:absolute 2xl:absolute 4k:absolute 2k:absolute relative left-0 -bottom-[28px]">
-                      {getErrorMessage("Activity")}
+                  {scopeErrors['Activity'] && (
+                    <div className='text-[12px] text-red-500 absolute left-0 -bottom-[28px]'>
+                      {getErrorMessage('Activity')}
                     </div>
                   )}
-                  {isDropdownActive && (
-                    <div
-                      ref={dropdownRef}
-                      className="absolute left-0 top-8 z-[100] w-full bg-white rounded-lg border border-gray-300 shadow-lg max-h-64 overflow-y-auto min-w-[210px] xl:min-w-[810px] md:min-w-[810px] lg:min-w-[810px] 2xl:min-w-[810px] 4k:min-w-[810px] 2k:min-w-[810px] 3xl:min-w-[810px] mb-6"
-                      onScroll={handleDropdownScroll}
-                    >
+                  {/* --------- Use Portal for Activity Dropdown -------- */}
+                  <ActivityDropdownPortal
+                    anchorRef={inputRef}
+                    isOpen={isDropdownActive}
+                    onClose={() => setIsDropdownActive(false)}
+                    minWidth={210}
+                    maxWidth={810}
+                    scope={scope}
+                  >
+                    <div>
                       <div
-                        className="p-2 border-b cursor-pointer hover:bg-gray-100"
+                        className='p-2 border-b cursor-pointer hover:bg-gray-100'
                         onClick={() => {
-                          setActivity("");
-                          toggleDropdown();
-                          setActivitySearch("");
+                          setActivity('');
+                          setIsDropdownActive(false);
+                          setActivitySearch('');
                         }}
                       >
-                        <span className="text-[12px]">
-                          {rowType === "calculated"
+                        <span className='text-[12px]'>
+                          {rowType === 'calculated'
                             ? activity
-                            : "Select Activity"}
+                            : 'Select Activity'}
                         </span>
                       </div>
 
                       {isLoadingActivities ? (
-                        <div className="p-2 text-center text-[12px] text-gray-500">
+                        <div className='p-2 text-center text-[12px] text-gray-500'>
                           Loading activities...
                         </div>
                       ) : visibleActivities.length === 0 ? (
-                        <div className="p-2 text-center text-[12px] text-gray-500">
+                        <div className='p-2 text-center text-[12px] text-gray-500'>
                           No matching activities found
                         </div>
                       ) : (
-                        // Map from visibleActivities
-                        visibleActivities.map((item, index) => {
-                          const displayText = `${item.name} - (${
-                            item.source
-                          }) - ${item.unit_type} - ${item.region} - ${
-                            item.year
-                          }${
-                            item.source_lca_activity !== "unknown"
-                              ? ` - ${item.source_lca_activity}`
-                              : ""
-                          }`;
-
-                          // For the dropdown selection value
-                          const value = `${item.name} - (${item.source}) - ${item.unit_type}`;
-
-                          // Check if this item's ID matches the currently selected activity's ID
-                          const isSelected = item.id === act_id;
-                          console.log(
-                            "isSelected:, item id, act_id",
-                            isSelected,
-                            item.id,
-                            act_id
-                          );
-
-                          return (
-                            <div
-                              key={item.id || item.activity_id || index}
-                              className={`p-2 cursor-pointer text-[12px] truncate ${
-                                isSelected
-                                  ? "bg-blue-100 font-medium"
-                                  : "hover:bg-gray-100"
-                              }`}
-                              onClick={() => {
-                                handleActivityChange(displayText);
-                                toggleDropdown();
-                                setActivitySearch("");
-                              }}
-                            >
-                              {displayText}
-                            </div>
-                          );
-                        })
-                      )}
-
-                      {hasMore && (
-                        <div className="p-2 text-center text-[12px] text-gray-500 border-t">
-                          Scroll down to load more...
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {/* mobile version */}
-                  {isActivityModalOpen && isMobile && (
-                    <div className="fixed inset-0 z-50 bg-white overflow-y-auto px-4 py-6">
-                      <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-lg font-semibold">
-                          Select Activity
-                        </h2>
-                        <button onClick={() => setIsActivityModalOpen(false)}>
-                          <MdClose size={24} />
-                        </button>
-                      </div>
-
-                      <input
-                        type="text"
-                        title={value.Activity?value.Activity:''}
-                        value={activitySearch}
-                        onChange={handleSearchChange}
-                        placeholder="Search activities..."
-                        className="w-full border rounded px-2 py-1 mb-4"
-                      />
-
-                      <div
-                        className="max-h-[80vh] overflow-y-auto border rounded"
-                        onScroll={handleDropdownScroll}
-                      >
-                        {isLoadingActivities ? (
-                          <p className="text-sm text-gray-500 text-center py-4">
-                            Loading...
-                          </p>
-                        ) : filteredActivities.length === 0 ? (
-                          <p className="text-sm text-gray-500 text-center py-4">
-                            No matching activities
-                          </p>
-                        ) : (
-                          visibleActivities.map((item, index) => {
-                            // const displayText = `${item.name} - (${item.source}) - ${item.unit_type}`;
+                        <div
+                          className='max-h-[300px] overflow-y-auto'
+                          onScroll={handleDropdownScroll}
+                        >
+                          {visibleActivities.map((item, index) => {
                             const displayText = `${item.name} - (${
                               item.source
                             }) - ${item.unit_type} - ${item.region} - ${
                               item.year
                             }${
-                              item.source_lca_activity !== "unknown"
+                              item.source_lca_activity !== 'unknown'
                                 ? ` - ${item.source_lca_activity}`
-                                : ""
+                                : ''
                             }`;
-                            const value = `${item.name} - (${item.source}) - ${item.unit_type}`;
+
+                            // Check if this item is currently selected
+                            const isSelected = activity === displayText;
+
                             return (
                               <div
-                                key={item.id || index}
-                                className="p-2 border-b text-sm hover:bg-gray-100 cursor-pointer"
+                                key={item.id || item.activity_id || index}
+                                className={`p-2 cursor-pointer text-[12px] truncate ${
+                                  isSelected
+                                    ? 'bg-blue-500 text-white' // Blue background for selected item
+                                    : 'hover:bg-gray-100' // Gray hover for non-selected items
+                                }`}
                                 onClick={() => {
-                                  handleActivityChange(value);
-                                  setIsActivityModalOpen(false);
-                                  setActivitySearch("");
+                                  handleActivityChange(displayText);
+                                  setIsDropdownActive(false);
+                                  setActivitySearch('');
                                 }}
                               >
                                 {displayText}
                               </div>
                             );
-                          })
-                        )}
-                      </div>
+                          })}
 
-                      {hasMore && (
-                        <p className="text-center text-xs text-gray-400 mt-4">
-                          Scroll to load more...
-                        </p>
+                          {hasMore && (
+                            <div className='p-2 text-center text-[12px] text-gray-500 border-t'>
+                              Scroll down to load more...
+                            </div>
+                          )}
+                        </div>
                       )}
                     </div>
-                  )}
+                  </ActivityDropdownPortal>
+                  {/* --------- End Portal -------- */}
                 </div>
               </td>
 
               {/* Quantity Input */}
-              <td className="w-[35vw] xl:w-[24vw] lg:w-[24vw] 2xl:w-[24vw] 4k:w-[24vw] 2k:w-[24vw] md:w-[24vw]">
-                {" "}
-                {/* Set a fixed width for the parent container */}
-                <div className="grid grid-flow-col-dense">
-                  {unit_type.includes("Over") ? (
-                    <>
-                      <div className="flex justify-end relative w-full">
-                        {" "}
-                        {/* Ensure the flex container takes full width */}
+              <td className='w-[31%] py-2 px-0.5'>
+                <div className='flex items-center justify-end h-full'>
+                  <div className='w-full flex justify-end'>
+                    {unit_type.includes('Over') ? (
+                      // Two quantity/unit pairs - side by side with more space
+                      <div className='flex justify-end items-center gap-1 w-full'>
+                        <div className='flex items-center gap-1'>
+                          <input
+                            ref={quantity1Ref}
+                            type='number'
+                            value={quantity}
+                            onChange={handleQuantityChange}
+                            onFocus={() => handleFocus('quantity1')}
+                            onBlur={handleBlur}
+                            step='1'
+                            min='0'
+                            placeholder={
+                              scopeErrors['Quantity'] ? 'Value *' : 'Value'
+                            }
+                            className={getFieldClass(
+                              'Quantity',
+                              'text-[12px] focus:outline-none w-16 text-right px-1 focus:border-b focus:border-blue-300'
+                            )}
+                            disabled={['assigned', 'approved'].includes(
+                              value.rowType
+                            )}
+                          />
+                          <select
+                            value={unit}
+                            onChange={(e) => handleUnitChange(e.target.value)}
+                            className={`text-[12px] w-8 pl-1 pr-0 text-center rounded-md py-1 shadow ${
+                              unit
+                                ? 'bg-white text-blue-500 '
+                                : 'bg-blue-500 text-white hover:bg-blue-600'
+                            }`}
+                            disabled={['assigned', 'approved'].includes(
+                              rowType
+                            )}
+                          >
+                            <option value=''>{tempUnit || 'Unit'}</option>
+                            {units.map((unit, index) => (
+                              <option key={index} value={unit}>
+                                {unit}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className='flex items-center gap-1'>
+                          <input
+                            ref={quantity2Ref}
+                            type='number'
+                            value={quantity2}
+                            onChange={handleQuantity2Change}
+                            onFocus={() => handleFocus('quantity2')}
+                            onBlur={handleBlur}
+                            placeholder='Value'
+                            className={getFieldClass(
+                              'Quantity2',
+                              'text-[12px] focus:outline-none w-16 text-right px-1 focus:border-b focus:border-blue-300'
+                            )}
+                            step='1'
+                            min='0'
+                            disabled={['assigned', 'approved'].includes(
+                              rowType
+                            )}
+                          />
+                          <select
+                            value={unit2}
+                            onChange={(e) => handleUnit2Change(e.target.value)}
+                            className={`text-[12px] w-8 pl-1 pr-0 text-center rounded-md py-1 shadow ${
+                              unit2
+                                ? 'bg-white text-blue-500 '
+                                : 'bg-blue-500 text-white hover:bg-blue-600'
+                            }`}
+                            disabled={['assigned', 'approved'].includes(
+                              rowType
+                            )}
+                          >
+                            <option value=''>{tempUnit2 || 'Unit'}</option>
+                            {units2.map((unit, index) => (
+                              <option key={index} value={unit}>
+                                {unit}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    ) : (
+                      // Single quantity/unit pair - centered in extra space
+                      <div className='flex justify-end items-center gap-1'>
                         <input
                           ref={quantity1Ref}
-                          type="number"
+                          type='number'
                           value={quantity}
                           onChange={handleQuantityChange}
-                          onFocus={() => handleFocus("quantity1")}
+                          onFocus={() => handleFocus('quantity1')}
                           onBlur={handleBlur}
-                          step="1"
-                          min="0"
-                          placeholder={
-                            scopeErrors["Quantity"]
-                              ? "Enter Value *"
-                              : "Enter Value"
-                          }
+                          step='1'
+                          min='0'
+                          placeholder='Enter Value'
                           className={getFieldClass(
-                            "Quantity",
-                            "text-[12px] focus:outline-none w-[15.5vw] xl:w-[5vw] lg:w-[5vw] 2xl:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] md:w-[5vw]  text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
+                            'Quantity',
+                            'text-[12px] focus:outline-none w-20 text-right px-1 focus:border-b focus:border-blue-300'
                           )}
-                          disabled={["assigned", "approved"].includes(
+                          disabled={['assigned', 'approved'].includes(
                             value.rowType
                           )}
-                          style={{
-                            "::placeholder": {
-                              color: scopeErrors["Quantity"]
-                                ? "#EF4444"
-                                : "inherit",
-                            },
-                          }}
                         />
-                        {scopeErrors["Quantity"] && (
-                          <div className="text-[12px] text-red-500 absolute left-[2rem] -bottom-6">
-                            {getErrorMessage("Quantity")}
-                          </div>
-                        )}
                         <select
                           value={unit}
                           onChange={(e) => handleUnitChange(e.target.value)}
-                          className={`text-[12px] w-[100px] text-center rounded-md py-1 shadow ${
+                          className={`text-[12px] w-14 pl-1 pr-0 text-center rounded-md py-1 shadow ${
                             unit
-                              ? "bg-white text-blue-500 "
-                              : "bg-blue-500 text-white hover:bg-blue-600"
+                              ? 'bg-white text-blue-500 '
+                              : 'bg-blue-500 text-white hover:bg-blue-600'
                           }`}
-                          disabled={["assigned", "approved"].includes(rowType)}
+                          disabled={['assigned', 'approved'].includes(rowType)}
                         >
-                          <option value="">Unit</option>
+                          <option value=''>{tempUnit || 'Unit'}</option>
                           {units.map((unit, index) => (
                             <option key={index} value={unit}>
                               {unit}
                             </option>
                           ))}
                         </select>
-                        {scopeErrors["Unit"] && (
-                          <div className="text-[12px] text-red-500 absolute right-1 -bottom-6">
-                            {getErrorMessage("Unit")}
-                          </div>
-                        )}
                       </div>
-                      <div className="flex justify-end relative w-full">
-                        {" "}
-                        {/* Ensure the flex container takes full width */}
-                        <input
-                          ref={quantity2Ref}
-                          type="number"
-                          value={quantity2}
-                          onChange={handleQuantity2Change}
-                          onFocus={() => handleFocus("quantity2")}
-                          onBlur={handleBlur}
-                          placeholder="Enter Value"
-                          className={getFieldClass(
-                            "Quantity2",
-                            "text-[12px] focus:outline-none  w-[15.5vw] xl:w-[5vw] lg:w-[5vw] 2xl:w-[5vw] 4k:w-[5vw] 2k:w-[5vw] md:w-[5vw]  text-right pe-1 focus:border-b focus:border-blue-300" // Adjust input width
-                          )}
-                          step="1"
-                          min="0"
-                          disabled={["assigned", "approved"].includes(rowType)}
-                          style={{
-                            "::placeholder": {
-                              color: scopeErrors["Quantity"]
-                                ? "#EF4444"
-                                : "inherit",
-                            },
-                          }}
-                        />
-                        {scopeErrors["Quantity2"] && (
-                          <div className="text-[12px] text-red-500 absolute left-[2rem] -bottom-6">
-                            {getErrorMessage("Quantity2")}
-                          </div>
-                        )}
-                        <select
-                          value={unit2}
-                          onChange={(e) => handleUnit2Change(e.target.value)}
-                          className={` text-[12px] w-[100px] text-center rounded-md py-1 shadow ${
-                            unit2
-                              ? "bg-white text-blue-500 "
-                              : "bg-blue-500 text-white hover:bg-blue-600"
-                          }`}
-                          disabled={["assigned", "approved"].includes(rowType)}
-                        >
-                          <option value="">Unit</option>
-                          {units2.map((unit, index) => (
-                            <option key={index} value={unit}>
-                              {unit}
-                            </option>
-                          ))}
-                        </select>
-                        {scopeErrors["Unit2"] && (
-                          <div className="text-[12px] text-red-500 absolute right-1 -bottom-6">
-                            {getErrorMessage("Unit2")}
-                          </div>
-                        )}
-                      </div>
-                    </>
-                  ) : (
-                    <div className="flex justify-end relative w-full">
-                      {" "}
-                      {/* Ensure the flex container takes full width */}
-                      <input
-                        ref={quantity1Ref}
-                        type="number"
-                        value={quantity}
-                        onChange={handleQuantityChange}
-                        onFocus={() => handleFocus("quantity1")}
-                        onBlur={handleBlur}
-                        step="1"
-                        min="0"
-                        placeholder="Enter Value"
-                        className={getFieldClass(
-                          "Quantity",
-                          "text-[12px] focus:outline-none  w-[57vw] xl:w-[10vw] lg:w-[10vw] 2xl:w-[10vw] 4k:w-[10vw] 2k:w-[10vw] md:w-[10vw]  text-right pe-1 focus:border-b focus:border-blue-300"
-                        )}
-                        disabled={["assigned", "approved"].includes(
-                          value.rowType
-                        )}
-                        style={{
-                          "::placeholder": {
-                            color: scopeErrors["Quantity"]
-                              ? "#EF4444"
-                              : "inherit",
-                          },
-                        }}
-                      />
-                      {scopeErrors["Quantity"] && (
-                        <div className="text-[12px] text-red-500 absolute left-[3rem] -bottom-7">
-                          {getErrorMessage("Quantity")}
-                        </div>
-                      )}
-                      <select
-                        value={unit}
-                        onChange={(e) => handleUnitChange(e.target.value)}
-                        className={` text-[12px] w-[100px] text-center rounded-md py-1 shadow ${
-                          unit
-                            ? "bg-white text-blue-500 "
-                            : "bg-blue-500 text-white hover:bg-blue-600"
-                        }`}
-                        disabled={["assigned", "approved"].includes(rowType)}
-                        style={{
-                          border: {
-                            color: scopeErrors["Unit"] ? "#EF4444" : "inherit",
-                          },
-                        }}
-                      >
-                        <option value="">Unit</option>
-                        {units.map((unit, index) => (
-                          <option key={index} value={unit}>
-                            {unit}
-                          </option>
-                        ))}
-                      </select>
-                      {scopeErrors["Unit"] && (
-                        <div className="text-[12px] text-red-500 absolute right-2 -bottom-7">
-                          {getErrorMessage("Unit")}
-                        </div>
-                      )}
+                    )}
+                  </div>
+                  {/* Error messages positioned absolutely */}
+                  {scopeErrors['Quantity'] && (
+                    <div className='text-[12px] text-red-500 absolute left-2 -bottom-6'>
+                      {getErrorMessage('Quantity')}
+                    </div>
+                  )}
+                  {scopeErrors['Quantity2'] && (
+                    <div className='text-[12px] text-red-500 absolute left-2 -bottom-12'>
+                      {getErrorMessage('Quantity2')}
+                    </div>
+                  )}
+                  {scopeErrors['Unit'] && (
+                    <div className='text-[12px] text-red-500 absolute right-2 -bottom-6'>
+                      {getErrorMessage('Unit')}
+                    </div>
+                  )}
+                  {scopeErrors['Unit2'] && (
+                    <div className='text-[12px] text-red-500 absolute right-2 -bottom-12'>
+                      {getErrorMessage('Unit2')}
                     </div>
                   )}
                 </div>
               </td>
 
               {/* Assignee Button */}
-              <td className="py-2 text-center w-[5vw]">
-                <button
-                  type="button"
-                  className={`${
-                    assignedUser
-                      ? "bg-white text-blue-500 pl-1 truncate overflow-hidden shadow-md border border-gray-300 hover:shadow-lg"
-                      : "bg-blue-500 text-white hover:bg-blue-600 "
-                  }  text-[12px] w-[112px] py-1 rounded-md shadow disabled:opacity-80`}
-                  onClick={handleAssignClick}
-                  disabled={
-                    rowType === "calculated" ||
-                    rowType === "approved" ||
-                    rowType === "assigned"
-                  }
-                >
-                  {assignedUser ? `${assignedUser}` : "Assign to"}
-                </button>
+              <td className='w-[10%] py-2 px-1'>
+                <div className='flex items-center justify-center h-full'>
+                  <button
+                    type='button'
+                    className={`${
+                      assignedUser
+                        ? 'bg-white text-blue-500 pl-1 truncate overflow-hidden shadow-md border border-gray-300 hover:shadow-lg'
+                        : 'bg-blue-500 text-white hover:bg-blue-600 '
+                    } text-[12px] w-full max-w-28 py-1 rounded-md shadow disabled:opacity-80`}
+                    onClick={handleAssignClick}
+                    disabled={
+                      rowType === 'calculated' ||
+                      rowType === 'approved' ||
+                      rowType === 'assigned'
+                    }
+                  >
+                    {assignedUser ? `${assignedUser}` : 'Assign to'}
+                  </button>
+                </div>
               </td>
 
               {/* Actions - Delete & Upload */}
-              <td className="py-3 w-[5vw]">
-                <div className=" flex justify-left">
-                  <div className="pt-1">
-                    <label className="">
-                      <LuTrash2
-                        className={`text-gray-500 ${
-                          rowType === "approved"
-                            ? "cursor-not-allowed"
-                            : "hover:text-red-500 cursor-pointer"
-                        }`}
-                        onClick={handleClickonRemove}
-                      />
-                    </label>
-                  </div>
-                  <div className="pt-1">
-                    <input
-                      type="file"
-                      id={id + scope}
-                      onChange={handleChange}
-                      style={{ display: "none" }}
-                      disabled={
-                        rowType === "assigned" ||
-                        rowType === "approved" ||
-                        rowType === "calculated"
-                      }
-                    />
-
-                    {fileName ? (
-                      <label className="cursor-pointer relative">
-                        {fileType.includes(
-                          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                        ) ? (
-                          <RiFileExcel2Line
-                            className="text-green-500 ml-2"
-                            onClick={handlePreview}
-                            data-tooltip-id={fileName}
-                            data-tooltip-content={fileName}
-                          />
-                        ) : fileType.includes("application/pdf") ? (
-                          <BsFiletypePdf
-                            className="text-red-500 ml-2"
-                            onClick={handlePreview}
-                            data-tooltip-id={fileName}
-                            data-tooltip-content={fileName}
-                          />
-                        ) : fileType.includes("image") ? (
-                          <BsFileEarmarkImage
-                            className="text-blue-500 ml-2"
-                            onClick={handlePreview}
-                            data-tooltip-id={fileName}
-                            data-tooltip-content={fileName}
-                          />
-                        ) : (
-                          <RiFileExcel2Line
-                            className="text-blue-500 ml-2"
-                            onClick={handlePreview}
-                            data-tooltip-id={fileName}
-                            data-tooltip-content={fileName}
-                          />
-                        )}
-                        <ReactTooltip
-                          id={fileName}
-                          place="top"
-                          effect="solid"
-                          style={{
-                            backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "10px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                          }}
-                        />
-                      </label>
-                    ) : (
-                      <label htmlFor={id + scope} className="cursor-pointer">
-                        <TbUpload className="text-gray-500 hover:text-blue-500 ml-2" />
-                      </label>
-                    )}
-
-                    {/* Preview Modal */}
-                    {showModal && previewData && (
-                      <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-                        <div className="bg-white p-1 rounded-lg w-[96%] h-[94%] mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]">
-                          <div className="flex justify-between mt-4 mb-4">
-                            <div>
-                              <h5 className="mb-4 ml-2 font-semibold truncate w-[200px] overflow-hidden whitespace-nowrap">
-                                {fileName}
-                              </h5>
-                            </div>
-                            <div className="flex">
-                              <div
-                                className="mb-4"
-                                onClick={() => handleDelete(id, scope)}
-                              >
-                                <button
-                                  type="button"
-                                  className="px-2 py-1 mr-2 w-[120px] mt-1 flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white disabled:opacity-70 disabled:cursor-not-allowed"
-                                  disabled={rowType === "approved"}
-                                >
-                                  <LuTrash2 className="me-2" /> Delete File
-                                </button>
-                              </div>
-                              <div>
-                                <button
-                                  className="px-4 py-2 text-xl rounded"
-                                  onClick={handleCloseModal}
-                                >
-                                  <MdClose />
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="block  xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex ">
-                            <div className="relative w-[112vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[136vw] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]">
-                              {fileType.startsWith("image") ? (
-                                <img
-                                  src={previewData}
-                                  alt="Preview"
-                                  className="max-w-full max-h-full object-contain"
-                                />
-                              ) : fileType === "application/pdf" ? (
-                                <iframe
-                                  src={previewData}
-                                  title="PDF Preview"
-                                  className="w-full h-full"
-                                />
-                              ) : (
-                                <div className="flex flex-col items-center justify-center h-full">
-                                  <p>
-                                    File preview not available.Please download
-                                    and verify
-                                  </p>
-                                  <a
-                                    href={previewData}
-                                    download={fileName}
-                                    className="mt-12 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                                  >
-                                    Download File
-                                  </a>
-                                </div>
-                              )}
-                            </div>
-                            <div className="w-[211px] ml-6">
-                              <div className="mb-4 mt-1">
-                                <h2 className="text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide">
-                                  File information
-                                </h2>
-                              </div>
-                              <div className="mb-4">
-                                <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
-                                  FILE NAME
-                                </h2>
-                                <h2 className="text-[14px] leading-relaxed tracking-wide">
-                                  {fileName}
-                                </h2>
-                              </div>
-                              <div className="mb-4">
-                                <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
-                                  FILE SIZE
-                                </h2>
-                                <h2 className="text-[14px] leading-relaxed tracking-wide">
-                                  {(fileSize / 1024).toFixed(2)} KB
-                                </h2>
-                              </div>
-                              <div className="mb-4">
-                                <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
-                                  FILE TYPE
-                                </h2>
-                                <h2 className="text-[14px] leading-relaxed tracking-wide">
-                                  {fileType}
-                                </h2>
-                              </div>
-                              <div className="mb-4">
-                                <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
-                                  UPLOAD DATE & TIME
-                                </h2>
-                                <h2 className="text-[14px] leading-relaxed tracking-wide">
-                                  {uploadDateTime}
-                                </h2>
-                              </div>
-                              <div className="mb-4">
-                                <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
-                                  UPLOADED BY
-                                </h2>
-                                <h2 className="text-[14px] leading-relaxed tracking-wide">
-                                  {uploadedBy.replace(/^"|"$/g, "") ||
-                                    "Unknown"}
-                                </h2>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  {value.rowType === "calculated" && (
-                    <div className="pt-1 ms-2">
-                      <label className="cursor-pointer">
-                        <MdOutlineRemoveRedEye
-                          className="text-gray-500 hover:text-blue-500"
-                          onClick={openInfoModal}
+              <td className='w-[5%] py-2 px-1'>
+                <div className='flex items-center h-full'>
+                  <div className='flex justify-start'>
+                    <div className='pt-1'>
+                      <label className=''>
+                        <LuTrash2
+                          className={`text-gray-500 ${
+                            rowType === 'approved'
+                              ? 'cursor-not-allowed'
+                              : 'hover:text-red-500 cursor-pointer'
+                          }`}
+                          onClick={handleClickonRemove}
                         />
                       </label>
                     </div>
-                  )}
+                    <div className='pt-1'>
+                      <input
+                        type='file'
+                        id={id + scope}
+                        onChange={handleChange}
+                        style={{ display: 'none' }}
+                        disabled={
+                          rowType === 'assigned' ||
+                          rowType === 'approved' ||
+                          rowType === 'calculated'
+                        }
+                      />
+
+                      {isUploading ? (
+                        <div className='ml-2 flex items-center'>
+                          <div className='animate-spin rounded-full h-4 w-4 border-2 border-blue-500 border-t-transparent'></div>
+                        </div>
+                      ) : fileName ? (
+                        <label className='cursor-pointer relative'>
+                          {fileType.includes(
+                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                          ) ? (
+                            <RiFileExcel2Line
+                              className='text-green-500 ml-2'
+                              onClick={handlePreview}
+                              data-tooltip-id={fileName}
+                              data-tooltip-content={fileName}
+                            />
+                          ) : fileType.includes('application/pdf') ? (
+                            <BsFiletypePdf
+                              className='text-red-500 ml-2'
+                              onClick={handlePreview}
+                              data-tooltip-id={fileName}
+                              data-tooltip-content={fileName}
+                            />
+                          ) : fileType.includes('image') ? (
+                            <BsFileEarmarkImage
+                              className='text-blue-500 ml-2'
+                              onClick={handlePreview}
+                              data-tooltip-id={fileName}
+                              data-tooltip-content={fileName}
+                            />
+                          ) : (
+                            <RiFileExcel2Line
+                              className='text-blue-500 ml-2'
+                              onClick={handlePreview}
+                              data-tooltip-id={fileName}
+                              data-tooltip-content={fileName}
+                            />
+                          )}
+                          <ReactTooltip
+                            id={fileName}
+                            place='top'
+                            effect='solid'
+                            style={{
+                              backgroundColor: '#000',
+                              color: 'white',
+                              fontSize: '10px',
+                              boxShadow: 3,
+                              borderRadius: '8px',
+                            }}
+                          />
+                        </label>
+                      ) : (
+                        <label htmlFor={id + scope} className={`cursor-pointer ${isUploading ? 'pointer-events-none opacity-50' : ''}`}>
+                          <TbUpload className='text-gray-500 hover:text-blue-500 ml-2' />
+                        </label>
+                      )}
+
+                      {/* Preview Modal */}
+                      {showModal && previewData && (
+                        <Portal>
+                          <div className='fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50 p-4'>
+                            <div className='bg-white p-1 rounded-lg w-[96%] max-h-[80vh] overflow-y-auto scrollable-content mt-6 xl:w-[60%] lg:w-[60%] md:w-[60%] 2xl:w-[60%] 4k:w-[60%] 2k:w-[60%]'>
+                              <div className='flex justify-between mt-4 mb-4'>
+                                <div>
+                                  <h5 className='mb-4 ml-2 font-semibold truncate w-[200px] overflow-hidden whitespace-nowrap'>
+                                    {fileName}
+                                  </h5>
+                                </div>
+                                <div className='flex'>
+                                  <div
+                                    className='mb-4'
+                                    onClick={() => handleDelete(id, scope)}
+                                  >
+                                    <button
+                                      type='button'
+                                      className='px-2 py-1 mr-2 w-[120px] mt-1 flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white disabled:opacity-70 disabled:cursor-not-allowed'
+                                      disabled={rowType === 'approved'}
+                                    >
+                                      <LuTrash2 className='me-2' /> Delete File
+                                    </button>
+                                  </div>
+                                  <div>
+                                    <button
+                                      className='px-4 py-2 text-xl rounded'
+                                      onClick={handleCloseModal}
+                                    >
+                                      <MdClose />
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className='block  xl:flex lg:flex d:flex  2xl:flex  4k:flex  2k:flex '>
+                                <div className='relative w-[90vw] xl:w-[744px] lg:w-[744px] 2xl:w-[744px] 4k:w-[744px] 2k:w-[744px] h-[60vh] xl:h-[545px] lg:h-[545px] 2xl:h-[545px] 4k:h-[545px] 2k:h-[545px]'>
+                                  {fileType.startsWith('image') ? (
+                                    <img
+                                      src={previewData}
+                                      alt='Preview'
+                                      className='max-w-full max-h-full object-contain'
+                                    />
+                                  ) : fileType === 'application/pdf' ? (
+                                    <iframe
+                                      src={previewData}
+                                      title='PDF Preview'
+                                      className='w-full h-full'
+                                    />
+                                  ) : (
+                                    <div className='flex flex-col items-center justify-center h-full'>
+                                      <p>
+                                        File preview not available.Please
+                                        download and verify
+                                      </p>
+                                      <a
+                                        href={previewData}
+                                        download={fileName}
+                                        className='mt-12 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600'
+                                      >
+                                        Download File
+                                      </a>
+                                    </div>
+                                  )}
+                                </div>
+                                <div className='w-[211px] ml-6 flex-shrink-0 overflow-hidden'>
+                                  <div className='mb-4 mt-1'>
+                                    <h2 className='text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide'>
+                                      File information
+                                    </h2>
+                                  </div>
+                                  <div className='mb-4'>
+                                    <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
+                                      FILE NAME
+                                    </h2>
+                                    <h2 className='text-[14px] leading-relaxed tracking-wide break-words overflow-hidden'>
+                                      {fileName}
+                                    </h2>
+                                  </div>
+                                  <div className='mb-4'>
+                                    <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
+                                      FILE SIZE
+                                    </h2>
+                                    <h2 className='text-[14px] leading-relaxed tracking-wide'>
+                                      {(fileSize / 1024).toFixed(2)} KB
+                                    </h2>
+                                  </div>
+                                  <div className='mb-4'>
+                                    <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
+                                      FILE TYPE
+                                    </h2>
+                                    <h2 className='text-[14px] leading-relaxed tracking-wide break-words'>
+                                      {fileType}
+                                    </h2>
+                                  </div>
+                                  <div className='mb-4'>
+                                    <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
+                                      UPLOAD DATE & TIME
+                                    </h2>
+                                    <h2 className='text-[14px] leading-relaxed tracking-wide break-words'>
+                                      {uploadDateTime}
+                                    </h2>
+                                  </div>
+                                  <div className='mb-4'>
+                                    <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>
+                                      UPLOADED BY
+                                    </h2>
+                                    <div className='text-[14px] leading-relaxed tracking-wide break-words overflow-hidden max-w-full'>
+                                      {uploadedBy && uploadedBy.replace(/^"|"$/g, '') ? (
+                                        <MaskedEmail 
+                                          email={uploadedBy.replace(/^"|"$/g, '')} 
+                                          showToggle={true}
+                                          className="max-w-full break-all"
+                                        />
+                                      ) : (
+                                        'Unknown'
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </Portal>
+                      )}
+                    </div>
+                    {value.rowType === 'calculated' && (
+                      <div className='pt-1 ml-1'>
+                        <label className='cursor-pointer'>
+                          <MdOutlineRemoveRedEye
+                            className='text-gray-500 hover:text-blue-500'
+                            onClick={openInfoModal}
+                          />
+                        </label>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
+        </div>
 
-        <AssignEmissionModal
-          isOpen={isAssignModalOpen}
-          onClose={handleCloseAssignModal}
-          onChange={onChange}
-          index={index}
-          onRemove={onRemove}
-          taskData={{
-            location,
-            year,
-            month: getMonthName(month),
-            scope,
-            category: value.Category,
-            subcategory: value.Subcategory,
-            activity: value.Activity,
-            activity_id: value.activity_id,
-            act_id: value.act_id,
-            factor: value.factor,
-            unit_type: value.unit_type,
-            quantity1: value.Quantity,
-            quantity2: value.Quantity2,
-            unit1: value.Unit,
-            unit2: value.Unit2,
-            countryCode,
-            rowId: rowId,
-          }}
-        />
-        <MultipleAssignEmissionModal
-          isOpen={isMultipleAssignModalOpen}
-          onClose={handleCloseMultipleAssignModal}
-          onChange={onChange}
-          scope={scope}
-          onRemove={onRemove}
-          taskData={{
-            location,
-            year,
-            month: getMonthName(month),
-            scope,
-            countryCode,
-          }}
-        />
-        <CalculationInfoModal
-          isOpen={isInfoModalOpen}
-          onClose={closeInfoModal}
-          data={{
-            // calculatedAt: value.updated_At || new Date().toISOString(),
-            scope: scope,
-            category: value.Category,
-            subCategory: value.Subcategory,
-            activity: value.Activity,
-            quantity: value.Quantity,
-            unit: value.Unit,
-            emissionFactorName: value.activity_id,
-            emissionFactorValue: value.factor,
-            unique_id: value.unique_id || "0",
-          }}
-          rowData={value}
-        />
+        {isAssignModalOpen && (
+          <Portal>
+            <AssignEmissionModal
+              isOpen={isAssignModalOpen}
+              onClose={handleCloseAssignModal}
+              onChange={onChange}
+              index={index}
+              onRemove={onRemove}
+              taskData={{
+                location,
+                year,
+                month: getMonthName(month),
+                scope,
+                category: value.Category,
+                subcategory: value.Subcategory,
+                activity: value.Activity,
+                activity_id: value.activity_id,
+                act_id: value.act_id,
+                factor: value.factor,
+                unit_type: value.unit_type,
+                quantity1: value.Quantity,
+                quantity2: value.Quantity2,
+                unit1: value.Unit,
+                unit2: value.Unit2,
+                countryCode,
+                rowId: rowId,
+              }}
+            />
+          </Portal>
+        )}
+        {isMultipleAssignModalOpen && (
+          <Portal>
+            <MultipleAssignEmissionModal
+              isOpen={isMultipleAssignModalOpen}
+              onClose={handleCloseMultipleAssignModal}
+              onChange={onChange}
+              scope={scope}
+              onRemove={onRemove}
+              taskData={{
+                location,
+                year,
+                month: getMonthName(month),
+                scope,
+                countryCode,
+              }}
+            />
+          </Portal>
+        )}
+        {isInfoModalOpen && (
+          <Portal>
+            <CalculationInfoModal
+              isOpen={isInfoModalOpen}
+              onClose={closeInfoModal}
+              data={{
+                // calculatedAt: value.updated_At || new Date().toISOString(),
+                scope: scope,
+                category: value.Category,
+                subCategory: value.Subcategory,
+                activity: value.Activity,
+                quantity: value.Quantity,
+                unit: value.Unit,
+                emissionFactorName: value.activity_id,
+                emissionFactorValue: value.factor,
+                unique_id: value.unique_id || '0',
+              }}
+              rowData={value}
+            />
+          </Portal>
+        )}
       </div>
     );
   }

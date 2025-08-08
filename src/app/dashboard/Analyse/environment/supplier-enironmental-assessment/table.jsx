@@ -5,8 +5,8 @@ const DynamicTable2 = ({ data, columns }) => {
   const isEmptyData = data.every(row => Object.keys(row).length === 0);
 
   return (
-    <div className="overflow-x-auto custom-scrollbar ">
-      <table className="rounded-md border border-gray-300  w-full min-w-[828px]" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+    <div className="overflow-x-auto custom-scrollbar w-full">
+      <table className="rounded-md border border-gray-300 w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
         <thead className=" border">
           <tr className="border border-gray-300  gradient-background">
             {columns.map((column, index) => (

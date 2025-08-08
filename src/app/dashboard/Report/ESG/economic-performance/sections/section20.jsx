@@ -34,7 +34,7 @@ const Section20 = ({ section11_6Ref, section11_6_1Ref,reportType,
         
       </div>
 
-      {reportType=='GRI Report: In accordance With'?(
+      {/* {reportType=='GRI Report: In accordance With'?(
          <div id="section11_6_1" ref={section11_6_1Ref}>
          <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
            11.6.1 Management of Material Topic
@@ -53,7 +53,7 @@ const Section20 = ({ section11_6Ref, section11_6_1Ref,reportType,
        </div>
       ):(
         <div></div>
-      )}
+      )} */}
 
      
     </>

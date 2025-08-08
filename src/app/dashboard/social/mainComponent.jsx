@@ -53,6 +53,7 @@ import CustomerPrivacy2 from "./Customer-Privacy/Section2/page";
 import Ratiosstandard from "./Diversity-Inclusion/ratios-standard/page";
 import BILLs201 from "./BillS-211/page";
 import Materialtopic from "../Management-Material-topic/page";
+import BRSRScreens from './BRSRScreens/page'
 import {
   setHeadertext1,
   setHeadertext2,
@@ -71,13 +72,14 @@ import {
   setStartDate,
   setEndDate,
 } from "../../../lib/redux/features/materialitySlice";
+import Cookies from "js-cookie";
 
 const Social = () => {
   const { open } = GlobalState();
   const [activeTab, setActiveTab] = useState(
     "Management of Material topic OHS"
   );
-
+ let brsrFrameworkId = Cookies.get('selected_brsr_framework_id') || 0
   const [mobileopen, setMobileopen] = useState(false);
   // Handle tab click and update the active tab
   const handleTabClick = (tab) => {
@@ -248,10 +250,11 @@ const Social = () => {
 
   return (
     <>
-      <div className="w-full">
-        <div className="block xl:flex lg:flex md:block 2xl:flex 4k:flex">
-          <div className=" hidden xl:block lg:block md:hidden 2xl:block 4k:block">
+      <div className="w-full h-full">
+        <div className="flex h-full overflow-hidden">
+          <div className="flex-shrink-0 hidden xl:block lg:block md:hidden 2xl:block 4k:block">
             <Aside
+            brsrFrameworkId={brsrFrameworkId}
               activeTab={activeTab}
               handleTabClick={handleTabClick}
               apiData={data}
@@ -262,6 +265,7 @@ const Social = () => {
             <div className="block xl:hidden lg:hidden md:block 2xl:hidden 4k:hidden">
               <div>
                 <Aside
+                brsrFrameworkId={brsrFrameworkId}
                   activeTab={activeTab}
                   handleTabClick={handleTabClick}
                   apiData={data}
@@ -270,13 +274,9 @@ const Social = () => {
               </div>
             </div>
           ) : (
-            <div
-              className={`${
-                open
-                  ? "sm:w-[87vw]  md:w-[120vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] 4k:w-[37vw]"
-                  : " sm:w-[87vw] md:w-[120vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw] 4k:w-[41vw]"
-              }`}
-            >
+            <div className="flex-1 h-full flex flex-col min-w-0 overflow-hidden">
+              <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 pb-6 min-w-0">
+                <div className="w-full max-w-full">
               {/* Emissions start */}
               {activeTab === "Management of Material topic Employment" && (
                 <Materialtopic
@@ -696,6 +696,17 @@ const Social = () => {
                   setMobileopen={setMobileopen}
                 />
               )}
+              {
+                brsrFrameworkId == 4 &&
+                activeTab === "CSR" && (
+                  <BRSRScreens
+                  apiData={data}
+                  setMobileopen={setMobileopen}
+                />
+                )
+              }
+                </div>
+              </div>
             </div>
           )}
         </div>

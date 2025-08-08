@@ -20,13 +20,13 @@ const WasteTopBar = ({
   return (
     <>
       <div className="hidden xl:block lg:block md:hidden 2xl:block 4k:block">
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+        <div className="flex justify-between items-center border-b border-gray-200 mb-3 pb-3 w-full">
           <div className="w-full">
             <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-[11px]">Environment</p>
               <div className="flex h-[28px]">
                 <div className="h-[28px]">
-                  <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
+                  <p className="gradient-text text-[22px] font-bold pt-1">
                     Waste Management
                   </p>
                 </div>

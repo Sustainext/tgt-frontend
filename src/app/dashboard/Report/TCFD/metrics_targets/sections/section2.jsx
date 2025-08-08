@@ -138,7 +138,7 @@ const Section2 = ({ section7_2Ref, data, tcfdCollectData, orgName }) => {
 <p>We track and report on key performance indicators that are material to our sector, including sector-specific emission intensities, climate-related financial metrics, and operational resilience measures. These metrics help us benchmark our performance against industry peers and demonstrate our commitment to sector-wide climate action.</p>
 <p>Our targets are designed to contribute to broader sectoral decarbonization goals while maintaining competitiveness and operational efficiency within our industry context.</p>`;
 
-    dispatch(setSectorInf2o(autoFillContent));
+    dispatch(setSectorInfo2(autoFillContent));
     if (editorRefSectorInfo.current) {
       editorRefSectorInfo.current.value = autoFillContent;
     }

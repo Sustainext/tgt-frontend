@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import  DateRangePicker  from "../../utils/DatePickerComponent";
 import axiosInstance from "../../utils/axiosMiddleware";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const AnalyseHeader5 = ({
   selectedOrg,
@@ -173,19 +174,27 @@ const AnalyseHeader5 = ({
                     Select Organization*
                   </label>
                   <div className="mt-2">
-                    <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                      value={selectedOrg}
-                      onChange={handleOrgChange}
-                    >
-                      <option value="01">Select Organization</option>
-                      {organisations &&
-                        organisations.map((org) => (
-                          <option key={org.id} value={org.id}>
-                            {org.name}
-                          </option>
-                        ))}
-                    </select>
+                    <div className="relative">
+                      <select
+                        className="block w-full pr-8 rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
+                        value={selectedOrg}
+                        onChange={handleOrgChange}
+                      >
+                        <option value="01">Select Organization</option>
+                        {organisations &&
+                          organisations.map((org) => (
+                            <option key={org.id} value={org.id}>
+                              {org.name}
+                            </option>
+                          ))}
+                      </select>
+                      <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                        <MdKeyboardArrowDown
+                          className="text-neutral-500"
+                          style={{ fontSize: '16px' }}
+                        />
+                      </div>
+                    </div>
                     {errors.organization && (
                       <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.organization}
@@ -202,19 +211,27 @@ const AnalyseHeader5 = ({
                       Select Corporate
                     </label>
                     <div className="mt-2">
-                      <select
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                        value={selectedCorp}
-                        onChange={handleCorpChange}
-                      >
-                        <option value="">Select Corporate</option>
-                        {corporates &&
-                          corporates.map((corp) => (
-                            <option key={corp.id} value={corp.id}>
-                              {corp.name}
-                            </option>
-                          ))}
-                      </select>
+                      <div className="relative">
+                        <select
+                          className="block w-full pr-8 rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
+                          value={selectedCorp}
+                          onChange={handleCorpChange}
+                        >
+                          <option value="">Select Corporate</option>
+                          {corporates &&
+                            corporates.map((corp) => (
+                              <option key={corp.id} value={corp.id}>
+                                {corp.name}
+                              </option>
+                            ))}
+                        </select>
+                        <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                          <MdKeyboardArrowDown
+                            className="text-neutral-500"
+                            style={{ fontSize: '16px' }}
+                          />
+                        </div>
+                      </div>
                       {errors.corporate && (
                         <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                           {errors.corporate}

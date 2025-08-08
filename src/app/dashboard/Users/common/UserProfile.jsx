@@ -8,6 +8,7 @@ import {
 } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import Moment from 'react-moment';
+import { MaskedEmail } from "../../../shared/components/MaskedPIIField";
 const UserProfile = ({ onClose, user }) => {
   return (
     <div className="relative bg-white px-6 py-4  w-full xl:max-h-[95vh] min-h-[92vh] max-h-[110vh] overflow-y-auto scrollable-content   pb-4">
@@ -46,7 +47,7 @@ const UserProfile = ({ onClose, user }) => {
               {user.last_name || ""}
             </div>
             <div className="text-gray-500 text-left text-[13px]">
-              {user.email || ""}
+              <MaskedEmail email={user.email || ""} className="inline" />
             </div>
           </div>
           <div>

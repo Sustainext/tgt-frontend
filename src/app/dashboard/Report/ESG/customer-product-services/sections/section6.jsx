@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 const Section6 = ({ section15_2_1Ref, data,reportType,
   sectionNumber = reportType=='GRI Report: In accordance With' || reportType==='Custom ESG Report'?'15.2.1':'',
  
-  sectionTitle = 'Product and Service Information and Labelling',
+  sectionTitle = 'Management of material topic',
   sectionOrder = 15,
  }) => {
   const shouldRender = useSelector((state)=> state.reportCreation.includeMaterialTopics)

@@ -719,8 +719,8 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
           <div className="fixed inset-0 bg-black bg-opacity-30" />
         </Transition.Child>
 
-        <div className="fixed inset-10 overflow-y-auto">
-          <div className="flex min-h-full items-start justify-center p-4 text-center">
+        <div className="fixed inset-10">
+          <div className="flex max-h-[90vh] scrollable-content overflow-y-auto items-start justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -730,7 +730,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-[1200px] transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all mb-8 max-h-[105vh] flex flex-col">
+              <Dialog.Panel className="w-full max-w-[1100px] transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all mb-8 max-h-[105vh] flex flex-col">
                 {/* Header section with scenario details */}
                 <div className="p-6 pb-4">
                   <Dialog.Title className="text-2xl font-medium text-gray-900 mb-3">
@@ -776,7 +776,7 @@ const ScenarioViewModal = ({ isOpen, onClose, scenarioData = {} }) => {
                     </h2>
 
                     {/* Filters row */}
-                    <div className="grid grid-cols-4 gap-4 mb-6">
+                    <div className="grid grid-cols-3 gap-4 mb-6">
                       {/* Scope Dropdown */}
                       <div className="flex items-center" ref={scopeRef}>
                         <span className="text-gray-600 font-medium mr-1">

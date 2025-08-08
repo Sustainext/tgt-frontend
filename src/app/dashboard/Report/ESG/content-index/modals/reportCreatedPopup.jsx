@@ -20,6 +20,7 @@ import { ImFileExcel } from "react-icons/im";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const ReportCreatedPopup = ({
   reportname,
@@ -34,16 +35,37 @@ const ReportCreatedPopup = ({
   statement,
   userName,
   userEmail,
-  reportType
+  reportType,
+  ispageNumberGenerated
 }) => {
+  
   const [isNotifyModalOpen, setIsNotifyModalOpen] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [mailSend,setMailSend]=useState(false)
   const [isDownloading, setIsDownloading] = useState(false);
   const [isCIDownloading, setIsCIDownloading] = useState(false);
   const [isCIXLDownloading, setIsCIXLDownloading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [loopen, setLoOpen] = useState(false); 
+  const [pdfLink,setpdfLink]=useState('https://sustainextstorage1.blob.core.windows.net/media/Gri_Pdf_Reports/full_report/9_accordance_nvn1.pdf')
+  const [contentIndexLink,setcontentIndexLink]=useState('https://sustainextstorage1.blob.core.windows.net/media/Gri_Pdf_Reports/content_index/9_accordance_nvn1_content_index.pdf')
   const router = useRouter();
   const dropdownRef = useRef(null);
+  const notifyGRICount=typeof window !== "undefined" ? localStorage.getItem("notifyGRICount") : "";
+  const report_id =typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+ 
+     const LoaderOpen = () => {
+       setLoOpen(true);
+     };
+   
+     const LoaderClose = () => {
+       setLoOpen(false);
+     };
+  useEffect(()=>{
+    if(notifyGRICount){
+      setMailSend(true)
+    }
+  },[notifyGRICount])
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -178,6 +200,33 @@ const ReportCreatedPopup = ({
     }
   };
 
+  const getAzureLink= async()=>{
+     LoaderOpen()
+    try{
+      const response = await axiosInstance.get(
+        `esg_report/generate_azure_links/${reportid?reportid:report_id}`,
+      );
+      if(response.status==200){
+        setpdfLink(response.data.azure_pdf_url)
+        setcontentIndexLink(response.data.azure_content_index_url)
+        setIsCreateReportModalOpen(false);
+        setIsNotifyModalOpen(true);
+         LoaderClose()
+      }
+      else{
+        LoaderClose()
+        console.log(response)
+        toast.error("Opps! Something went wrong")
+      }
+    }
+    catch(error){
+      LoaderClose()
+      console.log(error)
+      toast.error("Opps! Something went wrong")
+    }
+  }
+  
+
   return (
     <>
       {isCreateReportModalOpen && (
@@ -239,10 +288,13 @@ const ReportCreatedPopup = ({
               <div className="mt-6 mb-2">
                 <div className="relative" ref={dropdownRef}>
                   <button
-                    className={`p-4 border w-full border-gray-200 text-[16px] text-[#343A40] flex justify-between ${
+                  disabled={!ispageNumberGenerated}
+                    className={`p-4 border w-full border-gray-200 text-[16px] text-[#343A40] ${!ispageNumberGenerated?'opacity-30 cursor-not-allowed':''} flex justify-between ${
                       isHovered ? "" : "mb-3"
                     } rounded-md hover:text-blue-500 hover:border-blue-500 group`}
                     onClick={() => setIsHovered(!isHovered)}
+                    data-tooltip-content="This may take a few moments. PDF and Excel downloads will be available soon; please do not refresh the page."
+                    data-tooltip-id="tooltip-id1"
                   >
                     <span className="w-4.5 h-4.5 text-[#667085] mt-1 group-hover:text-blue-500 flex gap-2">
                       <GoDownload className="mt-0.5" />
@@ -251,8 +303,24 @@ const ReportCreatedPopup = ({
 
                     <IoIosArrowDown className="mt-1" />
                   </button>
+                  {
+                      !ispageNumberGenerated && (
+                        <ReactTooltip
+                                                id={`tooltip-id1`}
+                                                place="top"
+                                                effect="solid"
+                                                style={{
+                                                  fontSize: "12px",
+                                                  background: "#0a0528",
+                                                  boxShadow: 3,
+                                                  borderRadius: "8px",
+                                                  zIndex: 1000,
+                                                }}
+                                              />
+                      )
+                    }
                   {isHovered && (
-                    <div className="absolute bg-white border border-gray-200 rounded-md shadow-md  w-full">
+                    <div className="absolute z-50 bg-white border border-gray-200 rounded-md shadow-md  w-full">
                       <div
                         className="p-3 hover:bg-blue-50 cursor-pointer flex items-center gap-2"
                         onClick={() => {
@@ -300,11 +368,12 @@ const ReportCreatedPopup = ({
                     </div>
                   )}
                 </div>
-
-                <button
-                  onClick={() => {
+                  {
+                    reportType=='GRI Report: In accordance With' && (
+                       <button
+                  onClick={()=>{
                     setIsCreateReportModalOpen(false);
-                    setIsNotifyModalOpen(true);
+        setIsNotifyModalOpen(true);
                   }}
                   className="p-4 border w-full border-gray-200 text-[16px] text-[#343A40] rounded-md flex gap-2  hover:text-blue-500 hover:border-blue-500 group"
                 >
@@ -318,9 +387,12 @@ const ReportCreatedPopup = ({
                     <></>
                   )}
                 </button>
+                    )
+                  }
+               
               </div>
 
-              <div className="flex justify-end mt-5 mb-3">
+              <div className="flex justify-end relative mt-5 mb-3">
                 <button
                   className="w-auto h-full mr-3  py-2 px-3 bg-transparent text-[#4F4F4F] rounded-[8px] shadow cursor-pointer border border-gray-200 flex gap-2"
                   onClick={() => {
@@ -331,7 +403,10 @@ const ReportCreatedPopup = ({
                   Exit to Report Module
                 </button>
                 <button
-                  className="w-auto h-full py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow  flex gap-2"
+                  disabled={!ispageNumberGenerated}
+                  data-tooltip-content="This may take a few moments. The Download Report option will be available soon; please do not refresh the page"
+                  data-tooltip-id="tooltip-id2"
+                  className={`w-auto h-full py-2 px-3 ${!ispageNumberGenerated?'opacity-30 cursor-not-allowed':''} bg-[#007EEF] text-white rounded-[8px] shadow  flex gap-2`}
                   onClick={() => {
                     handleDownloadpdf(reportid, reportname, false);
                   }}
@@ -353,6 +428,22 @@ const ReportCreatedPopup = ({
                   Download Report
                   {/* <MdKeyboardArrowDown className="w-5 h-5 text-[#fff] mt-[3px]"/> */}
                 </button>
+                 {
+                      !ispageNumberGenerated && (
+                        <ReactTooltip
+                                                id={`tooltip-id2`}
+                                                place="top"
+                                                effect="solid"
+                                                style={{
+                                                  fontSize: "12px",
+                                                  background: "#0a0528",
+                                                  boxShadow: 3,
+                                                  borderRadius: "8px",
+                                                  zIndex: 1000,
+                                                }}
+                                              />
+                      )
+                    }
               </div>
             </div>
           </div>
@@ -368,7 +459,21 @@ const ReportCreatedPopup = ({
         isNotifyModalOpen={isNotifyModalOpen}
         setIsNotifyModalOpen={setIsNotifyModalOpen}
         setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+        pdfLink={pdfLink}
+        contentIndexLink={contentIndexLink}
       />
+       {loopen && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                      <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                      />
+                    </div>
+                  )}
     </>
   );
 };

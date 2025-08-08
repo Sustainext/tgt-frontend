@@ -114,6 +114,20 @@ Incidents of non-compliance with regulations and/or voluntary codes concerning m
         </div>
         <div className="text-sm mb-4">
           <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            Statement of non-compliance with regulations and/or voluntary codes
+          </p>
+           <p className="mb-4 font-normal">
+                {data["417_3b"]
+                    ? data["417_3b"]?.length > 0
+                      ? data["417_3b"][0]?.Q1
+                        ? data["417_3b"][0]?.Q1
+                        : "No data available"
+                      : "No data available"
+                    : "No data available"}
+              </p>
+        </div>
+        <div className="text-sm mb-4">
+          <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Ethical Marketing Practices 
           </p>
           <ul className="list-disc ml-4">

@@ -96,7 +96,7 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
     <div>
     
       <div className="flex">
-      <div className={`ps-4 w-[100%] me-4`}>
+      <div className="flex-1 ps-4 me-4 max-w-full overflow-hidden">
           <div className="mb-6">
             <div
               id="ep1"

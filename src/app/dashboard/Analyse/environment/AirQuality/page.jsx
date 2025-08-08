@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo } from "../../../../shared/data/yearInfo";
 import { AiOutlineCalendar } from "react-icons/ai";
 import TableSidebar from "./TableSidebar";
@@ -392,9 +393,9 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
                   >
                     Select Organization*
                   </label>
-                  <div className="mt-2">
+                  <div className="mt-2 relative">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 pr-8 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
                       value={selectedOrg}
                       onChange={handleOrganizationChange}
                     >
@@ -406,6 +407,7 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
                           </option>
                         ))}
                     </select>
+                    <MdKeyboardArrowDown className="absolute right-2 top-2 pointer-events-none" size={16} />
                     {errors.organization && (
                     <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
                       {errors.organization}
@@ -421,9 +423,9 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
                     >
                       Select Corporate
                     </label>
-                    <div className="mt-2">
+                    <div className="mt-2 relative">
                       <select
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                        className="block w-full rounded-md border-0 py-1.5 pl-4 pr-8 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
                         value={selectedCorp}
                         onChange={handleOrgChange}
                       >
@@ -435,6 +437,7 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
                             </option>
                           ))}
                       </select>
+                      <MdKeyboardArrowDown className="absolute right-2 top-2 pointer-events-none" size={16} />
                       {errors.corporate && (
                       <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
                         {errors.corporate}
@@ -451,9 +454,9 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
                     >
                       Select Location
                     </label>
-                    <div className="mt-2">
+                    <div className="mt-2 relative">
                       <select
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                        className="block w-full rounded-md border-0 py-1.5 pl-4 pr-8 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 appearance-none"
                         value={selectedsetLocation}
                         onChange={handleLocationChange}
                       >
@@ -465,6 +468,7 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
                             </option>
                           ))}
                       </select>
+                      <MdKeyboardArrowDown className="absolute right-2 top-2 pointer-events-none" size={16} />
                       {errors.location && (
                       <p className="text-[#007EEF] text-[12px] pl-2 mt-2">{errors.location}</p>
                     )}
@@ -495,8 +499,8 @@ const AnalyseAirQuality = ({ isBoxOpen }) => {
             </div>
           </div>
         </div>
-        <div className="flex">
-          <div className={`ps-4 w-[100%] me-4`}>
+        <div className="xl:flex md:flex lg:flex 2xl:flex 4k:flex 2k:flex block">
+          <div className="flex-1 ps-4 me-4 max-w-full overflow-hidden">
             {airPollutantinKg && airPollutantinKg.length>0 && (
                <div className="mb-6">
                <p className="text-black text-[15px] font-bold ">

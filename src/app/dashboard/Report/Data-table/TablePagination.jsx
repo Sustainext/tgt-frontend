@@ -172,8 +172,16 @@ const handleTCFDDownloadpdf = async (id, name) => {
             )}
             Download Report PDF
           </button>
-
-          <button
+            {
+              ['GRI Report: In accordance With','GRI Report: With Reference to','Custom ESG Report'].includes(item.report_type)?(
+                <button
+            className="flex items-center p-2 w-full text-left text-[#d1d5db] cursor-not-allowed"
+            disabled>
+            <BsFileEarmarkWord className="mr-2 w-4 h-4" />
+            Download Report Word
+          </button>
+              ):(
+                 <button
             className="flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue"
             onClick={() => {
               handleDownloaddocx(item.id, item.name);
@@ -185,6 +193,10 @@ const handleTCFDDownloadpdf = async (id, name) => {
             )}
             Download Report Word
           </button>
+              )
+              
+            }
+         
         </>
       )}
 
@@ -229,12 +241,17 @@ const handleTCFDDownloadpdf = async (id, name) => {
             )}
             Download Content Index Excel
           </button>
-          <button
-            onClick={() => console.log("Notify GRI")}
-            className="flex items-center p-2 w-full text-left  text-[#d1d5db]">
+          {
+            item.report_type === "GRI Report: In accordance With" && (
+              <button
+            // onClick={() => console.log("Notify GRI")}
+            className="flex items-center p-2 w-full text-left  text-[#d1d5db] cursor-not-allowed">
             <MdOutlineEmail className="mr-2 text-[#d1d5db] w-4 h-4" /> Notify
             GRI
           </button>
+            )
+          }
+          
         </>
       )}
 
@@ -252,6 +269,7 @@ const handleTCFDDownloadpdf = async (id, name) => {
               item.created_at,
               item.report_type,
               item.corporate_name,
+              item.gri_email_sent_count
             );
           } else {
             handleSetdata(
@@ -416,7 +434,8 @@ const handleTCFDDownloadpdf = async (id, name) => {
     name,
     created_at,
     report_type,
-    corporate_name
+    corporate_name,
+    gri_email_sent_count
   ) => {
     const newdata = {
       id: id,
@@ -434,6 +453,9 @@ const handleTCFDDownloadpdf = async (id, name) => {
     window.localStorage.setItem("reportCreatedOn", created_at);
     window.localStorage.setItem("reportType", report_type);
     window.localStorage.setItem("reportname", name);
+    if(gri_email_sent_count){
+      window.localStorage.setItem("notifyGRICount", gri_email_sent_count);
+    }
     // sessionStorage.setItem('reportData',newdata);
     // if (corporate_name !== undefined){
     // }

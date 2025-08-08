@@ -7,12 +7,15 @@ import { post, put,patch } from '../../../../utils/axiosMiddleware';
 import { showToast } from '@/app/utils/toastUtils';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from 'js-cookie';
 
 
 function Organization() {
   const [currentOrganization, setCurrentOrganization] = useState(null);
   const router = useRouter();
   const [data, setData] = useState(null);
+ 
+  let brsrFrameworkId = Cookies.get('selected_brsr_framework_id') || 0
 
   useEffect(() => {
     const queryString = window.location.search;
@@ -77,6 +80,7 @@ function Organization() {
       name: data.generalDetails.name || 'Entity 1',
       type_corporate_entity: data.generalDetails.type || 'Not Specified',
       owner: data.generalDetails.ownership || '',
+      email:data.generalDetails.email || '',
       location_of_headquarters: data.generalDetails.location || 'Not Specified',
       phone: data.generalDetails.phone || 9999999999,
       mobile: data.generalDetails.mobile || '',
@@ -136,6 +140,7 @@ function Organization() {
       name: data.generalDetails.name || 'Entity 1',
       type_corporate_entity: data.generalDetails.type || 'Not Specified',
       owner: data.generalDetails.ownership || '',
+      email:data.generalDetails.email || '',
       location_of_headquarters: data.generalDetails.location || 'Not Specified',
       phone: data.generalDetails.phone || 9999999999,
       mobile: data.generalDetails.mobile || '',
@@ -210,6 +215,7 @@ function Organization() {
           data ? 'Edit Organisation Details' : 'Add Organisation Details'
         }
         editData={data}
+        brsrFrameworkId={brsrFrameworkId}
       />
     </form>
     </>

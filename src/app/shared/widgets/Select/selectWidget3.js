@@ -51,7 +51,7 @@ const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSche
        <div className="flex justify-center items-center mt-2">
         <select
           className={`text-center py-1 text-[12px] 4k:text-[14px] w-[100px] rounded-md ${
-            value ? 'bg-white text-blue-500 shadow' : 'bg-blue-500 text-white'
+            value ? 'bg-white text-blue-500 shadow' : 'bg-blue-500 text-white border-b'
           }`}
           value={value || ''}
           disabled={uiSchema['ui:widgetDisable']?`${uiSchema['ui:widgetDisable']}`:false}

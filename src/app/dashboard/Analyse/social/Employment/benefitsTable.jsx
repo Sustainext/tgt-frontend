@@ -4,17 +4,7 @@ import { FaCheckSquare, FaRegSquare } from "react-icons/fa"; // Import checkbox 
 const BenefitTable = ({ locationdata, data }) => {
   const isDataEmpty = data.length === 0;
   return (
-    <div
-      style={{
-        maxHeight: "400px",
-        display: "",
-        overflowX: "auto",
-        maxWidth: "100%",
-        minWidth: "100%",
-        width: "50vw",
-      }}
-      className="table-scrollbar"
-    >
+    <div className="overflow-x-auto custom-scrollbar w-full max-h-[400px]">
       <table
         className="w-full rounded-lg border-x border-t border-gray-300 "
         style={{ borderCollapse: "separate", borderSpacing: 0 }}

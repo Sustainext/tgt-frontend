@@ -9,9 +9,9 @@ const nextConfig = {
     NEXT_APP_SUPERSET_URL_ENV_WASTE:
       "https://superset-dev.sustainext.ai/superset/dashboard/12/?standalone=3&refreshTime=120",
     CLIMATIQ_KEY: "98YJN6V0VC4M5KPQNSVHWCVEM8NT",
-    NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION: "16",
-    REDIS_HOST:'127.0.0.1',
-    REDIS_PORT:'6379',
+    NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION: "23",
+    REDIS_HOST: "127.0.0.1",
+    REDIS_PORT: "6379",
 
     // SSO
     AUTH0_SECRET: "LONG RANDOM VALsUE",
@@ -23,8 +23,30 @@ const nextConfig = {
       "VcLShjMepGqKoT5t9MwsuyGPHbWwwEN6zBl62XsXPSlkdHlVXeZFeRjpi6qX7t-q",
     AUTH0_REDIRECT_URL: "https://sustainext-udm.sustainext.ai/callback",
     // AUTH0_REDIRECT_URL: "http://localhost:3000/callback",
+   FERNET_SECRET_KEY : 'erM9hVkymirZRLTmBT2JU05k3PUAc7Mrz-G2NhD2_ko=',
+
+    KEYCLOAK_ISSUER_Auth_URL:
+      "https://keycloak.sustainext.ai/realms/Sustainext/protocol/openid-connect",
+    KEYCLOAK_ISSUER_BASE_URL:
+      "https://keycloak.sustainext.ai/realms/Sustainext/protocol/openid-connect",
+    KEYCLOAK_CLIENT_ID: "Sustainext_Test",
+    KEYCLOAK_CLIENT_SECRET: "GUZ9XkSU4kYfM29ZQg1bhtMTIl6ElJ9u",
+    KEYCLOAK_BASE_URL: "https://sustainext-udm.sustainext.ai",
+    KEYCLOAK_LOGOUT_URl:"https://keycloak.sustainext.ai/realms/Sustainext/protocol/openid-connect/logout",
   },
- 
+  async headers() {
+    return [
+      {
+        source: "/(.*)", // Apply to all routes
+        headers: [
+          {
+            key: "X-Frame-Options",
+            value: "DENY", // Or "SAMEORIGIN"
+          },
+        ],
+      },
+    ];
+  },
   images: {
     domains: [
       "udm-staging-be.sustainext.ai",
@@ -43,7 +65,7 @@ const nextConfig = {
         "process.env.IGNORE_BUILD_ERRORS": JSON.stringify("true"),
       })
     );
- 
+
     return config;
   },
   distDir: "custom_build",
@@ -53,5 +75,5 @@ const nextConfig = {
   },
   reactStrictMode: true,
 };
- 
+
 export default nextConfig;
