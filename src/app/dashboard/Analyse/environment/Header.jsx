@@ -172,7 +172,7 @@ const Header = ({ activeTab, setIsBoxOpen, setMobileopen }) => {
         <div className='hidden lg:block w-full'>
           <div className='flex justify-between items-start gap-8'>
             {/* Left side - Title and activeTab */}
-            <div className='flex-shrink-0 ms-4 mt-8'>
+            <div className='flex-shrink-0 ms-4 mt-8 w-[60%]'>
               <div className='h-[46px] flex-col justify-start items-start gap-0.5 inline-flex'>
                 <div className="text-black text-opacity-50 text-[11px] font-semibold font-['Manrope'] capitalize leading-[14px]">
                   Environment

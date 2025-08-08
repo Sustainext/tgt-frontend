@@ -57,9 +57,9 @@ const social = () => {
     dispatch(setMiddlename('Social'));
   }, [activeTab, dispatch]);
   return (
-    <div className='relative xl:flex lg:flex 2xl:flex 4k:flex justify-start'>
+    <div className='relative xl:flex lg:flex 2xl:flex 4k:flex justify-start w-full max-w-full overflow-hidden'>
       <div className='hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block'>
-        <div className='relative left-10 w-[199px] min-h-[90vh] py-[11px] flex-col items-end inline-flex '>
+        <div className='relative w-[199px] min-h-[90vh] py-[11px] flex-col items-end inline-flex flex-shrink-0 ml-6'>
           <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
         </div>
       </div>
@@ -74,7 +74,7 @@ const social = () => {
           </div>
         </div>
       ) : (
-        <div className='w-full xl:ms-8 md:ms-0 lg:ms-8 2xl:ms-8 4k:ms-8 2k:ms-8'>
+        <div className='flex-1 min-w-0 max-w-full overflow-hidden pl-4'>
           <div className='hidden xl:block lg:block md:hidden 2xl:block 4k:block 2k:block sticky xl:top-0 lg:top-0 2xl:top-14 4k:top-14 bg-white z-[100]'>
             <Header
               activeTab={activeTab}

@@ -2,17 +2,23 @@ import React, { useState, useEffect } from "react";
 import { AiOutlineLink } from "react-icons/ai";
 
 const TableSidebar2 = () => {
-  const [activeId, setActiveId] = useState("ep3");
+  const [activeId, setActiveId] = useState("ep1");
 
   const adjustScrollPosition = (anchor) => {
-    const headerOffset = 250;
-    const elementPosition = document.querySelector(anchor).getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: "smooth",
-    });
+    const element = document.querySelector(anchor);
+    if (element) {
+      const headerOffset = 200;
+      element.scrollIntoView({ 
+        behavior: "smooth", 
+        block: "start",
+        inline: "nearest"
+      });
+      
+      // Additional offset adjustment
+      setTimeout(() => {
+        window.scrollBy(0, -headerOffset);
+      }, 100);
+    }
   };
 
   useEffect(() => {
@@ -52,27 +58,26 @@ const TableSidebar2 = () => {
         </div>
       </div>
       {[
-      
-      {
-        id: "ep1",
-        name: "Formal joint management-worker health and safety committees",
-      },
-      {
-        id: "ep2",
-        name: "Workers covered by an occupational health and safety management system",
-      },
+        {
+          id: "ep1",
+          name: "Formal joint management-worker health and safety committees",
+        },
+        {
+          id: "ep2",
+          name: "Workers covered by an occupational health and safety management system",
+        },
         {
           id: "ep3",
-          name: "Workers covered by an occupational health and safety management system ",
+          name: "Work related ill health",
         },
         {
           id: "ep4",
-          name: "Work related ill health  ",
+          name: "Ill Health - For all employees",
         },
         {
-            id: "ep5",
-            name: "Ill Health",
-          },
+          id: "ep5",
+          name: "Ill Health - For workers not employees",
+        },
       ].map((link) => (
         <div key={link.id} className="self-stretch justify-end items-center gap-2 inline-flex">
           <a

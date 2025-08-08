@@ -1,9 +1,9 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import scenarioService from "@/app/dashboard/Optimise/service/scenarioService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import scenarioService from '@/app/dashboard/Optimise/service/scenarioService';
 
 // Async thunks for API operations
 export const fetchScenarioById = createAsyncThunk(
-  "optimise/fetchScenarioById",
+  'optimise/fetchScenarioById',
   async (scenarioId, { rejectWithValue }) => {
     try {
       const response = await scenarioService.fetchScenarioById(scenarioId);
@@ -15,7 +15,7 @@ export const fetchScenarioById = createAsyncThunk(
 );
 
 export const fetchScenarioMetrics = createAsyncThunk(
-  "optimise/fetchScenarioMetrics",
+  'optimise/fetchScenarioMetrics',
   async (scenarioId, { rejectWithValue }) => {
     try {
       const response = await scenarioService.fetchScenarioMetrics(scenarioId);
@@ -27,7 +27,7 @@ export const fetchScenarioMetrics = createAsyncThunk(
 );
 
 export const updateScenarioMetrics = createAsyncThunk(
-  "optimise/updateScenarioMetrics",
+  'optimise/updateScenarioMetrics',
   async ({ scenarioId, payload }, { rejectWithValue }) => {
     try {
       const response = await scenarioService.updateScenarioMetrics(
@@ -42,7 +42,7 @@ export const updateScenarioMetrics = createAsyncThunk(
 );
 
 export const fetchScenarioActivities = createAsyncThunk(
-  "optimise/fetchScenarioActivities",
+  'optimise/fetchScenarioActivities',
   async (scenarioId, { rejectWithValue }) => {
     try {
       const response = await scenarioService.fetchScenarioActivities(
@@ -56,7 +56,7 @@ export const fetchScenarioActivities = createAsyncThunk(
 );
 
 export const updateScenarioActivities = createAsyncThunk(
-  "optimise/updateScenarioActivities",
+  'optimise/updateScenarioActivities',
   async ({ scenarioId, activities }, { rejectWithValue }) => {
     try {
       const response = await scenarioService.updateScenarioActivities(
@@ -72,7 +72,7 @@ export const updateScenarioActivities = createAsyncThunk(
 
 // New thunk for fetching emission data
 export const fetchEmissionData = createAsyncThunk(
-  "optimise/fetchEmissionData",
+  'optimise/fetchEmissionData',
   async ({ scenarioId, filters = {} }, { rejectWithValue }) => {
     try {
       const response = await scenarioService.fetchEmissionData(
@@ -88,7 +88,7 @@ export const fetchEmissionData = createAsyncThunk(
 
 // Thunk for adding activities to a scenario
 export const addActivitiesToScenario = createAsyncThunk(
-  "optimise/addActivitiesToScenario",
+  'optimise/addActivitiesToScenario',
   async ({ scenarioId, activityIds }, { rejectWithValue }) => {
     try {
       const response = await scenarioService.addActivitiesToScenario(
@@ -104,7 +104,7 @@ export const addActivitiesToScenario = createAsyncThunk(
 
 // Thunk for removing an activity from a scenario
 export const removeActivityFromScenario = createAsyncThunk(
-  "optimise/removeActivityFromScenario",
+  'optimise/removeActivityFromScenario',
   async ({ scenarioId, activityId }, { rejectWithValue }) => {
     try {
       const response = await scenarioService.removeActivityFromScenario(
@@ -128,7 +128,7 @@ const getActivityIndexById = (activities, activityId) => {
 
 // Async thunk for updating a specific activity within a scenario
 export const updateScenarioActivity = createAsyncThunk(
-  "optimise/updateScenarioActivity",
+  'optimise/updateScenarioActivity',
   async ({ scenarioId, activityId, updates }, { rejectWithValue }) => {
     try {
       const response = await scenarioService.updateScenarioActivity(
@@ -148,10 +148,12 @@ export const updateScenarioActivity = createAsyncThunk(
 );
 
 export const calculateEmissionsForOptimise = createAsyncThunk(
-  "optimise/calculateEmissionsForOptimise",
+  'optimise/calculateEmissionsForOptimise',
   async (scenarioId, { rejectWithValue }) => {
     try {
-      const response = await scenarioService.calculateEmissionsForOptimise(scenarioId);
+      const response = await scenarioService.calculateEmissionsForOptimise(
+        scenarioId
+      );
       return response;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -160,7 +162,7 @@ export const calculateEmissionsForOptimise = createAsyncThunk(
 );
 
 export const updateAllSelectedActivities = createAsyncThunk(
-  "optimise/updateAllSelectedActivities",
+  'optimise/updateAllSelectedActivities',
   async ({ scenarioId, activities }, { dispatch, rejectWithValue }) => {
     try {
       // First, update all activities
@@ -168,23 +170,23 @@ export const updateAllSelectedActivities = createAsyncThunk(
         scenarioId,
         activities
       );
-      
+
       // Then, trigger the climate calculation
       try {
         // We use unwrap() to ensure errors are properly caught and handled
         await dispatch(calculateEmissionsForOptimise(scenarioId)).unwrap();
-        console.log("Climatiq result calculation completed successfully");
+        console.log('Climatiq result calculation completed successfully');
       } catch (climateError) {
-        console.error("Climatiq calculation failed:", climateError);
+        console.error('Climatiq calculation failed:', climateError);
         // Instead of ignoring the error, we reject with a clear error message
         return rejectWithValue({
-          message: "Failed to calculate emissions. Please try again.",
-          details: climateError.message || "Unknown Climatiq calculation error",
+          message: 'Failed to calculate emissions. Please try again.',
+          details: climateError.message || 'Unknown Climatiq calculation error',
           originalError: climateError,
-          type: "CLIMATIQ_CALCULATION_ERROR" // This helps identify the specific error type
+          type: 'CLIMATIQ_CALCULATION_ERROR', // This helps identify the specific error type
         });
       }
-      
+
       // Only return the successful response if both steps complete successfully
       return response;
     } catch (error) {
@@ -195,10 +197,13 @@ export const updateAllSelectedActivities = createAsyncThunk(
 
 // New thunk for fetching scenario graph data
 export const fetchScenarioGraphData = createAsyncThunk(
-  "optimise/fetchScenarioGraphData",
+  'optimise/fetchScenarioGraphData',
   async ({ scenarioId, filters = {} }, { rejectWithValue }) => {
     try {
-      const response = await scenarioService.getScenarioGraphData(scenarioId, filters);
+      const response = await scenarioService.getScenarioGraphData(
+        scenarioId,
+        filters
+      );
       return response;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -217,7 +222,7 @@ const initialState = {
     activities: [],
     count: 0,
     filters: {
-      search: "",
+      search: '',
       scopes: [],
       categories: [],
       subCategories: [],
@@ -225,7 +230,7 @@ const initialState = {
     },
     sorting: {
       column: null,
-      order: "asc",
+      order: 'asc',
     },
     pagination: {
       currentPage: 1,
@@ -239,7 +244,7 @@ const initialState = {
     metrics: false,
     activities: false,
     emissionData: false,
-    EmissionCalculation: false, 
+    EmissionCalculation: false,
     graphData: false,
   },
   error: {
@@ -247,10 +252,9 @@ const initialState = {
     metrics: null,
     activities: null,
     emissionData: null,
-    EmissionCalculation: null, 
+    EmissionCalculation: null,
     graphData: null,
   },
-  
 };
 
 // Helper function to extract selected metrics from metrics data
@@ -265,9 +269,9 @@ const getSelectedMetrics = (metricsData) => {
   // For each metric check if it's enabled in the data
   Object.keys(metricsData).forEach((key) => {
     // Only process direct metric keys (fte, area, etc), not fte_data or fte_weightage
-    if (!key.includes("_")) {
+    if (!key.includes('_')) {
       // Map from snake_case to camelCase if needed
-      const metricKey = key === "production_volume" ? "productionVolume" : key;
+      const metricKey = key === 'production_volume' ? 'productionVolume' : key;
 
       // Set the value if it's a valid business metric
       if (Object.keys(selectedMetrics).includes(metricKey)) {
@@ -281,7 +285,7 @@ const getSelectedMetrics = (metricsData) => {
 
 // Create the slice
 const optimiseSlice = createSlice({
-  name: "optimise",
+  name: 'optimise',
   initialState,
   reducers: {
     setCurrentStep: (state, action) => {
@@ -292,7 +296,7 @@ const optimiseSlice = createSlice({
 
       // Toggle the metric in metricsData
       const snakeCaseMetricId =
-        metricId === "productionVolume" ? "production_volume" : metricId;
+        metricId === 'productionVolume' ? 'production_volume' : metricId;
       state.metricsData[snakeCaseMetricId] =
         !state.metricsData[snakeCaseMetricId];
 
@@ -310,7 +314,7 @@ const optimiseSlice = createSlice({
         // Update weightages
         activeMetrics.forEach((metric) => {
           const snakeMetric =
-            metric === "productionVolume" ? "production_volume" : metric;
+            metric === 'productionVolume' ? 'production_volume' : metric;
           state.metricsData[`${snakeMetric}_weightage`] = equalWeight;
         });
       }
@@ -321,14 +325,14 @@ const optimiseSlice = createSlice({
       // Update the weightages in metricsData
       Object.keys(weightages).forEach((metricId) => {
         const snakeMetric =
-          metricId === "productionVolume" ? "production_volume" : metricId;
+          metricId === 'productionVolume' ? 'production_volume' : metricId;
         state.metricsData[`${snakeMetric}_weightage`] = weightages[metricId];
       });
     },
     updateMetricData: (state, action) => {
       const { metricId, data } = action.payload;
       const snakeMetric =
-        metricId === "productionVolume" ? "production_volume" : metricId;
+        metricId === 'productionVolume' ? 'production_volume' : metricId;
 
       // Initialize metric data structure if it doesn't exist
       if (!state.metricsData[`${snakeMetric}_data`]) {
@@ -353,7 +357,7 @@ const optimiseSlice = createSlice({
     },
     clearEmissionDataFilters: (state) => {
       state.emissionData.filters = {
-        search: "",
+        search: '',
         scopes: [],
         categories: [],
         subCategories: [],
@@ -378,12 +382,15 @@ const optimiseSlice = createSlice({
     resetOptimiseState: () => initialState,
     setActivityChange: (state, action) => {
       const { activityId, activityChange } = action.payload;
-      const activityIndex = getActivityIndexById(state.selectedActivities, activityId);
-      
+      const activityIndex = getActivityIndexById(
+        state.selectedActivities,
+        activityId
+      );
+
       if (activityIndex !== -1) {
         state.selectedActivities[activityIndex] = {
           ...state.selectedActivities[activityIndex],
-          activity_change: activityChange
+          activity_change: activityChange,
         };
       }
     },
@@ -448,7 +455,7 @@ const optimiseSlice = createSlice({
       })
       .addCase(fetchScenarioById.rejected, (state, action) => {
         state.loading.scenario = false;
-        state.error.scenario = action.payload || "Failed to fetch scenario";
+        state.error.scenario = action.payload || 'Failed to fetch scenario';
       })
 
       // Fetch scenario metrics
@@ -464,7 +471,7 @@ const optimiseSlice = createSlice({
       })
       .addCase(fetchScenarioMetrics.rejected, (state, action) => {
         state.loading.metrics = false;
-        state.error.metrics = action.payload || "Failed to fetch metrics data";
+        state.error.metrics = action.payload || 'Failed to fetch metrics data';
       })
 
       // Update scenario metrics
@@ -480,7 +487,7 @@ const optimiseSlice = createSlice({
       })
       .addCase(updateScenarioMetrics.rejected, (state, action) => {
         state.loading.metrics = false;
-        state.error.metrics = action.payload || "Failed to update metrics";
+        state.error.metrics = action.payload || 'Failed to update metrics';
       })
 
       // Fetch scenario activities
@@ -494,7 +501,7 @@ const optimiseSlice = createSlice({
       })
       .addCase(fetchScenarioActivities.rejected, (state, action) => {
         state.loading.activities = false;
-        state.error.activities = action.payload || "Failed to fetch activities";
+        state.error.activities = action.payload || 'Failed to fetch activities';
       })
 
       // Update scenario activities
@@ -509,7 +516,7 @@ const optimiseSlice = createSlice({
       .addCase(updateScenarioActivities.rejected, (state, action) => {
         state.loading.activities = false;
         state.error.activities =
-          action.payload || "Failed to update activities";
+          action.payload || 'Failed to update activities';
       })
 
       // Fetch emission data
@@ -525,7 +532,7 @@ const optimiseSlice = createSlice({
       .addCase(fetchEmissionData.rejected, (state, action) => {
         state.loading.emissionData = false;
         state.error.emissionData =
-          action.payload || "Failed to fetch emission data";
+          action.payload || 'Failed to fetch emission data';
       })
 
       // Add activities to scenario
@@ -541,7 +548,7 @@ const optimiseSlice = createSlice({
       .addCase(addActivitiesToScenario.rejected, (state, action) => {
         state.loading.activities = false;
         state.error.activities =
-          action.payload || "Failed to add activities to scenario";
+          action.payload || 'Failed to add activities to scenario';
       })
 
       // Remove activity from scenario
@@ -557,7 +564,7 @@ const optimiseSlice = createSlice({
       .addCase(removeActivityFromScenario.rejected, (state, action) => {
         state.loading.activities = false;
         state.error.activities =
-          action.payload || "Failed to remove activity from scenario";
+          action.payload || 'Failed to remove activity from scenario';
       })
       .addCase(updateScenarioActivity.pending, (state) => {
         state.loading.activities = true;
@@ -583,7 +590,7 @@ const optimiseSlice = createSlice({
       })
       .addCase(updateScenarioActivity.rejected, (state, action) => {
         state.loading.activities = false;
-        state.error.activities = action.payload || "Failed to update activity";
+        state.error.activities = action.payload || 'Failed to update activity';
       })
       .addCase(updateAllSelectedActivities.pending, (state) => {
         state.loading.activities = true;
@@ -599,7 +606,7 @@ const optimiseSlice = createSlice({
       .addCase(updateAllSelectedActivities.rejected, (state, action) => {
         state.loading.activities = false;
         state.error.activities =
-          action.payload || "Failed to update activities";
+          action.payload || 'Failed to update activities';
       })
       .addCase(calculateEmissionsForOptimise.pending, (state) => {
         state.loading.EmissionCalculation = true;
@@ -612,7 +619,8 @@ const optimiseSlice = createSlice({
       })
       .addCase(calculateEmissionsForOptimise.rejected, (state, action) => {
         state.loading.EmissionCalculation = false;
-        state.error.EmissionCalculation = action.payload || "Failed to calculate climate results";
+        state.error.EmissionCalculation =
+          action.payload || 'Failed to calculate climate results';
       })
       .addCase(fetchScenarioGraphData.pending, (state) => {
         state.loading.graphData = true;
@@ -624,7 +632,7 @@ const optimiseSlice = createSlice({
       })
       .addCase(fetchScenarioGraphData.rejected, (state, action) => {
         state.loading.graphData = false;
-        state.error.graphData = action.payload || "Failed to fetch graph data";
+        state.error.graphData = action.payload || 'Failed to fetch graph data';
       });
   },
 });
