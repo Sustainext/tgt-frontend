@@ -1,6 +1,6 @@
 #---------------- STAGE 1: The Builder ----------------
 # Use the full Node.js image to build the app
-FROM node:18 AS builder
+FROM tgtreg.azurecr.io/node:18 AS builder
 
 # Set the working directory
 WORKDIR /app
