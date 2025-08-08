@@ -11,6 +11,7 @@ import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import { useSelector } from "react-redux";
 import EconomicTopBar from "../../economicTopBar";
+// import BRSRScreen1 from './BRSRScreens/screen1'
 
 const Anticompetitivebehavior = ({ apiData, setMobileopen }) => {
   const {
@@ -182,6 +183,12 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         togglestatus={togglestatus}
       />
+      {/* <BRSRScreen1
+       selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+        togglestatus={togglestatus}
+      /> */}
     </>
   );
 };

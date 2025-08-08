@@ -10,9 +10,21 @@ function ErrorPage() {
   const handleClose = () => {
     window.close();
   };
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
 
   const handleRetry = () => {
-    router.push("/EZGB");
+     let token = getAuthToken()
+    if(token){
+      router.push("/EZGB");
+    }
+    else{
+       router.push('/')
+    }
   };
 
   return (
