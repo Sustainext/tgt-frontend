@@ -1869,7 +1869,7 @@ const EmissionWidget = React.memo(
 
               {/* Assignee Button */}
               <td className='w-[8%] py-2 px-1'>
-                <div className='flex items-center justify-center h-full'>
+                <div className='flex items-start justify-center pt-2'>
                   <button
                     type='button'
                     className={`${
@@ -1891,7 +1891,7 @@ const EmissionWidget = React.memo(
 
               {/* Actions - Delete & Upload */}
               <td className='w-[10%] py-2 px-1'>
-                <div className='flex items-center h-full'>
+                <div className='flex items-start pt-2'>
                   <div className='flex justify-start items-center gap-1'>
                     <div>
                       <label className=''>
