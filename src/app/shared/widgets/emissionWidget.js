@@ -1473,17 +1473,17 @@ const EmissionWidget = React.memo(
                 <th className='h-[44px] w-[18%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-0.5'>
                   <div className='flex items-center h-full'>Activity</div>
                 </th>
-                <th className='h-[44px] w-[31%] border-b border-gray-300 text-[12px] text-right text-[#667085] px-0.5'>
+                <th className='h-[44px] w-[26%] border-b border-gray-300 text-[12px] text-right text-[#667085] px-0.5'>
                   <div className='flex items-center justify-end h-full'>
                     Quantity
                   </div>
                 </th>
-                <th className='h-[44px] w-[10%] border-b border-gray-300 text-[12px] text-center text-[#667085] px-1'>
+                <th className='h-[44px] w-[8%] border-b border-gray-300 text-[12px] text-center text-[#667085] px-1'>
                   <div className='flex items-center justify-center h-full'>
                     Assignee
                   </div>
                 </th>
-                <th className='h-[44px] w-[5%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-1'>
+                <th className='h-[44px] w-[10%] border-b border-gray-300 text-[12px] text-left text-[#667085] px-1'>
                   <div className='flex items-center h-full'>Actions</div>
                 </th>
               </tr>
@@ -1679,7 +1679,7 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Quantity Input */}
-              <td className='w-[31%] py-2 px-0.5 relative'>
+              <td className='w-[26%] py-2 px-0.5 relative'>
                 <div className='flex flex-col justify-center h-full'>
                   <div className='flex items-center justify-end'>
                     {unit_type.includes('Over') ? (
@@ -1868,8 +1868,8 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Assignee Button */}
-              <td className='w-[10%] py-2 px-1'>
-                <div className='flex items-center justify-center h-full'>
+              <td className='w-[8%] py-2 px-1'>
+                <div className='flex items-start justify-center pt-2'>
                   <button
                     type='button'
                     className={`${
@@ -1890,10 +1890,10 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Actions - Delete & Upload */}
-              <td className='w-[5%] py-2 px-1'>
-                <div className='flex items-center h-full'>
-                  <div className='flex justify-start'>
-                    <div className='pt-1'>
+              <td className='w-[10%] py-2 px-1'>
+                <div className='flex items-start pt-2'>
+                  <div className='flex justify-start items-center gap-1'>
+                    <div>
                       <label className=''>
                         <LuTrash2
                           className={`text-gray-500 ${
@@ -1905,7 +1905,7 @@ const EmissionWidget = React.memo(
                         />
                       </label>
                     </div>
-                    <div className='pt-1'>
+                    <div>
                       <input
                         type='file'
                         id={id + scope}
@@ -2100,7 +2100,7 @@ const EmissionWidget = React.memo(
                       )}
                     </div>
                     {value.rowType === 'calculated' && (
-                      <div className='pt-1 ml-1'>
+                      <div>
                         <label className='cursor-pointer'>
                           <MdOutlineRemoveRedEye
                             className='text-gray-500 hover:text-blue-500'
