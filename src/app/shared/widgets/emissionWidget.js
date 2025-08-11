@@ -1037,6 +1037,8 @@ const EmissionWidget = React.memo(
         'application/pdf',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'application/vnd.ms-excel',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/msword',
         'image/jpeg',
         'image/jpg',
         'image/png',
@@ -1050,7 +1052,7 @@ const EmissionWidget = React.memo(
       }
 
       if (!allowedTypes.includes(selectedFile.type)) {
-        toast.error('Please upload only PDF, Excel, or image files');
+        toast.error('Please upload only PDF, Word, Excel, or image files');
         event.target.value = ''; // Clear the input
         return;
       }
