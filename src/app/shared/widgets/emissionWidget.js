@@ -1037,6 +1037,8 @@ const EmissionWidget = React.memo(
         'application/pdf',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'application/vnd.ms-excel',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/msword',
         'image/jpeg',
         'image/jpg',
         'image/png',
@@ -1050,7 +1052,7 @@ const EmissionWidget = React.memo(
       }
 
       if (!allowedTypes.includes(selectedFile.type)) {
-        toast.error('Please upload only PDF, Excel, or image files');
+        toast.error('Please upload only PDF, Word, Excel, or image files');
         event.target.value = ''; // Clear the input
         return;
       }
@@ -1493,195 +1495,319 @@ const EmissionWidget = React.memo(
               {renderFirstColumn()}
 
               {/* Category Dropdown */}
-              <td
-                className={`w-[18%] py-2 pl-1 pr-1 relative ${
-                  scopeErrors['Category'] ? '' : ''
-                }`}
-              >
-                <div className='flex items-center h-full'>
-                  <select
-                    value={category}
-                    onChange={(e) => handleCategoryChange(e.target.value)}
-                    className={getFieldClass(
-                      'Category',
-                      `text-[12px] focus:outline-none w-full py-1 ${
-                        category && rowType === 'default'
-                          ? 'border-b border-zinc-800'
-                          : ''
-                      }`
-                    )}
-                    disabled={['assigned', 'calculated', 'approved'].includes(
-                      rowType
-                    )}
-                  >
-                    <option className={getPlaceholderClass('Category')}>
-                      Select Category
-                    </option>
-                    {baseCategories.map((categoryName, index) => (
-                      <option key={index} value={categoryName}>
-                        {categoryName}
+              <td className='w-[18%] py-2 pl-1 pr-1 relative'>
+                <div className='flex flex-col h-full'>
+                  <div className='flex items-center'>
+                    <select
+                      value={category}
+                      onChange={(e) => handleCategoryChange(e.target.value)}
+                      className={getFieldClass(
+                        'Category',
+                        `text-[12px] focus:outline-none w-full py-1 ${
+                          category && rowType === 'default'
+                            ? 'border-b border-zinc-800'
+                            : ''
+                        }`
+                      )}
+                      disabled={['assigned', 'calculated', 'approved'].includes(
+                        rowType
+                      )}
+                    >
+                      <option className={getPlaceholderClass('Category')}>
+                        Select Category
                       </option>
-                    ))}
-                  </select>
-                </div>
-                {scopeErrors['Category'] && (
-                  <div className='text-[12px] text-red-500 absolute left-3 -bottom-[18px]'>
-                    {getErrorMessage('Category')}
+                      {baseCategories.map((categoryName, index) => (
+                        <option key={index} value={categoryName}>
+                          {categoryName}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                )}
+                  {scopeErrors['Category'] && (
+                    <div className='text-[10px] text-red-500 mt-1 whitespace-nowrap overflow-hidden text-ellipsis'>
+                      {getErrorMessage('Category')}
+                    </div>
+                  )}
+                </div>
               </td>
 
               {/* Sub-Category Dropdown */}
               <td className='w-[18%] py-2 px-0.5 relative'>
-                <div className='flex items-center h-full'>
-                  <select
-                    value={subcategory}
-                    onChange={(e) => handleSubcategoryChange(e.target.value)}
-                    className={getFieldClass(
-                      'Subcategory',
-                      `text-[12px] focus:outline-none w-full py-1 ${
-                        subcategory && rowType === 'default'
-                          ? 'border-b border-zinc-800'
-                          : ''
-                      }`
-                    )}
-                    disabled={['assigned', 'calculated', 'approved'].includes(
-                      rowType
-                    )}
-                  >
-                    <option className='emissionscopc'>
-                      Select Sub-Category
-                    </option>
-                    {subcategories.map((sub, index) => (
-                      <option key={index} value={sub}>
-                        {sub}
+                <div className='flex flex-col h-full'>
+                  <div className='flex items-center'>
+                    <select
+                      value={subcategory}
+                      onChange={(e) => handleSubcategoryChange(e.target.value)}
+                      className={getFieldClass(
+                        'Subcategory',
+                        `text-[12px] focus:outline-none w-full py-1 ${
+                          subcategory && rowType === 'default'
+                            ? 'border-b border-zinc-800'
+                            : ''
+                        }`
+                      )}
+                      disabled={['assigned', 'calculated', 'approved'].includes(
+                        rowType
+                      )}
+                    >
+                      <option className='emissionscopc'>
+                        Select Sub-Category
                       </option>
-                    ))}
-                  </select>
-                </div>
-                {scopeErrors['Subcategory'] && (
-                  <div className='text-[12px] text-red-500 absolute left-2 -bottom-[18px]'>
-                    {getErrorMessage('Subcategory')}
+                      {subcategories.map((sub, index) => (
+                        <option key={index} value={sub}>
+                          {sub}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                )}
+                  {scopeErrors['Subcategory'] && (
+                    <div className='text-[10px] text-red-500 mt-1 whitespace-nowrap overflow-hidden text-ellipsis'>
+                      {getErrorMessage('Subcategory')}
+                    </div>
+                  )}
+                </div>
               </td>
 
               {/* Activity Dropdown */}
-              <td className='w-[18%] py-2 px-0.5'>
-                <div className='relative'>
-                  <input
-                    ref={inputRef}
-                    type='text'
-                    title={value.Activity ? value.Activity : ''}
-                    placeholder={getActivityPlaceholder()}
-                    value={activitySearch}
-                    onChange={handleSearchChange}
-                    onFocus={() => setIsDropdownActive(true)}
-                    className={getFieldClass(
-                      'Activity',
-                      'text-[12px] focus:outline-none w-full py-1'
-                    )}
-                    disabled={['assigned', 'calculated', 'approved'].includes(
-                      value.rowType
-                    )}
-                  />
+              <td className='w-[18%] py-2 px-0.5 relative'>
+                <div className='flex flex-col h-full'>
+                  <div className='relative'>
+                    <input
+                      ref={inputRef}
+                      type='text'
+                      title={value.Activity ? value.Activity : ''}
+                      placeholder={getActivityPlaceholder()}
+                      value={activitySearch}
+                      onChange={handleSearchChange}
+                      onFocus={() => setIsDropdownActive(true)}
+                      className={getFieldClass(
+                        'Activity',
+                        'text-[12px] focus:outline-none w-full py-2'
+                      )}
+                      disabled={['assigned', 'calculated', 'approved'].includes(
+                        value.rowType
+                      )}
+                    />
+                    {/* --------- Use Portal for Activity Dropdown -------- */}
+                    <ActivityDropdownPortal
+                      anchorRef={inputRef}
+                      isOpen={isDropdownActive}
+                      onClose={() => setIsDropdownActive(false)}
+                      minWidth={210}
+                      maxWidth={810}
+                      scope={scope}
+                    >
+                      <div>
+                        <div
+                          className='p-2 border-b cursor-pointer hover:bg-gray-100'
+                          onClick={() => {
+                            setActivity('');
+                            setIsDropdownActive(false);
+                            setActivitySearch('');
+                          }}
+                        >
+                          <span className='text-[12px]'>
+                            {rowType === 'calculated'
+                              ? activity
+                              : 'Select Activity'}
+                          </span>
+                        </div>
+
+                        {isLoadingActivities ? (
+                          <div className='p-2 text-center text-[12px] text-gray-500'>
+                            Loading activities...
+                          </div>
+                        ) : visibleActivities.length === 0 ? (
+                          <div className='p-2 text-center text-[12px] text-gray-500'>
+                            No matching activities found
+                          </div>
+                        ) : (
+                          <div
+                            className='max-h-[300px] overflow-y-auto'
+                            onScroll={handleDropdownScroll}
+                          >
+                            {visibleActivities.map((item, index) => {
+                              const displayText = `${item.name} - (${
+                                item.source
+                              }) - ${item.unit_type} - ${item.region} - ${
+                                item.year
+                              }${
+                                item.source_lca_activity !== 'unknown'
+                                  ? ` - ${item.source_lca_activity}`
+                                  : ''
+                              }`;
+
+                              // Check if this item is currently selected
+                              const isSelected = activity === displayText;
+
+                              return (
+                                <div
+                                  key={item.id || item.activity_id || index}
+                                  className={`p-2 cursor-pointer text-[12px] truncate ${
+                                    isSelected
+                                      ? 'bg-blue-500 text-white' // Blue background for selected item
+                                      : 'hover:bg-gray-100' // Gray hover for non-selected items
+                                  }`}
+                                  onClick={() => {
+                                    handleActivityChange(displayText);
+                                    setIsDropdownActive(false);
+                                    setActivitySearch('');
+                                  }}
+                                >
+                                  {displayText}
+                                </div>
+                              );
+                            })}
+
+                            {hasMore && (
+                              <div className='p-2 text-center text-[12px] text-gray-500 border-t'>
+                                Scroll down to load more...
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </ActivityDropdownPortal>
+                    {/* --------- End Portal -------- */}
+                  </div>
                   {scopeErrors['Activity'] && (
-                    <div className='text-[12px] text-red-500 absolute left-0 -bottom-[28px]'>
+                    <div className='text-[10px] text-red-500 mt-1 whitespace-nowrap overflow-hidden text-ellipsis'>
                       {getErrorMessage('Activity')}
                     </div>
                   )}
-                  {/* --------- Use Portal for Activity Dropdown -------- */}
-                  <ActivityDropdownPortal
-                    anchorRef={inputRef}
-                    isOpen={isDropdownActive}
-                    onClose={() => setIsDropdownActive(false)}
-                    minWidth={210}
-                    maxWidth={810}
-                    scope={scope}
-                  >
-                    <div>
-                      <div
-                        className='p-2 border-b cursor-pointer hover:bg-gray-100'
-                        onClick={() => {
-                          setActivity('');
-                          setIsDropdownActive(false);
-                          setActivitySearch('');
-                        }}
-                      >
-                        <span className='text-[12px]'>
-                          {rowType === 'calculated'
-                            ? activity
-                            : 'Select Activity'}
-                        </span>
-                      </div>
-
-                      {isLoadingActivities ? (
-                        <div className='p-2 text-center text-[12px] text-gray-500'>
-                          Loading activities...
-                        </div>
-                      ) : visibleActivities.length === 0 ? (
-                        <div className='p-2 text-center text-[12px] text-gray-500'>
-                          No matching activities found
-                        </div>
-                      ) : (
-                        <div
-                          className='max-h-[300px] overflow-y-auto'
-                          onScroll={handleDropdownScroll}
-                        >
-                          {visibleActivities.map((item, index) => {
-                            const displayText = `${item.name} - (${
-                              item.source
-                            }) - ${item.unit_type} - ${item.region} - ${
-                              item.year
-                            }${
-                              item.source_lca_activity !== 'unknown'
-                                ? ` - ${item.source_lca_activity}`
-                                : ''
-                            }`;
-
-                            // Check if this item is currently selected
-                            const isSelected = activity === displayText;
-
-                            return (
-                              <div
-                                key={item.id || item.activity_id || index}
-                                className={`p-2 cursor-pointer text-[12px] truncate ${
-                                  isSelected
-                                    ? 'bg-blue-500 text-white' // Blue background for selected item
-                                    : 'hover:bg-gray-100' // Gray hover for non-selected items
-                                }`}
-                                onClick={() => {
-                                  handleActivityChange(displayText);
-                                  setIsDropdownActive(false);
-                                  setActivitySearch('');
-                                }}
-                              >
-                                {displayText}
-                              </div>
-                            );
-                          })}
-
-                          {hasMore && (
-                            <div className='p-2 text-center text-[12px] text-gray-500 border-t'>
-                              Scroll down to load more...
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </ActivityDropdownPortal>
-                  {/* --------- End Portal -------- */}
                 </div>
               </td>
 
               {/* Quantity Input */}
-              <td className='w-[31%] py-2 px-0.5'>
-                <div className='flex items-center justify-end h-full'>
-                  <div className='w-full flex justify-end'>
+              <td className='w-[31%] py-2 px-0.5 relative'>
+                <div className='flex flex-col justify-center h-full'>
+                  <div className='flex items-center justify-end'>
                     {unit_type.includes('Over') ? (
                       // Two quantity/unit pairs - side by side with more space
-                      <div className='flex justify-end items-center gap-1 w-full'>
-                        <div className='flex items-center gap-1'>
+                      <div className='flex justify-end items-start gap-2 w-full'>
+                        <div className='flex items-start gap-1'>
+                          <div className='flex flex-col items-center gap-0.5'>
+                            <input
+                              ref={quantity1Ref}
+                              type='number'
+                              value={quantity}
+                              onChange={handleQuantityChange}
+                              onFocus={() => handleFocus('quantity1')}
+                              onBlur={handleBlur}
+                              step='1'
+                              min='0'
+                              placeholder={
+                                scopeErrors['Quantity'] ? 'Value *' : 'Value'
+                              }
+                              className={getFieldClass(
+                                'Quantity',
+                                'text-[12px] focus:outline-none w-16 text-right px-1 py-2 focus:border-b focus:border-blue-300'
+                              )}
+                              disabled={['assigned', 'approved'].includes(
+                                value.rowType
+                              )}
+                            />
+                            {/* Quantity error appears below quantity input */}
+                            {scopeErrors['Quantity'] && (
+                              <div className='text-[9px] text-red-500 text-center whitespace-nowrap w-16'>
+                                {getErrorMessage('Quantity')}
+                              </div>
+                            )}
+                          </div>
+                          <div className='flex flex-col items-center gap-0.5'>
+                            <select
+                              value={unit}
+                              onChange={(e) => handleUnitChange(e.target.value)}
+                              className={getFieldClass(
+                                'Unit',
+                                `text-[12px] w-8 pl-1 pr-0 text-center rounded-md shadow ${
+                                  unit
+                                    ? 'bg-white text-blue-500 '
+                                    : 'bg-blue-500 text-white hover:bg-blue-600'
+                                }`
+                              )}
+                              disabled={['assigned', 'approved'].includes(
+                                rowType
+                              )}
+                            >
+                              <option value=''>{tempUnit || 'Unit'}</option>
+                              {units.map((unit, index) => (
+                                <option key={index} value={unit}>
+                                  {unit}
+                                </option>
+                              ))}
+                            </select>
+                            {/* Unit error appears below unit dropdown */}
+                            {scopeErrors['Unit'] && (
+                              <div className='text-[9px] text-red-500 text-center whitespace-nowrap w-8'>
+                                {getErrorMessage('Unit')}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className='flex items-start gap-1'>
+                          <div className='flex flex-col items-center gap-0.5'>
+                            <input
+                              ref={quantity2Ref}
+                              type='number'
+                              value={quantity2}
+                              onChange={handleQuantity2Change}
+                              onFocus={() => handleFocus('quantity2')}
+                              onBlur={handleBlur}
+                              placeholder='Value'
+                              className={getFieldClass(
+                                'Quantity2',
+                                'text-[12px] focus:outline-none w-16 text-right px-1 py-2 focus:border-b focus:border-blue-300'
+                              )}
+                              step='1'
+                              min='0'
+                              disabled={['assigned', 'approved'].includes(
+                                rowType
+                              )}
+                            />
+                            {/* Quantity2 error appears below quantity2 input */}
+                            {scopeErrors['Quantity2'] && (
+                              <div className='text-[9px] text-red-500 text-center whitespace-nowrap w-16'>
+                                {getErrorMessage('Quantity2')}
+                              </div>
+                            )}
+                          </div>
+                          <div className='flex flex-col items-center gap-0.5'>
+                            <select
+                              value={unit2}
+                              onChange={(e) => handleUnit2Change(e.target.value)}
+                              className={getFieldClass(
+                                'Unit2',
+                                `text-[12px] w-8 pl-1 pr-0 text-center rounded-md shadow ${
+                                  unit2
+                                    ? 'bg-white text-blue-500 '
+                                    : 'bg-blue-500 text-white hover:bg-blue-600'
+                                }`
+                              )}
+                              disabled={['assigned', 'approved'].includes(
+                                rowType
+                              )}
+                            >
+                              <option value=''>{tempUnit2 || 'Unit'}</option>
+                              {units2.map((unit, index) => (
+                                <option key={index} value={unit}>
+                                  {unit}
+                                </option>
+                              ))}
+                            </select>
+                            {/* Unit2 error appears below unit2 dropdown */}
+                            {scopeErrors['Unit2'] && (
+                              <div className='text-[9px] text-red-500 text-center whitespace-nowrap w-8'>
+                                {getErrorMessage('Unit2')}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      // Single quantity/unit pair - centered in extra space
+                      <div className='flex justify-end items-start gap-1 w-full'>
+                        <div className='flex flex-col items-center gap-0.5'>
                           <input
                             ref={quantity1Ref}
                             type='number'
@@ -1691,28 +1817,35 @@ const EmissionWidget = React.memo(
                             onBlur={handleBlur}
                             step='1'
                             min='0'
-                            placeholder={
-                              scopeErrors['Quantity'] ? 'Value *' : 'Value'
-                            }
+                            placeholder='Enter Value'
                             className={getFieldClass(
                               'Quantity',
-                              'text-[12px] focus:outline-none w-16 text-right px-1 focus:border-b focus:border-blue-300'
+                              'text-[12px] focus:outline-none w-20 text-right px-1 py-2 focus:border-b focus:border-blue-300'
                             )}
                             disabled={['assigned', 'approved'].includes(
                               value.rowType
                             )}
                           />
+                          {/* Quantity error appears below quantity input */}
+                          {scopeErrors['Quantity'] && (
+                            <div className='text-[9px] text-red-500 text-center whitespace-nowrap w-20'>
+                              {getErrorMessage('Quantity')}
+                            </div>
+                          )}
+                        </div>
+                        <div className='flex flex-col items-center gap-0.5'>
                           <select
                             value={unit}
                             onChange={(e) => handleUnitChange(e.target.value)}
-                            className={`text-[12px] w-8 pl-1 pr-0 text-center rounded-md py-1 shadow ${
-                              unit
-                                ? 'bg-white text-blue-500 '
-                                : 'bg-blue-500 text-white hover:bg-blue-600'
-                            }`}
-                            disabled={['assigned', 'approved'].includes(
-                              rowType
+                            className={getFieldClass(
+                              'Unit',
+                              `text-[12px] w-14 pl-1 pr-0 text-center rounded-md shadow ${
+                                unit
+                                  ? 'bg-white text-blue-500 '
+                                  : 'bg-blue-500 text-white hover:bg-blue-600'
+                              }`
                             )}
+                            disabled={['assigned', 'approved'].includes(rowType)}
                           >
                             <option value=''>{tempUnit || 'Unit'}</option>
                             {units.map((unit, index) => (
@@ -1721,109 +1854,16 @@ const EmissionWidget = React.memo(
                               </option>
                             ))}
                           </select>
-                        </div>
-                        <div className='flex items-center gap-1'>
-                          <input
-                            ref={quantity2Ref}
-                            type='number'
-                            value={quantity2}
-                            onChange={handleQuantity2Change}
-                            onFocus={() => handleFocus('quantity2')}
-                            onBlur={handleBlur}
-                            placeholder='Value'
-                            className={getFieldClass(
-                              'Quantity2',
-                              'text-[12px] focus:outline-none w-16 text-right px-1 focus:border-b focus:border-blue-300'
-                            )}
-                            step='1'
-                            min='0'
-                            disabled={['assigned', 'approved'].includes(
-                              rowType
-                            )}
-                          />
-                          <select
-                            value={unit2}
-                            onChange={(e) => handleUnit2Change(e.target.value)}
-                            className={`text-[12px] w-8 pl-1 pr-0 text-center rounded-md py-1 shadow ${
-                              unit2
-                                ? 'bg-white text-blue-500 '
-                                : 'bg-blue-500 text-white hover:bg-blue-600'
-                            }`}
-                            disabled={['assigned', 'approved'].includes(
-                              rowType
-                            )}
-                          >
-                            <option value=''>{tempUnit2 || 'Unit'}</option>
-                            {units2.map((unit, index) => (
-                              <option key={index} value={unit}>
-                                {unit}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-                    ) : (
-                      // Single quantity/unit pair - centered in extra space
-                      <div className='flex justify-end items-center gap-1'>
-                        <input
-                          ref={quantity1Ref}
-                          type='number'
-                          value={quantity}
-                          onChange={handleQuantityChange}
-                          onFocus={() => handleFocus('quantity1')}
-                          onBlur={handleBlur}
-                          step='1'
-                          min='0'
-                          placeholder='Enter Value'
-                          className={getFieldClass(
-                            'Quantity',
-                            'text-[12px] focus:outline-none w-20 text-right px-1 focus:border-b focus:border-blue-300'
+                          {/* Unit error appears below unit dropdown */}
+                          {scopeErrors['Unit'] && (
+                            <div className='text-[9px] text-red-500 text-center whitespace-nowrap w-14'>
+                              {getErrorMessage('Unit')}
+                            </div>
                           )}
-                          disabled={['assigned', 'approved'].includes(
-                            value.rowType
-                          )}
-                        />
-                        <select
-                          value={unit}
-                          onChange={(e) => handleUnitChange(e.target.value)}
-                          className={`text-[12px] w-14 pl-1 pr-0 text-center rounded-md py-1 shadow ${
-                            unit
-                              ? 'bg-white text-blue-500 '
-                              : 'bg-blue-500 text-white hover:bg-blue-600'
-                          }`}
-                          disabled={['assigned', 'approved'].includes(rowType)}
-                        >
-                          <option value=''>{tempUnit || 'Unit'}</option>
-                          {units.map((unit, index) => (
-                            <option key={index} value={unit}>
-                              {unit}
-                            </option>
-                          ))}
-                        </select>
+                        </div>
                       </div>
                     )}
                   </div>
-                  {/* Error messages positioned absolutely */}
-                  {scopeErrors['Quantity'] && (
-                    <div className='text-[12px] text-red-500 absolute left-2 -bottom-6'>
-                      {getErrorMessage('Quantity')}
-                    </div>
-                  )}
-                  {scopeErrors['Quantity2'] && (
-                    <div className='text-[12px] text-red-500 absolute left-2 -bottom-12'>
-                      {getErrorMessage('Quantity2')}
-                    </div>
-                  )}
-                  {scopeErrors['Unit'] && (
-                    <div className='text-[12px] text-red-500 absolute right-2 -bottom-6'>
-                      {getErrorMessage('Unit')}
-                    </div>
-                  )}
-                  {scopeErrors['Unit2'] && (
-                    <div className='text-[12px] text-red-500 absolute right-2 -bottom-12'>
-                      {getErrorMessage('Unit2')}
-                    </div>
-                  )}
                 </div>
               </td>
 
