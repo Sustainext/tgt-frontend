@@ -23,7 +23,7 @@ RUN npm run build
 
 #---------------- STAGE 2: The Production Runner ----------------
 # Use a much smaller and more secure "alpine" image for the final stage
-FROM node:18-alpine
+FROM tgtreg.azurecr.io/node:18-alpine
 
 # Set the working directory
 WORKDIR /app
