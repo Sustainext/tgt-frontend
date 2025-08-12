@@ -102,7 +102,7 @@ const CalculationInfoModal = ({ isOpen, onClose, data }) => {
               </p>
 
               <p className='text-gray-500 ms-4'>
-                Value (tCO<sub>2</sub>e)
+                Value (CO<sub>2</sub>e)
               </p>
               <p className='font-medium text-gray-800'>
                 {emissionFactorValue} {result?.co2e_unit}/
