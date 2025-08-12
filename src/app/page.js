@@ -257,7 +257,13 @@ export default function Home() {
                 </div>
               </form>
               <div className="mt-4">
-                <Auth0LoginButton/>
+                  <button
+      
+      className="group relative mt-2 flex w-full justify-center rounded-md bg-transparent px-3 py-1.5 text-sm font-normal leading-6 text-[#007EEF] hover:text-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-not-allowed opacity-40"
+    >
+      Login with SSO (Single Sign On)
+    </button>
+                {/* <Auth0LoginButton/> */}
               </div>
             </div>
           </div>
