@@ -7,7 +7,8 @@ import Cookies from "js-cookie";
 import HomeDashboard from "./Home/page";
 import TasksPage from "./Home/Tasks";
 import axiosInstance from "../utils/axiosMiddleware";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   setHeadertext1,
   setHeadertext2,
@@ -148,6 +149,8 @@ const Dashboard = () => {
   }, [activeTab, dispatch]);
 
   return (
+    <>
+     <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
     <div className="xl:ms-6 lg:ms-6">
       <div className="flex justify-between">
         <div
@@ -202,6 +205,7 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

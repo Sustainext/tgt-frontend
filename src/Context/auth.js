@@ -242,7 +242,9 @@ const logout = async () => {
     if (response.status !== 200) {
       throw new Error("Failed to logout");
     }
-
+     const elfsightScript = document.querySelector(`script[src="https://static.elfsight.com/platform/platform.js"]`);
+      if (elfsightScript) elfsightScript.parentNode.removeChild(elfsightScript);
+      document.querySelectorAll('[class*="EmbedRoot__Root"]').forEach(node => node.remove());
     // Remove all cookies set by your application
     Cookies.remove("token");
     Cookies.remove("permissions");

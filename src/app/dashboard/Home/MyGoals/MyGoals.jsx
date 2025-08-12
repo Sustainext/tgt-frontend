@@ -60,7 +60,7 @@ const MyGoals = () => {
         toast.error("Error");
       }
     } catch (error) {
-      toast.error("Error completing goal");
+      // toast.error("Error completing goal");
     } finally {
       LoaderClose();
     }
@@ -104,7 +104,7 @@ const MyGoals = () => {
         toast.error("Error");
       }
     } catch (error) {
-      toast.error("Error adding goal");
+      // toast.error("Error adding goal");
     } finally {
       LoaderClose();
     }
