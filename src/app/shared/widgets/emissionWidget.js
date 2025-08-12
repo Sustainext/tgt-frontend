@@ -1512,7 +1512,7 @@ const EmissionWidget = React.memo(
                 {renderFirstColumn()}
 
                 {/* Category Dropdown */}
-                <td className='w-[18%] py-2 pl-1 pr-1 relative'>
+                <td className='w-[18%] pt-2 pl-1 pr-1 relative'>
                   <div className='flex flex-col h-full'>
                     <div className='flex items-center'>
                       <select
@@ -1551,7 +1551,7 @@ const EmissionWidget = React.memo(
                 </td>
 
                 {/* Sub-Category Dropdown */}
-                <td className='w-[18%] py-2 px-0.5 relative'>
+                <td className='w-[18%] pt-2 px-0.5 relative'>
                   <div className='flex flex-col h-full'>
                     <div className='flex items-center'>
                       <select
@@ -1739,7 +1739,7 @@ const EmissionWidget = React.memo(
                                 </div>
                               )}
                             </div>
-                            <div className='flex flex-col items-center gap-0.5 pt-1'>
+                            <div className='flex flex-col items-center gap-0.5 pt-[4px]'>
                               <select
                                 value={unit}
                                 onChange={(e) =>
@@ -1747,7 +1747,7 @@ const EmissionWidget = React.memo(
                                 }
                                 className={getFieldClass(
                                   'Unit',
-                                  `text-[12px] w-8 pl-1 pr-0 text-center rounded-md shadow ${
+                                  `text-[12px] w-8 pl-1 pr-0 text-center rounded-md shadow unit ${
                                     unit
                                       ? 'bg-white text-blue-500 '
                                       : 'bg-blue-500 text-white hover:bg-blue-600'
@@ -1799,7 +1799,7 @@ const EmissionWidget = React.memo(
                                 </div>
                               )}
                             </div>
-                            <div className='flex flex-col items-center gap-0.5 pt-1'>
+                            <div className='flex flex-col items-center gap-0.5 pt-[4px]'>
                               <select
                                 value={unit2}
                                 onChange={(e) =>
@@ -1807,7 +1807,7 @@ const EmissionWidget = React.memo(
                                 }
                                 className={getFieldClass(
                                   'Unit2',
-                                  `text-[12px] w-8 pl-1 pr-0 text-center rounded-md shadow ${
+                                  `text-[12px] w-8 pl-1 pr-0 text-center rounded-md shadow unit ${
                                     unit2
                                       ? 'bg-white text-blue-500 '
                                       : 'bg-blue-500 text-white hover:bg-blue-600'
@@ -1862,13 +1862,17 @@ const EmissionWidget = React.memo(
                               </div>
                             )}
                           </div>
-                          <div className='flex flex-col items-center gap-0.5 pt-1'>
+                          <div
+                            className={`flex flex-col items-center gap-0.5 ${
+                              scopeErrors['Unit'] ? 'pt-2' : 'pt-1'
+                            }`}
+                          >
                             <select
                               value={unit}
                               onChange={(e) => handleUnitChange(e.target.value)}
                               className={getFieldClass(
                                 'Unit',
-                                `text-[12px] w-14 pl-1 pr-0 text-center rounded-md shadow ${
+                                `text-[12px] w-14 pl-1 pr-0 text-center rounded-md shadow unit ${
                                   unit
                                     ? 'bg-white text-blue-500 '
                                     : 'bg-blue-500 text-white hover:bg-blue-600'
@@ -1900,7 +1904,7 @@ const EmissionWidget = React.memo(
 
                 {/* Assignee Button */}
                 <td className='w-[8%] py-2 px-1'>
-                  <div className='flex items-start justify-center pt-1'>
+                  <div className='flex items-start justify-center'>
                     <button
                       type='button'
                       className={`${
@@ -1922,7 +1926,7 @@ const EmissionWidget = React.memo(
 
                 {/* Actions - Delete & Upload */}
                 <td className='w-[10%] py-2 px-1'>
-                  <div className='flex items-start pt-1'>
+                  <div className='flex items-start'>
                     <div className='flex justify-start items-center'>
                       <div>
                         <label className=''>
