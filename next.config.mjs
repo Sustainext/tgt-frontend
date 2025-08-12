@@ -8,7 +8,7 @@ const nextConfig = {
       'https://superset-dev.sustainext.ai/superset/dashboard/11/?standalone=3&refreshTime=120',
     NEXT_APP_SUPERSET_URL_ENV_WASTE:
       'https://superset-dev.sustainext.ai/superset/dashboard/12/?standalone=3&refreshTime=120',
-    CLIMATIQ_KEY: '98YJN6V0VC4M5KPQNSVHWCVEM8NT',
+    CLIMATIQ_KEY: 'JWFSEW69S10SF32N68F084YJP0',
     NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION: '23',
     REDIS_HOST: '127.0.0.1',
     REDIS_PORT: '6379',
