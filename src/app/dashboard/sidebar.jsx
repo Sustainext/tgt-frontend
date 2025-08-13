@@ -106,7 +106,7 @@ const Sidenav = () => {
       id: 1,
       title: "Materiality Dashboard",
       icon: <MdOutlinePieChartOutline />,
-      spacing: false,
+      spacing: true,
       link: "/dashboard/Materiality",
       lockicon: <MdLockOutline />,
       lockiconshow: false,
