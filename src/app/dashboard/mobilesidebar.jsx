@@ -143,30 +143,30 @@ const MobileSidenav = () => {
           icon: <MdPublic />,
           link: "/dashboard/environment",
         },
-        // {
-        //   id: "2-2",
-        //   title: "Social",
-        //   icon: <MdOutlineGroup />,
-        //   link: "/dashboard/social",
-        // },
-        // {
-        //   id: "2-3",
-        //   title: "Governance",
-        //   icon: <MdOutlineDiversity1 />,
-        //   link: "/dashboard/governance",
-        // },
-        // {
-        //   id: "2-4",
-        //   title: "General",
-        //   icon: <MdOutlineDiversity2 />,
-        //   link: "/dashboard/general",
-        // },
-        // {
-        //   id: "2-5",
-        //   title: "Economic",
-        //   icon: <MdOutlineDiversity3 />,
-        //   link: "/dashboard/economic",
-        // },
+        {
+          id: "2-2",
+          title: "Social",
+          icon: <MdOutlineGroup />,
+          link: "/dashboard/social",
+        },
+        {
+          id: "2-3",
+          title: "Governance",
+          icon: <MdOutlineDiversity1 />,
+          link: "/dashboard/governance",
+        },
+        {
+          id: "2-4",
+          title: "General",
+          icon: <MdOutlineDiversity2 />,
+          link: "/dashboard/general",
+        },
+        {
+          id: "2-5",
+          title: "Economic",
+          icon: <MdOutlineDiversity3 />,
+          link: "/dashboard/economic",
+        },
       ],
     },
     {
@@ -186,30 +186,30 @@ const MobileSidenav = () => {
           icon: <MdPublic />,
           link: "/dashboard/Analyse/environment",
         },
-        // {
-        //   id: "3-2",
-        //   title: "Social",
-        //   icon: <MdOutlineGroup />,
-        //   link: "/dashboard/Analyse/social",
-        // },
-        // {
-        //   id: "3-3",
-        //   title: "Governance",
-        //   icon: <MdOutlineDiversity1 />,
-        //   link: "/dashboard/Analyse/governance",
-        // },
-        // {
-        //   id: "3-4",
-        //   title: "General",
-        //   icon: <MdOutlineDiversity2 />,
-        //   link: "/dashboard/Analyse/general",
-        // },
-        // {
-        //   id: "3-5",
-        //   title: "Economic",
-        //   icon: <MdOutlineDiversity3 />,
-        //   link: "/dashboard/Analyse/economic",
-        // },
+        {
+          id: "3-2",
+          title: "Social",
+          icon: <MdOutlineGroup />,
+          link: "/dashboard/Analyse/social",
+        },
+        {
+          id: "3-3",
+          title: "Governance",
+          icon: <MdOutlineDiversity1 />,
+          link: "/dashboard/Analyse/governance",
+        },
+        {
+          id: "3-4",
+          title: "General",
+          icon: <MdOutlineDiversity2 />,
+          link: "/dashboard/Analyse/general",
+        },
+        {
+          id: "3-5",
+          title: "Economic",
+          icon: <MdOutlineDiversity3 />,
+          link: "/dashboard/Analyse/economic",
+        },
       ],
     },
     {
@@ -322,7 +322,7 @@ const MobileSidenav = () => {
     //   lockicon: <MdLockOutline />,
     //   lockiconshow: false,
     // },
-  ].filter(Boolean); // Remove false values (if the "Users" menu is not rendered)
+  ].filter(Boolean);// Remove false values (if the "Users" menu is not rendered)
 
   const [submenuOpen, setSubmenuOpen] = useState(
     new Array(Menus.length).fill(false)
