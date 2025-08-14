@@ -55,14 +55,7 @@ const EconomicPerformance = forwardRef(
   ) => {
     const [data, setData] = useState("");
     const [initialData, setInitialData] = useState({});
-    // const reportid =
-    //   typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
-    // const orgName =
-    //   typeof window !== "undefined"
-    //     ? localStorage.getItem("reportorgname")
-    //     : "";
-    // const reportType =
-    //   typeof window !== "undefined" ? localStorage.getItem("reportType") : "";
+    
     const [reportid, setReportid] = useState("");
     const [reportType, setReportType] = useState("");
     const [orgName, setOrgname] = useState("");
@@ -386,7 +379,7 @@ const EconomicPerformance = forwardRef(
       }}),
     };
 
-    // console.log(subsections,"look susection")
+    
     
     const getSubsectionsToShow = () => {
       if (reportType === "Custom ESG Report") {
@@ -485,9 +478,9 @@ const EconomicPerformance = forwardRef(
     };
     const selectedSubsections = getSelectedSubsections();
 
-    // const getDynamicSectionMap = () => {
-    //   let groupIndex = 1;
-    //   const dynamicMap = [];
+    
+    
+    
     
     //   groupedSubsections.forEach((group) => {
     //     if (group.children) {
