@@ -222,11 +222,11 @@ const Sidenav = () => {
       id: 6,
       title: "Optimise",
       icon: <MdOutlineSettingsSuggest />,
-      link: "/dashboard/Optimise",
+      link: "",
       permission: "optimise",
       role: true,
       lockicon: <MdLockOutline />,
-      lockiconshow: false,
+      lockiconshow: true,
     },
     {
       id: 7,
