@@ -16,21 +16,40 @@ function MyResponsivePie({ exdata }) {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+  // const aggregatedDataByScope = exdata.reduce((acc, corporate) => {
+  //   corporate.scopes.forEach(scope => { // Corrected from `exdata.corporate.scopes` to `corporate.scopes`
+  //     if (acc[scope.scope_name]) {
+  //       acc[scope.scope_name].value += parseFloat(scope.total_co2e);
+  //     } else {
+  //       acc[scope.scope_name] = {
+  //         id: scope.scope_name,
+  //         label: scope.scope_name,
+  //         value: parseFloat(scope.total_co2e),
+  //         color: `hsl(${Math.random() * 360}, 70%, 50%)` // Random color for each scope
+  //       };
+  //     }
+  //   });
+  //   return acc;
+  // }, {});
   const aggregatedDataByScope = exdata.reduce((acc, corporate) => {
-    corporate.scopes.forEach(scope => { // Corrected from `exdata.corporate.scopes` to `corporate.scopes`
+  corporate.scopes.forEach(scope => {
+    if (corporate.corporate_type === "Regular" || scope.scope_name === "Scope-3") {
       if (acc[scope.scope_name]) {
-        acc[scope.scope_name].value += parseFloat(scope.total_co2e);
+        acc[scope.scope_name].value = parseFloat(
+          (acc[scope.scope_name].value + parseFloat(scope.total_co2e)).toFixed(2)
+        );
       } else {
         acc[scope.scope_name] = {
           id: scope.scope_name,
           label: scope.scope_name,
-          value: parseFloat(scope.total_co2e),
-          color: `hsl(${Math.random() * 360}, 70%, 50%)` // Random color for each scope
+          value: parseFloat(parseFloat(scope.total_co2e).toFixed(2)),
+          color: `hsl(${Math.random() * 360}, 70%, 50%)`
         };
       }
-    });
-    return acc;
-  }, {});
+    }
+  });
+  return acc;
+}, {});
   
   // Convert the aggregated object back into an array for @nivo/pie
   const dataForPieChart = Object.values(aggregatedDataByScope);
